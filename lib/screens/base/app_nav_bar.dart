@@ -24,11 +24,11 @@ class _AppNavBarState extends State<AppNavBar> {
   late AuthProvider authProvider;
 
   final items = [
-    MyIcons.football,
-    MyIcons.documentText,
-    MyIcons.cup,
-    MyIcons.starOutlined,
-    MyIcons.wallet,
+    MyIcons.logo,
+    MyIcons.logo,
+    MyIcons.logo,
+    MyIcons.logo,
+    MyIcons.logo,
   ];
 
   List<String> _getTitle(BuildContext context) {
