@@ -9,4 +9,7 @@ class ColorPalette {
   static of(BuildContext context) => ColorPalette(context);
 
   bool get _isLightTheme => MyTheme.isLightTheme(_context);
+
+  //black
+  Color get black33 => const Color(0xFF333333);
 }

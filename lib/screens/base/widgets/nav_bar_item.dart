@@ -1,6 +1,7 @@
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/widgets/custom_svg.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class NavBarItem extends StatelessWidget {
   final VoidCallback onTap;
@@ -20,7 +21,7 @@ class NavBarItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = isSelected ? context.colorScheme.primary : null;
+    final color = isSelected ? context.colorPalette.black33 : null;
     return Expanded(
       child: GestureDetector(
         onTap: onTap,
@@ -45,6 +46,7 @@ class NavBarItem extends StatelessWidget {
                     title,
                     style: context.textTheme.labelSmall!.copyWith(
                       color: color,
+                      fontWeight: FontWeight.w600,
                     ),
                     textAlign: TextAlign.center,
                   ),
