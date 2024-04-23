@@ -12,41 +12,44 @@ class MySubscription extends StatefulWidget {
 class _MySubscriptionState extends State<MySubscription> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            AppBarText(context.appLocalization.hello),
-            Flexible(
-              child: AppBarText(
-                "Almhyar Zahra",
-                overflow: TextOverflow.ellipsis,
-                textColor: context.colorPalette.black33,
+    return Padding(
+      padding: const EdgeInsetsDirectional.only(start: 15),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              AppBarText(context.appLocalization.hello),
+              Flexible(
+                child: AppBarText(
+                  "Almhyar Zahra",
+                  overflow: TextOverflow.ellipsis,
+                  textColor: context.colorPalette.black33,
+                ),
               ),
-            ),
-            const Text(
-              "👋",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
+              const Text(
+                "👋",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              )
+            ],
+          ),
+          const Row(
+            children: [
+              Text("🇯🇴"),
+              Flexible(
+                child: AppBarText(
+                  "/ الجامعة الأردنية / كلية الملك عبدالله",
+                  overflow: TextOverflow.ellipsis,
+                  fontSize: 12,
+                ),
               ),
-            )
-          ],
-        ),
-        const Row(
-          children: [
-            Text("🇯🇴"),
-            Flexible(
-              child: AppBarText(
-                "/ الجامعة الأردنية / كلية الملك عبدالله",
-                overflow: TextOverflow.ellipsis,
-                fontSize: 14,
-              ),
-            ),
-          ],
-        ),
-      ],
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

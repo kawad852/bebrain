@@ -1,5 +1,7 @@
 import 'package:bebrain/screens/home/widgets/action_container.dart';
 import 'package:bebrain/screens/home/widgets/appbar_text.dart';
+import 'package:bebrain/screens/home/widgets/departments_card.dart';
+import 'package:bebrain/screens/home/widgets/distinguished_lectures.dart';
 import 'package:bebrain/screens/home/widgets/eduction_card.dart';
 import 'package:bebrain/screens/home/widgets/my_subscription.dart';
 import 'package:bebrain/utils/app_constants.dart';
@@ -26,35 +28,33 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            sliver: SliverAppBar(
-              pinned: true,
-              leadingWidth: kBarLeadingWith,
-              leading: const MySubscription(),
-              actions: [
-                ActionContainer(
-                  onTap: () {},
-                  hasBorder: true,
-                  child: const CustomSvg(MyIcons.filter),
+          SliverAppBar(
+            pinned: true,
+            leadingWidth: kBarLeadingWith,
+            leading: const MySubscription(),
+            actions: [
+              ActionContainer(
+                onTap: () {},
+                hasBorder: true,
+                child: const CustomSvg(MyIcons.filter),
+              ),
+              const SizedBox(width: 5),
+              ActionContainer(
+                onTap: () {},
+                color: context.colorPalette.blueC2E,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const CustomSvg(MyIcons.help),
+                    AppBarText(
+                      context.appLocalization.helper,
+                      fontSize: 10,
+                    )
+                  ],
                 ),
-                const SizedBox(width: 5),
-                ActionContainer(
-                  onTap: () {},
-                  color: context.colorPalette.blueC2E,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const CustomSvg(MyIcons.help),
-                      AppBarText(
-                        context.appLocalization.helper,
-                        fontSize: 10,
-                      )
-                    ],
-                  ),
-                )
-              ],
-            ),
+              ),
+              const SizedBox(width: 10),
+            ],
           ),
           SliverToBoxAdapter(
             child: Column(
@@ -121,6 +121,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
+          ),
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            sliver: SliverList.separated(
+              separatorBuilder: (context, index) => const SizedBox(height: 5),
+              itemCount: 3,
+              itemBuilder: (context, index) {
+                return const DepartmentsCard();
+              },
+            ),
+          ),
+          const SliverToBoxAdapter(
+            child: DistinguishedLectures(),
           ),
         ],
       ),

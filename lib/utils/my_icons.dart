@@ -15,6 +15,8 @@ class MyIcons {
   static const String filter = '${_path}filter.svg';
   static const String help = '${_path}help.svg';
   static const String eductionCircle = '${_path}eduction_circle.svg';
+  static const String star = '${_path}star.svg';
+
 
 
 

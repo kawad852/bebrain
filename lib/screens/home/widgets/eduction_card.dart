@@ -7,15 +7,16 @@ class EductionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 100,
-      height: 100,
-      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
-      decoration: BoxDecoration(
-        color: context.colorPalette.blueC2E,
-        borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
-      ),
-      child: Flexible(
+    return GestureDetector(
+      onTap: () {},
+      child: Container(
+        width: 100,
+        height: 100,
+        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
+        decoration: BoxDecoration(
+          color: context.colorPalette.blueC2E,
+          borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -37,18 +38,19 @@ class EductionCard extends StatelessWidget {
                 ),
               ),
             ),
-            const Text(
-              "اساسيات البرمجة المتقدمة",
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 12,
+            const Flexible(
+              child: Text(
+                "اساسيات البرمجة المتقدمة",
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 12,
+                ),
               ),
             ),
             Text(
               "10 فيديو ، 2 س",
-              overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 color: context.colorPalette.grey66,
                 fontSize: 12,
