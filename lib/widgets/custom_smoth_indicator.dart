@@ -23,7 +23,7 @@ class CustomSmoothIndicator extends StatelessWidget {
         dotWidth: 8,
         dotHeight: 8,
         dotColor: context.colorScheme.surfaceVariant,
-        activeDotColor: context.colorScheme.primary,
+        activeDotColor: context.colorPalette.blueC2E,
       ),
     );
   }

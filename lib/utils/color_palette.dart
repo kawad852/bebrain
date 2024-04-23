@@ -10,6 +10,25 @@ class ColorPalette {
 
   bool get _isLightTheme => MyTheme.isLightTheme(_context);
 
+  ///common
+  Color get white => Colors.white;
+  Color get black => Colors.black;
+
   //black
   Color get black33 => const Color(0xFF333333);
+
+
+
+  //grey
+  Color get grey66 => const Color(0xFF666666);
+  Color get grey99 => const Color(0xFF999999);
+
+
+  //blue
+  Color get blueC2E => const Color(0xFFC2E7D6);
+  Color get blueA3C => const Color(0xFFA3CDBA);
+
+
+
+
 }

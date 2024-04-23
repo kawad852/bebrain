@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 const kEditorBottomPadding = 16.0;
 const kProductBubbleHeight = 70.0;
-const kBarLeadingWith = 80.0;
+const kBarLeadingWith = 250.0;
 const kBarCollapsedHeight = 250.0;
 
 class MyTheme {

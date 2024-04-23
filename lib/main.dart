@@ -20,7 +20,8 @@ import 'package:provider/provider.dart';
 
 // mhyar
 
-final GlobalKey<NavigatorState> navigatorKey = GlobalKey(debugLabel: "Main Navigator");
+final GlobalKey<NavigatorState> navigatorKey =
+    GlobalKey(debugLabel: "Main Navigator");
 
 @pragma('vm:entry-point')
 Future<void> onBackgroundMessage(RemoteMessage message) async {
@@ -37,7 +38,8 @@ Future<void> main() async {
   // FlutterBranchSdk.validateSDKIntegration();
   // MySharedPreferences.clearStorage();
   // MySharedPreferences.isPassedIntro = false;
-  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  await SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   FirebaseMessaging.onBackgroundMessage(onBackgroundMessage);
   runApp(
     MultiProvider(
@@ -95,7 +97,7 @@ class _MyAppState extends State<MyApp> {
       builder: (context, appProvider, child) {
         final isLight = appProvider.appTheme == ThemeEnum.light;
         var seedColorScheme = ColorScheme.fromSeed(
-          seedColor: const Color(0xFF032D4B),
+          seedColor: const Color(0xFF333333),
           brightness: isLight ? Brightness.light : Brightness.dark,
         );
         seedColorScheme = seedColorScheme.copyWith(

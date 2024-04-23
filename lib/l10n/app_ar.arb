@@ -28,5 +28,14 @@
   "serverErrorBody": "نواجه حاليًا مشكلة في استرداد البيانات من الخادم. يرجى المحاولة مرة أخرى لاحقًا.",
   "authFailed": "تم حظر حسابك بسبب أنشطة مخالفة",
   "loginToCont": "للمتابعة يجب تسجيل الدخول",
-  "accountDeletedMsg": "تم حذف الحساب بنجاح"
+  "accountDeletedMsg": "تم حذف الحساب بنجاح",
+  "home":"الرئيسية",
+  "duties":"الواجبات",
+  "explanation":"شرح خاص",
+  "graduationProjects":"مشاريع التخرج",
+  "profile":"الحساب",
+  "hello":"مرحباً,",
+  "helper":"المساعد",
+  "pursueEducation":"متابعة التعليم"
+  
 }

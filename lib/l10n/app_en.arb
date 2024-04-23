@@ -28,5 +28,14 @@
   "serverErrorBody": "We're currently having trouble retrieving data from the server. Please try again later.",
   "authFailed": "Your account has been suspended due to unusual activities",
   "accountDeletedMsg": "Account deleted successfully",
-  "loginToCont": "login to continue"
+  "loginToCont": "login to continue",
+  "home":"Home",
+  "duties":"Duties",
+  "explanation":"Special explanation",
+  "graduationProjects":"Graduation projects",
+  "profile":"Profile",
+  "hello":"Hello,",
+  "helper":"Helper",
+  "pursueEducation":"Pursue education"
+  
 }

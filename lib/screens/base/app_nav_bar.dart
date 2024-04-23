@@ -1,5 +1,9 @@
 import 'package:bebrain/screens/base/widgets/nav_bar_item.dart';
+import 'package:bebrain/screens/duties/duties_screen.dart';
+import 'package:bebrain/screens/graduation_projects/graduation_projects_screen.dart';
 import 'package:bebrain/screens/home/home_screen.dart';
+import 'package:bebrain/screens/profile/profile_screen.dart';
+import 'package:bebrain/screens/special_explanation/special_explanation_screen.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/my_icons.dart';
 import 'package:flutter/material.dart';
@@ -25,26 +29,34 @@ class _AppNavBarState extends State<AppNavBar> {
     MyIcons.home,
     MyIcons.duties,
     MyIcons.specialExplanation,
-    MyIcons.search,
+    MyIcons.graduation,
     MyIcons.profile,
+  ];
+
+   final itemsSelected = [
+    MyIcons.homeSelected,
+    MyIcons.dutiesSelected,
+    MyIcons.specialExplanationSelected,
+    MyIcons.graduationSelected,
+    MyIcons.profileSelected,
   ];
 
   List<String> _getTitle(BuildContext context) {
     return [
-      "Home",
-      "Duties",
-      "Explanation",
-      "Search",
-      "Profile",
+      context.appLocalization.home,
+      context.appLocalization.duties,
+      context.appLocalization.explanation,
+      context.appLocalization.graduationProjects,
+      context.appLocalization.profile,
     ];
   }
 
   final screens = [
     const HomeScreen(),
-    const HomeScreen(),
-    const HomeScreen(),
-    const HomeScreen(),
-    const HomeScreen(),
+    const DutiesScreen(),
+    const SpecialExplanationScreen(),
+    const GraduationProjectsScreen(),
+    const ProfileScreen(),
   ];
 
   void _onSelect(int index) {
@@ -96,7 +108,7 @@ class _AppNavBarState extends State<AppNavBar> {
                 // }
               },
               isSelected: _currentIndex == index,
-              icon: items[index],
+              icon: _currentIndex == index?itemsSelected[index]:items[index],
               title: _getTitle(context)[index],
             );
           }).toList(),
