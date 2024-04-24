@@ -1,7 +1,7 @@
 import 'package:bebrain/screens/home/widgets/action_container.dart';
 import 'package:bebrain/screens/home/widgets/appbar_text.dart';
 import 'package:bebrain/screens/home/widgets/departments_card.dart';
-import 'package:bebrain/screens/home/widgets/distinguished_lectures.dart';
+import 'package:bebrain/widgets/distinguished_lectures.dart';
 import 'package:bebrain/screens/home/widgets/eduction_card.dart';
 import 'package:bebrain/screens/home/widgets/my_subscription.dart';
 import 'package:bebrain/utils/app_constants.dart';
@@ -132,8 +132,8 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
           ),
-          const SliverToBoxAdapter(
-            child: DistinguishedLectures(),
+           SliverToBoxAdapter(
+            child: DistinguishedLectures(title: context.appLocalization.distinguishedLecturers),
           ),
         ],
       ),

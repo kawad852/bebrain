@@ -23,6 +23,8 @@ class ColorPalette {
   Color get grey66 => const Color(0xFF666666);
   Color get grey99 => const Color(0xFF999999);
   Color get greyEEE => const Color(0xFFEEEDED);
+  Color get greyF2F => const Color(0xFFF2F2F2);
+
 
 
 

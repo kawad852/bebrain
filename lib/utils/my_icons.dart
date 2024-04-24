@@ -16,6 +16,12 @@ class MyIcons {
   static const String help = '${_path}help.svg';
   static const String eductionCircle = '${_path}eduction_circle.svg';
   static const String star = '${_path}star.svg';
+  static const String search = '${_path}search.svg';
+  static const String subscription = '${_path}subscription.svg';
+  static const String teacher = '${_path}teacher.svg';
+  static const String video = '${_path}video.svg';
+  static const String axes = '${_path}axes.svg';
+  static const String message = '${_path}message.svg';
 
 
 

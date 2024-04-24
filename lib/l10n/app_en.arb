@@ -38,6 +38,17 @@
   "helper":"Helper",
   "pursueEducation":"Pursue education",
   "more":"More",
-  "distinguishedLecturers":"Distinguished lecturers"
+  "distinguishedLecturers":"Distinguished lecturers",
+  "course":"course",
+  "subscriber":"subscriber",
+  "searchCourse":"Search for the name of the course or part of a course",
+  "lecturers":"Lecturers",
+  "courses":"Courses",
+  "video":"video",
+  "axes":"axes",
+  "requestSolveAssignment":"You can submit a request to solve an assignment or write a report and research by sending a new request",
+  "sendNewRequest":"Send a new request",
+  "previousRequests":"Previous requests",
+  "requestNumber":"Request number"
   
 }

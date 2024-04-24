@@ -38,6 +38,17 @@
   "helper":"المساعد",
   "pursueEducation":"متابعة التعليم",
   "more":"المزيد",
-  "distinguishedLecturers":"محاضرين مميزين"
+  "distinguishedLecturers":"محاضرين مميزين",
+  "course":"كورس",
+  "subscriber":"مشترك",
+  "searchCourse":"ابحث عن اسم المادة او جزء من مادة",
+  "lecturers":"المحاضرين",
+  "courses":"الكورسات",
+  "video":"فيديو",
+  "axes":"محاور",
+  "requestSolveAssignment":"يمكنك تقديم طلب حل واجب أو كتابة تقرير وبحث عن طريق إرسال طلب جديد",
+  "sendNewRequest":"ارسال طلب جديد",
+  "previousRequests":"الطلبات السابقة",
+  "requestNumber":"رقم الطلب"
   
 }

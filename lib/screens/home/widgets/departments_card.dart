@@ -1,9 +1,10 @@
+import 'package:bebrain/screens/department/department_screen.dart';
 import 'package:bebrain/utils/app_constants.dart';
 import 'package:bebrain/utils/base_extensions.dart';
-import 'package:bebrain/utils/my_icons.dart';
 import 'package:bebrain/utils/my_theme.dart';
 import 'package:bebrain/widgets/custom_network_image.dart';
-import 'package:bebrain/widgets/custom_svg.dart';
+import 'package:bebrain/widgets/evaluation_star.dart';
+import 'package:bebrain/widgets/more_button.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
@@ -36,25 +37,10 @@ class _DepartmentsCardState extends State<DepartmentsCard> {
                   ),
                 ),
               ),
-              GestureDetector(
-                onTap: () {},
-                child: Row(
-                  children: [
-                    Text(
-                      context.appLocalization.more,
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: context.colorPalette.grey66,
-                      ),
-                    ),
-                    const SizedBox(width: 3),
-                    Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      size: 12,
-                      color: context.colorPalette.grey66,
-                    )
-                  ],
-                ),
+              MoreButton(
+                onTap: () {
+                  context.push(const DepartmentScreen());
+                },
               ),
             ],
           ),
@@ -74,28 +60,15 @@ class _DepartmentsCardState extends State<DepartmentsCard> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CustomNetworkImage(
+                  const CustomNetworkImage(
                     kFakeImage,
                     width: 272,
                     height: 180,
                     alignment: Alignment.topLeft,
                     radius: MyTheme.radiusSecondary,
-                    child: Container(
-                      width: 46,
-                      height: 20,
-                      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                      decoration: BoxDecoration(
-                        color: context.colorPalette.white,
-                        borderRadius: BorderRadius.circular(MyTheme.radiusPrimary),
-                      ),
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          CustomSvg(MyIcons.star),
-                          SizedBox(width: 5),
-                          Text("4.8")
-                        ],
-                      ),
+                    child: EvaluationStar(
+                      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                      evaluation: "4.8",
                     ),
                   ),
                   Flexible(
@@ -127,7 +100,7 @@ class _DepartmentsCardState extends State<DepartmentsCard> {
         SizedBox(
           height: 50,
           child: ListView.separated(
-            padding: const EdgeInsetsDirectional.only(start: 10, top: 10, bottom: 10),
+            padding: const EdgeInsetsDirectional.only( start: 10, top: 10, bottom: 10),
             separatorBuilder: (context, index) => const SizedBox(width: 5),
             itemCount: 4,
             scrollDirection: Axis.horizontal,

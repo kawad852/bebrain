@@ -2,10 +2,12 @@ import 'package:bebrain/utils/app_constants.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/my_theme.dart';
 import 'package:bebrain/widgets/custom_network_image.dart';
+import 'package:bebrain/widgets/more_button.dart';
 import 'package:flutter/material.dart';
 
 class DistinguishedLectures extends StatefulWidget {
-  const DistinguishedLectures({super.key});
+  final String title;
+  const DistinguishedLectures({super.key, required this.title});
 
   @override
   State<DistinguishedLectures> createState() => _DistinguishedLecturesState();
@@ -23,7 +25,7 @@ class _DistinguishedLecturesState extends State<DistinguishedLectures> {
             children: [
               Flexible(
                 child: Text(
-                  context.appLocalization.distinguishedLecturers,
+                  widget.title,
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
@@ -31,31 +33,12 @@ class _DistinguishedLecturesState extends State<DistinguishedLectures> {
                   ),
                 ),
               ),
-              GestureDetector(
-                onTap: () {},
-                child: Row(
-                  children: [
-                    Text(
-                      context.appLocalization.more,
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: context.colorPalette.grey66,
-                      ),
-                    ),
-                    const SizedBox(width: 3),
-                    Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      size: 12,
-                      color: context.colorPalette.grey66,
-                    )
-                  ],
-                ),
-              ),
+              MoreButton(onTap: (){}),
             ],
           ),
         ),
         SizedBox(
-          height: 70,
+          height: 75,
           child: ListView.separated(
             padding: const EdgeInsetsDirectional.only(top: 10, bottom: 10, start: 10),
             separatorBuilder: (context, index) => const SizedBox(width: 5),
@@ -64,7 +47,8 @@ class _DistinguishedLecturesState extends State<DistinguishedLectures> {
             shrinkWrap: true,
             itemBuilder: (context, index) {
               return Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
+                width: 160,
+                padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
                 decoration: BoxDecoration(
                   color: context.colorPalette.greyEEE,
                   borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
@@ -78,26 +62,30 @@ class _DistinguishedLecturesState extends State<DistinguishedLectures> {
                       radius: MyTheme.radiusSecondary,
                     ),
                     const SizedBox(width: 5),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "د. عبدالله محمد",
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color: context.colorPalette.black33,
+                    Flexible(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "د. عبدالله محمد",
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: context.colorPalette.black33,
+                            ),
                           ),
-                        ),
-                        Text(
-                          "4950 مشترك",
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: context.colorPalette.black33,
+                          Text(
+                            "4950 مشترك",
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: context.colorPalette.black33,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ],
                 ),
