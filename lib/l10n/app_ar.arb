@@ -53,6 +53,23 @@
   "partNotUnderstood":"هل لديك جزئ غير مفهوم او غير موجود في مادة ؟ بسيطة ! اطلب شرح خاص الان بكل سهولة واستلم الفيديو بأسرع وقت.",
   "projects":"المشاريع",
   "projectRequest":"طلب مشروع",
-  "requestYourProject":"هل لديك مشروع تخرج او مشروع لمادة ؟ سهله ! اطلب مشروعك الان من المساعد بكل سهولة."
+  "requestYourProject":"هل لديك مشروع تخرج او مشروع لمادة ؟ سهله ! اطلب مشروعك الان من المساعد بكل سهولة.",
+  "sendRequest":"ارسال طلب",
+  "requestSolveAssignmentAndSendRequest":"يمكنك تقديم طلب حل واجب أو كتابة تقرير وبحث من خلال تعبئة النموذج التالي وارسال الطلب",
+  "country":"الدولة",
+  "selectCountry":"اختر الدولة",
+  "university":"الجامعة",
+  "selectUniversity":"اختر الجامعة",
+  "college":"الكلية",
+  "selectCollege":"اختر الكلية",
+  "specialization":"التخصص",
+  "selectSpecialization":"اختر التخصص",
+  "title":"العنوان",
+  "titleOfReportOrResarch":"عنوان الواجب او التقرير او البحث",
+  "notes":"ملاحظات",
+  "descriptionAboutAssignment":"وصف او ملاحظات حول الواجب او التقرير المراد طلبه",
+  "attachFilesAndPictures":"ارفاق ملفات وصور",
+  "attachPdfOrImages":"يمكنك ارفاق ملفات pdf او صور",
+  "send":"ارسال"
   
 }

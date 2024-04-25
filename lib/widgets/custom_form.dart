@@ -1,3 +1,4 @@
+import 'package:bebrain/screens/send_request/send_request_screen.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/my_icons.dart';
 import 'package:bebrain/widgets/custom_svg.dart';
@@ -52,7 +53,9 @@ class _CustomFormState extends State<CustomForm> {
                       ),
                     ),
                     StretchedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        context.push(const SendRequestScreen());
+                      },
                       margin:
                           const EdgeInsetsDirectional.only(top: 25, bottom: 10),
                       child: Row(

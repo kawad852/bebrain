@@ -53,6 +53,23 @@
   "partNotUnderstood":"Do you have a part that is not understood or does not exist in a material? Simple! Request a special explanation now with ease and receive the video as quickly as possible.",
   "projects":"Projects",
   "projectRequest":"Project request",
-  "requestYourProject":"Do you have a graduation project or a project for a subject? Easy! Request your project now from Al-Musaed with ease."
+  "requestYourProject":"Do you have a graduation project or a project for a subject? Easy! Request your project now from Al-Musaed with ease.",
+  "sendRequest":"Send Request",
+  "requestSolveAssignmentAndSendRequest":"You can submit a request to solve an assignment or write a report and research by filling out the following form and sending the request",
+  "country":"Country",
+  "selectCountry":"Select country",
+  "university":"University",
+  "selectUniversity":"Select the university",
+  "college":"College",
+  "selectCollege":"Select the college",
+  "specialization":"Specialization",
+  "selectSpecialization":"select the specialization",
+  "title":"Title",
+  "titleOfReportOrResarch":"Title of the assignment, report, or research",
+  "notes":"Notes",
+  "descriptionAboutAssignment":"A description or notes about the assignment or report to be requested",
+  "attachFilesAndPictures":"Attach files and pictures",
+  "attachPdfOrImages":"You can attach pdf files or images",
+  "send":"Send"
   
 }

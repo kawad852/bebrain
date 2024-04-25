@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:bebrain/utils/base_extensions.dart';
+import 'package:flutter/material.dart';
 
 class TitledTextField extends StatelessWidget {
   final String title;
@@ -19,8 +19,9 @@ class TitledTextField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          '* $title',
+          title,
           style: context.textTheme.bodySmall!.copyWith(
+            fontSize: 14,
             fontWeight: FontWeight.bold,
           ),
         ),
