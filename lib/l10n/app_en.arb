@@ -49,6 +49,10 @@
   "requestSolveAssignment":"You can submit a request to solve an assignment or write a report and research by sending a new request",
   "sendNewRequest":"Send a new request",
   "previousRequests":"Previous requests",
-  "requestNumber":"Request number"
+  "requestNumber":"Request number",
+  "partNotUnderstood":"Do you have a part that is not understood or does not exist in a material? Simple! Request a special explanation now with ease and receive the video as quickly as possible.",
+  "projects":"Projects",
+  "projectRequest":"Project request",
+  "requestYourProject":"Do you have a graduation project or a project for a subject? Easy! Request your project now from Al-Musaed with ease."
   
 }
