@@ -70,6 +70,8 @@
   "descriptionAboutAssignment":"وصف او ملاحظات حول الواجب او التقرير المراد طلبه",
   "attachFilesAndPictures":"ارفاق ملفات وصور",
   "attachPdfOrImages":"يمكنك ارفاق ملفات pdf او صور",
-  "send":"ارسال"
+  "send":"ارسال",
+  "requestExplainArtical":"يمكنك تقديم طلب شرح جزئ من مادة او عنوان من خلال تعبئة النموذج التالي وارسال الطلب",
+  "requestGraduationProject":"يمكنك تقديم طلب مشروع تخرج او مشروع مادة من خلال تعبئة النموذج التالي وارسال الطلب"
   
 }

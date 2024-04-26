@@ -1,4 +1,5 @@
 import 'package:bebrain/utils/base_extensions.dart';
+import 'package:bebrain/utils/enums.dart';
 import 'package:bebrain/widgets/custom_form.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +15,7 @@ class _SpecialExplanationScreenState extends State<SpecialExplanationScreen> {
   @override
   Widget build(BuildContext context) {
     return CustomForm(
+      formEnum: FormEnum.specialExplanation,
       title: context.appLocalization.explanation,
       description: context.appLocalization.partNotUnderstood,
     );

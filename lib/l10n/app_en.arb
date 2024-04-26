@@ -50,7 +50,7 @@
   "sendNewRequest":"Send a new request",
   "previousRequests":"Previous requests",
   "requestNumber":"Request number",
-  "partNotUnderstood":"Do you have a part that is not understood or does not exist in a material? Simple! Request a special explanation now with ease and receive the video as quickly as possible.",
+  "partNotUnderstood":"Do you have a part that is not understood or does not exist in a artical? Simple! Request a special explanation now with ease and receive the video as quickly as possible.",
   "projects":"Projects",
   "projectRequest":"Project request",
   "requestYourProject":"Do you have a graduation project or a project for a subject? Easy! Request your project now from Al-Musaed with ease.",
@@ -70,6 +70,8 @@
   "descriptionAboutAssignment":"A description or notes about the assignment or report to be requested",
   "attachFilesAndPictures":"Attach files and pictures",
   "attachPdfOrImages":"You can attach pdf files or images",
-  "send":"Send"
+  "send":"Send",
+  "requestExplainArtical":"You can submit a request to explain part of the artical or title by filling out the following form and submitting the request",
+  "requestGraduationProject":"You can submit a request for a graduation project or subject project by filling out the following form and sending the request"
   
 }

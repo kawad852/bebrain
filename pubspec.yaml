@@ -61,6 +61,7 @@ dependencies:
   flutter_native_splash: ^2.3.6
   android_intent_plus: ^4.0.3
   url_launcher: ^6.2.5
+  file_picker: ^8.0.2
 
 
   #firebase

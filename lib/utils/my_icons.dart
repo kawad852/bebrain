@@ -22,6 +22,10 @@ class MyIcons {
   static const String video = '${_path}video.svg';
   static const String axes = '${_path}axes.svg';
   static const String message = '${_path}message.svg';
+  static const String arrowDown = '${_path}arrow_down.svg';
+  static const String attach = '${_path}attach.svg';
+
+
 
 
 

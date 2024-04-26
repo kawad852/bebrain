@@ -1,8 +1,8 @@
 import 'package:bebrain/screens/department/widgets/course_card.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/my_icons.dart';
-import 'package:bebrain/utils/my_theme.dart';
 import 'package:bebrain/widgets/custom_svg.dart';
+import 'package:bebrain/widgets/custom_text_field.dart';
 import 'package:bebrain/widgets/distinguished_lectures.dart';
 import 'package:flutter/material.dart';
 
@@ -61,29 +61,15 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                       ],
                     ),
                   ),
-                  TextFormField(
+                  CustomTextField(
                     controller: _searchController,
-                    decoration: InputDecoration(
-                      fillColor: context.colorPalette.white,
-                      hintText: context.appLocalization.searchCourse,
-                      hintStyle: TextStyle(
-                        color: context.colorPalette.grey66,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 10,
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
-                        borderSide: BorderSide(color: context.colorPalette.greyF2F),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
-                        borderSide: BorderSide(color: context.colorPalette.greyF2F),
-                      ),
-                      prefixIcon: const IconButton(
+                    hintText:context.appLocalization.searchCourse ,
+                    fontSize: 10,
+                    fontWeight: FontWeight.w600,
+                    prefixIcon:  const IconButton(
                         onPressed: null,
                         icon: CustomSvg(MyIcons.search),
                       ),
-                    ),
                   ),
                 ],
               ),

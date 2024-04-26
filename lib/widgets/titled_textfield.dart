@@ -27,7 +27,7 @@ class TitledTextField extends StatelessWidget {
         ),
         const SizedBox(height: 3),
         child,
-        const SizedBox(height: 13),
+        const SizedBox(height: 3),
       ],
     );
   }

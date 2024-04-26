@@ -1,5 +1,6 @@
 import 'package:bebrain/screens/send_request/send_request_screen.dart';
 import 'package:bebrain/utils/base_extensions.dart';
+import 'package:bebrain/utils/enums.dart';
 import 'package:bebrain/utils/my_icons.dart';
 import 'package:bebrain/widgets/custom_svg.dart';
 import 'package:bebrain/widgets/previous_request.dart';
@@ -10,11 +11,13 @@ class CustomForm extends StatefulWidget {
   final String title;
   final String description;
   final bool isGraduationProjects;
+  final FormEnum formEnum;
   const CustomForm({
     super.key,
     required this.title,
     required this.description,
     this.isGraduationProjects = false,
+    required this.formEnum,
   });
 
   @override
@@ -54,7 +57,9 @@ class _CustomFormState extends State<CustomForm> {
                     ),
                     StretchedButton(
                       onPressed: () {
-                        context.push(const SendRequestScreen());
+                        context.push(SendRequestScreen(
+                          formEnum: widget.formEnum,
+                        ));
                       },
                       margin:
                           const EdgeInsetsDirectional.only(top: 25, bottom: 10),
