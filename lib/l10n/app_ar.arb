@@ -72,6 +72,14 @@
   "attachPdfOrImages":"يمكنك ارفاق ملفات pdf او صور",
   "send":"ارسال",
   "requestExplainArtical":"يمكنك تقديم طلب شرح جزئ من مادة او عنوان من خلال تعبئة النموذج التالي وارسال الطلب",
-  "requestGraduationProject":"يمكنك تقديم طلب مشروع تخرج او مشروع مادة من خلال تعبئة النموذج التالي وارسال الطلب"
+  "requestGraduationProject":"يمكنك تقديم طلب مشروع تخرج او مشروع مادة من خلال تعبئة النموذج التالي وارسال الطلب",
+  "dateSendingRequest":"تاريخ ووقت إرسال الطلب",
+  "attachedFiles":"الملفات المرفقة",
+  "download":"تحميل",
+  "assistantResponse":"رد المساعد",
+  "contactTheAssistant":"اذا كان لديك اي ملاحظة ، يمكنك التواصل مع المساعد",
+  "pay":"دفع",
+  "feesRequest":"الرسوم المستحقة لإنجاز الطلب",
+  "timeRemainingPayment":"الوقت المتبقي للدفع"
   
 }

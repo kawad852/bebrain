@@ -36,7 +36,7 @@ class MySharedPreferences {
   static String get accessToken => _sharedPreferences.getString('accessToken') ?? '24|KdSh71bdqpHW41M7PQop6vOFHhptFzbw3Xa1abfP201f65ab';
   static set accessToken(String value) => _sharedPreferences.setString('accessToken', value);
 
-  static String get language => _sharedPreferences.getString('language') ?? LanguageEnum.english;
+  static String get language => _sharedPreferences.getString('language') ?? LanguageEnum.arabic;
   static set language(String value) => _sharedPreferences.setString('language', value);
 
   static String get theme => _sharedPreferences.getString('theme') ?? ThemeEnum.light;

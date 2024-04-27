@@ -72,6 +72,14 @@
   "attachPdfOrImages":"You can attach pdf files or images",
   "send":"Send",
   "requestExplainArtical":"You can submit a request to explain part of the artical or title by filling out the following form and submitting the request",
-  "requestGraduationProject":"You can submit a request for a graduation project or subject project by filling out the following form and sending the request"
+  "requestGraduationProject":"You can submit a request for a graduation project or subject project by filling out the following form and sending the request",
+  "dateSendingRequest":"Date and time of sending the request",
+  "attachedFiles":"Attached Files",
+  "download":"Download",
+  "assistantResponse":"Assistant's response",
+  "contactTheAssistant":"If you have any notes, you can contact the assistant",
+  "pay":"pay",
+  "feesRequest":"Fees due for completing the request",
+  "timeRemainingPayment":"Time remaining for payment"
   
 }
