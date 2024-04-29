@@ -66,6 +66,7 @@ dependencies:
   chewie: ^1.8.1
 
 
+
   #firebase
   firebase_core: ^2.25.4
   firebase_auth: ^4.12.1
