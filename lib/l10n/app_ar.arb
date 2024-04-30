@@ -80,6 +80,27 @@
   "contactTheAssistant":"اذا كان لديك اي ملاحظة ، يمكنك التواصل مع المساعد",
   "pay":"دفع",
   "feesRequest":"الرسوم المستحقة لإنجاز الطلب",
-  "timeRemainingPayment":"الوقت المتبقي للدفع"
+  "timeRemainingPayment":"الوقت المتبقي للدفع",
+  "subscribers":"المشتركين",
+  "totalDuration":"المدة الإجمالية",
+  "videos":"فيديوهات",
+  "join":"الإنضمام",
+  "getPatFree":"واحصل الآن على جزء من الدورة مجاناً",
+  "contents":"المحتويات",
+  "file":"ملف",
+  "minute":"دقيقة",
+  "second":"ثانية",
+  "hours":"ساعة",
+  "days":"أيام",
+  "free":"مجانا",
+  "subscribed":"تم الإشتراك",
+  "buying":"شراء",
+  "discountEntireCourse":"خصم {value}% عند شراء الدورة بالكامل",
+  "aboutTheTeacher":"عن المدرس",
+  "views":"مشاهدات",
+  "article":"مادة",
+  "ratings":"التقييمات",
+  "viewRatings":"عرض التقييمات",
+  "basedOnRatings":"استنادا الى {value} تقييم"
   
 }

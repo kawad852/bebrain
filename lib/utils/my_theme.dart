@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 const kEditorBottomPadding = 16.0;
 const kProductBubbleHeight = 70.0;
 const kBarLeadingWith = 250.0;
-const kBarCollapsedHeight = 250.0;
+const kBarCollapsedHeight = 220.0;
 
 class MyTheme {
   static const Color primaryLightColor = Color(0xFF1A73E8);
@@ -18,12 +18,16 @@ class MyTheme {
   static const double radiusSecondary = 10;
   static const double radiusTertiary = 16;
 
-  static bool isLightTheme(BuildContext context) => context.colorScheme.brightness == Brightness.light;
+  static bool isLightTheme(BuildContext context) =>
+      context.colorScheme.brightness == Brightness.light;
 
-  static InputDecorationTheme inputDecorationTheme(BuildContext context, ColorScheme colorScheme) => InputDecorationTheme(
+  static InputDecorationTheme inputDecorationTheme(
+          BuildContext context, ColorScheme colorScheme) =>
+      InputDecorationTheme(
         filled: true,
         isDense: true,
-        contentPadding: const EdgeInsetsDirectional.symmetric(horizontal: 5, vertical: 10),
+        contentPadding:
+            const EdgeInsetsDirectional.symmetric(horizontal: 5, vertical: 10),
         // fillColor: colorScheme.brightness == Brightness.light ? context.colorPalette.grey9F9 : null,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(radiusPrimary),
