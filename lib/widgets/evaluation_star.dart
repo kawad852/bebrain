@@ -5,10 +5,10 @@ import 'package:bebrain/widgets/custom_svg.dart';
 import 'package:flutter/material.dart';
 
 class EvaluationStar extends StatelessWidget {
-  final EdgeInsetsGeometry margin;
+  final EdgeInsetsGeometry? margin;
   final String evaluation;
   const EvaluationStar(
-      {super.key, required this.margin, required this.evaluation});
+      {super.key,  this.margin, required this.evaluation});
 
   @override
   Widget build(BuildContext context) {

@@ -88,9 +88,19 @@ class _AppNavBarState extends State<AppNavBar> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.transparent,
-      bottomNavigationBar: SizedBox(
+      bottomNavigationBar: Container(
         height: withNotch ? 95 : 85,
         width: context.mediaQuery.width,
+        decoration: BoxDecoration(
+          color: context.colorPalette.white50,
+          boxShadow: [
+            BoxShadow(
+              color: context.colorPalette.blueC2E,
+              offset: const Offset(0.0, 1.0),
+              blurRadius: 3.0,
+            ),
+          ],
+        ),
         child: Row(
           children: screens.map((element) {
             final index = screens.indexOf(element);

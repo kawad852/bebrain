@@ -1,3 +1,4 @@
+import 'package:bebrain/screens/lecturers/lecturers_screen.dart';
 import 'package:bebrain/utils/app_constants.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/my_theme.dart';
@@ -33,7 +34,9 @@ class _DistinguishedLecturesState extends State<DistinguishedLectures> {
                   ),
                 ),
               ),
-              MoreButton(onTap: (){}),
+              MoreButton(onTap: (){
+                context.push(const LecturersScreen());
+              }),
             ],
           ),
         ),

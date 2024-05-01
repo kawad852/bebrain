@@ -101,6 +101,7 @@
   "article":"مادة",
   "ratings":"التقييمات",
   "viewRatings":"عرض التقييمات",
-  "basedOnRatings":"استنادا الى {value} تقييم"
+  "basedOnRatings":"استنادا الى {value} تقييم",
+  "searchLectureName":"ابحث عن اسم محاضر"
   
 }

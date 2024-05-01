@@ -101,6 +101,7 @@
   "article":"article",
   "ratings":"Ratings",
   "viewRatings":"View ratings",
-  "basedOnRatings":"Based on {value} ratings"
+  "basedOnRatings":"Based on {value} ratings",
+  "searchLectureName":"Search for a lecturer's name"
   
 }
