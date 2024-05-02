@@ -102,6 +102,7 @@
   "ratings":"التقييمات",
   "viewRatings":"عرض التقييمات",
   "basedOnRatings":"استنادا الى {value} تقييم",
-  "searchLectureName":"ابحث عن اسم محاضر"
+  "searchLectureName":"ابحث عن اسم محاضر",
+  "subscribeSection":"الإشتراك في هذا القسم"
   
 }

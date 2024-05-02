@@ -2,6 +2,7 @@ import 'package:bebrain/screens/course/widgets/content_card.dart';
 import 'package:bebrain/screens/course/widgets/course_info.dart';
 import 'package:bebrain/screens/course/widgets/course_nav_bar.dart';
 import 'package:bebrain/screens/course/widgets/course_text.dart';
+import 'package:bebrain/screens/course/widgets/leading_back.dart';
 import 'package:bebrain/screens/course/widgets/lecture_card.dart';
 import 'package:bebrain/screens/course/widgets/rating_card.dart';
 import 'package:bebrain/screens/course/widgets/view_ratings_button.dart';
@@ -29,26 +30,12 @@ class _CourseScreenState extends State<CourseScreen> {
       bottomNavigationBar: const CourseNavBar(),
       body: CustomScrollView(
         slivers: [
-          SliverAppBar(
+          const SliverAppBar(
             pinned: true,
             scrolledUnderElevation: 0,
             collapsedHeight: kBarCollapsedHeight,
-            leading: IconButton(
-              onPressed: () {
-                context.pop();
-              },
-              icon: Container(
-                width: 24,
-                height: 24,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: context.colorPalette.white50,
-                  borderRadius: BorderRadius.circular(3),
-                ),
-                child: const Icon(Icons.arrow_back_rounded),
-              ),
-            ),
-            flexibleSpace: const CustomNetworkImage(
+            leading: LeadingBack(),
+            flexibleSpace:  CustomNetworkImage(
               kFakeImage,
               height: 258,
               radius: 0,
