@@ -18,35 +18,35 @@ class MyTheme {
   static const double radiusSecondary = 10;
   static const double radiusTertiary = 16;
 
-  static bool isLightTheme(BuildContext context) =>
-      context.colorScheme.brightness == Brightness.light;
+  static bool isLightTheme(BuildContext context) => context.colorScheme.brightness == Brightness.light;
 
-  static InputDecorationTheme inputDecorationTheme(
-          BuildContext context, ColorScheme colorScheme) =>
-      InputDecorationTheme(
+  static InputDecorationTheme inputDecorationTheme(BuildContext context, ColorScheme colorScheme) => InputDecorationTheme(
         filled: true,
         isDense: true,
-        contentPadding:
-            const EdgeInsetsDirectional.symmetric(horizontal: 5, vertical: 10),
-        // fillColor: colorScheme.brightness == Brightness.light ? context.colorPalette.grey9F9 : null,
+        fillColor: context.colorPalette.greyBFB,
+        hintStyle: TextStyle(
+          fontSize: 14,
+          color: context.colorPalette.greyDBD,
+        ),
+        contentPadding: const EdgeInsetsDirectional.symmetric(horizontal: 5, vertical: 10),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(radiusPrimary),
-          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(color: context.colorPalette.greyF2F),
         ),
         disabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(radiusPrimary),
-          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(color: context.colorPalette.greyF2F),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(radiusPrimary),
-          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(color: context.colorPalette.greyF2F),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(radiusPrimary),
+          borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(color: colorScheme.error),
         ),
         focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(radiusPrimary),
+          borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(color: colorScheme.error),
         ),
       );

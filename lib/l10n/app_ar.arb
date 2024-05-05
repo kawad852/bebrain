@@ -19,6 +19,7 @@
   "conWithGoogle": "المتابعة باستخدام Google",
   "conWithApple": "المتابعة باستخدام Apple",
   "conWithAPhone": "المتابعة باستخدام الهاتف",
+  "conWithFacebook": "المتابعة باستخدام Facebook",
   "discover": "اكتشف",
   "generalErrorTitle": "حدث خطأ ما",
   "generalErrorBody": "حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى لاحقًا أو الاتصال بالدعم.",
@@ -114,6 +115,12 @@
   "privacyPolicy":"سياسة الخصوصية",
   "termsAndConditions":"الشروط والأحكام",
   "contactAlmusaed":"تواصل مع المساعد",
-  "logout":"تسجيل الخروج"
-  
+  "logout":"تسجيل الخروج",
+  "guestBrowse": "التصفح كضيف",
+  "loginMsg": "يرجى إدخال البيانات التالية للدخول إلى حسابك",
+  "phoneNum": "رقم الهاتف المحمول",
+  "searchCountryOrCode": "إبحث عن إسم أو رمز البلد",
+  "passwordTooShort": "كلمة المرور قصيرة",
+  "password": "كلمة المرور",
+  "forgotPassword": "هل نسيت كلمة المرور"
 }

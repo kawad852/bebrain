@@ -14,7 +14,7 @@ import Flutter
 }
 
 extension UIWindow {
- func makeSecure(){
+ func makeSecure() {
   let field = UITextField()
   field.isSecureTextEntry = true
   self.addSubview(field)
@@ -23,5 +23,4 @@ extension UIWindow {
   self.layer.superlayer?.addSubview(field.layer)
   field.layer.superlayer?.first?.addSubview(self.layer)
  }
-  
 }

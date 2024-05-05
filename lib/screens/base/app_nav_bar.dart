@@ -33,7 +33,7 @@ class _AppNavBarState extends State<AppNavBar> {
     MyIcons.profile,
   ];
 
-   final itemsSelected = [
+  final itemsSelected = [
     MyIcons.homeSelected,
     MyIcons.dutiesSelected,
     MyIcons.specialExplanationSelected,
@@ -85,6 +85,9 @@ class _AppNavBarState extends State<AppNavBar> {
   @override
   Widget build(BuildContext context) {
     bool withNotch = MediaQuery.of(context).viewPadding.bottom > 0.0;
+    final Locale myLocale = Localizations.localeOf(context);
+    final StringcountryCode = myLocale.countryCode;
+    print("StringcountryCode:: $StringcountryCode");
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.transparent,
@@ -118,7 +121,7 @@ class _AppNavBarState extends State<AppNavBar> {
                 // }
               },
               isSelected: _currentIndex == index,
-              icon: _currentIndex == index?itemsSelected[index]:items[index],
+              icon: _currentIndex == index ? itemsSelected[index] : items[index],
               title: _getTitle(context)[index],
             );
           }).toList(),

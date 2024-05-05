@@ -36,23 +36,7 @@ class MyIcons {
   static const String privacyPolicy = '${_path}privacy_policy.svg';
   static const String setting = '${_path}setting.svg';
   static const String terms = '${_path}terms.svg';
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  static const String apple = '${_path}apple.svg';
+  static const String google = '${_path}google.svg';
+  static const String facebook = '${_path}facebook.svg';
 }

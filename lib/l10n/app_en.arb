@@ -19,6 +19,7 @@
   "conWithGoogle": "Continue with Google",
   "conWithApple": "Continue with Apple",
   "conWithAPhone": "Continue with Phone",
+  "conWithFacebook": "Continue with Facebook",
   "discover": "Discover",
   "generalErrorTitle": "Something Went Wrong",
   "generalErrorBody": "An unexpected error occurred. Please try again later or contact support.",
@@ -114,6 +115,12 @@
   "privacyPolicy":"Privacy policy",
   "termsAndConditions":"Terms and Conditions",
   "contactAlmusaed":"Contact with Al-Musaed",
-  "logout":"Logout"
-  
+  "logout":"Logout",
+  "guestBrowse": "Browse as guest",
+  "loginMsg": "Please enter the following data to login",
+  "phoneNum": "Phone number",
+  "searchCountryOrCode": "Search for the country name or dial code",
+  "passwordTooShort": "Password too short",
+  "password": "Password",
+  "forgotPassword": "Did you forget your password ?"
 }

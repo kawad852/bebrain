@@ -9,13 +9,15 @@ class CustomTextField extends StatelessWidget {
   final Widget? prefixIcon;
   final FontWeight? fontWeight;
   final int? maxLines;
+
   const CustomTextField({
     super.key,
     required this.controller,
     required this.hintText,
     this.fontSize,
     this.prefixIcon,
-    this.fontWeight, this.maxLines,
+    this.fontWeight,
+    this.maxLines,
   });
 
   @override

@@ -1,3 +1,4 @@
+import 'package:bebrain/model/user_model.dart';
 import 'package:bebrain/utils/app_constants.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/my_icons.dart';
@@ -17,6 +18,9 @@ class LecturersScreen extends StatefulWidget {
 
 class _LecturersScreenState extends State<LecturersScreen> {
   final TextEditingController _searchController = TextEditingController();
+
+  final user = UserModel();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,19 +58,17 @@ class _LecturersScreenState extends State<LecturersScreen> {
           SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             sliver: SliverGrid(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, childAspectRatio: 0.9),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 0.9),
               delegate: SliverChildBuilderDelegate(
                 childCount: 8,
                 (context, index) {
                   return Container(
                     height: 185,
-                    padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 5),
-                    margin:const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                    margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                     decoration: BoxDecoration(
                       color: context.colorPalette.greyEEE,
-                      borderRadius:
-                          BorderRadius.circular(MyTheme.radiusSecondary),
+                      borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
                     ),
                     child: Column(
                       children: [
@@ -75,9 +77,7 @@ class _LecturersScreenState extends State<LecturersScreen> {
                           width: 91,
                           height: 91,
                           shape: BoxShape.circle,
-                          alignment: context.isLTR
-                              ? Alignment.topLeft
-                              : Alignment.topRight,
+                          alignment: context.isLTR ? Alignment.topLeft : Alignment.topRight,
                           child: const EvaluationStar(
                             evaluation: "4.8",
                           ),
