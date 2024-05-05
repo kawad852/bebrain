@@ -44,6 +44,8 @@ class ColorPalette {
 
   //red
   Color get redE42 => const Color(0xFFE4290D);
+  Color get redE66 => const Color(0xFFE66451);
+
 
 
   //green

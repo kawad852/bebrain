@@ -103,6 +103,17 @@
   "viewRatings":"عرض التقييمات",
   "basedOnRatings":"استنادا الى {value} تقييم",
   "searchLectureName":"ابحث عن اسم محاضر",
-  "subscribeSection":"الإشتراك في هذا القسم"
+  "subscribeSection":"الإشتراك في هذا القسم",
+  "accountNumber":"رقم الحساب",
+  "articles":"مواد",
+  "durationStudyWithMusaed":"مدة الدراسة مع المساعد",
+  "articleSubscriptions":"اشتراكات المواد",
+  "notifications":"الإشعارات",
+  "appLanguage":"لغة التطبيق",
+  "getKnowAlmusaed":"تعرف على المساعد",
+  "privacyPolicy":"سياسة الخصوصية",
+  "termsAndConditions":"الشروط والأحكام",
+  "contactAlmusaed":"تواصل مع المساعد",
+  "logout":"تسجيل الخروج"
   
 }

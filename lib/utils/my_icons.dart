@@ -27,6 +27,24 @@ class MyIcons {
   static const String line = '${_path}line.svg';
   static const String lock = '${_path}lock.svg';
   static const String unLock = '${_path}un_lock.svg';
+  static const String appLanguage = '${_path}app_language.svg';
+  static const String articleSubscriptions = '${_path}article_subscriptions.svg';
+  static const String contact = '${_path}contact.svg';
+  static const String information = '${_path}information.svg';
+  static const String logout = '${_path}logout.svg';
+  static const String notification = '${_path}notification.svg';
+  static const String privacyPolicy = '${_path}privacy_policy.svg';
+  static const String setting = '${_path}setting.svg';
+  static const String terms = '${_path}terms.svg';
+
+
+
+
+
+
+
+
+
 
 
 

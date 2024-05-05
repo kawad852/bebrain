@@ -103,6 +103,17 @@
   "viewRatings":"View ratings",
   "basedOnRatings":"Based on {value} ratings",
   "searchLectureName":"Search for a lecturer's name",
-  "subscribeSection":"Subscribe to this section"
+  "subscribeSection":"Subscribe to this section",
+  "accountNumber":"Account Number",
+  "articles":"Articles",
+  "durationStudyWithMusaed":"Duration of study with Al-Musaed",
+  "articleSubscriptions":"Article subscriptions",
+  "notifications":"Notifications",
+  "appLanguage":"App language",
+  "getKnowAlmusaed":"Get to know Al-Musaed",
+  "privacyPolicy":"Privacy policy",
+  "termsAndConditions":"Terms and Conditions",
+  "contactAlmusaed":"Contact with Al-Musaed",
+  "logout":"Logout"
   
 }
