@@ -10,6 +10,7 @@ import 'package:bebrain/utils/enums.dart';
 import 'package:bebrain/utils/my_theme.dart';
 import 'package:bebrain/utils/shared_pref.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -85,7 +86,8 @@ class _MyAppState extends State<MyApp> {
       playSound: true,
       // sound: RawResourceAndroidNotificationSound('notification'),
     );
-    // final v = PlatformDispatcher.instance.locale.countryCode;
+    final countryCode = PlatformDispatcher.instance.locale.countryCode;
+    print("countryCode:: $countryCode");
   }
 
   @override
