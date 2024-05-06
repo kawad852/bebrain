@@ -6,7 +6,7 @@ import 'package:bebrain/utils/enums.dart';
 import 'package:bebrain/utils/my_icons.dart';
 import 'package:bebrain/utils/my_theme.dart';
 import 'package:bebrain/widgets/custom_svg.dart';
-import 'package:bebrain/widgets/custom_text_field.dart';
+import 'package:bebrain/widgets/editors/base_editor.dart';
 import 'package:bebrain/widgets/stretch_button.dart';
 import 'package:bebrain/widgets/titled_textfield.dart';
 import 'package:file_picker/file_picker.dart';
@@ -21,8 +21,6 @@ class SendRequestScreen extends StatefulWidget {
 }
 
 class _SendRequestScreenState extends State<SendRequestScreen> {
-  final TextEditingController _titleController = TextEditingController();
-  final TextEditingController _notesController = TextEditingController();
   FilePickerResult? result;
   List<File> files = [];
 
@@ -104,18 +102,19 @@ class _SendRequestScreenState extends State<SendRequestScreen> {
                   ),
                   TitledTextField(
                     title: context.appLocalization.title,
-                    child: CustomTextField(
-                      controller: _titleController,
+                    child:  BaseEditor(
                       hintText: context.appLocalization.titleOfReportOrResarch,
+                      initialValue: null,
+                      onChanged: (value) {},
                     ),
                   ),
                   TitledTextField(
                     title: context.appLocalization.notes,
-                    child: CustomTextField(
-                      controller: _notesController,
+                    child: BaseEditor(
+                      hintText: context.appLocalization.descriptionAboutAssignment,
                       maxLines: 4,
-                      hintText:
-                          context.appLocalization.descriptionAboutAssignment,
+                      initialValue: null,
+                      onChanged: (value) {},
                     ),
                   ),
                   Padding(

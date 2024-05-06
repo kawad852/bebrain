@@ -122,5 +122,15 @@
   "searchCountryOrCode": "Search for the country name or dial code",
   "passwordTooShort": "Password too short",
   "password": "Password",
-  "forgotPassword": "Did you forget your password ?"
+  "forgotPassword": "Did you forget your password ?",
+  "editProfile":"Edit profile",
+  "fullName":"Full name",
+  "currentPassword":"Current password",
+  "newPassword":"New password",
+  "confirmNewPassword":"Confirm new password",
+  "enterPasswordHere":"Enter password here",
+  "deleteAccount":"Delete Account",
+  "save":"Save",
+  "edit":"Edit",
+  "enterYourNameHere":"Enter your name here"
 }

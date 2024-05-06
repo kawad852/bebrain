@@ -122,5 +122,15 @@
   "searchCountryOrCode": "إبحث عن إسم أو رمز البلد",
   "passwordTooShort": "كلمة المرور قصيرة",
   "password": "كلمة المرور",
-  "forgotPassword": "هل نسيت كلمة المرور"
+  "forgotPassword": "هل نسيت كلمة المرور",
+  "editProfile":"تعديل الحساب",
+  "fullName":"الاسم الكامل",
+  "currentPassword":"كلمة المرور الحالية",
+  "newPassword":"كلمة المرور الجديدة",
+  "confirmNewPassword":"تأكيد كلمة المرور الجديدة",
+  "enterPasswordHere":"ادخل كلمة المرور هنا",
+  "deleteAccount":"حذف الحساب",
+  "save":"حفظ",
+  "edit":"تغيير",
+  "enterYourNameHere":"ادخل اسمك هنا"
 }
