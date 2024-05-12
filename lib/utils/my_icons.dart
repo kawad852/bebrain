@@ -40,5 +40,15 @@ class MyIcons {
   static const String google = '${_path}google.svg';
   static const String facebook = '${_path}facebook.svg';
   static const String deleteAccount = '${_path}delete_account.svg';
+  static const String arrow0 = '${_path}arrow0.svg';
+  static const String arrow1 = '${_path}arrow1.svg';
+  static const String checkRight = '${_path}check_right.svg';
+  static const String introBubble0 = '${_path}intro_bubble0.svg';
+  static const String videoPlay = '${_path}video_play.svg';
+
+
+  
+
+
 
 }
