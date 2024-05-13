@@ -132,5 +132,15 @@
   "deleteAccount":"Delete Account",
   "save":"Save",
   "edit":"Edit",
-  "enterYourNameHere":"Enter your name here"
+  "enterYourNameHere":"Enter your name here",
+  "distinctiveVerySimple":"A distinctive and very simple way of explaining",
+  "solvedPleaseDownload":"Solved, please download the attached file",
+  "now":"Now",
+  "videoHasBeenRecorded":"The video has been recorded. We hope you watch it full of knowledge",
+  "introTitle0":"Compare the best teachers with reviews",
+  "introTitle1":"Late for the assignments, research, and graduation projects required of you!!",
+  "introTitle2":"Do you have a subject that you would like us to explain to you?",
+  "introDisc0":"Read other students' experiences with teachers transparently, choose the teacher that suits you, and don't forget to attend the free part of each course",
+  "introDisc1":"Easy, request assistance with assignments, research, and projects and get the solution from us.",
+  "introDisc2":"Simple, request a special explanation request, write the subject you want to explain, and receive a video explaining your subject in detail."
 }

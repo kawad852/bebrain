@@ -44,11 +44,13 @@ class MyIcons {
   static const String arrow1 = '${_path}arrow1.svg';
   static const String checkRight = '${_path}check_right.svg';
   static const String introBubble0 = '${_path}intro_bubble0.svg';
+  static const String introBubble1 = '${_path}intro_bubble1.svg';
+  static const String introBubble2 = '${_path}intro_bubble2.svg';
   static const String videoPlay = '${_path}video_play.svg';
-
-
-  
-
-
+  static const String fakeProfile = '${_path}fake_profile.svg';
+  static const String bebrain = '${_path}bebrain.svg';
+  static const String gallery = '${_path}gallery.svg';
+  static const String sms = '${_path}sms.svg';
+  static const String messageEdit = '${_path}message-edit.svg';
 
 }
