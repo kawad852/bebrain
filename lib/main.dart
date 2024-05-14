@@ -67,7 +67,7 @@ class _MyAppState extends State<MyApp> {
   late AuthProvider _authProvider;
 
   Widget _toggleRoute(BuildContext context) {
-    return const AppNavBar();
+    return const IntroScreen();
     // if (_authProvider.user.id != null) {
     //   return const AppNavBar(initFav: true);
     // } else {

@@ -1,14 +1,13 @@
-import 'dart:math';
-
 import 'package:animate_do/animate_do.dart';
 import 'package:bebrain/screens/intro/widgets/intro_bubble.dart';
+import 'package:bebrain/screens/intro/widgets/intro_card.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/my_icons.dart';
 import 'package:bebrain/utils/my_images.dart';
 import 'package:bebrain/utils/my_theme.dart';
+import 'package:bebrain/widgets/custom_smoth_indicator.dart';
 import 'package:bebrain/widgets/custom_svg.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class IntroScreen extends StatefulWidget {
   const IntroScreen({super.key});
@@ -18,136 +17,183 @@ class IntroScreen extends StatefulWidget {
 }
 
 class _IntroScreenState extends State<IntroScreen> {
+  int _currentIndex = 0;
+  late PageController _pageController;
+  List<String> introBubbleIcon = [
+    MyIcons.introBubble0,
+    MyIcons.introBubble1,
+    MyIcons.introBubble2
+  ];
+  List<String> topIcon = [
+    MyIcons.axes,
+    MyIcons.messageEdit,
+    MyIcons.messageEdit
+  ];
+  List<String> bottomIcon = [MyIcons.videoPlay, MyIcons.sms, MyIcons.gallery];
+  List<String> mainImage = [MyImages.intro0, MyImages.intro1, MyImages.intro2];
+  late List<String> titleIntro;
+  late List<String> discriptionIntro;
+  late List<String> introCard;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(initialPage: 0);
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    titleIntro = [
+      context.appLocalization.introTitle0,
+      context.appLocalization.introTitle1,
+      context.appLocalization.introTitle2,
+    ];
+    discriptionIntro = [
+      context.appLocalization.introDisc0,
+      context.appLocalization.introDisc1,
+      context.appLocalization.introDisc2,
+    ];
+    introCard = [
+      context.appLocalization.distinctiveVerySimple,
+      context.appLocalization.solvedPleaseDownload,
+      context.appLocalization.videoHasBeenRecorded,
+    ];
     return Scaffold(
-        backgroundColor: context.colorPalette.blueC2E,
-        body: PageView.builder(
-          itemCount: 2,
-          itemBuilder: (context, index) {
-            return Stack(
-              children: [
-                Positioned(
-                  top: 110,
-                  left: 25,
-                  child: ShakeX(
-                    from: 20,
-                    duration: const Duration(seconds: 5),
-                    infinite: true,
-                    child: ShakeY(
-                      from: 20,
-                      duration: const Duration(seconds: 5),
-                      infinite: true,
-                      child: const CustomSvg(MyIcons.introBubble0),
-                    ),
-                  ),
+      backgroundColor: context.colorPalette.blueC2E,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            CustomSmoothIndicator(
+              count: 3,
+              index: _currentIndex,
+            ),
+            InkWell(
+              onTap: () {
+                _pageController.nextPage(
+                  duration: const Duration(milliseconds: 400),
+                  curve: Curves.easeInExpo,
+                );
+              },
+              child: Container(
+                width: 50,
+                height: 50,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: context.colorPalette.blueC2E,
+                  borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
                 ),
-                Positioned(
-                  top: 80,
-                  right: 50,
-                  child: ShakeX(
-                    from: 20,
-                    duration: const Duration(seconds: 5),
-                    infinite: true,
-                    child: const IntroBubble(icon: MyIcons.axes),
-                  ),
-                ),
-                Positioned(
-                  top: 220,
-                  right: 35,
+                child: const Icon(Icons.arrow_forward_ios),
+              ),
+            ),
+          ],
+        ),
+      ),
+      body: PageView.builder(
+        controller: _pageController,
+        itemCount: 3,
+        onPageChanged: (value) {
+          setState(() {
+            _currentIndex = value;
+          });
+        },
+        itemBuilder: (context, index) {
+          return Stack(
+            children: [
+              Positioned(
+                top: 110,
+                left: 25,
+                child: ShakeX(
+                  from: 20,
+                  duration: const Duration(seconds: 5),
+                  infinite: true,
                   child: ShakeY(
                     from: 20,
                     duration: const Duration(seconds: 5),
                     infinite: true,
-                    child: const IntroBubble(icon: MyIcons.videoPlay),
+                    child: CustomSvg(introBubbleIcon[index]),
                   ),
                 ),
-                const Positioned(
-                  top: 25,
-                  left: 90,
-                  child: CustomSvg(MyIcons.arrow0),
+              ),
+              Positioned(
+                top: 80,
+                right: 50,
+                child: ShakeX(
+                  from: 20,
+                  duration: const Duration(seconds: 5),
+                  infinite: true,
+                  child: IntroBubble(icon: topIcon[index]),
                 ),
-                const Positioned(
-                  top: 100,
-                  left: 75,
-                  child: CustomSvg(MyIcons.arrow1),
+              ),
+              Positioned(
+                top: 220,
+                right: 35,
+                child: ShakeY(
+                  from: 20,
+                  duration: const Duration(seconds: 5),
+                  infinite: true,
+                  child: IntroBubble(icon: bottomIcon[index]),
                 ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                    width: double.infinity,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage(MyImages.intro0),
-                        fit: BoxFit.cover,
-                      ),
+              ),
+              const Positioned(
+                top: 25,
+                left: 90,
+                child: CustomSvg(MyIcons.arrow0),
+              ),
+              const Positioned(
+                top: 100,
+                left: 75,
+                child: CustomSvg(MyIcons.arrow1),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(mainImage[index]),
+                      fit: BoxFit.cover,
                     ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Transform.rotate(
-                          angle: pi / 13,
-                          child: Container(
-                            width: 235,
-                            height: 80,
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            decoration: BoxDecoration(
-                              color: context.colorPalette.greyF6F,
-                              borderRadius: BorderRadius.circular(
-                                  MyTheme.radiusSecondary),
-                            ),
-                            child: Row(
-                              children: [
-                                Container(
-                                  width: 50,
-                                  height: 50,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    color: context.colorPalette.greyE0E,
-                                    borderRadius: BorderRadius.circular(
-                                        MyTheme.radiusSecondary),
-                                  ),
-                                  child: const CustomSvg(MyIcons.fakeProfile),
-                                ),
-                                const SizedBox(width: 10),
-                                Expanded(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Text(
-                                        "A distinctive and very simple way of explaining",
-                                        maxLines: 2,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                      RatingBar.builder(
-                                        initialRating: 5,
-                                        direction: Axis.horizontal,
-                                        ignoreGestures: true,
-                                        itemSize: 25,
-                                        itemCount: 5,
-                                        itemPadding: const EdgeInsets.symmetric(
-                                            horizontal: 3),
-                                        itemBuilder: (context, _) =>
-                                            const CustomSvg(MyIcons.star),
-                                        onRatingUpdate: (rating) {},
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      IntroCard(title: introCard[index],isRating: index==0),
+                      const SizedBox(height: 100),
+                      Text(
+                        titleIntro[index],
+                        style: TextStyle(
+                          color: context.colorPalette.blueC2E,
+                          fontSize: 22,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10, bottom: 80),
+                        child: Text(
+                          discriptionIntro[index],
+                          style: TextStyle(
+                            color: context.colorPalette.white,
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            );
-          },
-        ));
+              ),
+            ],
+          );
+        },
+      ),
+    );
   }
 }
