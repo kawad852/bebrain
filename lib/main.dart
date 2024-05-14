@@ -4,7 +4,6 @@ import 'dart:developer';
 import 'package:bebrain/notifications/local_notifications_service.dart';
 import 'package:bebrain/providers/app_provider.dart';
 import 'package:bebrain/providers/auth_provider.dart';
-import 'package:bebrain/screens/base/app_nav_bar.dart';
 import 'package:bebrain/screens/intro/intro_screen.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/enums.dart';
