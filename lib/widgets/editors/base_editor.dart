@@ -92,6 +92,7 @@ class BaseEditor extends StatelessWidget {
           suffixIcon: suffixIcon,
           prefixIcon: prefixIcon,
           suffixIconConstraints: suffixIconConstraints,
+          prefixIconConstraints: suffixIconConstraints,
           floatingLabelBehavior: floatingLabelBehavior,
           alignLabelWithHint: true,
           helperText: helperText,

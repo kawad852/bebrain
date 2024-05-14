@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:bebrain/model/auth_model.dart';
+import 'package:bebrain/utils/app_constants.dart';
 import 'package:bebrain/utils/enums.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -44,4 +45,7 @@ class MySharedPreferences {
 
   static bool get isPassedIntro => _sharedPreferences.getBool('isPassedIntro') ?? false;
   static set isPassedIntro(bool value) => _sharedPreferences.setBool('isPassedIntro', value);
+
+  static String get countryCode => _sharedPreferences.getString('countryCode') ?? kFallBackCountryCode;
+  static set countryCode(String value) => _sharedPreferences.setString('countryCode', value);
 }

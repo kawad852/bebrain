@@ -65,6 +65,7 @@ class _PhoneFieldState extends State<PhoneField> {
             _controller.phoneNum = value;
           }
         },
+        hintText: '000 - 000 - 000',
         keyboardType: TextInputType.phone,
         required: widget.required,
         validator: (value) {

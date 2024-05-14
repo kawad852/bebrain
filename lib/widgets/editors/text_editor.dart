@@ -7,6 +7,7 @@ class TextEditor extends StatefulWidget {
   final Function(String?) onChanged;
   final bool required;
   final Widget? suffixIcon;
+  final String? hintText;
 
   const TextEditor({
     super.key,
@@ -14,6 +15,7 @@ class TextEditor extends StatefulWidget {
     required this.onChanged,
     this.required = true,
     this.suffixIcon,
+    this.hintText,
   });
 
   @override
@@ -28,6 +30,7 @@ class _TextEditorState extends State<TextEditor> with AutomaticKeepAliveClientMi
       initialValue: widget.initialValue,
       required: widget.required,
       suffixIcon: widget.suffixIcon,
+      hintText: widget.hintText,
       onChanged: (value) {
         if (value.isEmpty) {
           widget.onChanged(null);

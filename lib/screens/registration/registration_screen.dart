@@ -1,5 +1,7 @@
 import 'package:bebrain/helper/phone_controller.dart';
+import 'package:bebrain/screens/registration/create_account_screen.dart';
 import 'package:bebrain/screens/registration/widgets/auth_button.dart';
+import 'package:bebrain/screens/registration/widgets/auth_header.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/my_icons.dart';
 import 'package:bebrain/utils/my_images.dart';
@@ -56,22 +58,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             ),
           ),
           const SizedBox(height: 50),
-          Text(
-            context.appLocalization.login,
-            style: const TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 6),
-          Padding(
-            padding: const EdgeInsets.only(top: 6, bottom: 30),
-            child: Text(
-              context.appLocalization.loginMsg,
-              style: const TextStyle(
-                fontSize: 16,
-              ),
-            ),
+          AuthHeader(
+            title: context.appLocalization.login,
+            body: context.appLocalization.loginMsg,
           ),
           PhoneField(
             controller: _phoneController,
@@ -92,6 +81,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             ),
           ),
           const SizedBox(height: 49),
+          AuthButton(
+            onTap: () {
+              context.push(const CreateAccountScreen());
+            },
+            icon: MyIcons.home,
+            text: context.appLocalization.conWithAPhone,
+            backgroundColor: context.colorPalette.blue8DD,
+            textColor: context.colorPalette.blackB0B,
+          ),
           AuthButton(
             onTap: () {},
             icon: MyIcons.facebook,

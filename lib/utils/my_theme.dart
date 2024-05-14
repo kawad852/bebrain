@@ -28,7 +28,7 @@ class MyTheme {
           fontSize: 14,
           color: context.colorPalette.greyDBD,
         ),
-        contentPadding: const EdgeInsetsDirectional.symmetric(horizontal: 5, vertical: 10),
+        contentPadding: const EdgeInsetsDirectional.symmetric(horizontal: 5, vertical: 10).copyWith(start: 20),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(color: context.colorPalette.greyF2F),

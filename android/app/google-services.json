@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "97702859580",
+    "project_id": "almosaedapp",
+    "storage_bucket": "almosaedapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:97702859580:android:859365273baecbdcb14439",
+        "android_client_info": {
+          "package_name": "com.bebrain.wecan"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACjyPXax7ffJiZskDvC-9SYt3vMt-TWHk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
