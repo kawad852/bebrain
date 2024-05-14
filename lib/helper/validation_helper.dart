@@ -5,6 +5,7 @@ class ValidationHelper {
   static final emailRegex = RegExp(r"^[a-zA-Z\d.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z\d](?:[a-zA-Z\d-]{0,253}[a-zA-Z\d])?(?:\.[a-zA-Z\d](?:[a-zA-Z\d-]{0,253}[a-zA-Z\d])?)*$");
   static final decimalNumbersRegex = RegExp(r'^\d*\.?\d*$');
   static final intNumberRegex = RegExp(r'^\d+$');
+  static final passwordRegex = RegExp(r'^[a-zA-Z0-9]*$');
 
   static String? general(BuildContext context, String? value) {
     if (value == null || value.isEmpty) {
@@ -45,8 +46,9 @@ class ValidationHelper {
       return context.appLocalization.requiredField;
     } else if (value.length < 6) {
       return context.appLocalization.passwordTooShort;
+    } else if (!passwordRegex.hasMatch(value)) {
+      return context.appLocalization.invalidPassword;
     }
-
     return null;
   }
 }

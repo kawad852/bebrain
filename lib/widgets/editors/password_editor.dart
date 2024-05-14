@@ -6,15 +6,19 @@ import 'package:flutter/material.dart';
 
 class PasswordEditor extends StatefulWidget {
   final String? initialValue;
-  final String? title;
   final Function(String?) onChanged;
   final bool withErrorIndicator;
+  final bool isConfirm;
+  final String? password;
+  final String? title;
 
   const PasswordEditor({
     super.key,
     required this.onChanged,
     required this.initialValue,
-    this.withErrorIndicator = true, this.title,
+    this.withErrorIndicator = true,
+    this.isConfirm = false,
+    this.password, this.title,
   });
 
   @override
@@ -27,19 +31,20 @@ class _PasswordEditorState extends State<PasswordEditor> {
   @override
   Widget build(BuildContext context) {
     return TitledTextField(
-      title: widget.title ?? context.appLocalization.password,
+      title:widget.title != null? widget.title!: widget.isConfirm ? context.appLocalization.confirmPassword : context.appLocalization.password,
       child: BaseEditor(
         initialValue: widget.initialValue,
         obscureText: _obscureText,
-        hintText: context.appLocalization.enterPasswordHere,
         required: true,
+        autoValidateMode: widget.isConfirm ? null : AutovalidateMode.onUserInteraction,
+        hintText: context.appLocalization.passwordHint,
         suffixIcon: IconButton(
           onPressed: () {
             setState(() {
               _obscureText = !_obscureText;
             });
           },
-          icon: Icon(_obscureText ? Icons.remove_red_eye : Icons.visibility_off_outlined),
+          icon: Icon(_obscureText ? Icons.visibility_off : Icons.visibility),
         ),
         onChanged: (value) {
           if (value.isEmpty) {
@@ -47,8 +52,17 @@ class _PasswordEditorState extends State<PasswordEditor> {
           } else {
             widget.onChanged(value);
           }
+          if (widget.isConfirm) {
+            setState(() {});
+          }
         },
-        validator: (value) => ValidationHelper.password(context, value),
+        validator: (value) {
+          if (widget.isConfirm) {
+            print("alksfjajlksfjasjklf");
+            return widget.password == value ? null : context.appLocalization.passwordNotMatch;
+          }
+          return ValidationHelper.password(context, value);
+        },
       ),
     );
   }

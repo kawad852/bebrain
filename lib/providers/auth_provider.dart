@@ -1,11 +1,15 @@
 import 'package:bebrain/alerts/errors/app_error_feedback.dart';
 import 'package:bebrain/alerts/feedback/app_feedback.dart';
+import 'package:bebrain/alerts/loading/app_over_loader.dart';
 import 'package:bebrain/model/auth_model.dart';
 import 'package:bebrain/model/user_model.dart';
 import 'package:bebrain/network/api_service.dart';
 import 'package:bebrain/network/api_url.dart';
 import 'package:bebrain/screens/base/app_nav_bar.dart';
+import 'package:bebrain/screens/registration/verify_code_screen.dart';
+import 'package:bebrain/screens/registration/wizard_screen.dart';
 import 'package:bebrain/utils/base_extensions.dart';
+import 'package:bebrain/utils/enums.dart';
 import 'package:bebrain/utils/shared_pref.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -69,6 +73,52 @@ class AuthProvider extends ChangeNotifier {
           }
         } else {
           context.showSnackBar(snapshot.msg!);
+        }
+      },
+      onError: (failure) => AppErrorFeedback.show(context, failure),
+    );
+  }
+
+  Future createAccount(
+    BuildContext context, {
+    required String? fullName,
+    required String? password,
+    required String? phoneNum,
+  }) async {
+    await ApiFutureBuilder<AuthModel>().fetch(
+      context,
+      withOverlayLoader: false,
+      future: () {
+        final createAccountFuture = ApiService<AuthModel>().build(
+          url: ApiUrl.createAccount,
+          isPublic: true,
+          apiType: ApiType.post,
+          queryParams: {
+            "name": fullName,
+            "phone_number": phoneNum,
+            "password": password,
+            "password_confirmation": password,
+            "locale": MySharedPreferences.language,
+          },
+          builder: AuthModel.fromJson,
+        );
+        return createAccountFuture;
+      },
+      onComplete: (snapshot) async {
+        AppOverlayLoader.hide();
+        if (snapshot.status == true) {
+          MySharedPreferences.accessToken = snapshot.data!.token!;
+          if (!context.mounted) return;
+          context.showSnackBar(context.appLocalization.accountCreatedMsg, duration: 10);
+          updateUser(context, userModel: snapshot.data!.user);
+          if (_lastRouteName == null) {
+            context.pushAndRemoveUntil(const AppNavBar());
+            context.push(const WizardScreen(wizardType: WizardType.countries));
+          } else {
+            _popUntilLastPage(context);
+          }
+        } else {
+          context.showSnackBar(snapshot.msg ?? context.appLocalization.generalError);
         }
       },
       onError: (failure) => AppErrorFeedback.show(context, failure),
@@ -197,5 +247,71 @@ class AuthProvider extends ChangeNotifier {
         }
       });
     }
+  }
+
+  Future<void> sendPinCode(
+    BuildContext context, {
+    Function(String id)? onResent,
+    bool withOverLayLoading = true,
+    required String dialCode,
+    required String phoneNum,
+    required String password,
+    required String fullName,
+  }) async {
+    debugPrint("DialCode:: $dialCode PhoneNum:: $phoneNum");
+    if (withOverLayLoading) {
+      AppOverlayLoader.show();
+    }
+    await FirebaseAuth.instance.verifyPhoneNumber(
+      forceResendingToken: 10,
+      phoneNumber: '$dialCode$phoneNum',
+      verificationCompleted: (PhoneAuthCredential credential) async {
+        debugPrint("verificationCompleted:: $credential");
+      },
+      codeSent: (String verificationId, int? resendToken) async {
+        debugPrint("codeSent:: $verificationId");
+        AppOverlayLoader.hide();
+        if (onResent != null) {
+          onResent(verificationId);
+        } else {
+          if (context.mounted) {
+            context.push(
+              VerifyCodeScreen(
+                verificationId: verificationId,
+                dialCode: dialCode,
+                phoneNum: phoneNum,
+                guestRoute: '',
+                password: password,
+                fullName: fullName,
+              ),
+            );
+            // VerifyCodeRoute(
+            //   dialCode: _phoneController.getDialCode(context),
+            //   phoneNum: _phoneController.phoneNum!,
+            //   $extra: verificationId,
+            //   guestRoute: widget.guestRoute,
+            // ).go(context);
+          }
+        }
+      },
+      verificationFailed: (FirebaseAuthException e) {
+        debugPrint("verificationFailed:: $e ${e.code}");
+        AppOverlayLoader.hide();
+        if (e.code == AppErrorFeedback.webCanceled) return;
+        if (e.code == AppErrorFeedback.networkRequestFailed) {
+          context.showSnackBar(context.appLocalization.networkError);
+        } else if (e.code == AppErrorFeedback.invalidPhoneNumber) {
+          context.showSnackBar(context.appLocalization.invalidPhoneNum);
+        } else if (e.code == AppErrorFeedback.tooManyRequests) {
+          context.showSnackBar(context.appLocalization.pinCodeBlockMsg);
+        } else {
+          context.showSnackBar(e.message ?? context.appLocalization.generalError);
+        }
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {
+        debugPrint("Sms time out error");
+        AppOverlayLoader.hide();
+      },
+    );
   }
 }

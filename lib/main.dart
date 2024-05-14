@@ -4,11 +4,13 @@ import 'dart:developer';
 import 'package:bebrain/notifications/local_notifications_service.dart';
 import 'package:bebrain/providers/app_provider.dart';
 import 'package:bebrain/providers/auth_provider.dart';
+import 'package:bebrain/screens/base/app_nav_bar.dart';
 import 'package:bebrain/screens/intro/intro_screen.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/enums.dart';
 import 'package:bebrain/utils/my_theme.dart';
 import 'package:bebrain/utils/shared_pref.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +34,11 @@ Future<void> onBackgroundMessage(RemoteMessage message) async {
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: const FirebaseOptions(
+        apiKey: "AIzaSyBx-u_p9-gXqy7KjbmfF12UAvWNMlsd-ww", authDomain: "almosaedapp.firebaseapp.com", projectId: "almosaedapp", storageBucket: "almosaedapp.appspot.com", messagingSenderId: "97702859580", appId: "1:97702859580:web:d355a19b08456fedb14439", measurementId: "G-NTPXWDYBY0"),
+  );
+  unawaited(AppProvider.getCountryCode());
   await MySharedPreferences.init();
   // FlutterBranchSdk.validateSDKIntegration();
   // MySharedPreferences.clearStorage();
@@ -61,7 +67,7 @@ class _MyAppState extends State<MyApp> {
   late AuthProvider _authProvider;
 
   Widget _toggleRoute(BuildContext context) {
-    return const IntroScreen();
+    return const AppNavBar();
     // if (_authProvider.user.id != null) {
     //   return const AppNavBar(initFav: true);
     // } else {
@@ -96,11 +102,8 @@ class _MyAppState extends State<MyApp> {
       builder: (context, appProvider, child) {
         final isLight = appProvider.appTheme == ThemeEnum.light;
         var seedColorScheme = ColorScheme.fromSeed(
-          seedColor: const Color(0xFF333333),
+          seedColor: const Color(0xFFC2E7D6),
           brightness: isLight ? Brightness.light : Brightness.dark,
-        );
-        seedColorScheme = seedColorScheme.copyWith(
-          primary: isLight ? const Color(0xFF032D4B) : null,
         );
         return MaterialApp(
           navigatorKey: navigatorKey,

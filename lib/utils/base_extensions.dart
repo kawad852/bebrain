@@ -5,7 +5,6 @@ import 'package:bebrain/providers/auth_provider.dart';
 import 'package:bebrain/utils/app_routes.dart';
 import 'package:bebrain/utils/color_palette.dart';
 import 'package:bebrain/utils/enums.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
@@ -100,7 +99,7 @@ extension CommonExtensions on BuildContext {
   void unFocusKeyboard() => FocusManager.instance.primaryFocus?.unfocus();
   double get systemButtonHeight => Theme.of(this).buttonTheme.height;
   String? get currentRouteName => ModalRoute.of(this)?.settings.name;
-  String? get countryCode => PlatformDispatcher.instance.locale.countryCode;
+  String? get countryCode => AppProvider.countryCode;
 }
 
 extension ImageExtension on BuildContext {

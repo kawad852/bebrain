@@ -33,6 +33,7 @@ class ColorPalette {
   Color get greyE0E => const Color(0xFFE0E0E0);
 
 
+  Color get greyDED => const Color(0xFFEEEDED);
 
   //blue
   Color get blueC2E => const Color(0xFFC2E7D6);
