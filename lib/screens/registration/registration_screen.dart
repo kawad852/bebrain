@@ -1,4 +1,8 @@
+import 'package:bebrain/alerts/feedback/app_feedback.dart';
+import 'package:bebrain/alerts/loading/app_over_loader.dart';
 import 'package:bebrain/helper/phone_controller.dart';
+import 'package:bebrain/providers/auth_provider.dart';
+import 'package:bebrain/screens/base/app_nav_bar.dart';
 import 'package:bebrain/screens/registration/create_account_screen.dart';
 import 'package:bebrain/screens/registration/widgets/auth_button.dart';
 import 'package:bebrain/screens/registration/widgets/auth_header.dart';
@@ -8,7 +12,10 @@ import 'package:bebrain/utils/my_images.dart';
 import 'package:bebrain/widgets/editors/password_editor.dart';
 import 'package:bebrain/widgets/phone_field.dart';
 import 'package:bebrain/widgets/stretch_button.dart';
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -19,10 +26,63 @@ class RegistrationScreen extends StatefulWidget {
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
   late PhoneController _phoneController;
+  late AuthProvider _authProvider;
+
+  firebase_auth.FirebaseAuth get _firebaseAuth => firebase_auth.FirebaseAuth.instance;
+
+  Future<void> _signInWithGoogle(BuildContext context) async {
+    try {
+      AppOverlayLoader.show();
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+      final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+
+      if (googleAuth?.accessToken == null) {
+        AppOverlayLoader.hide();
+        return;
+      }
+
+      final credential = firebase_auth.GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+
+      final auth = await _firebaseAuth.signInWithCredential(credential);
+      if (context.mounted) {
+        await _authProvider.login(
+          context,
+          displayName: auth.user?.displayName,
+          email: auth.user?.email,
+          photoURL: auth.user?.photoURL,
+        );
+      }
+    } on PlatformException catch (e) {
+      AppOverlayLoader.hide();
+      if (context.mounted) {
+        if (e.code == GoogleSignIn.kNetworkError) {
+          context.showSnackBar(context.appLocalization.networkError);
+        } else {
+          if (context.mounted) {
+            context.showSnackBar(context.appLocalization.generalError);
+          }
+        }
+      }
+      debugPrint("GoogleSignInException:: $e");
+    } catch (e) {
+      AppOverlayLoader.hide();
+      if (context.mounted) {
+        context.showSnackBar(context.appLocalization.generalError);
+      }
+      debugPrint("GoogleSignInException:: $e");
+    } finally {
+      AppOverlayLoader.hide();
+    }
+  }
 
   @override
   void initState() {
     super.initState();
+    _authProvider = context.authProvider;
     _phoneController = PhoneController(context);
   }
 
@@ -38,7 +98,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       appBar: AppBar(
         actions: [
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              context.pushAndRemoveUntil(const AppNavBar());
+            },
             child: Text(context.appLocalization.guestBrowse),
           ),
         ],
@@ -85,10 +147,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             onTap: () {
               context.push(const CreateAccountScreen());
             },
-            icon: MyIcons.home,
+            icon: MyIcons.phone,
             text: context.appLocalization.conWithAPhone,
             backgroundColor: context.colorPalette.blue8DD,
             textColor: context.colorPalette.blackB0B,
+            iconColor: context.colorPalette.blackB0B,
           ),
           AuthButton(
             onTap: () {},
@@ -98,7 +161,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             textColor: Colors.white,
           ),
           AuthButton(
-            onTap: () {},
+            onTap: () {
+              _signInWithGoogle(context);
+            },
             icon: MyIcons.google,
             text: context.appLocalization.conWithGoogle,
             backgroundColor: context.colorPalette.greyF2F,

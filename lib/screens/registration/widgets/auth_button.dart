@@ -8,6 +8,7 @@ class AuthButton extends StatelessWidget {
   final Color backgroundColor;
   final Color? foregroundColor;
   final Color? textColor;
+  final Color? iconColor;
   final ShapeBorder? shape;
 
   const AuthButton({
@@ -19,6 +20,7 @@ class AuthButton extends StatelessWidget {
     this.foregroundColor,
     this.shape,
     this.textColor,
+    this.iconColor,
   });
 
   @override
@@ -46,7 +48,10 @@ class AuthButton extends StatelessWidget {
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CustomSvg(icon),
+                  CustomSvg(
+                    icon,
+                    color: iconColor,
+                  ),
                   const SizedBox(width: 10),
                   Text(
                     text,

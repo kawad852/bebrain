@@ -39,4 +39,5 @@ class MyIcons {
   static const String apple = '${_path}apple.svg';
   static const String google = '${_path}google.svg';
   static const String facebook = '${_path}facebook.svg';
+  static const String phone = '${_path}phone.svg';
 }

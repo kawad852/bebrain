@@ -1,8 +1,6 @@
 import 'package:bebrain/helper/phone_controller.dart';
 import 'package:bebrain/screens/registration/widgets/auth_header.dart';
-import 'package:bebrain/screens/registration/wizard_screen.dart';
 import 'package:bebrain/utils/base_extensions.dart';
-import 'package:bebrain/utils/enums.dart';
 import 'package:bebrain/widgets/editors/password_editor.dart';
 import 'package:bebrain/widgets/editors/text_editor.dart';
 import 'package:bebrain/widgets/phone_field.dart';
@@ -55,11 +53,11 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          context.push(const WizardScreen(wizardType: WizardType.countries));
-        },
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     context.push(const WizardScreen(wizardType: WizardType.countries));
+      //   },
+      // ),
       bottomNavigationBar: BottomAppBar(
         child: StretchedButton(
           child: Text(context.appLocalization.next),
@@ -91,17 +89,27 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                 controller: _phoneController,
               ),
             ),
-            PasswordEditor(
-              onChanged: (value) => _password = value,
-              initialValue: null,
-            ),
-            const SizedBox(height: 24),
-            PasswordEditor(
-              onChanged: (value) => _confirmPassword = value,
-              isConfirm: true,
-              password: _password,
-              initialValue: null,
-            ),
+            StatefulBuilder(builder: (context, setState) {
+              return ListBody(
+                children: [
+                  PasswordEditor(
+                    onChanged: (value) {
+                      setState(() {
+                        _password = value;
+                      });
+                    },
+                    initialValue: null,
+                  ),
+                  const SizedBox(height: 24),
+                  PasswordEditor(
+                    onChanged: (value) => _confirmPassword = value,
+                    isConfirm: true,
+                    password: _password,
+                    initialValue: null,
+                  ),
+                ],
+              );
+            }),
           ],
         ),
       ),

@@ -2,6 +2,7 @@ class ApiUrl {
   static const String mainUrl = 'https://almosaaed.com';
 
   static const String login = '/api/login';
+  static const String socialLogin = '/api/social-login';
   static const String createAccount = '/api/register';
   static const String intro = '/api/introductions';
   static const String user = '/api/users';

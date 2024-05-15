@@ -44,13 +44,13 @@ class AuthProvider extends ChangeNotifier {
       withOverlayLoader: false,
       future: () {
         final socialLoginFuture = ApiService<AuthModel>().build(
-          url: ApiUrl.login,
+          url: ApiUrl.socialLogin,
           isPublic: true,
           apiType: ApiType.post,
           queryParams: {
             "name": displayName,
             "email": email,
-            "profile_img": photoURL,
+            "image": photoURL,
             "locale": MySharedPreferences.language,
           },
           builder: AuthModel.fromJson,
