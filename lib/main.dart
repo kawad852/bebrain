@@ -4,7 +4,7 @@ import 'dart:developer';
 import 'package:bebrain/notifications/local_notifications_service.dart';
 import 'package:bebrain/providers/app_provider.dart';
 import 'package:bebrain/providers/auth_provider.dart';
-import 'package:bebrain/screens/registration/registration_screen.dart';
+import 'package:bebrain/screens/intro/intro_screen.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/enums.dart';
 import 'package:bebrain/utils/my_theme.dart';
@@ -66,7 +66,7 @@ class _MyAppState extends State<MyApp> {
   late AuthProvider _authProvider;
 
   Widget _toggleRoute(BuildContext context) {
-    return const RegistrationScreen();
+    return const IntroScreen();
     // if (_authProvider.user.id != null) {
     //   return const AppNavBar(initFav: true);
     // } else {

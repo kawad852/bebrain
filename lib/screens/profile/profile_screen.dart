@@ -1,3 +1,4 @@
+import 'package:bebrain/screens/profile/edit_profile_screen.dart';
 import 'package:bebrain/screens/profile/widgets/profile_tile.dart';
 import 'package:bebrain/screens/profile/widgets/study_info.dart';
 import 'package:bebrain/utils/app_constants.dart';
@@ -36,7 +37,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             actions: [
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  context.push(const EditProfileScreen());
+                },
                 icon: const CustomSvg(MyIcons.setting),
               ),
             ],

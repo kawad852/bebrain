@@ -10,6 +10,7 @@ class PasswordEditor extends StatefulWidget {
   final bool withErrorIndicator;
   final bool isConfirm;
   final String? password;
+  final String? title;
 
   const PasswordEditor({
     super.key,
@@ -17,7 +18,7 @@ class PasswordEditor extends StatefulWidget {
     required this.initialValue,
     this.withErrorIndicator = true,
     this.isConfirm = false,
-    this.password,
+    this.password, this.title,
   });
 
   @override
@@ -30,7 +31,7 @@ class _PasswordEditorState extends State<PasswordEditor> {
   @override
   Widget build(BuildContext context) {
     return TitledTextField(
-      title: widget.isConfirm ? context.appLocalization.confirmPassword : context.appLocalization.password,
+      title:widget.title != null? widget.title!: widget.isConfirm ? context.appLocalization.confirmPassword : context.appLocalization.password,
       child: BaseEditor(
         initialValue: widget.initialValue,
         obscureText: _obscureText,

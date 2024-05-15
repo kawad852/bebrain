@@ -20,6 +20,7 @@ class CustomNetworkImage extends StatelessWidget {
   final Color? backgroundColor;
   final double scale;
   final bool ignorePlaceHolder;
+  final Clip clipBehavior;
 
   const CustomNetworkImage(
     this.url, {
@@ -39,6 +40,7 @@ class CustomNetworkImage extends StatelessWidget {
     this.backgroundColor,
     this.scale = 1,
     this.ignorePlaceHolder = false,
+    this.clipBehavior=Clip.none,
   });
 
   Widget _buildContainer({
@@ -51,6 +53,7 @@ class CustomNetworkImage extends StatelessWidget {
       margin: margin,
       padding: padding,
       alignment: alignment,
+      clipBehavior: clipBehavior,
       decoration: BoxDecoration(
         shape: shape ?? BoxShape.rectangle,
         color: color,

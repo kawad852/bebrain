@@ -5,7 +5,7 @@ import 'package:bebrain/utils/my_icons.dart';
 import 'package:bebrain/utils/my_theme.dart';
 import 'package:bebrain/widgets/custom_network_image.dart';
 import 'package:bebrain/widgets/custom_svg.dart';
-import 'package:bebrain/widgets/custom_text_field.dart';
+import 'package:bebrain/widgets/editors/base_editor.dart';
 import 'package:bebrain/widgets/evaluation_star.dart';
 import 'package:flutter/material.dart';
 
@@ -17,8 +17,6 @@ class LecturersScreen extends StatefulWidget {
 }
 
 class _LecturersScreenState extends State<LecturersScreen> {
-  final TextEditingController _searchController = TextEditingController();
-
   final user = UserModel();
 
   @override
@@ -42,13 +40,16 @@ class _LecturersScreenState extends State<LecturersScreen> {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: CustomTextField(
-                      controller: _searchController,
+                    child: BaseEditor(
                       hintText: context.appLocalization.searchLectureName,
+                      initialValue: null,
+                      filled: true,
+                      fillColor: context.colorPalette.white,
                       prefixIcon: const IconButton(
                         onPressed: null,
                         icon: CustomSvg(MyIcons.search),
                       ),
+                      onChanged: (value) {},
                     ),
                   ),
                 ],
@@ -58,17 +59,21 @@ class _LecturersScreenState extends State<LecturersScreen> {
           SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             sliver: SliverGrid(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 0.9),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2, childAspectRatio: 0.9),
               delegate: SliverChildBuilderDelegate(
                 childCount: 8,
                 (context, index) {
                   return Container(
                     height: 185,
-                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                    margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                    margin:
+                        const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                     decoration: BoxDecoration(
                       color: context.colorPalette.greyEEE,
-                      borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
+                      borderRadius:
+                          BorderRadius.circular(MyTheme.radiusSecondary),
                     ),
                     child: Column(
                       children: [
@@ -77,7 +82,9 @@ class _LecturersScreenState extends State<LecturersScreen> {
                           width: 91,
                           height: 91,
                           shape: BoxShape.circle,
-                          alignment: context.isLTR ? Alignment.topLeft : Alignment.topRight,
+                          alignment: context.isLTR
+                              ? Alignment.topLeft
+                              : Alignment.topRight,
                           child: const EvaluationStar(
                             evaluation: "4.8",
                           ),

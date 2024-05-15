@@ -2,8 +2,8 @@ import 'package:bebrain/screens/department/widgets/course_card.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/my_icons.dart';
 import 'package:bebrain/widgets/custom_svg.dart';
-import 'package:bebrain/widgets/custom_text_field.dart';
 import 'package:bebrain/widgets/distinguished_lectures.dart';
+import 'package:bebrain/widgets/editors/base_editor.dart';
 import 'package:flutter/material.dart';
 
 class DepartmentScreen extends StatefulWidget {
@@ -14,7 +14,6 @@ class DepartmentScreen extends StatefulWidget {
 }
 
 class _DepartmentScreenState extends State<DepartmentScreen> {
-  final TextEditingController _searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,12 +34,14 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsetsDirectional.symmetric(vertical: 10),
+                    padding:
+                        const EdgeInsetsDirectional.symmetric(vertical: 10),
                     child: Row(
                       children: [
                         const CustomSvg(MyIcons.teacher),
                         Padding(
-                          padding: const EdgeInsetsDirectional.only(start: 5, end: 10),
+                          padding: const EdgeInsetsDirectional.only(
+                              start: 5, end: 10),
                           child: Text(
                             "25 ${context.appLocalization.course}",
                             style: TextStyle(
@@ -61,15 +62,21 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                       ],
                     ),
                   ),
-                  CustomTextField(
-                    controller: _searchController,
-                    hintText:context.appLocalization.searchCourse ,
-                    fontSize: 10,
-                    fontWeight: FontWeight.w600,
-                    prefixIcon:  const IconButton(
-                        onPressed: null,
-                        icon: CustomSvg(MyIcons.search),
-                      ),
+                  BaseEditor(
+                    hintText: context.appLocalization.searchCourse,
+                    hintStyle: TextStyle(
+                      color: context.colorPalette.grey66,
+                      fontSize: 10,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    initialValue: null,
+                    filled: true,
+                    fillColor: context.colorPalette.white,
+                    prefixIcon: const IconButton(
+                      onPressed: null,
+                      icon: CustomSvg(MyIcons.search),
+                    ),
+                    onChanged: (value) {},
                   ),
                 ],
               ),
@@ -99,7 +106,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
               ),
             ),
           ),
-           SliverPadding(
+          SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
             sliver: SliverList.separated(
               separatorBuilder: (context, index) => const SizedBox(height: 10),
@@ -108,7 +115,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                 return const CourseCard();
               },
             ),
-            ),
+          ),
         ],
       ),
     );
