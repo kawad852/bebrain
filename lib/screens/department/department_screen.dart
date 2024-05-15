@@ -90,6 +90,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                 children: [
                   DistinguishedLectures(
                     title: context.appLocalization.lecturers,
+                    professors: [],
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15),

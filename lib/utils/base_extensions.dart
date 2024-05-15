@@ -2,6 +2,7 @@ import 'package:bebrain/alerts/loading/app_loading_indicators.dart';
 import 'package:bebrain/network/api_url.dart';
 import 'package:bebrain/providers/app_provider.dart';
 import 'package:bebrain/providers/auth_provider.dart';
+import 'package:bebrain/providers/home_provider.dart';
 import 'package:bebrain/utils/app_routes.dart';
 import 'package:bebrain/utils/color_palette.dart';
 import 'package:bebrain/utils/enums.dart';
@@ -93,6 +94,8 @@ extension ThemeExtension on BuildContext {
 extension ProvidersExtension on BuildContext {
   AuthProvider get authProvider => read<AuthProvider>();
   AppProvider get appProvider => read<AppProvider>();
+  HomeProvider get homeProvider => read<HomeProvider>();
+
 }
 
 extension CommonExtensions on BuildContext {

@@ -1,5 +1,5 @@
+import 'package:bebrain/model/country_filter_model.dart';
 import 'package:bebrain/screens/course/course_screen.dart';
-import 'package:bebrain/utils/app_constants.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/my_theme.dart';
 import 'package:bebrain/widgets/custom_network_image.dart';
@@ -8,12 +8,13 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 class CoursesList extends StatelessWidget {
-  const CoursesList({super.key});
+  final List<Course> courses;
+  const CoursesList({super.key, required this.courses});
 
   @override
   Widget build(BuildContext context) {
     return CarouselSlider.builder(
-      itemCount: 5,
+      itemCount: courses.length,
       options: CarouselOptions(
         padEnds: false,
         viewportFraction: 0.8,
@@ -28,7 +29,7 @@ class CoursesList extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomNetworkImage(
-                kFakeImage,
+                courses[index].image!,
                 width: 272,
                 height: 180,
                 alignment:context.isLTR? Alignment.topLeft: Alignment.topRight,
@@ -41,7 +42,7 @@ class CoursesList extends StatelessWidget {
               ),
               Flexible(
                 child: Text(
-                  "اساسيات البرمجة المتقدمة",
+                 courses[index].name!,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontSize: 16,
@@ -52,7 +53,7 @@ class CoursesList extends StatelessWidget {
               ),
               Flexible(
                 child: Text(
-                  "د. احمد محمد",
+                  courses[index].professor!,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontSize: 14,

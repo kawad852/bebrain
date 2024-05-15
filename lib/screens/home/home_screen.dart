@@ -1,18 +1,22 @@
+import 'package:bebrain/model/country_filter_model.dart';
+import 'package:bebrain/providers/home_provider.dart';
 import 'package:bebrain/screens/home/widgets/action_container.dart';
 import 'package:bebrain/screens/home/widgets/appbar_text.dart';
 import 'package:bebrain/screens/home/widgets/departments_card.dart';
-import 'package:bebrain/widgets/distinguished_lectures.dart';
 import 'package:bebrain/screens/home/widgets/eduction_card.dart';
 import 'package:bebrain/screens/home/widgets/my_subscription.dart';
 import 'package:bebrain/utils/app_constants.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/my_icons.dart';
 import 'package:bebrain/utils/my_theme.dart';
+import 'package:bebrain/widgets/custom_future_builder.dart';
 import 'package:bebrain/widgets/custom_network_image.dart';
 import 'package:bebrain/widgets/custom_smoth_indicator.dart';
 import 'package:bebrain/widgets/custom_svg.dart';
+import 'package:bebrain/widgets/distinguished_lectures.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -22,6 +26,20 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late HomeProvider _homeProvider;
+  late Future<CountryFilterModel> _countryFilterFuture;
+
+  void _initializeFuture() async {
+    _countryFilterFuture = _homeProvider.filterByCountry(1);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _homeProvider = context.homeProvider;
+    _initializeFuture();
+  }
+
   int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
@@ -109,9 +127,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: 110,
                   child: ListView.separated(
-                    separatorBuilder: (context, index) => const SizedBox(width: 7),
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(width: 7),
                     itemCount: 10,
-                    padding: const EdgeInsetsDirectional.only(top: 10, start: 13),
+                    padding:
+                        const EdgeInsetsDirectional.only(top: 10, start: 13),
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, indxe) {
@@ -122,18 +142,43 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-          SliverPadding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            sliver: SliverList.separated(
-              separatorBuilder: (context, index) => const SizedBox(height: 5),
-              itemCount: 3,
-              itemBuilder: (context, index) {
-                return const DepartmentsCard();
-              },
-            ),
-          ),
-           SliverToBoxAdapter(
-            child: DistinguishedLectures(title: context.appLocalization.distinguishedLecturers),
+          CustomFutureBuilder(
+            future: _countryFilterFuture,
+            onRetry: () {
+              setState(() {
+                _initializeFuture();
+              });
+            },
+            sliver: true,
+            onComplete: (context, snapshot) {
+              final countryFilter=snapshot.data!;
+              final universities=countryFilter.data!.universities!;
+              final professors=countryFilter.data!.professors!;
+              return SliverPadding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                sliver: SliverToBoxAdapter(
+                  child: ShrinkWrappingViewport(
+                    offset: ViewportOffset.zero(),
+                    slivers: [
+                      SliverList.separated(
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(height: 5),
+                        itemCount: universities.length,
+                        itemBuilder: (context, index) {
+                          return  DepartmentsCard(university:universities[index]);
+                        },
+                      ),
+                      SliverToBoxAdapter(
+                        child: DistinguishedLectures(
+                          title: context.appLocalization.distinguishedLecturers,
+                          professors: professors,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
           ),
         ],
       ),

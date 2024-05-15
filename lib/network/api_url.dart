@@ -12,4 +12,8 @@ class ApiUrl {
   static const String universities = '/api/universities';
   static const String colleges = '/api/colleges';
   static const String specialties = '/api/colleges';
+  static const String countryFilter = '/api/country-filter';
+  static const String universityFilter = '/api/university-filter';
+
+
 }

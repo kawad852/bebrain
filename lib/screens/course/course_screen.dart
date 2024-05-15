@@ -190,7 +190,7 @@ class _CourseScreenState extends State<CourseScreen> {
                 ),
                 const Padding(
                   padding: EdgeInsets.symmetric(vertical: 10),
-                  child: CoursesList(),
+                  child: CoursesList(courses: [],),
                 ),
               ],
             ),
