@@ -44,7 +44,7 @@ class ValidationHelper {
   static String? password(BuildContext context, String? value) {
     if (value!.isEmpty) {
       return context.appLocalization.requiredField;
-    } else if (value.length < 6) {
+    } else if (value.length < 8) {
       return context.appLocalization.passwordTooShort;
     } else if (!passwordRegex.hasMatch(value)) {
       return context.appLocalization.invalidPassword;

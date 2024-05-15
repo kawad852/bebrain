@@ -35,24 +35,37 @@ class AuthProvider extends ChangeNotifier {
 
   Future login(
     BuildContext context, {
-    required String? displayName,
-    required String? email,
-    required String? photoURL,
+    String? displayName,
+    String? email,
+    String? photoURL,
+    String? phoneNum,
+    String? password,
+    bool isLogin = false,
   }) async {
     await ApiFutureBuilder<AuthModel>().fetch(
       context,
-      withOverlayLoader: false,
+      withOverlayLoader: isLogin,
       future: () {
-        final socialLoginFuture = ApiService<AuthModel>().build(
-          url: ApiUrl.socialLogin,
-          isPublic: true,
-          apiType: ApiType.post,
-          queryParams: {
+        Map<String, dynamic> json = {};
+        if (isLogin) {
+          json = {
+            "phone_number": phoneNum,
+            "password": password,
+            "locale": MySharedPreferences.language,
+          };
+        } else {
+          json = {
             "name": displayName,
             "email": email,
             "image": photoURL,
             "locale": MySharedPreferences.language,
-          },
+          };
+        }
+        final socialLoginFuture = ApiService<AuthModel>().build(
+          url: isLogin ? ApiUrl.login : ApiUrl.socialLogin,
+          isPublic: true,
+          apiType: ApiType.post,
+          queryParams: json,
           builder: AuthModel.fromJson,
         );
         return socialLoginFuture;
@@ -72,7 +85,7 @@ class AuthProvider extends ChangeNotifier {
             _popUntilLastPage(context);
           }
         } else {
-          context.showSnackBar(snapshot.msg!);
+          context.showSnackBar(snapshot.msg ?? context.appLocalization.generalError);
         }
       },
       onError: (failure) => AppErrorFeedback.show(context, failure),

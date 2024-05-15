@@ -27,6 +27,8 @@ class RegistrationScreen extends StatefulWidget {
 class _RegistrationScreenState extends State<RegistrationScreen> {
   late PhoneController _phoneController;
   late AuthProvider _authProvider;
+  final _formKey = GlobalKey<FormState>();
+  String? _password;
 
   firebase_auth.FirebaseAuth get _firebaseAuth => firebase_auth.FirebaseAuth.instance;
 
@@ -108,74 +110,87 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       bottomNavigationBar: BottomAppBar(
         child: StretchedButton(
           child: Text(context.appLocalization.login),
-          onPressed: () {},
+          onPressed: () {
+            if (_formKey.currentState!.validate()) {
+              FocusManager.instance.primaryFocus?.unfocus();
+              _authProvider.login(
+                context,
+                isLogin: true,
+                phoneNum: '${_phoneController.getDialCode()}${_phoneController.phoneNum}',
+                password: _password!,
+              );
+            }
+          },
         ),
       ),
-      body: ListView(
-        padding: const EdgeInsets.all(20),
-        children: [
-          Center(
-            child: Image.asset(
-              MyImages.logo,
-            ),
-          ),
-          const SizedBox(height: 50),
-          AuthHeader(
-            title: context.appLocalization.login,
-            body: context.appLocalization.loginMsg,
-          ),
-          PhoneField(
-            controller: _phoneController,
-          ),
-          const SizedBox(height: 15),
-          PasswordEditor(
-            initialValue: null,
-            onChanged: (value) {},
-          ),
-          Align(
-            alignment: AlignmentDirectional.centerEnd,
-            child: TextButton(
-              onPressed: () {},
-              style: TextButton.styleFrom(
-                foregroundColor: context.colorPalette.red232,
+      body: Form(
+        key: _formKey,
+        child: ListView(
+          padding: const EdgeInsets.all(20),
+          children: [
+            Center(
+              child: Image.asset(
+                MyImages.logo,
               ),
-              child: Text(context.appLocalization.forgotPassword),
             ),
-          ),
-          const SizedBox(height: 49),
-          AuthButton(
-            onTap: () {
-              context.push(const CreateAccountScreen());
-            },
-            icon: MyIcons.phone,
-            text: context.appLocalization.conWithAPhone,
-            backgroundColor: context.colorPalette.blue8DD,
-            textColor: context.colorPalette.blackB0B,
-            iconColor: context.colorPalette.blackB0B,
-          ),
-          AuthButton(
-            onTap: () {},
-            icon: MyIcons.facebook,
-            text: context.appLocalization.conWithFacebook,
-            backgroundColor: context.colorPalette.facebook,
-            textColor: Colors.white,
-          ),
-          AuthButton(
-            onTap: () {
-              _signInWithGoogle(context);
-            },
-            icon: MyIcons.google,
-            text: context.appLocalization.conWithGoogle,
-            backgroundColor: context.colorPalette.greyF2F,
-          ),
-          AuthButton(
-            onTap: () {},
-            icon: MyIcons.apple,
-            text: context.appLocalization.conWithApple,
-            backgroundColor: Colors.black,
-            textColor: Colors.white,
-          ),
-        ],
+            const SizedBox(height: 50),
+            AuthHeader(
+              title: context.appLocalization.login,
+              body: context.appLocalization.loginMsg,
+            ),
+            PhoneField(
+              controller: _phoneController,
+            ),
+            const SizedBox(height: 15),
+            PasswordEditor(
+              initialValue: null,
+              onChanged: (value) => _password = value,
+            ),
+            Align(
+              alignment: AlignmentDirectional.centerEnd,
+              child: TextButton(
+                onPressed: () {},
+                style: TextButton.styleFrom(
+                  foregroundColor: context.colorPalette.red232,
+                ),
+                child: Text(context.appLocalization.forgotPassword),
+              ),
+            ),
+            const SizedBox(height: 49),
+            AuthButton(
+              onTap: () {
+                context.push(const CreateAccountScreen());
+              },
+              icon: MyIcons.phone,
+              text: context.appLocalization.conWithAPhone,
+              backgroundColor: context.colorPalette.blue8DD,
+              textColor: context.colorPalette.blackB0B,
+              iconColor: context.colorPalette.blackB0B,
+            ),
+            AuthButton(
+              onTap: () {},
+              icon: MyIcons.facebook,
+              text: context.appLocalization.conWithFacebook,
+              backgroundColor: context.colorPalette.facebook,
+              textColor: Colors.white,
+            ),
+            AuthButton(
+              onTap: () {
+                _signInWithGoogle(context);
+              },
+              icon: MyIcons.google,
+              text: context.appLocalization.conWithGoogle,
+              backgroundColor: context.colorPalette.greyF2F,
+            ),
+            AuthButton(
+              onTap: () {},
+              icon: MyIcons.apple,
+              text: context.appLocalization.conWithApple,
+              backgroundColor: Colors.black,
+              textColor: Colors.white,
+            ),
+          ],
+        ),
       ),
     );
   }
