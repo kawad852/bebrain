@@ -76,11 +76,11 @@ class AuthProvider extends ChangeNotifier {
           if (!context.mounted) return;
           updateUser(context, userModel: snapshot.data!.user);
           if (_lastRouteName == null) {
-            if (snapshot.data!.user!.invitationCodeStatus == 0) {
-              // context.pushAndRemoveUntil(const InvitationCodeScreen());
-            } else {
+            // if (snapshot.data!.user!.invitationCodeStatus == 0) {
+            //   // context.pushAndRemoveUntil(const InvitationCodeScreen());
+            // } else {
               context.pushAndRemoveUntil(const AppNavBar());
-            }
+            //}
           } else {
             _popUntilLastPage(context);
           }

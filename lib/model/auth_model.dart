@@ -43,83 +43,85 @@ class Data {
 }
 
 class UserData {
-  int? id;
-  String? name;
-  String? email;
-  String? profileImg;
-  String? invitationCode;
-  int? points;
-  String? deviceToken;
-  int? invitationCodeStatus;
-  List<Favorite>? favorites;
+    int? id;
+    String? name;
+    String? email;
+    String? phoneNumber;
+    String? image;
+    String? code;
+    String? deviceToken;
+    int? status;
+    String? locale;
+    int? countryId;
+    String? country;
+    int? universityId;
+    String? universityName;
+    int? collegeId;
+    String? collegeName;
+    int? majorId;
+    String? majorName;
 
-  UserData({
-    this.id,
-    this.name,
-    this.email,
-    this.invitationCode,
-    this.points,
-    this.deviceToken,
-    this.invitationCodeStatus,
-    this.favorites,
-    this.profileImg,
-  });
+    UserData({
+        this.id,
+        this.name,
+        this.email,
+        this.phoneNumber,
+        this.image,
+        this.code,
+        this.deviceToken,
+        this.status,
+        this.locale,
+        this.countryId,
+        this.country,
+        this.universityId,
+        this.universityName,
+        this.collegeId,
+        this.collegeName,
+        this.majorId,
+        this.majorName,
+    });
 
-  factory UserData.copy(UserData userModel) => UserData.fromJson(userModel.toJson());
+    factory UserData.copy(UserData userModel) => UserData.fromJson(userModel.toJson());
 
-  factory UserData.fromJson(Map<String, dynamic> json) => UserData(
+    factory UserData.fromJson(Map<String, dynamic> json) => UserData(
         id: json["id"],
-        name: json["name"] ?? '',
+        name: json["name"] ??'',
         email: json["email"],
-        profileImg: json["profile_img"] ?? '',
-        invitationCode: json["invitation_code"],
-        points: json["points"],
+        phoneNumber: json["phone_number"],
+        image: json["image"] ??'',
+        code: json["code"],
         deviceToken: json["device_token"],
-        invitationCodeStatus: json["invitation_code_status"],
-        favorites: json["favorites"] == null ? [] : List<Favorite>.from(json["favorites"]!.map((x) => Favorite.fromJson(x))),
-      );
+        status: json["status"],
+        locale: json["locale"],
+        countryId: json["country_id"],
+        country: json["country"],
+        universityId: json["university_id"],
+        universityName: json["university_name"],
+        collegeId: json["college_id"],
+        collegeName: json["college_name"],
+        majorId: json["major_id"],
+        majorName: json["major_name"],
+    );
 
-  Map<String, dynamic> toJson() => {
+    Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
-        "profile_img": profileImg,
         "email": email,
-        "invitation_code": invitationCode,
-        "points": points,
+        "phone_number": phoneNumber,
+        "image": image,
+        "code": code,
         "device_token": deviceToken,
-        "invitation_code_status": invitationCodeStatus,
-        "favorites": favorites == null ? [] : List<dynamic>.from(favorites!.map((x) => x.toJson())),
-      };
+        "status": status,
+        "locale": locale,
+        "country_id": countryId,
+        "country": country,
+        "university_id": universityId,
+        "university_name": universityName,
+        "college_id": collegeId,
+        "college_name": collegeName,
+        "major_id": majorId,
+        "major_name": majorName,
+    };
 }
 
-class Favorite {
-  int? id;
-  int? userId;
-  String? type;
-  String? favoritableId;
-  int? isFavorite;
 
-  Favorite({
-    this.id,
-    this.userId,
-    this.type,
-    this.favoritableId,
-    this.isFavorite,
-  });
-
-  factory Favorite.fromJson(Map<String, dynamic> json) => Favorite(
-        id: json["id"],
-        userId: json["user_id"],
-        type: json["type"],
-        favoritableId: json["favoritable_id"],
-        isFavorite: json["is_favorite"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "user_id": userId,
-        "type": type,
-        "favoritable_id": favoritableId,
-        "is_favorite": isFavorite,
-      };
-}

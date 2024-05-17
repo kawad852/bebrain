@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bebrain/model/country_filter_model.dart';
 import 'package:bebrain/providers/home_provider.dart';
 import 'package:bebrain/screens/home/widgets/action_container.dart';
@@ -9,6 +11,7 @@ import 'package:bebrain/utils/app_constants.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/my_icons.dart';
 import 'package:bebrain/utils/my_theme.dart';
+import 'package:bebrain/utils/shared_pref.dart';
 import 'package:bebrain/widgets/custom_future_builder.dart';
 import 'package:bebrain/widgets/custom_network_image.dart';
 import 'package:bebrain/widgets/custom_smoth_indicator.dart';
@@ -36,6 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    log(MySharedPreferences.accessToken);
     _homeProvider = context.homeProvider;
     _initializeFuture();
   }
