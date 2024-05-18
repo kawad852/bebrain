@@ -32,6 +32,8 @@ class _HomeScreenState extends State<HomeScreen> {
   late MainProvider _mainProvider;
   late Future<CountryFilterModel> _countryFilterFuture;
 
+  int currentIndex = 0;
+
   void _initializeFuture() async {
     _countryFilterFuture = _mainProvider.filterByCountry(1);
   }
@@ -44,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _initializeFuture();
   }
 
-  int currentIndex = 0;
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
