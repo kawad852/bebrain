@@ -1,12 +1,18 @@
 enum FormEnum { duties, specialExplanation, graduationProjects }
 
-enum WizardType {
-  countries,
-  universities,
-  colleges,
-  specialities,
-}
+// enum WizardType {
+//   countries,
+//   universities,
+//   colleges,
+//   specialities,
+// }
 
+class WizardType{
+  static const String countries='countries';
+  static const String universities='universities';
+  static const String colleges='colleges';
+  static const String specialities='specialities';
+}
 class LanguageEnum {
   static const String english = 'en';
   static const String arabic = 'ar';

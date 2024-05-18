@@ -2,6 +2,7 @@ import 'package:bebrain/alerts/errors/app_error_feedback.dart';
 import 'package:bebrain/alerts/feedback/app_feedback.dart';
 import 'package:bebrain/alerts/loading/app_over_loader.dart';
 import 'package:bebrain/model/auth_model.dart';
+import 'package:bebrain/model/filter_model.dart';
 import 'package:bebrain/model/user_model.dart';
 import 'package:bebrain/network/api_service.dart';
 import 'package:bebrain/network/api_url.dart';
@@ -326,5 +327,33 @@ class AuthProvider extends ChangeNotifier {
         AppOverlayLoader.hide();
       },
     );
+  }
+
+  Future<void> updateFilter(
+    BuildContext context, {
+    required FilterModel filterModel,
+    bool notify = true,
+  }) async {
+    if(filterModel.countryId!=null){
+      MySharedPreferences.saveFilter(filterModel);
+    }
+    else{
+    MySharedPreferences.saveFilter(
+      FilterModel(
+        wizardType: filterModel.wizardType ?? MySharedPreferences.filter.wizardType,
+        countryId: filterModel.countryId?? MySharedPreferences.filter.countryId,
+        countryName: filterModel.countryName?? MySharedPreferences.filter.countryName,
+        universityId: filterModel.universityId?? MySharedPreferences.filter.universityId,
+        universityName: filterModel.universityName?? MySharedPreferences.filter.universityName,
+        collegeId: filterModel.collegeId?? MySharedPreferences.filter.collegeId,
+        collegeName: filterModel.collegeName?? MySharedPreferences.filter.collegeName,
+        majorId: filterModel.majorId?? MySharedPreferences.filter.majorId,
+        majorName: filterModel.majorName?? MySharedPreferences.filter.majorName,
+      ));
+      }
+    debugPrint("Filter:: ${MySharedPreferences.filter.toJson()}");
+    if (notify) {
+      notifyListeners();
+    }
   }
 }

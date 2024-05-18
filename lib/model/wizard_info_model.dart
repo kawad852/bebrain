@@ -1,11 +1,10 @@
-import 'package:bebrain/utils/enums.dart';
 
 class WizardInfoModel {
   String? apiUrl;
   String? headerTitle;
   String? headerBody;
   String? hintText;
-  WizardType? nextType;
+  String? nextType;
 
   WizardInfoModel({
     this.apiUrl,

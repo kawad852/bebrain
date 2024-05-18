@@ -8,7 +8,7 @@ class HomeProvider extends ChangeNotifier {
   Future<CountryFilterModel> filterByCountry(int countryId) {
     final snapshot = ApiService<CountryFilterModel>().build(
       url: "${ApiUrl.countryFilter}/$countryId",
-      isPublic: false,
+      isPublic: true,
       apiType: ApiType.get,
       builder: CountryFilterModel.fromJson,
     );
@@ -18,7 +18,7 @@ class HomeProvider extends ChangeNotifier {
   Future<UniversityFilterModel> filterByUniversity(int universityId) {
     final snapshot = ApiService<UniversityFilterModel>().build(
       url: "${ApiUrl.universityFilter}/$universityId",
-      isPublic: false,
+      isPublic: true,
       apiType: ApiType.get,
       builder: UniversityFilterModel.fromJson,
     );

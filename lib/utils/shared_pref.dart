@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:bebrain/model/auth_model.dart';
+import 'package:bebrain/model/filter_model.dart';
 import 'package:bebrain/utils/app_constants.dart';
 import 'package:bebrain/utils/enums.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,6 +16,7 @@ class MySharedPreferences {
   static void clearStorage() {
     MySharedPreferences.accessToken = '';
     user = UserData.fromJson(UserData().toJson());
+    filter = FilterModel.fromJson(FilterModel().toJson());
   }
 
   static UserData get user {
@@ -48,4 +50,21 @@ class MySharedPreferences {
 
   static String get countryCode => _sharedPreferences.getString('countryCode') ?? kFallBackCountryCode;
   static set countryCode(String value) => _sharedPreferences.setString('countryCode', value);
+
+  static FilterModel get filter {
+    String value = _sharedPreferences.getString('filterModel') ?? '';
+    var filterModel = FilterModel();
+    if (value.isNotEmpty) {
+      filterModel = FilterModel.fromJson(jsonDecode(value));
+    }
+    return filterModel;
+  }
+
+  static set filter(FilterModel value) {
+    _sharedPreferences.setString('filterModel', jsonEncode(value.toJson()));
+  }
+
+  static void saveFilter(FilterModel model) {
+    filter = FilterModel.fromJson(model.toJson());
+  }
 }

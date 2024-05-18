@@ -14,7 +14,7 @@ import 'package:bebrain/widgets/stretch_button.dart';
 import 'package:flutter/material.dart';
 
 class WizardScreen extends StatefulWidget {
-  final WizardType wizardType;
+  final String wizardType;
 
   const WizardScreen({
     super.key,
