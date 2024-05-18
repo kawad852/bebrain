@@ -4,7 +4,7 @@ import 'package:bebrain/network/api_service.dart';
 import 'package:bebrain/network/api_url.dart';
 import 'package:flutter/material.dart';
 
-class HomeProvider extends ChangeNotifier {
+class MainProvider extends ChangeNotifier {
   Future<CountryFilterModel> filterByCountry(int countryId) {
     final snapshot = ApiService<CountryFilterModel>().build(
       url: "${ApiUrl.countryFilter}/$countryId",

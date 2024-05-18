@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:bebrain/model/country_filter_model.dart';
-import 'package:bebrain/providers/home_provider.dart';
+import 'package:bebrain/providers/main_provider.dart';
 import 'package:bebrain/screens/home/widgets/action_container.dart';
 import 'package:bebrain/screens/home/widgets/appbar_text.dart';
 import 'package:bebrain/screens/home/widgets/departments_card.dart';
@@ -29,18 +29,18 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late HomeProvider _homeProvider;
+  late MainProvider _mainProvider;
   late Future<CountryFilterModel> _countryFilterFuture;
 
   void _initializeFuture() async {
-    _countryFilterFuture = _homeProvider.filterByCountry(1);
+    _countryFilterFuture = _mainProvider.filterByCountry(1);
   }
 
   @override
   void initState() {
     super.initState();
     log(MySharedPreferences.accessToken);
-    _homeProvider = context.homeProvider;
+    _mainProvider = context.mainProvider;
     _initializeFuture();
   }
 
