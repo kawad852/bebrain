@@ -6,13 +6,16 @@ import 'package:bebrain/screens/base/app_nav_bar.dart';
 import 'package:bebrain/screens/registration/create_account_screen.dart';
 import 'package:bebrain/screens/registration/widgets/auth_button.dart';
 import 'package:bebrain/screens/registration/widgets/auth_header.dart';
+import 'package:bebrain/screens/registration/wizard_screen.dart';
 import 'package:bebrain/utils/base_extensions.dart';
+import 'package:bebrain/utils/enums.dart';
 import 'package:bebrain/utils/my_icons.dart';
 import 'package:bebrain/utils/my_images.dart';
 import 'package:bebrain/widgets/editors/password_editor.dart';
 import 'package:bebrain/widgets/phone_field.dart';
 import 'package:bebrain/widgets/stretch_button.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -107,6 +110,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           ),
         ],
       ),
+      floatingActionButton: kDebugMode
+          ? FloatingActionButton(
+              onPressed: () {
+                context.push(
+                  WizardScreen(wizardType: WizardType.countries),
+                );
+              },
+            )
+          : null,
       bottomNavigationBar: BottomAppBar(
         child: StretchedButton(
           child: Text(context.appLocalization.login),

@@ -32,6 +32,7 @@ class WizardData {
   int? countryId;
   String? country;
   String? flag;
+  String? countryCode;
 
   WizardData({
     this.id,
@@ -39,6 +40,7 @@ class WizardData {
     this.countryId,
     this.country,
     this.flag,
+    this.countryCode,
   });
 
   factory WizardData.fromJson(Map<String, dynamic> json) => WizardData(
@@ -46,6 +48,7 @@ class WizardData {
         name: json["name"],
         countryId: json["country_id"],
         country: json["country"],
+        countryCode: json["country_code"],
         flag: json["flag"],
       );
 
@@ -54,6 +57,7 @@ class WizardData {
         "name": name,
         "country_id": countryId,
         "country": country,
+        "country_code": countryCode,
         "flag": flag,
       };
 }

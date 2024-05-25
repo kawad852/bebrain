@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bebrain/helper/ui_helper.dart';
 import 'package:bebrain/model/wizard_info_model.dart';
 import 'package:bebrain/model/wizard_model.dart';
@@ -29,6 +31,23 @@ class _WizardScreenState extends State<WizardScreen> {
   WizardInfoModel? _info;
   late Future<WizardModel> _future;
   int? _selectedId;
+  Timer? _debounce;
+  String _query = '';
+
+  _onSearchChanged(String query) {
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), () {
+      if (query.isEmpty) {
+        setState(() {
+          _query = '';
+        });
+      } else {
+        setState(() {
+          _query = query;
+        });
+      }
+    });
+  }
 
   void _fetchData(String url) {
     _future = ApiService<WizardModel>().build(
@@ -107,6 +126,22 @@ class _WizardScreenState extends State<WizardScreen> {
       },
       withBackgroundColor: true,
       onComplete: (context, snapshot) {
+        var data = <WizardData>[];
+        if (_query.isEmpty) {
+          data = snapshot.data!.data!;
+        } else {
+          data = List<WizardData>.from(snapshot.data!.data!
+              .where(
+                (element) {
+                  if (context.languageCode == LanguageEnum.arabic) {
+                    return element.name!.contains(_query);
+                  }
+                  return element.name!.toLowerCase().contains(_query.toLowerCase());
+                },
+              )
+              .toList()
+              .map((x) => WizardData.fromJson(x.toJson())));
+        }
         return Scaffold(
           appBar: AppBar(
             actions: [
@@ -143,16 +178,20 @@ class _WizardScreenState extends State<WizardScreen> {
                     maxWidth: 50,
                     maxHeight: 30,
                   ),
-                  onChanged: (value) {},
+                  onChanged: _onSearchChanged,
                 ),
                 const SizedBox(height: 10),
                 Expanded(
-                  child: ListView.builder(
-                    itemCount: snapshot.data!.data!.length,
+                  child: ListView.separated(
+                    itemCount: data.length,
+                    separatorBuilder: (context, index) => const SizedBox(height: 5),
                     itemBuilder: (context, index) {
-                      final element = snapshot.data!.data![index];
+                      final element = data[index];
                       return ListTile(
                         tileColor: context.colorPalette.greyDED,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                         onTap: () {
                           setState(() {
                             _selectedId = element.id;
