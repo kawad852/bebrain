@@ -5,6 +5,7 @@ import 'package:bebrain/model/wizard_info_model.dart';
 import 'package:bebrain/model/wizard_model.dart';
 import 'package:bebrain/network/api_service.dart';
 import 'package:bebrain/network/api_url.dart';
+import 'package:bebrain/screens/base/app_nav_bar.dart';
 import 'package:bebrain/screens/registration/widgets/auth_header.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/enums.dart';
@@ -17,10 +18,12 @@ import 'package:flutter/material.dart';
 
 class WizardScreen extends StatefulWidget {
   final String wizardType;
+  final int? id;
 
   const WizardScreen({
     super.key,
     required this.wizardType,
+    this.id,
   });
 
   @override
@@ -70,7 +73,7 @@ class _WizardScreenState extends State<WizardScreen> {
         );
       case WizardType.universities:
         return WizardInfoModel(
-          apiUrl: ApiUrl.universities,
+          apiUrl: '${ApiUrl.universities}/${widget.id}',
           headerTitle: context.appLocalization.selectUniversity,
           headerBody: context.appLocalization.canChangeUniversity,
           hintText: context.appLocalization.searchUniversity,
@@ -78,7 +81,7 @@ class _WizardScreenState extends State<WizardScreen> {
         );
       case WizardType.colleges:
         return WizardInfoModel(
-          apiUrl: ApiUrl.colleges,
+          apiUrl: "${ApiUrl.colleges}/${widget.id}",
           headerTitle: context.appLocalization.selectCollege,
           headerBody: context.appLocalization.canChangeCollege,
           hintText: context.appLocalization.searchCollege,
@@ -86,7 +89,7 @@ class _WizardScreenState extends State<WizardScreen> {
         );
       case WizardType.specialities:
         return WizardInfoModel(
-          apiUrl: ApiUrl.specialties,
+          apiUrl: '${ApiUrl.specialties}/${widget.id}',
           headerTitle: context.appLocalization.selectSpecialization,
           headerBody: context.appLocalization.canChangeSpecialty,
           hintText: context.appLocalization.searchSpecialty,
@@ -101,7 +104,10 @@ class _WizardScreenState extends State<WizardScreen> {
       Navigator.popUntil(context, (route) => route.isFirst);
     } else {
       context.push(
-        WizardScreen(wizardType: _info!.nextType!),
+        WizardScreen(
+          wizardType: _info!.nextType!,
+          id: _selectedId,
+        ),
       );
     }
   }
@@ -144,10 +150,12 @@ class _WizardScreenState extends State<WizardScreen> {
         }
         return Scaffold(
           appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            surfaceTintColor: Colors.transparent,
             actions: [
               TextButton(
                 onPressed: () {
-                  _onNext(context);
+                  context.pushAndRemoveUntil(const AppNavBar());
                 },
                 child: Text(context.appLocalization.skip),
               ),
@@ -167,20 +175,26 @@ class _WizardScreenState extends State<WizardScreen> {
             padding: const EdgeInsets.all(20),
             child: Column(
               children: [
-                AuthHeader(
-                  title: _info!.headerTitle!,
-                  body: _info?.headerBody,
-                ),
-                BaseEditor(
-                  hintText: _info!.hintText,
-                  prefixIcon: const Center(child: CustomSvg(MyIcons.search)),
-                  suffixIconConstraints: const BoxConstraints(
-                    maxWidth: 50,
-                    maxHeight: 30,
+                Material(
+                  child: ListBody(
+                    children: [
+                      AuthHeader(
+                        title: _info!.headerTitle!,
+                        body: _info?.headerBody,
+                      ),
+                      BaseEditor(
+                        hintText: _info!.hintText,
+                        prefixIcon: const Center(child: CustomSvg(MyIcons.search)),
+                        suffixIconConstraints: const BoxConstraints(
+                          maxWidth: 50,
+                          maxHeight: 30,
+                        ),
+                        onChanged: _onSearchChanged,
+                      ),
+                      const SizedBox(height: 10),
+                    ],
                   ),
-                  onChanged: _onSearchChanged,
                 ),
-                const SizedBox(height: 10),
                 Expanded(
                   child: ListView.separated(
                     itemCount: data.length,
@@ -204,7 +218,7 @@ class _WizardScreenState extends State<WizardScreen> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(6),
                                   child: CustomSvg(
-                                    UiHelper.getFlag('JO'),
+                                    UiHelper.getFlag(element.countryCode!),
                                     width: 30,
                                   ),
                                 ),

@@ -9,13 +9,10 @@ class ApiUrl {
   static const String deleteAccount = '/api/users/delete';
   static const String updateProfile = '/api/users/update';
   static const String countries = '/api/countries';
-  static const String universities = '/api/universities';
-  static const String colleges = '/api/colleges';
-  static const String specialties = '/api/colleges';
+  static const String universities = '/api/universities/country';
+  static const String colleges = '/api/colleges/university';
+  static const String specialties = '/api/majors/college';
   static const String countryFilter = '/api/country-filter';
   static const String universityFilter = '/api/university-filter';
   static const String professors = '/api/professors';
-
-
-
 }

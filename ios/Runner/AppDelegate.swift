@@ -20,7 +20,7 @@ extension UIWindow {
   self.addSubview(field)
   field.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
   field.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-  self.layer.superlayer?.addSubview(field.layer)
-  field.layer.superlayer?.first?.addSubview(self.layer)
+  self.layer.superlayer?.addSublayer(field.layer)
+  field.layer.sublayers?.first?.addSublayer(self.layer)
  }
 }
