@@ -1,3 +1,5 @@
+import 'package:bebrain/model/country_filter_model.dart';
+
 class UniversityFilterModel {
     bool? status;
     int? code;
@@ -46,33 +48,6 @@ class UniversityFilterData {
     };
 }
 
-class Professor {
-    int? id;
-    String? name;
-    String? description;
-    String? image;
-
-    Professor({
-        this.id,
-        this.name,
-        this.description,
-        this.image,
-    });
-
-    factory Professor.fromJson(Map<String, dynamic> json) => Professor(
-        id: json["id"],
-        name: json["name"],
-        description: json["description"],
-        image: json["image"],
-    );
-
-    Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "description": description,
-        "image": image,
-    };
-}
 
 class University {
     int? id;
@@ -134,65 +109,7 @@ class College {
     };
 }
 
-class Course {
-    int? id;
-    String? name;
-    String? description;
-    String? image;
-    int? price;
-    int? discountPrice;
-    int? collegeId;
-    String? college;
-    int? majorId;
-    String? major;
-    int? professorId;
-    String? professor;
 
-    Course({
-        this.id,
-        this.name,
-        this.description,
-        this.image,
-        this.price,
-        this.discountPrice,
-        this.collegeId,
-        this.college,
-        this.majorId,
-        this.major,
-        this.professorId,
-        this.professor,
-    });
-
-    factory Course.fromJson(Map<String, dynamic> json) => Course(
-        id: json["id"],
-        name: json["name"],
-        description: json["description"],
-        image: json["image"],
-        price: json["price"],
-        discountPrice: json["discount_price"],
-        collegeId: json["college_id"],
-        college: json["college"],
-        majorId: json["major_id"],
-        major: json["major"],
-        professorId: json["professor_id"],
-        professor: json["professor"],
-    );
-
-    Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "description": description,
-        "image": image,
-        "price": price,
-        "discount_price": discountPrice,
-        "college_id": collegeId,
-        "college": college,
-        "major_id": majorId,
-        "major": major,
-        "professor_id": professorId,
-        "professor": professor,
-    };
-}
 
 class Major {
     int? id;

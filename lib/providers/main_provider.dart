@@ -1,3 +1,4 @@
+import 'package:bebrain/model/college_filter_model.dart';
 import 'package:bebrain/model/country_filter_model.dart';
 import 'package:bebrain/model/professors_model.dart';
 import 'package:bebrain/model/university_filter_model.dart';
@@ -22,6 +23,16 @@ class MainProvider extends ChangeNotifier {
       isPublic: true,
       apiType: ApiType.get,
       builder: UniversityFilterModel.fromJson,
+    );
+    return snapshot;
+  }
+
+  Future<CollegeFilterModel> filterByCollege(int collegeId) {
+    final snapshot = ApiService<CollegeFilterModel>().build(
+      url: "${ApiUrl.collegeFilter}/$collegeId",
+      isPublic: true,
+      apiType: ApiType.get,
+      builder: CollegeFilterModel.fromJson,
     );
     return snapshot;
   }
