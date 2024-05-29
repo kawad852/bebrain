@@ -19,7 +19,7 @@ class CoursesList extends StatelessWidget {
         padEnds: false,
         viewportFraction: 0.8,
         enableInfiniteScroll: false,
-        height: 220,
+        height: 235,
         onPageChanged: (index, reason) {},
       ),
       itemBuilder: (context, index, realIndex) {
@@ -32,7 +32,8 @@ class CoursesList extends StatelessWidget {
                 courses[index].image!,
                 width: 272,
                 height: 180,
-                alignment:context.isLTR? Alignment.topLeft: Alignment.topRight,
+                alignment:
+                    context.isLTR ? Alignment.topLeft : Alignment.topRight,
                 radius: MyTheme.radiusSecondary,
                 onTap: () => context.push(const CourseScreen()),
                 child: const EvaluationStar(
@@ -42,7 +43,7 @@ class CoursesList extends StatelessWidget {
               ),
               Flexible(
                 child: Text(
-                 courses[index].name!,
+                  courses[index].name!,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontSize: 16,

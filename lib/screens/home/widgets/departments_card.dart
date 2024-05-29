@@ -1,3 +1,5 @@
+import 'package:bebrain/helper/ui_helper.dart';
+import 'package:bebrain/model/filter_model.dart';
 import 'package:bebrain/screens/department/department_screen.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/enums.dart';
@@ -9,14 +11,16 @@ import 'package:flutter/material.dart';
 
 class DepartmentsCard extends StatefulWidget {
   final dynamic data;
-  const DepartmentsCard({super.key, required this.data});
+  final void Function() onTapSubData;
+  final int? collegeId;
+  const DepartmentsCard(
+      {super.key, required this.data, required this.onTapSubData, required this.collegeId});
 
   @override
   State<DepartmentsCard> createState() => _DepartmentsCardState();
 }
 
 class _DepartmentsCardState extends State<DepartmentsCard> {
-
   int getLengthData() {
     switch (MySharedPreferences.filter.wizardType) {
       case WizardType.countries:
@@ -62,7 +66,34 @@ class _DepartmentsCardState extends State<DepartmentsCard> {
               ),
               MoreButton(
                 onTap: () {
-                  context.push(const DepartmentScreen());
+                  if(MySharedPreferences.filter.wizardType==WizardType.countries){
+                    UiHelper.addFilter(context, 
+                    filterModel:FilterModel(
+                      wizardType: WizardType.universities,
+                      universityId: widget.data!.id!,
+                      universityName: widget.data.name!,
+                    ),
+                    afterAdd: widget.onTapSubData,
+                    );
+                  }
+                  else if(MySharedPreferences.filter.wizardType==WizardType.universities){
+                    UiHelper.addFilter(context, 
+                    filterModel:FilterModel(
+                      wizardType: WizardType.colleges,
+                      collegeId: widget.data!.id!,
+                      collegeName: widget.data.name!,
+                    ),
+                    afterAdd: widget.onTapSubData,
+                    );
+                  }
+                  else{
+                    context.push( 
+                      DepartmentScreen(
+                        collegeId: widget.collegeId!,
+                        majorId: widget.data!.id!,
+                    ),
+                    );
+                  }
                 },
               ),
             ],
@@ -74,27 +105,50 @@ class _DepartmentsCardState extends State<DepartmentsCard> {
           SizedBox(
             height: 50,
             child: ListView.separated(
-              padding: const EdgeInsetsDirectional.only(
-                  start: 10, top: 10, bottom: 10),
+              padding: const EdgeInsetsDirectional.only(start: 10, top: 10, bottom: 10),
               separatorBuilder: (context, index) => const SizedBox(width: 5),
               itemCount: getLengthData(),
               scrollDirection: Axis.horizontal,
               shrinkWrap: true,
               itemBuilder: (context, index) {
-                return Container(
-                  height: 34,
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.symmetric(horizontal: 5),
-                  decoration: BoxDecoration(
-                    color: context.colorPalette.greyEEE,
-                    borderRadius:
-                        BorderRadius.circular(MyTheme.radiusSecondary),
-                  ),
-                  child: Text(
-                    getName(index),
-                    style: TextStyle(
-                      color: context.colorPalette.grey66,
-                      fontSize: 12,
+                return GestureDetector(
+                  onTap: () {
+                    if (MySharedPreferences.filter.wizardType == WizardType.countries) {
+                      UiHelper.addFilter(
+                        context,
+                        filterModel: FilterModel(
+                            wizardType: WizardType.colleges,
+                            universityId: widget.data.id!,
+                            universityName: widget.data.name!,
+                            collegeId: widget.data.colleges[index].id!,
+                            collegeName: widget.data.colleges[index].name!,
+                            ),
+                        afterAdd: widget.onTapSubData,
+                      );
+                    } else if (MySharedPreferences.filter.wizardType == WizardType.universities) {
+                      context.push(
+                        DepartmentScreen(
+                          collegeId: widget.data.id!,
+                          majorId: widget.data.majors[index].id!,
+                        ),
+                      );
+                    }
+                  },
+                  child: Container(
+                    height: 34,
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                    decoration: BoxDecoration(
+                      color: context.colorPalette.greyEEE,
+                      borderRadius:
+                          BorderRadius.circular(MyTheme.radiusSecondary),
+                    ),
+                    child: Text(
+                      getName(index),
+                      style: TextStyle(
+                        color: context.colorPalette.grey66,
+                        fontSize: 12,
+                      ),
                     ),
                   ),
                 );

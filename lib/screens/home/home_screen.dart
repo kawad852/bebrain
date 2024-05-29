@@ -10,6 +10,7 @@ import 'package:bebrain/screens/home/widgets/action_container.dart';
 import 'package:bebrain/screens/home/widgets/appbar_text.dart';
 import 'package:bebrain/screens/home/widgets/departments_card.dart';
 import 'package:bebrain/screens/home/widgets/eduction_card.dart';
+import 'package:bebrain/screens/home/widgets/filter_loading.dart';
 import 'package:bebrain/screens/home/widgets/my_subscription.dart';
 import 'package:bebrain/utils/app_constants.dart';
 import 'package:bebrain/utils/base_extensions.dart';
@@ -22,6 +23,7 @@ import 'package:bebrain/widgets/custom_network_image.dart';
 import 'package:bebrain/widgets/custom_smoth_indicator.dart';
 import 'package:bebrain/widgets/custom_svg.dart';
 import 'package:bebrain/widgets/distinguished_lectures.dart';
+import 'package:bebrain/widgets/shimmer/shimmer_loading.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -41,12 +43,15 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<dynamic> _initializeFuture() async {
     switch (MySharedPreferences.filter.wizardType) {
       case WizardType.countries:
-        return _mainProvider.filterByCountry(1);
+        return _mainProvider
+            .filterByCountry(MySharedPreferences.filter.countryId!);
       case WizardType.universities:
-        return _mainProvider.filterByUniversity(1);
+        return _mainProvider
+            .filterByUniversity(MySharedPreferences.filter.universityId!);
       case WizardType.colleges:
       case WizardType.specialities:
-        return _mainProvider.filterByCollege(1);
+        return _mainProvider
+            .filterByCollege(MySharedPreferences.filter.collegeId!);
     }
   }
 
@@ -73,9 +78,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   //test
                   UiHelper.addFilter(context,
                       filterModel: FilterModel(
-                        wizardType: WizardType.colleges,
-                        collegeId: 1
-                      ), afterAdd: () {
+                          wizardType: WizardType.countries,
+                          countryId: 1,
+                          countryName: "الأردن"), afterAdd: () {
                     setState(() {
                       _future = _initializeFuture();
                     });
@@ -155,11 +160,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: 110,
                   child: ListView.separated(
-                    separatorBuilder: (context, index) =>
-                        const SizedBox(width: 7),
+                    separatorBuilder: (context, index) => const SizedBox(width: 7),
                     itemCount: 10,
-                    padding:
-                        const EdgeInsetsDirectional.only(top: 10, start: 13),
+                    padding: const EdgeInsetsDirectional.only(top: 10, start: 13),
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, indxe) {
@@ -172,16 +175,20 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           CustomFutureBuilder(
             future: _future,
+            sliver: true,
             onRetry: () {
               setState(() {
                 _future = _initializeFuture();
               });
             },
-            sliver: true,
+            onLoading: () {
+              return const ShimmerLoading(child: FilterLoading());
+            },
             onComplete: (context, snapshot) {
               late final dynamic filter;
               late final List<dynamic> data;
               late final List<cou.Professor> professors;
+              int? collegeId;
 
               switch (MySharedPreferences.filter.wizardType) {
                 case WizardType.countries:
@@ -196,6 +203,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 case WizardType.specialities:
                   filter = snapshot.data! as CollegeFilterModel;
                   data = filter.data!.majors! as List<Major>;
+                  collegeId = filter.data!.college!.id!;
                   professors = filter.data!.professors!;
               }
               return SliverPadding(
@@ -205,11 +213,18 @@ class _HomeScreenState extends State<HomeScreen> {
                     offset: ViewportOffset.zero(),
                     slivers: [
                       SliverList.separated(
-                        separatorBuilder: (context, index) =>
-                            const SizedBox(height: 5),
+                        separatorBuilder: (context, index) => const SizedBox(height: 8),
                         itemCount: data.length,
                         itemBuilder: (context, index) {
-                          return DepartmentsCard(data: data[index]);
+                          return DepartmentsCard(
+                            data: data[index],
+                            collegeId: collegeId,
+                            onTapSubData: () {
+                              setState(() {
+                                _future = _initializeFuture();
+                              });
+                            },
+                          );
                         },
                       ),
                       SliverToBoxAdapter(

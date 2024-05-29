@@ -135,8 +135,10 @@ class Course {
     String? name;
     String? description;
     String? image;
-    int? price;
-    int? discountPrice;
+    double? price;
+    double? discountPrice;
+    int? videosCount;
+    int? unitCount;
     int? collegeId;
     String? college;
     int? majorId;
@@ -151,6 +153,8 @@ class Course {
         this.image,
         this.price,
         this.discountPrice,
+        this.videosCount,
+        this.unitCount,
         this.collegeId,
         this.college,
         this.majorId,
@@ -164,8 +168,10 @@ class Course {
         name: json["name"],
         description: json["description"],
         image: json["image"],
-        price: json["price"],
-        discountPrice: json["discount_price"],
+        price: json["price"]?.toDouble(),
+        discountPrice: json["discount_price"]?.toDouble(),
+        videosCount: json['videos_count'],
+        unitCount: json['units_count'],
         collegeId: json["college_id"],
         college: json["college"],
         majorId: json["major_id"],
@@ -181,6 +187,8 @@ class Course {
         "image": image,
         "price": price,
         "discount_price": discountPrice,
+        "videos_count":videosCount,
+        "units_count":unitCount,
         "college_id": collegeId,
         "college": college,
         "major_id": majorId,

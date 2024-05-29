@@ -1,6 +1,6 @@
+import 'package:bebrain/model/country_filter_model.dart';
 import 'package:bebrain/screens/course/course_screen.dart';
 import 'package:bebrain/screens/department/widgets/text_course.dart';
-import 'package:bebrain/utils/app_constants.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/my_icons.dart';
 import 'package:bebrain/utils/my_theme.dart';
@@ -11,7 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class CourseCard extends StatelessWidget {
-  const CourseCard({super.key});
+  final Course course;
+  const CourseCard({super.key, required this.course});
 
   @override
   Widget build(BuildContext context) {
@@ -32,13 +33,13 @@ class CourseCard extends StatelessWidget {
         ),
         child: Row(
           children: [
-            const CustomNetworkImage(
-              kFakeImage,
+             CustomNetworkImage(
+              course.image!,
               width: 90,
               height: 90,
               radius: MyTheme.radiusSecondary,
               alignment: Alignment.topLeft,
-              child: EvaluationStar(
+              child: const EvaluationStar(
                 margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                 evaluation: "4.8",
               ),
@@ -49,16 +50,16 @@ class CourseCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextCourse(
-                    "اساسيات البرمجة المتقدمة",
+                    course.name!,
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                     color: context.colorPalette.black33,
                   ),
-                  const TextCourse(
-                    "د. عبدالله محمد",
+                   TextCourse(
+                    course.professor!,
                     fontSize: 14,
                   ),
-                  const TextCourse("وصف مختصر عن الكورس"),
+                   TextCourse(course.description!),
                   const SizedBox(height: 6),
                   Row(
                     children: [
@@ -71,12 +72,12 @@ class CourseCard extends StatelessWidget {
                       Padding(
                         padding:
                             const EdgeInsetsDirectional.only(start: 5, end: 8),
-                        child: TextCourse("20 ${context.appLocalization.video}"),
+                        child: TextCourse("${course.videosCount} ${context.appLocalization.video}"),
                       ),
                       const CustomSvg(MyIcons.axes),
                       Padding(
                         padding: const EdgeInsetsDirectional.only(start: 5),
-                        child: TextCourse("4 ${context.appLocalization.axes}"),
+                        child: TextCourse("${course.unitCount} ${context.appLocalization.axes}"),
                       ),
                     ],
                   ),
