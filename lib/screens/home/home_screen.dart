@@ -35,7 +35,7 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMixin{
   late MainProvider _mainProvider;
   late Future<dynamic> _future;
   int currentIndex = 0;
@@ -43,15 +43,12 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<dynamic> _initializeFuture() async {
     switch (MySharedPreferences.filter.wizardType) {
       case WizardType.countries:
-        return _mainProvider
-            .filterByCountry(MySharedPreferences.filter.countryId!);
+        return _mainProvider.filterByCountry(MySharedPreferences.filter.countryId!);
       case WizardType.universities:
-        return _mainProvider
-            .filterByUniversity(MySharedPreferences.filter.universityId!);
+        return _mainProvider.filterByUniversity(MySharedPreferences.filter.universityId!);
       case WizardType.colleges:
       case WizardType.specialities:
-        return _mainProvider
-            .filterByCollege(MySharedPreferences.filter.collegeId!);
+        return _mainProvider.filterByCollege(MySharedPreferences.filter.collegeId!);
     }
   }
 
@@ -65,6 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -243,4 +241,6 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+  @override
+  bool get wantKeepAlive => true;
 }

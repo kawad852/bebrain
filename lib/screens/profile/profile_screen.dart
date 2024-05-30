@@ -1,3 +1,4 @@
+import 'package:bebrain/screens/polifcy/policy_screen.dart';
 import 'package:bebrain/screens/profile/edit_profile_screen.dart';
 import 'package:bebrain/screens/profile/widgets/profile_tile.dart';
 import 'package:bebrain/screens/profile/widgets/study_info.dart';
@@ -101,17 +102,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     icon: MyIcons.appLanguage,
                   ),
                   ProfileTile(
-                    onTap: () {},
+                    onTap: () {
+                      context.push(const PolicyScreen(id: 3));
+                    },
                     title: context.appLocalization.getKnowAlmusaed,
                     icon: MyIcons.information,
                   ),
                   ProfileTile(
-                    onTap: () {},
+                    onTap: () {
+                      context.push(const PolicyScreen(id: 2));
+                    },
                     title: context.appLocalization.privacyPolicy,
                     icon: MyIcons.privacyPolicy,
                   ),
                   ProfileTile(
-                    onTap: () {},
+                    onTap: () {
+                      context.push(const PolicyScreen(id: 1));
+                    },
                     title: context.appLocalization.termsAndConditions,
                     icon: MyIcons.terms,
                   ),

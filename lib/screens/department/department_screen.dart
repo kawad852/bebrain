@@ -25,8 +25,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
   late Future<MajorFilterModel> _majorFuture;
 
   void _initializeFuture() async {
-    _majorFuture = _mainProvider.filterByMajor(
-        collegeId: widget.collegeId, majorId: widget.majorId);
+    _majorFuture = _mainProvider.filterByMajor(collegeId: widget.collegeId, majorId: widget.majorId);
   }
 
   @override
