@@ -12,6 +12,7 @@ import 'package:bebrain/screens/home/widgets/departments_card.dart';
 import 'package:bebrain/screens/home/widgets/eduction_card.dart';
 import 'package:bebrain/screens/home/widgets/filter_loading.dart';
 import 'package:bebrain/screens/home/widgets/my_subscription.dart';
+import 'package:bebrain/screens/registration/wizard_screen.dart';
 import 'package:bebrain/utils/app_constants.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/enums.dart';
@@ -73,16 +74,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
             actions: [
               ActionContainer(
                 onTap: () {
-                  //test
-                  UiHelper.addFilter(context,
-                      filterModel: FilterModel(
-                          wizardType: WizardType.countries,
-                          countryId: 1,
-                          countryName: "الأردن"), afterAdd: () {
-                    setState(() {
-                      _future = _initializeFuture();
-                    });
-                  });
+                  context.push(const WizardScreen(wizardType: WizardType.countries));
                 },
                 hasBorder: true,
                 child: const CustomSvg(MyIcons.filter),

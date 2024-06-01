@@ -70,6 +70,8 @@ class _DepartmentsCardState extends State<DepartmentsCard> {
                     UiHelper.addFilter(context, 
                     filterModel:FilterModel(
                       wizardType: WizardType.universities,
+                      countryId: MySharedPreferences.filter.countryId,
+                      countryName: MySharedPreferences.filter.countryName,
                       universityId: widget.data!.id!,
                       universityName: widget.data.name!,
                     ),
@@ -80,6 +82,10 @@ class _DepartmentsCardState extends State<DepartmentsCard> {
                     UiHelper.addFilter(context, 
                     filterModel:FilterModel(
                       wizardType: WizardType.colleges,
+                      countryId: MySharedPreferences.filter.countryId,
+                      countryName: MySharedPreferences.filter.countryName,
+                      universityId: MySharedPreferences.filter.universityId,
+                      universityName: MySharedPreferences.filter.universityName,
                       collegeId: widget.data!.id!,
                       collegeName: widget.data.name!,
                     ),
@@ -118,6 +124,8 @@ class _DepartmentsCardState extends State<DepartmentsCard> {
                         context,
                         filterModel: FilterModel(
                             wizardType: WizardType.colleges,
+                            countryId: MySharedPreferences.filter.countryId,
+                            countryName: MySharedPreferences.filter.countryName,
                             universityId: widget.data.id!,
                             universityName: widget.data.name!,
                             collegeId: widget.data.colleges[index].id!,

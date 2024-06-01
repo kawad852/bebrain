@@ -78,8 +78,8 @@ class AuthProvider extends ChangeNotifier {
           if (!context.mounted) return;
           updateUser(context, userModel: snapshot.data!.user);
           if (_lastRouteName == null) {
-            context.pushAndRemoveUntil(const AppNavBar());
-            context.push(const WizardScreen(wizardType: WizardType.countries));
+            //context.pushAndRemoveUntil(const AppNavBar());
+            context.pushAndRemoveUntil(const WizardScreen(wizardType: WizardType.countries));
           } else {
             _popUntilLastPage(context);
           }
@@ -124,8 +124,8 @@ class AuthProvider extends ChangeNotifier {
           context.showSnackBar(context.appLocalization.accountCreatedMsg, duration: 10);
           updateUser(context, userModel: snapshot.data!.user);
           if (_lastRouteName == null) {
-            context.pushAndRemoveUntil(const AppNavBar());
-            context.push(const WizardScreen(wizardType: WizardType.countries));
+           // context.pushAndRemoveUntil(const AppNavBar());
+            context.pushAndRemoveUntil(const WizardScreen(wizardType: WizardType.countries));
           } else {
             _popUntilLastPage(context);
           }
@@ -332,21 +332,21 @@ class AuthProvider extends ChangeNotifier {
     required FilterModel filterModel,
     bool notify = true,
   }) async {
-    if (filterModel.countryId != null) {
+    //if (filterModel.countryId != null) {
       MySharedPreferences.saveFilter(filterModel);
-    } else {
-      MySharedPreferences.saveFilter(FilterModel(
-        wizardType: filterModel.wizardType ?? MySharedPreferences.filter.wizardType,
-        countryId: filterModel.countryId ?? MySharedPreferences.filter.countryId,
-        countryName: filterModel.countryName ?? MySharedPreferences.filter.countryName,
-        universityId: filterModel.universityId ?? MySharedPreferences.filter.universityId,
-        universityName: filterModel.universityName ?? MySharedPreferences.filter.universityName,
-        collegeId: filterModel.collegeId ?? MySharedPreferences.filter.collegeId,
-        collegeName: filterModel.collegeName ?? MySharedPreferences.filter.collegeName,
-        majorId: filterModel.majorId ?? MySharedPreferences.filter.majorId,
-        majorName: filterModel.majorName ?? MySharedPreferences.filter.majorName,
-      ));
-    }
+    //} else {
+      // MySharedPreferences.saveFilter(FilterModel(
+      //   wizardType: filterModel.wizardType ?? MySharedPreferences.filter.wizardType,
+      //   countryId: filterModel.countryId ?? MySharedPreferences.filter.countryId,
+      //   countryName: filterModel.countryName ?? MySharedPreferences.filter.countryName,
+      //   universityId: filterModel.universityId ?? MySharedPreferences.filter.universityId,
+      //   universityName: filterModel.universityName ?? MySharedPreferences.filter.universityName,
+      //   collegeId: filterModel.collegeId ?? MySharedPreferences.filter.collegeId,
+      //   collegeName: filterModel.collegeName ?? MySharedPreferences.filter.collegeName,
+      //   majorId: filterModel.majorId ?? MySharedPreferences.filter.majorId,
+      //   majorName: filterModel.majorName ?? MySharedPreferences.filter.majorName,
+      // ));
+    //}
     debugPrint("Filter:: ${MySharedPreferences.filter.toJson()}");
     if (notify) {
       notifyListeners();

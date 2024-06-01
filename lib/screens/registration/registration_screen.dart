@@ -105,7 +105,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         actions: [
           TextButton(
             onPressed: () {
-              context.pushAndRemoveUntil(const AppNavBar());
+              context.pushAndRemoveUntil(const WizardScreen(wizardType: WizardType.countries));
             },
             child: Text(context.appLocalization.guestBrowse),
           ),

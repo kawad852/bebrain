@@ -17,10 +17,14 @@ class UiHelper {
         context,
         future: () async {
           final updateFilter = context.authProvider.updateProfile(context, {
-            if (filterModel.countryId != null) "country_id": filterModel.countryId,
-            if (filterModel.universityId != null) "university_id": filterModel.universityId,
-            if (filterModel.collegeId != null) "college_id": filterModel.collegeId,
-            if (filterModel.majorId != null) "major_id": filterModel.majorId,
+            //if (filterModel.countryId != null)
+             "country_id": filterModel.countryId??"",
+            //if (filterModel.universityId != null)
+             "university_id": filterModel.universityId??"",
+            //if (filterModel.collegeId != null) 
+            "college_id": filterModel.collegeId??"",
+            //if (filterModel.majorId != null)
+             "major_id": filterModel.majorId??"",
           });
           return updateFilter;
         },

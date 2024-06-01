@@ -54,6 +54,7 @@ class UserData {
     String? locale;
     int? countryId;
     String? country;
+    String? countryCode;
     int? universityId;
     String? universityName;
     int? collegeId;
@@ -73,6 +74,7 @@ class UserData {
         this.locale,
         this.countryId,
         this.country,
+        this.countryCode,
         this.universityId,
         this.universityName,
         this.collegeId,
@@ -95,6 +97,7 @@ class UserData {
         locale: json["locale"],
         countryId: json["country_id"],
         country: json["country"],
+        countryCode: json["country_code"],
         universityId: json["university_id"],
         universityName: json["university_name"],
         collegeId: json["college_id"],
@@ -115,6 +118,7 @@ class UserData {
         "locale": locale,
         "country_id": countryId,
         "country": country,
+        "country_code":countryCode,
         "university_id": universityId,
         "university_name": universityName,
         "college_id": collegeId,

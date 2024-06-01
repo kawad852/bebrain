@@ -34,6 +34,7 @@ class _WizardScreenState extends State<WizardScreen> {
   WizardInfoModel? _info;
   late Future<WizardModel> _future;
   int? _selectedId;
+  String? _selectedName;
   Timer? _debounce;
   String _query = '';
 
@@ -103,12 +104,20 @@ class _WizardScreenState extends State<WizardScreen> {
     switch (widget.wizardType) {
       case WizardType.countries:
         context.authProvider.wizardValues.countryId = _selectedId;
+        context.authProvider.wizardValues.countryName=_selectedName;
+        context.authProvider.wizardValues.wizardType=WizardType.countries;
       case WizardType.universities:
         context.authProvider.wizardValues.universityId = _selectedId;
+        context.authProvider.wizardValues.universityName=_selectedName;
+        context.authProvider.wizardValues.wizardType=WizardType.universities;
       case WizardType.colleges:
         context.authProvider.wizardValues.collegeId = _selectedId;
+        context.authProvider.wizardValues.collegeName=_selectedName;
+        context.authProvider.wizardValues.wizardType=WizardType.colleges;
       case WizardType.specialities:
         context.authProvider.wizardValues.majorId = _selectedId;
+        context.authProvider.wizardValues.majorName=_selectedName;
+        context.authProvider.wizardValues.wizardType=WizardType.specialities;
       default:
         break;
     }
@@ -117,8 +126,10 @@ class _WizardScreenState extends State<WizardScreen> {
   void _onNext(BuildContext context) {
     saveWizardValue();
     if (_info!.nextType == null) {
-      UiHelper.addFilter(context, filterModel: context.authProvider.wizardValues).then((value) {
-        Navigator.popUntil(context, (route) => route.isFirst);
+      UiHelper.addFilter(context, filterModel: context.authProvider.wizardValues,
+      afterAdd: (){
+        context.pushAndRemoveUntil(const AppNavBar());
+       // Navigator.popUntil(context, (route) => route.isFirst);
       });
     } else {
       context.push(
@@ -171,9 +182,14 @@ class _WizardScreenState extends State<WizardScreen> {
             backgroundColor: Colors.transparent,
             surfaceTintColor: Colors.transparent,
             actions: [
+              if(widget.wizardType != WizardType.countries)
               TextButton(
                 onPressed: () {
-                  context.pushAndRemoveUntil(const AppNavBar());
+                  UiHelper.addFilter(context, filterModel: context.authProvider.wizardValues,
+                   afterAdd: (){
+                   context.pushAndRemoveUntil(const AppNavBar());
+                   });
+                 // context.pushAndRemoveUntil(const AppNavBar());
                 },
                 child: Text(context.appLocalization.skip),
               ),
@@ -227,6 +243,7 @@ class _WizardScreenState extends State<WizardScreen> {
                         onTap: () {
                           setState(() {
                             _selectedId = element.id;
+                            _selectedName=element.name!;
                           });
                         },
                         leading: widget.wizardType == WizardType.countries
