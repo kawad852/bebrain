@@ -22,6 +22,7 @@ class AuthProvider extends ChangeNotifier {
   String? _lastRouteName;
   bool _executeLastRouteCallback = false;
   FirebaseAuth get _firebaseAuth => FirebaseAuth.instance;
+  var wizardValues = FilterModel();
 
   bool get isAuthenticated => user.id != null;
 
@@ -80,7 +81,7 @@ class AuthProvider extends ChangeNotifier {
             // if (snapshot.data!.user!.invitationCodeStatus == 0) {
             //   // context.pushAndRemoveUntil(const InvitationCodeScreen());
             // } else {
-              context.pushAndRemoveUntil(const AppNavBar());
+            context.pushAndRemoveUntil(const AppNavBar());
             //}
           } else {
             _popUntilLastPage(context);
@@ -334,23 +335,21 @@ class AuthProvider extends ChangeNotifier {
     required FilterModel filterModel,
     bool notify = true,
   }) async {
-    if(filterModel.countryId!=null){
+    if (filterModel.countryId != null) {
       MySharedPreferences.saveFilter(filterModel);
-    }
-    else{
-    MySharedPreferences.saveFilter(
-      FilterModel(
+    } else {
+      MySharedPreferences.saveFilter(FilterModel(
         wizardType: filterModel.wizardType ?? MySharedPreferences.filter.wizardType,
-        countryId: filterModel.countryId?? MySharedPreferences.filter.countryId,
-        countryName: filterModel.countryName?? MySharedPreferences.filter.countryName,
-        universityId: filterModel.universityId?? MySharedPreferences.filter.universityId,
-        universityName: filterModel.universityName?? MySharedPreferences.filter.universityName,
-        collegeId: filterModel.collegeId?? MySharedPreferences.filter.collegeId,
-        collegeName: filterModel.collegeName?? MySharedPreferences.filter.collegeName,
-        majorId: filterModel.majorId?? MySharedPreferences.filter.majorId,
-        majorName: filterModel.majorName?? MySharedPreferences.filter.majorName,
+        countryId: filterModel.countryId ?? MySharedPreferences.filter.countryId,
+        countryName: filterModel.countryName ?? MySharedPreferences.filter.countryName,
+        universityId: filterModel.universityId ?? MySharedPreferences.filter.universityId,
+        universityName: filterModel.universityName ?? MySharedPreferences.filter.universityName,
+        collegeId: filterModel.collegeId ?? MySharedPreferences.filter.collegeId,
+        collegeName: filterModel.collegeName ?? MySharedPreferences.filter.collegeName,
+        majorId: filterModel.majorId ?? MySharedPreferences.filter.majorId,
+        majorName: filterModel.majorName ?? MySharedPreferences.filter.majorName,
       ));
-      }
+    }
     debugPrint("Filter:: ${MySharedPreferences.filter.toJson()}");
     if (notify) {
       notifyListeners();

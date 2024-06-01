@@ -99,9 +99,28 @@ class _WizardScreenState extends State<WizardScreen> {
     }
   }
 
+  void saveWizardValue() {
+    print("widget.wizardType:::: ${widget.wizardType}");
+    switch (widget.wizardType) {
+      case WizardType.countries:
+        context.authProvider.wizardValues.countryId = _selectedId;
+      case WizardType.universities:
+        context.authProvider.wizardValues.universityId = _selectedId;
+      case WizardType.colleges:
+        context.authProvider.wizardValues.collegeId = _selectedId;
+      case WizardType.specialities:
+        context.authProvider.wizardValues.majorId = _selectedId;
+      default:
+        break;
+    }
+  }
+
   void _onNext(BuildContext context) {
+    saveWizardValue();
     if (_info!.nextType == null) {
-      Navigator.popUntil(context, (route) => route.isFirst);
+      UiHelper.addFilter(context, filterModel: context.authProvider.wizardValues).then((value) {
+        Navigator.popUntil(context, (route) => route.isFirst);
+      });
     } else {
       context.push(
         WizardScreen(
