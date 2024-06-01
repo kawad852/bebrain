@@ -100,7 +100,6 @@ class _WizardScreenState extends State<WizardScreen> {
   }
 
   void saveWizardValue() {
-    print("widget.wizardType:::: ${widget.wizardType}");
     switch (widget.wizardType) {
       case WizardType.countries:
         context.authProvider.wizardValues.countryId = _selectedId;

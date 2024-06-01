@@ -114,7 +114,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           ? FloatingActionButton(
               onPressed: () {
                 context.push(
-                  WizardScreen(wizardType: WizardType.countries),
+                  const WizardScreen(wizardType: WizardType.countries),
                 );
               },
             )
