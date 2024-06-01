@@ -18,7 +18,8 @@ class PasswordEditor extends StatefulWidget {
     required this.initialValue,
     this.withErrorIndicator = true,
     this.isConfirm = false,
-    this.password, this.title,
+    this.password,
+    this.title,
   });
 
   @override
@@ -31,7 +32,11 @@ class _PasswordEditorState extends State<PasswordEditor> {
   @override
   Widget build(BuildContext context) {
     return TitledTextField(
-      title:widget.title != null? widget.title!: widget.isConfirm ? context.appLocalization.confirmPassword : context.appLocalization.password,
+      title: widget.title != null
+          ? widget.title!
+          : widget.isConfirm
+              ? context.appLocalization.confirmPassword
+              : context.appLocalization.password,
       child: BaseEditor(
         initialValue: widget.initialValue,
         obscureText: _obscureText,
@@ -58,7 +63,6 @@ class _PasswordEditorState extends State<PasswordEditor> {
         },
         validator: (value) {
           if (widget.isConfirm) {
-            print("alksfjajlksfjasjklf");
             return widget.password == value ? null : context.appLocalization.passwordNotMatch;
           }
           return ValidationHelper.password(context, value);

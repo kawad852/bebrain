@@ -18,7 +18,5 @@ class ApiUrl {
   static const String collegeFilter = '/api/college-filter';
   static const String majorFilter = '/api/major-filter';
   static const String policy = '/api/pages';
-
-
-
+  static const String updatePassword = '/api/password/update';
 }

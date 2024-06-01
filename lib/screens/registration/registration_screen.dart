@@ -4,6 +4,7 @@ import 'package:bebrain/helper/phone_controller.dart';
 import 'package:bebrain/providers/auth_provider.dart';
 import 'package:bebrain/screens/base/app_nav_bar.dart';
 import 'package:bebrain/screens/registration/create_account_screen.dart';
+import 'package:bebrain/screens/registration/forget_password/forget_password_screen.dart';
 import 'package:bebrain/screens/registration/widgets/auth_button.dart';
 import 'package:bebrain/screens/registration/widgets/auth_header.dart';
 import 'package:bebrain/screens/registration/wizard_screen.dart';
@@ -161,7 +162,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             Align(
               alignment: AlignmentDirectional.centerEnd,
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  context.push(const ForgetPasswordScreen());
+                },
                 style: TextButton.styleFrom(
                   foregroundColor: context.colorPalette.red232,
                 ),

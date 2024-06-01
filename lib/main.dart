@@ -51,7 +51,7 @@ Future<void> main() async {
   unawaited(AppProvider.getCountryCode());
   await MySharedPreferences.init();
   // FlutterBranchSdk.validateSDKIntegration();
-  // MySharedPreferences.clearStorage();
+  MySharedPreferences.clearStorage();
   // MySharedPreferences.isPassedIntro = false;
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   FirebaseMessaging.onBackgroundMessage(onBackgroundMessage);

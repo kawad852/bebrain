@@ -1,6 +1,7 @@
 import 'package:bebrain/alerts/feedback/app_feedback.dart';
 import 'package:bebrain/alerts/loading/app_over_loader.dart';
 import 'package:bebrain/providers/auth_provider.dart';
+import 'package:bebrain/screens/registration/forget_password/reset_password_screen.dart';
 import 'package:bebrain/screens/registration/widgets/auth_header.dart';
 import 'package:bebrain/screens/registration/widgets/pincode_field.dart';
 import 'package:bebrain/utils/base_extensions.dart';
@@ -11,8 +12,8 @@ import 'package:flutter/material.dart';
 class VerifyCodeScreen extends StatefulWidget {
   final String dialCode;
   final String phoneNum;
-  final String password;
-  final String fullName;
+  final String? password;
+  final String? fullName;
   final String verificationId;
   final String? guestRoute;
 
@@ -40,13 +41,24 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
       AppOverlayLoader.show();
       fire_auth.PhoneAuthCredential credential = fire_auth.PhoneAuthProvider.credential(verificationId: _verificationId, smsCode: _pinCodeCtrl.text);
       final auth = await fire_auth.FirebaseAuth.instance.signInWithCredential(credential);
-      if (context.mounted) {
-        await _userProvider.createAccount(
-          context,
-          phoneNum: '${widget.dialCode}${widget.phoneNum}',
-          fullName: widget.fullName,
-          password: widget.password,
-        );
+      if (widget.password == null) {
+        if (context.mounted) {
+          context.push(
+            ResetPasswordScreen(
+              dialCode: widget.dialCode,
+              phoneNum: widget.phoneNum,
+            ),
+          );
+        }
+      } else {
+        if (context.mounted) {
+          await _userProvider.createAccount(
+            context,
+            phoneNum: '${widget.dialCode}${widget.phoneNum}',
+            fullName: widget.fullName,
+            password: widget.password,
+          );
+        }
       }
     } on fire_auth.FirebaseAuthException catch (e) {
       AppOverlayLoader.hide();
@@ -65,6 +77,8 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
       if (context.mounted) {
         context.showSnackBar(context.appLocalization.generalError);
       }
+    } finally {
+      AppOverlayLoader.hide();
     }
   }
 
@@ -110,7 +124,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
         padding: const EdgeInsets.all(20),
         children: [
           AuthHeader(
-            title: context.appLocalization.verifyCode,
+            title: context.appLocalization.verifyPhoneNum,
             body: context.appLocalization.verifyCodeMsg,
           ),
           PinCodeField(

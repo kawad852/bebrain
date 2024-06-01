@@ -158,6 +158,7 @@
   "codeExpired": "انتهت صلاحية الرمز",
   "enterPhoneCode": "أدخل رمز التحقق",
   "verifyCode": "تفعيل الحساب",
+  "verifyPhoneNum": "تحقق من هاتفك",
   "verifyCodeMsg": "يرجى إدخال رمز التحقق OTP الذي تم ارساله الى رقم الهاتف المحمول.",
   "noPinReceived": "لم يتم استلام الرمز؟",
   "resend": "إعادة الإرسال",
@@ -169,5 +170,10 @@
   "searchSpecialty": "ابحث عن اسم التخصص",
   "canChangeCollege": "يمكنك تغيير الكلية في اي وقت",
   "canChangeSpecialty": "يمكنك تغيير التخصص في اي وقت",
-  "skip": "تخطي"
+  "skip": "تخطي",
+  "forgetPasswordTitle": "نسيت كلمة المرور؟",
+  "forgetPasswordBody": "لإعادة تعيين كلمة المرور يرجى إدخال رقم الهاتف المحمول و سيتم إرسال رمز التحقق.",
+  "resetPasswordTitle": "إعادة تعيين كلمة المرور",
+  "resetPasswordBody": "يجب أن تكون كلمة المرور الجديدة مختلفة عن كلمة المرور السابقة",
+  "passwordUpdatedMsg": "تم تحديث كلمة المرور بنجاح"
 }

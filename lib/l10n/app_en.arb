@@ -158,6 +158,7 @@
   "codeExpired": "Code Expired",
   "enterPhoneCode": "Enter Verification Code",
   "verifyCode": "Verify Account",
+  "verifyPhoneNum": "Verify Your Phone Number",
   "verifyCodeMsg": "Please enter the OTP verification code sent to the mobile number.",
   "noPinReceived": "Didn't receive pin code ?",
   "resend": "Resend",
@@ -169,5 +170,10 @@
   "searchSpecialty": "Search for the specialty",
   "canChangeCollege": "You can change your college at any time",
   "canChangeSpecialty": "You can change your specialty at any time",
-  "skip": "Skip"
+  "skip": "Skip",
+  "forgetPasswordTitle": "Forgot Password ?",
+  "forgetPasswordBody": "To reset your password, please enter your mobile phone number and a verification code will be sent.",
+  "resetPasswordTitle": "Reset Password",
+  "resetPasswordBody": "The new password must be different from the previous password",
+  "passwordUpdatedMsg": "Password Updated Successfully"
 }

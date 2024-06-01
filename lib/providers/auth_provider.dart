@@ -267,8 +267,8 @@ class AuthProvider extends ChangeNotifier {
     bool withOverLayLoading = true,
     required String dialCode,
     required String phoneNum,
-    required String password,
-    required String fullName,
+    String? password,
+    String? fullName,
   }) async {
     debugPrint("DialCode:: $dialCode PhoneNum:: $phoneNum");
     if (withOverLayLoading) {
