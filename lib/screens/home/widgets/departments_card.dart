@@ -4,7 +4,6 @@ import 'package:bebrain/screens/department/department_screen.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/enums.dart';
 import 'package:bebrain/utils/my_theme.dart';
-import 'package:bebrain/utils/shared_pref.dart';
 import 'package:bebrain/widgets/courses_list.dart';
 import 'package:bebrain/widgets/more_button.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +21,7 @@ class DepartmentsCard extends StatefulWidget {
 
 class _DepartmentsCardState extends State<DepartmentsCard> {
   int getLengthData() {
-    switch (MySharedPreferences.filter.wizardType) {
+    switch (context.authProvider.wizardValues.wizardType) {
       case WizardType.countries:
         return widget.data.colleges!.length;
       case WizardType.universities:
@@ -33,7 +32,7 @@ class _DepartmentsCardState extends State<DepartmentsCard> {
   }
 
   String getName(int index) {
-    switch (MySharedPreferences.filter.wizardType) {
+    switch (context.authProvider.wizardValues.wizardType) {
       case WizardType.countries:
         return widget.data.colleges![index].name!;
       case WizardType.universities:
@@ -66,26 +65,28 @@ class _DepartmentsCardState extends State<DepartmentsCard> {
               ),
               MoreButton(
                 onTap: () {
-                  if(MySharedPreferences.filter.wizardType==WizardType.countries){
+                  if(context.authProvider.wizardValues.wizardType==WizardType.countries){
                     UiHelper.addFilter(context, 
                     filterModel:FilterModel(
                       wizardType: WizardType.universities,
-                      countryId: MySharedPreferences.filter.countryId,
-                      countryName: MySharedPreferences.filter.countryName,
+                      countryId: context.authProvider.wizardValues.countryId,
+                      countryCode:context.authProvider.wizardValues.countryCode ,
+                      countryName: context.authProvider.wizardValues.countryName,
                       universityId: widget.data!.id!,
                       universityName: widget.data.name!,
                     ),
                     afterAdd: widget.onTapSubData,
                     );
                   }
-                  else if(MySharedPreferences.filter.wizardType==WizardType.universities){
+                  else if(context.authProvider.wizardValues.wizardType==WizardType.universities){
                     UiHelper.addFilter(context, 
                     filterModel:FilterModel(
                       wizardType: WizardType.colleges,
-                      countryId: MySharedPreferences.filter.countryId,
-                      countryName: MySharedPreferences.filter.countryName,
-                      universityId: MySharedPreferences.filter.universityId,
-                      universityName: MySharedPreferences.filter.universityName,
+                      countryId: context.authProvider.wizardValues.countryId,
+                      countryName: context.authProvider.wizardValues.countryName,
+                      countryCode: context.authProvider.wizardValues.countryCode,
+                      universityId: context.authProvider.wizardValues.universityId,
+                      universityName: context.authProvider.wizardValues.universityName,
                       collegeId: widget.data!.id!,
                       collegeName: widget.data.name!,
                     ),
@@ -106,8 +107,8 @@ class _DepartmentsCardState extends State<DepartmentsCard> {
           ),
         ),
         CoursesList(courses: widget.data.courses!),
-        if (MySharedPreferences.filter.wizardType != WizardType.colleges &&
-            MySharedPreferences.filter.wizardType != WizardType.specialities)
+        if (context.authProvider.wizardValues.wizardType != WizardType.colleges &&
+            context.authProvider.wizardValues.wizardType != WizardType.specialities)
           SizedBox(
             height: 50,
             child: ListView.separated(
@@ -119,13 +120,14 @@ class _DepartmentsCardState extends State<DepartmentsCard> {
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
-                    if (MySharedPreferences.filter.wizardType == WizardType.countries) {
+                    if (context.authProvider.wizardValues.wizardType == WizardType.countries) {
                       UiHelper.addFilter(
                         context,
                         filterModel: FilterModel(
                             wizardType: WizardType.colleges,
-                            countryId: MySharedPreferences.filter.countryId,
-                            countryName: MySharedPreferences.filter.countryName,
+                            countryId: context.authProvider.wizardValues.countryId,
+                            countryName: context.authProvider.wizardValues.countryName,
+                            countryCode:context.authProvider.wizardValues.countryCode ,
                             universityId: widget.data.id!,
                             universityName: widget.data.name!,
                             collegeId: widget.data.colleges[index].id!,
@@ -133,7 +135,7 @@ class _DepartmentsCardState extends State<DepartmentsCard> {
                             ),
                         afterAdd: widget.onTapSubData,
                       );
-                    } else if (MySharedPreferences.filter.wizardType == WizardType.universities) {
+                    } else if (context.authProvider.wizardValues.wizardType == WizardType.universities) {
                       context.push(
                         DepartmentScreen(
                           collegeId: widget.data.id!,

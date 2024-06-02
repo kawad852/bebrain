@@ -1,6 +1,6 @@
+import 'package:bebrain/model/country_filter_model.dart';
 import 'package:bebrain/screens/course/widgets/course_text.dart';
 import 'package:bebrain/screens/course/widgets/point.dart';
-import 'package:bebrain/utils/app_constants.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/my_icons.dart';
 import 'package:bebrain/utils/my_theme.dart';
@@ -10,7 +10,8 @@ import 'package:bebrain/widgets/more_button.dart';
 import 'package:flutter/material.dart';
 
 class LectureCard extends StatelessWidget {
-  const LectureCard({super.key});
+  final Professor professor;
+  const LectureCard({super.key, required this.professor});
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +29,8 @@ class LectureCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              const CustomNetworkImage(
-                kFakeImage,
+               CustomNetworkImage(
+                professor.image!,
                 width: 42,
                 height: 42,
                 radius: MyTheme.radiusSecondary,
@@ -41,9 +42,9 @@ class LectureCard extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        const Expanded(
+                         Expanded(
                           child: CourseText(
-                            "د. عبدالله محمد",
+                            professor.name!,
                             fontWeight: FontWeight.bold,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -98,9 +99,9 @@ class LectureCard extends StatelessWidget {
               ],
             ),
           ),
-          const Flexible(
+           Flexible(
             child: CourseText(
-              "حاصل على شهادة دكتوراة في محاسبة الشركات وعضوا هيئة تدريسية في الجامعة الأردنية ومحاضر اكاديمي في جامعة الزيتونة الأردنية",
+              professor.description!,
               fontSize: 12,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,

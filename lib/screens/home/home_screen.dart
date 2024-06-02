@@ -1,9 +1,7 @@
 import 'dart:developer';
 
-import 'package:bebrain/helper/ui_helper.dart';
 import 'package:bebrain/model/college_filter_model.dart';
 import 'package:bebrain/model/country_filter_model.dart' as cou;
-import 'package:bebrain/model/filter_model.dart';
 import 'package:bebrain/model/university_filter_model.dart' as un;
 import 'package:bebrain/providers/main_provider.dart';
 import 'package:bebrain/screens/home/widgets/action_container.dart';
@@ -42,14 +40,14 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
   int currentIndex = 0;
 
   Future<dynamic> _initializeFuture() async {
-    switch (MySharedPreferences.filter.wizardType) {
+    switch (context.authProvider.wizardValues.wizardType) {
       case WizardType.countries:
-        return _mainProvider.filterByCountry(MySharedPreferences.filter.countryId!);
+        return _mainProvider.filterByCountry(context.authProvider.wizardValues.countryId!);
       case WizardType.universities:
-        return _mainProvider.filterByUniversity(MySharedPreferences.filter.universityId!);
+        return _mainProvider.filterByUniversity(context.authProvider.wizardValues.universityId!);
       case WizardType.colleges:
       case WizardType.specialities:
-        return _mainProvider.filterByCollege(MySharedPreferences.filter.collegeId!);
+        return _mainProvider.filterByCollege(context.authProvider.wizardValues.collegeId!);
     }
   }
 
@@ -180,7 +178,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
               late final List<cou.Professor> professors;
               int? collegeId;
 
-              switch (MySharedPreferences.filter.wizardType) {
+              switch (context.authProvider.wizardValues.wizardType) {
                 case WizardType.countries:
                   filter = snapshot.data! as cou.CountryFilterModel;
                   data = filter.data!.universities! as List<cou.University>;

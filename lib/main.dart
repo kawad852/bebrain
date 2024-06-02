@@ -95,6 +95,7 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     _authProvider = context.authProvider;
     _authProvider.initUser();
+    _authProvider.initFilter();
     LocalNotificationsService.androidChannel = const AndroidNotificationChannel(
       'cnid', // id
       'cnid channel', // title

@@ -1,4 +1,5 @@
-import 'package:bebrain/screens/course/course_part_screen.dart';
+import 'package:bebrain/model/course_filter_model.dart';
+import 'package:bebrain/screens/course/unit_screen.dart';
 import 'package:bebrain/screens/course/widgets/course_text.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/my_icons.dart';
@@ -7,13 +8,14 @@ import 'package:bebrain/widgets/custom_svg.dart';
 import 'package:flutter/material.dart';
 
 class ContentCard extends StatelessWidget {
-  const ContentCard({super.key});
+  final Unit unit;
+  const ContentCard({super.key, required this.unit});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        context.push(const CoursePartScreen());
+        context.push(UnitScreen(unitId: unit.id!));
       },
       child: Container(
         width: double.infinity,
@@ -32,12 +34,12 @@ class ContentCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const CourseText(
-                    "الجزء الأول",
+                   CourseText(
+                    unit.name!,
                     fontWeight: FontWeight.bold,
                   ),
                   CourseText(
-                    "30 ${context.appLocalization.minute} , 3 ${context.appLocalization.videos} , 2 ${context.appLocalization.file}",
+                    "${unit.videosMinutes} ${context.appLocalization.minute} , ${unit.videosCount} ${context.appLocalization.videos} , ${unit.documentsCount} ${context.appLocalization.file}",
                     textColor: context.colorPalette.grey66,
                     fontSize: 12,
                   ),
@@ -48,14 +50,15 @@ class ContentCard extends StatelessWidget {
               /// مجاناوتم الاشتراك
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                if(unit.discountPrice!=0)
                 CourseText(
-                  "\$30",
+                  "\$${unit.discountPrice}",
                   textColor: context.colorPalette.grey66,
                   fontWeight: FontWeight.bold,
                   decoration: TextDecoration.lineThrough,
                 ),
-                const CourseText(
-                  "\$9",
+                 CourseText(
+                  "\$${unit.unitPrice}",
                   fontWeight: FontWeight.bold,
                 ),
               ],

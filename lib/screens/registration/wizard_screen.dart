@@ -35,6 +35,7 @@ class _WizardScreenState extends State<WizardScreen> {
   late Future<WizardModel> _future;
   int? _selectedId;
   String? _selectedName;
+  String countryCode='';
   Timer? _debounce;
   String _query = '';
 
@@ -106,6 +107,7 @@ class _WizardScreenState extends State<WizardScreen> {
         context.authProvider.wizardValues.countryId = _selectedId;
         context.authProvider.wizardValues.countryName=_selectedName;
         context.authProvider.wizardValues.wizardType=WizardType.countries;
+        context.authProvider.wizardValues.countryCode=countryCode;
       case WizardType.universities:
         context.authProvider.wizardValues.universityId = _selectedId;
         context.authProvider.wizardValues.universityName=_selectedName;
@@ -242,6 +244,9 @@ class _WizardScreenState extends State<WizardScreen> {
                         ),
                         onTap: () {
                           setState(() {
+                            if(widget.wizardType == WizardType.countries){
+                              countryCode=element.countryCode!;
+                            }
                             _selectedId = element.id;
                             _selectedName=element.name!;
                           });

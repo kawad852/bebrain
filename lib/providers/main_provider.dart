@@ -1,8 +1,10 @@
 import 'package:bebrain/model/college_filter_model.dart';
 import 'package:bebrain/model/country_filter_model.dart';
+import 'package:bebrain/model/course_filter_model.dart';
 import 'package:bebrain/model/major_filter_model.dart';
 import 'package:bebrain/model/policy_model.dart';
 import 'package:bebrain/model/professors_model.dart';
+import 'package:bebrain/model/unit_filter_model.dart';
 import 'package:bebrain/model/university_filter_model.dart';
 import 'package:bebrain/network/api_service.dart';
 import 'package:bebrain/network/api_url.dart';
@@ -58,6 +60,26 @@ class MainProvider extends ChangeNotifier {
       isPublic: true,
       apiType: ApiType.get,
       builder: MajorFilterModel.fromJson,
+    );
+    return snapshot;
+  }
+
+  Future<CourseFilterModel> filterByCourse(int courseId) {
+    final snapshot = ApiService<CourseFilterModel>().build(
+      url: "${ApiUrl.courseFilter}/$courseId",
+      isPublic: false,
+      apiType: ApiType.get,
+      builder: CourseFilterModel.fromJson,
+    );
+    return snapshot;
+  }
+
+   Future<UnitFilterModel> filterByUnit(int unitId) {
+    final snapshot = ApiService<UnitFilterModel>().build(
+      url: "${ApiUrl.unitFilter}/$unitId",
+      isPublic: false,
+      apiType: ApiType.get,
+      builder: UnitFilterModel.fromJson,
     );
     return snapshot;
   }

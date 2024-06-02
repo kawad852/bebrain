@@ -30,6 +30,10 @@ class AuthProvider extends ChangeNotifier {
     user = UserData.copy(MySharedPreferences.user);
   }
 
+  void initFilter(){
+    wizardValues=FilterModel.copy(MySharedPreferences.filter);
+  }
+
   void _popUntilLastPage(BuildContext context) {
     _executeLastRouteCallback = true;
     Navigator.popUntil(context, (route) => route.settings.name == _lastRouteName);
@@ -332,21 +336,8 @@ class AuthProvider extends ChangeNotifier {
     required FilterModel filterModel,
     bool notify = true,
   }) async {
-    //if (filterModel.countryId != null) {
-      MySharedPreferences.saveFilter(filterModel);
-    //} else {
-      // MySharedPreferences.saveFilter(FilterModel(
-      //   wizardType: filterModel.wizardType ?? MySharedPreferences.filter.wizardType,
-      //   countryId: filterModel.countryId ?? MySharedPreferences.filter.countryId,
-      //   countryName: filterModel.countryName ?? MySharedPreferences.filter.countryName,
-      //   universityId: filterModel.universityId ?? MySharedPreferences.filter.universityId,
-      //   universityName: filterModel.universityName ?? MySharedPreferences.filter.universityName,
-      //   collegeId: filterModel.collegeId ?? MySharedPreferences.filter.collegeId,
-      //   collegeName: filterModel.collegeName ?? MySharedPreferences.filter.collegeName,
-      //   majorId: filterModel.majorId ?? MySharedPreferences.filter.majorId,
-      //   majorName: filterModel.majorName ?? MySharedPreferences.filter.majorName,
-      // ));
-    //}
+    wizardValues = FilterModel.copy(filterModel);
+    MySharedPreferences.saveFilter(filterModel);
     debugPrint("Filter:: ${MySharedPreferences.filter.toJson()}");
     if (notify) {
       notifyListeners();

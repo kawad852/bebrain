@@ -1,3 +1,4 @@
+import 'package:bebrain/model/unit_filter_model.dart';
 import 'package:bebrain/screens/course/widgets/course_text.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/my_icons.dart';
@@ -6,7 +7,8 @@ import 'package:bebrain/widgets/custom_svg.dart';
 import 'package:flutter/material.dart';
 
 class PartCard extends StatelessWidget {
-  const PartCard({super.key});
+  final Section section;
+  const PartCard({super.key, required this.section});
 
   @override
   Widget build(BuildContext context) {
@@ -20,14 +22,15 @@ class PartCard extends StatelessWidget {
           /// مجاناوتم الاشتراك
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            if(section.discountPrice!=0)
             CourseText(
-              "\$30",
+              "\$${section.discountPrice}",
               textColor: context.colorPalette.grey66,
               fontWeight: FontWeight.bold,
               decoration: TextDecoration.lineThrough,
             ),
-            const CourseText(
-              "\$9",
+             CourseText(
+              "\$${section.sectionPrice}",
               fontWeight: FontWeight.bold,
             ),
           ],
@@ -41,12 +44,12 @@ class PartCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const CourseText(
-                    "القسم الأول",
+                   CourseText(
+                   section.name!,
                     fontWeight: FontWeight.bold,
                   ),
                   CourseText(
-                    "30 ${context.appLocalization.minute} , 3 ${context.appLocalization.videos} , 2 ${context.appLocalization.file}",
+                    "${section.numberOfMinutes} ${context.appLocalization.minute} , ${section.videosCount} ${context.appLocalization.videos} , ${section.documentsCount} ${context.appLocalization.file}",
                     textColor: context.colorPalette.grey66,
                     fontSize: 12,
                   ),
@@ -56,15 +59,16 @@ class PartCard extends StatelessWidget {
           ],
         ),
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
+          ...section.videos!.map((element){
+            return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
             child: Row(
               children: [
-                const CustomSvg(MyIcons.attach),
+                const CustomSvg(MyIcons.playCircle),
                 const SizedBox(width: 7),
-                const Expanded(
+                 Expanded(
                   child: CourseText(
-                    "حل قائمة الاصول الغير متداولة",
+                    element.name!,
                     fontSize: 12,
                     overflow: TextOverflow.ellipsis,
                     fontWeight: FontWeight.bold,
@@ -77,7 +81,8 @@ class PartCard extends StatelessWidget {
                 ),
               ],
             ),
-          ),
+          );
+          }).toList(),
           GestureDetector(
             onTap: () {},
             child: Container(

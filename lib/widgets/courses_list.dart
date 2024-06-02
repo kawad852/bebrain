@@ -35,7 +35,7 @@ class CoursesList extends StatelessWidget {
                 alignment:
                     context.isLTR ? Alignment.topLeft : Alignment.topRight,
                 radius: MyTheme.radiusSecondary,
-                onTap: () => context.push(const CourseScreen()),
+                onTap: () => context.push(CourseScreen(courseId:courses[index].id!)),
                 child: const EvaluationStar(
                   margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   evaluation: "4.8",

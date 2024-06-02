@@ -53,4 +53,5 @@ class MyIcons {
   static const String sms = '${_path}sms.svg';
   static const String messageEdit = '${_path}message-edit.svg';
   static const String phone = '${_path}phone.svg';
+  static const String playCircle = '${_path}play-circle.svg';
 }

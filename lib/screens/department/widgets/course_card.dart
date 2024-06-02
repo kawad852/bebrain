@@ -18,7 +18,7 @@ class CourseCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        context.push(const CourseScreen());
+        context.push(CourseScreen(courseId: course.id!));
       },
       child: Container(
         width: double.infinity,

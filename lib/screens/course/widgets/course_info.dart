@@ -5,7 +5,10 @@ import 'package:bebrain/widgets/custom_svg.dart';
 import 'package:flutter/material.dart';
 
 class CourseInfo extends StatelessWidget {
-  const CourseInfo({super.key});
+  final int videoCount;
+  final int hours;
+  final int minutes;
+  const CourseInfo({super.key, required this.videoCount, required this.hours, required this.minutes});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +36,7 @@ class CourseInfo extends StatelessWidget {
           child: Column(
             children: [
               CourseText(
-                "10h , 13 min",
+                "${hours}h , ${minutes}min",
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
@@ -51,7 +54,7 @@ class CourseInfo extends StatelessWidget {
           child: Column(
             children: [
               CourseText(
-                "20",
+                "$videoCount",
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
