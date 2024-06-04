@@ -1,5 +1,6 @@
 import 'package:bebrain/model/unit_filter_model.dart';
 import 'package:bebrain/screens/course/widgets/course_text.dart';
+import 'package:bebrain/screens/file/file_screen.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/my_icons.dart';
 import 'package:bebrain/utils/my_theme.dart';
@@ -22,14 +23,14 @@ class PartCard extends StatelessWidget {
           /// مجاناوتم الاشتراك
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            if(section.discountPrice!=0)
+            if (section.discountPrice != 0)
+              CourseText(
+                "\$${section.discountPrice}",
+                textColor: context.colorPalette.grey66,
+                fontWeight: FontWeight.bold,
+                decoration: TextDecoration.lineThrough,
+              ),
             CourseText(
-              "\$${section.discountPrice}",
-              textColor: context.colorPalette.grey66,
-              fontWeight: FontWeight.bold,
-              decoration: TextDecoration.lineThrough,
-            ),
-             CourseText(
               "\$${section.sectionPrice}",
               fontWeight: FontWeight.bold,
             ),
@@ -44,8 +45,8 @@ class PartCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                   CourseText(
-                   section.name!,
+                  CourseText(
+                    section.name!,
                     fontWeight: FontWeight.bold,
                   ),
                   CourseText(
@@ -59,29 +60,89 @@ class PartCard extends StatelessWidget {
           ],
         ),
         children: [
-          ...section.videos!.map((element){
+          ...section.videos!.map((element) {
             return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
-            child: Row(
-              children: [
-                const CustomSvg(MyIcons.playCircle),
-                const SizedBox(width: 7),
-                 Expanded(
-                  child: CourseText(
-                    element.name!,
-                    fontSize: 12,
-                    overflow: TextOverflow.ellipsis,
-                    fontWeight: FontWeight.bold,
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      const CustomSvg(MyIcons.playCircle),
+                      const SizedBox(width: 7),
+                      Expanded(
+                        child: CourseText(
+                          element.name!,
+                          fontSize: 12,
+                          overflow: TextOverflow.ellipsis,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      CourseText(
+                        "${element.period} ${context.appLocalization.minute}",
+                        fontSize: 12,
+                        textColor: context.colorPalette.grey66,
+                      ),
+                    ],
                   ),
+                  if (element.document != null) const SizedBox(height: 5),
+                  if (element.document != null)
+                    GestureDetector(
+                      onTap: () {
+                        context.push(
+                          FileScreen(
+                            url: element.document!,
+                            fileName: element.name!,
+                          ),
+                        );
+                      },
+                      child: Row(
+                        children: [
+                          const CustomSvg(MyIcons.attach),
+                          const SizedBox(width: 7),
+                          Expanded(
+                            child: CourseText(
+                              "${element.name!} (${context.appLocalization.attachedFile})",
+                              fontSize: 12,
+                              overflow: TextOverflow.ellipsis,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                ],
+              ),
+            );
+          }).toList(),
+          ...section.documents!.map((document) {
+            return GestureDetector(
+              onTap: () {
+                context.push(
+                  FileScreen(
+                    url: document.document!,
+                    fileName: document.name!,
+                  ),
+                );
+              },
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                child: Row(
+                  children: [
+                    const CustomSvg(MyIcons.attach),
+                    const SizedBox(width: 7),
+                    Expanded(
+                      child: CourseText(
+                        "${document.name!} (${context.appLocalization.attachedFile})",
+                        fontSize: 12,
+                        overflow: TextOverflow.ellipsis,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
-                CourseText(
-                  "00:39",
-                  fontSize: 12,
-                  textColor: context.colorPalette.grey66,
-                ),
-              ],
-            ),
-          );
+              ),
+            );
           }).toList(),
           GestureDetector(
             onTap: () {},

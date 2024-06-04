@@ -176,5 +176,6 @@
   "resetPasswordTitle": "Reset Password",
   "resetPasswordBody": "The new password must be different from the previous password",
   "passwordUpdatedMsg": "Password Updated Successfully",
-  "subscribeToThisPartOnly":"Subscribe to this part only"
+  "subscribeToThisPartOnly":"Subscribe to this part only",
+  "attachedFile":"Attached file"
 }

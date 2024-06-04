@@ -17,8 +17,10 @@ class CourseCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        context.push(CourseScreen(courseId: course.id!));
+      onTap: () {
+        context.authProvider.checkIfUserAuthenticated(context, callback: () {
+          context.push(CourseScreen(courseId: course.id!));
+        });
       },
       child: Container(
         width: double.infinity,
@@ -33,7 +35,7 @@ class CourseCard extends StatelessWidget {
         ),
         child: Row(
           children: [
-             CustomNetworkImage(
+            CustomNetworkImage(
               course.image!,
               width: 90,
               height: 90,
@@ -55,11 +57,11 @@ class CourseCard extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                     color: context.colorPalette.black33,
                   ),
-                   TextCourse(
+                  TextCourse(
                     course.professor!,
                     fontSize: 14,
                   ),
-                   TextCourse(course.description!),
+                  TextCourse(course.description!),
                   const SizedBox(height: 6),
                   Row(
                     children: [
@@ -72,12 +74,14 @@ class CourseCard extends StatelessWidget {
                       Padding(
                         padding:
                             const EdgeInsetsDirectional.only(start: 5, end: 8),
-                        child: TextCourse("${course.videosCount} ${context.appLocalization.video}"),
+                        child: TextCourse(
+                            "${course.videosCount} ${context.appLocalization.video}"),
                       ),
                       const CustomSvg(MyIcons.axes),
                       Padding(
                         padding: const EdgeInsetsDirectional.only(start: 5),
-                        child: TextCourse("${course.unitCount} ${context.appLocalization.axes}"),
+                        child: TextCourse(
+                            "${course.unitCount} ${context.appLocalization.axes}"),
                       ),
                     ],
                   ),

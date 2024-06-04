@@ -19,129 +19,134 @@ class MySubscription extends StatefulWidget {
 class _MySubscriptionState extends State<MySubscription> {
   @override
   Widget build(BuildContext context) {
-    return context.authProvider.isAuthenticated
-        ? Selector<AuthProvider, UserData>(
-            selector: (context, provider) => provider.user,
-            builder: (context, userData, child) {
-              String getUserEducation() {
-                if (userData.universityName == null) {
-                  return "";
-                } else {
-                  return userData.collegeName != null
-                      ? "/${userData.universityName}/ ${userData.collegeName}"
-                      : "/${userData.universityName!}";
-                }
-              }
+    return Selector<AuthProvider, bool>(
+      selector: (context, provider) => provider.isAuthenticated,
+      builder: (context, isAuthenticated, child) {
+        return isAuthenticated
+            ? Selector<AuthProvider, UserData>(
+                selector: (context, provider) => provider.user,
+                builder: (context, userData, child) {
+                  String getUserEducation() {
+                    if (userData.universityName == null) {
+                      return "";
+                    } else {
+                      return userData.collegeName != null
+                          ? "/${userData.universityName}/ ${userData.collegeName}"
+                          : "/${userData.universityName!}";
+                    }
+                  }
 
-              return Builder(
-                builder: (context) {
-                  return Padding(
-                    padding: const EdgeInsetsDirectional.only(start: 15),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
+                  return Builder(
+                    builder: (context) {
+                      return Padding(
+                        padding: const EdgeInsetsDirectional.only(start: 15),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            AppBarText(context.appLocalization.hello),
-                            Flexible(
-                              child: AppBarText(
-                                userData.name ?? "",
-                                overflow: TextOverflow.ellipsis,
-                                textColor: context.colorPalette.black33,
-                              ),
+                            Row(
+                              children: [
+                                AppBarText(context.appLocalization.hello),
+                                Flexible(
+                                  child: AppBarText(
+                                    userData.name ?? "",
+                                    overflow: TextOverflow.ellipsis,
+                                    textColor: context.colorPalette.black33,
+                                  ),
+                                ),
+                                const Text(
+                                  "👋",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                  ),
+                                )
+                              ],
                             ),
-                            const Text(
-                              "👋",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
-                              ),
-                            )
+                            Row(
+                              children: [
+                                CustomSvg(
+                                  UiHelper.getFlag(userData.countryCode ??
+                                      MySharedPreferences.filter.countryCode!),
+                                  width: 20,
+                                ),
+                                Flexible(
+                                  child: AppBarText(
+                                    getUserEducation(),
+                                    overflow: TextOverflow.ellipsis,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ],
                         ),
-                        Row(
+                      );
+                    },
+                  );
+                },
+              )
+            : Selector<AuthProvider, FilterModel>(
+                selector: (context, provider) => provider.wizardValues,
+                builder: (context, wizardValues, child) {
+                  String getUserEducation() {
+                    if (wizardValues.universityName == null) {
+                      return "";
+                    } else {
+                      return wizardValues.collegeName != null
+                          ? "/${wizardValues.universityName}/ ${wizardValues.collegeName}"
+                          : "/${wizardValues.universityName!}";
+                    }
+                  }
+
+                  return Builder(
+                    builder: (context) {
+                      return Padding(
+                        padding: const EdgeInsetsDirectional.only(start: 15),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            CustomSvg(
-                              UiHelper.getFlag(userData.countryCode ??
-                                  MySharedPreferences.filter.countryCode!),
-                              width: 20,
+                            Row(
+                              children: [
+                                AppBarText(context.appLocalization.hello),
+                                Flexible(
+                                  child: AppBarText(
+                                    "",
+                                    overflow: TextOverflow.ellipsis,
+                                    textColor: context.colorPalette.black33,
+                                  ),
+                                ),
+                                const Text(
+                                  "👋",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                  ),
+                                )
+                              ],
                             ),
-                            Flexible(
-                              child: AppBarText(
-                                getUserEducation(),
-                                overflow: TextOverflow.ellipsis,
-                                fontSize: 12,
-                              ),
+                            Row(
+                              children: [
+                                CustomSvg(
+                                  UiHelper.getFlag(wizardValues.countryCode!),
+                                  width: 20,
+                                ),
+                                Flexible(
+                                  child: AppBarText(
+                                    getUserEducation(),
+                                    overflow: TextOverflow.ellipsis,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
-                      ],
-                    ),
+                      );
+                    },
                   );
                 },
               );
-            },
-          )
-        : Selector<AuthProvider, FilterModel>(
-            selector: (context, provider) => provider.wizardValues,
-            builder: (context, wizardValues, child) {
-              String getUserEducation() {
-                if (wizardValues.universityName == null) {
-                  return "";
-                } else {
-                  return wizardValues.collegeName != null
-                      ? "/${wizardValues.universityName}/ ${wizardValues.collegeName}"
-                      : "/${wizardValues.universityName!}";
-                }
-              }
-
-              return Builder(
-                builder: (context) {
-                  return Padding(
-                    padding: const EdgeInsetsDirectional.only(start: 15),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            AppBarText(context.appLocalization.hello),
-                            Flexible(
-                              child: AppBarText(
-                                "",
-                                overflow: TextOverflow.ellipsis,
-                                textColor: context.colorPalette.black33,
-                              ),
-                            ),
-                            const Text(
-                              "👋",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
-                              ),
-                            )
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            CustomSvg(
-                              UiHelper.getFlag(wizardValues.countryCode!),
-                              width: 20,
-                            ),
-                            Flexible(
-                              child: AppBarText(
-                                getUserEducation(),
-                                overflow: TextOverflow.ellipsis,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              );
-            },
-          );
+      },
+    );
   }
 }

@@ -176,5 +176,6 @@
   "resetPasswordTitle": "إعادة تعيين كلمة المرور",
   "resetPasswordBody": "يجب أن تكون كلمة المرور الجديدة مختلفة عن كلمة المرور السابقة",
   "passwordUpdatedMsg": "تم تحديث كلمة المرور بنجاح",
-  "subscribeToThisPartOnly":"الإشتراك في هذا الجزء فقط"
+  "subscribeToThisPartOnly":"الإشتراك في هذا الجزء فقط",
+  "attachedFile":"ملف مرفق"
 }

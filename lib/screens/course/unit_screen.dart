@@ -135,7 +135,7 @@ class _UnitScreenState extends State<UnitScreen> {
                         ],
                       ),
                       CourseText(
-                        unit.sections![0].videos![0].course??"",
+                        unit.courseName!,
                         textColor: context.colorPalette.grey66,
                         fontWeight: FontWeight.bold,
                       ),

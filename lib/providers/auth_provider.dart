@@ -7,6 +7,7 @@ import 'package:bebrain/model/user_model.dart';
 import 'package:bebrain/network/api_service.dart';
 import 'package:bebrain/network/api_url.dart';
 import 'package:bebrain/screens/base/app_nav_bar.dart';
+import 'package:bebrain/screens/registration/registration_screen.dart';
 import 'package:bebrain/screens/registration/verify_code_screen.dart';
 import 'package:bebrain/screens/registration/wizard_screen.dart';
 import 'package:bebrain/utils/base_extensions.dart';
@@ -253,13 +254,13 @@ class AuthProvider extends ChangeNotifier {
           .then((value) {
         if (value != null) {
           _lastRouteName = context.currentRouteName;
-          // context.push(const RegistrationScreen(hideGuestButton: true)).then((value) {
-          //   _lastRouteName = null;
-          //   if (_executeLastRouteCallback) {
-          //     callback();
-          //     _executeLastRouteCallback = false;
-          //   }
-          // });
+          context.push(const RegistrationScreen(hideGuestButton: true)).then((value) {
+            _lastRouteName = null;
+            if (_executeLastRouteCallback) {
+              callback();
+              _executeLastRouteCallback = false;
+            }
+          });
         }
       });
     }

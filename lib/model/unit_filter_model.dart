@@ -34,6 +34,7 @@ class UnitFilterData {
     double? unitPrice;
     double? discountPrice;
     int? courseId;
+    String? courseName;
     int? videosCount;
     int? documentsCount;
     int? videosMinutes;
@@ -47,6 +48,7 @@ class UnitFilterData {
         this.unitPrice,
         this.discountPrice,
         this.courseId,
+        this.courseName,
         this.videosCount,
         this.documentsCount,
         this.videosMinutes,
@@ -61,6 +63,7 @@ class UnitFilterData {
         unitPrice: json["unit_price"]?.toDouble(),
         discountPrice: json["discount_price"]?.toDouble(),
         courseId: json["course_id"],
+        courseName: json["course_name"],
         videosCount: json["videos_count"],
         documentsCount: json["documents_count"],
         videosMinutes: json["videos_minutes"],
@@ -75,6 +78,7 @@ class UnitFilterData {
         "unit_price": unitPrice,
         "discount_price": discountPrice,
         "course_id": courseId,
+        "course_name":courseName,
         "videos_count": videosCount,
         "documents_count": documentsCount,
         "videos_minutes": videosMinutes,
@@ -87,24 +91,30 @@ class Section {
     String? name;
     int? tag;
     int? order;
+    int? courseId;
+    String? courseName;
     double? sectionPrice;
     double? discountPrice;
     int? videosCount;
     int? documentsCount;
-    dynamic numberOfMinutes;
+    String? numberOfMinutes;
     List<Video>? videos;
+    List<Document>? documents;
 
     Section({
         this.id,
         this.name,
         this.tag,
         this.order,
+        this.courseId,
+        this.courseName,
         this.sectionPrice,
         this.discountPrice,
         this.videosCount,
         this.documentsCount,
         this.numberOfMinutes,
         this.videos,
+        this.documents,
     });
 
     factory Section.fromJson(Map<String, dynamic> json) => Section(
@@ -112,12 +122,15 @@ class Section {
         name: json["name"],
         tag: json["tag"],
         order: json["order"],
+        courseId: json["course_id"],
+        courseName: json["course_name"],
         sectionPrice: json["section_price"]?.toDouble(),
         discountPrice: json["discount_price"]?.toDouble(),
         videosCount: json["videos_count"],
         documentsCount: json["documents_count"],
         numberOfMinutes: json["number_of_minutes"],
         videos: json["videos"] == null ? [] : List<Video>.from(json["videos"]!.map((x) => Video.fromJson(x))),
+        documents: json["documents"] == null ? [] : List<Document>.from(json["documents"]!.map((x) => Document.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
@@ -125,12 +138,43 @@ class Section {
         "name": name,
         "tag": tag,
         "order": order,
+        "course_id": courseId,
+        "course_name": courseName,
         "section_price": sectionPrice,
         "discount_price": discountPrice,
         "videos_count": videosCount,
         "documents_count": documentsCount,
         "number_of_minutes": numberOfMinutes,
         "videos": videos == null ? [] : List<dynamic>.from(videos!.map((x) => x.toJson())),
+        "documents": documents == null ? [] : List<dynamic>.from(documents!.map((x) => x.toJson())),
+    };
+}
+
+class Document {
+    int? id;
+    String? name;
+    String? document;
+    int? paymentStatus;
+
+    Document({
+        this.id,
+        this.name,
+        this.document,
+        this.paymentStatus,
+    });
+
+    factory Document.fromJson(Map<String, dynamic> json) => Document(
+        id: json["id"],
+        name: json["name"],
+        document: json["document"],
+        paymentStatus: json["payment_status"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "document": document,
+        "payment_status": paymentStatus,
     };
 }
 

@@ -65,6 +65,7 @@ dependencies:
   video_player: ^2.8.6
   chewie: ^1.8.1
   flutter_rating_bar: ^4.0.1
+  flutter_cached_pdfview: ^0.4.2
 
   #firebase
   firebase_core: ^2.25.4

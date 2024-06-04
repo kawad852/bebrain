@@ -2,7 +2,6 @@ import 'package:bebrain/alerts/feedback/app_feedback.dart';
 import 'package:bebrain/alerts/loading/app_over_loader.dart';
 import 'package:bebrain/helper/phone_controller.dart';
 import 'package:bebrain/providers/auth_provider.dart';
-import 'package:bebrain/screens/base/app_nav_bar.dart';
 import 'package:bebrain/screens/registration/create_account_screen.dart';
 import 'package:bebrain/screens/registration/forget_password/forget_password_screen.dart';
 import 'package:bebrain/screens/registration/widgets/auth_button.dart';
@@ -22,7 +21,8 @@ import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class RegistrationScreen extends StatefulWidget {
-  const RegistrationScreen({super.key});
+  final bool hideGuestButton;
+  const RegistrationScreen({super.key, this.hideGuestButton=false});
 
   @override
   State<RegistrationScreen> createState() => _RegistrationScreenState();
@@ -103,6 +103,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     return Scaffold(
       appBar: AppBar(
         actions: [
+         if(!widget.hideGuestButton)
           TextButton(
             onPressed: () {
               context.pushAndRemoveUntil(const WizardScreen(wizardType: WizardType.countries));
