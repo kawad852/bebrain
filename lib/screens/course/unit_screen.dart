@@ -7,11 +7,9 @@ import 'package:bebrain/screens/course/widgets/part_card.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/my_theme.dart';
 import 'package:bebrain/widgets/custom_future_builder.dart';
-import 'package:bebrain/widgets/custom_loading_indicator.dart';
 import 'package:bebrain/widgets/stretch_button.dart';
-import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
-import 'package:video_player/video_player.dart';
+import 'package:vimeo_player_flutter/vimeo_player_flutter.dart';
 
 class UnitScreen extends StatefulWidget {
   final int unitId;
@@ -22,8 +20,7 @@ class UnitScreen extends StatefulWidget {
 }
 
 class _UnitScreenState extends State<UnitScreen> {
-  late VideoPlayerController _videoController;
-  late ChewieController _chewieController;
+  
   late MainProvider _mainProvider;
   late Future<UnitFilterModel> _unitFuture;
 
@@ -39,32 +36,9 @@ class _UnitScreenState extends State<UnitScreen> {
     
   }
 
-  void _initializeVideo(String url){
-    _videoController = VideoPlayerController.networkUrl(Uri.parse(url))
-      ..initialize().then(
-        (value) {
-          setState(
-            () {
-              _chewieController = ChewieController(
-                videoPlayerController: _videoController,
-                autoInitialize: true,
-                autoPlay: true,
-                showControls: true,
-                allowMuting: true,
-                aspectRatio: _videoController.value.aspectRatio,
-                allowPlaybackSpeedChanging: true,
-                customControls: const MaterialControls(),
-              );
-            },
-          );
-        },
-      );
-  }
-
+  
   @override
   void dispose() {
-    _videoController.dispose();
-    _chewieController.dispose();
     super.dispose();
   }
 
@@ -81,7 +55,6 @@ class _UnitScreenState extends State<UnitScreen> {
       onComplete: (context, snapshot) {
         final data=snapshot.data!;
         final unit=data.data!;
-        _initializeVideo(unit.sections![0].videos![0].url!);
         return Scaffold(
           bottomNavigationBar: const CourseNavBar(),
           body: CustomScrollView(
@@ -89,16 +62,11 @@ class _UnitScreenState extends State<UnitScreen> {
               SliverAppBar(
                 pinned: true,
                 scrolledUnderElevation: 0,
-                collapsedHeight: kBarCollapsedHeight,
+                collapsedHeight: 170,
                 leading: const LeadingBack(),
-                flexibleSpace: _videoController.value.isInitialized
-                    ? AspectRatio(
-                        aspectRatio: _videoController.value.aspectRatio,
-                        child: Chewie(
-                          controller: _chewieController,
-                        ),
-                      )
-                    : const CustomLoadingIndicator(withBackgroundColor: true),
+                flexibleSpace:VimeoPlayer(
+                videoId: unit.sections![0].videos![0].vimeoId!,
+              ),
               ),
               SliverPadding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),

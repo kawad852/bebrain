@@ -1,6 +1,7 @@
 import 'package:bebrain/model/unit_filter_model.dart';
 import 'package:bebrain/screens/course/widgets/course_text.dart';
 import 'package:bebrain/screens/file/file_screen.dart';
+import 'package:bebrain/screens/video/video_screen.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/my_icons.dart';
 import 'package:bebrain/utils/my_theme.dart';
@@ -65,24 +66,29 @@ class PartCard extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      const CustomSvg(MyIcons.playCircle),
-                      const SizedBox(width: 7),
-                      Expanded(
-                        child: CourseText(
-                          element.name!,
-                          fontSize: 12,
-                          overflow: TextOverflow.ellipsis,
-                          fontWeight: FontWeight.bold,
+                  GestureDetector(
+                    onTap: (){
+                      context.push(VideoScreen(videoId: element.vimeoId!));
+                    },
+                    child: Row(
+                      children: [
+                        const CustomSvg(MyIcons.playCircle),
+                        const SizedBox(width: 7),
+                        Expanded(
+                          child: CourseText(
+                            element.name!,
+                            fontSize: 12,
+                            overflow: TextOverflow.ellipsis,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      CourseText(
-                        "${element.period} ${context.appLocalization.minute}",
-                        fontSize: 12,
-                        textColor: context.colorPalette.grey66,
-                      ),
-                    ],
+                        CourseText(
+                          "${element.period} ${context.appLocalization.minute}",
+                          fontSize: 12,
+                          textColor: context.colorPalette.grey66,
+                        ),
+                      ],
+                    ),
                   ),
                   if (element.document != null) const SizedBox(height: 5),
                   if (element.document != null)

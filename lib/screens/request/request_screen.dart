@@ -8,11 +8,9 @@ import 'package:bebrain/utils/enums.dart';
 import 'package:bebrain/utils/my_icons.dart';
 import 'package:bebrain/utils/my_theme.dart';
 import 'package:bebrain/utils/shared_pref.dart';
-import 'package:bebrain/widgets/custom_loading_indicator.dart';
 import 'package:bebrain/widgets/custom_svg.dart';
-import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
-import 'package:video_player/video_player.dart';
+import 'package:vimeo_player_flutter/vimeo_player_flutter.dart';
 
 class RequestScreen extends StatefulWidget {
   const RequestScreen({super.key});
@@ -22,38 +20,14 @@ class RequestScreen extends StatefulWidget {
 }
 
 class _RequestScreenState extends State<RequestScreen> {
-  late VideoPlayerController _videoController;
-  late ChewieController _chewieController;
 
   @override
   void initState() {
     super.initState();
-    _videoController = VideoPlayerController.networkUrl(Uri.parse(
-        'https://cllllb.com/assets/img/club/2023/11/170003674156065724_861437017527465_7048239623259199580_n.mp4'))
-      ..initialize().then(
-        (value) {
-          setState(
-            () {
-              _chewieController = ChewieController(
-                videoPlayerController: _videoController,
-                autoInitialize: true,
-                autoPlay: true,
-                showControls: true,
-                allowMuting: true,
-                aspectRatio: _videoController.value.aspectRatio,
-                allowPlaybackSpeedChanging: true,
-                customControls: const MaterialControls(),
-              );
-            },
-          );
-        },
-      );
   }
 
   @override
   void dispose() {
-    _videoController.dispose();
-    _chewieController.dispose();
     super.dispose();
   }
 
@@ -86,7 +60,8 @@ class _RequestScreenState extends State<RequestScreen> {
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           color: context.colorPalette.blueC2E,
-                          borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
+                          borderRadius:
+                              BorderRadius.circular(MyTheme.radiusSecondary),
                         ),
                         child: const RequestText(
                           "مكتمل",
@@ -127,7 +102,8 @@ class _RequestScreenState extends State<RequestScreen> {
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                   child: Row(
                     children: [
                       const CustomSvg(MyIcons.attach),
@@ -139,9 +115,11 @@ class _RequestScreenState extends State<RequestScreen> {
                 SizedBox(
                   height: 93,
                   child: ListView.separated(
-                    separatorBuilder: (context, index) => const SizedBox(width: 6),
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(width: 6),
                     itemCount: 10,
-                    padding: const EdgeInsetsDirectional.only(start: 15, end: 10),
+                    padding:
+                        const EdgeInsetsDirectional.only(start: 15, end: 10),
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (contxet, index) {
@@ -167,11 +145,13 @@ class _RequestScreenState extends State<RequestScreen> {
                     child: Column(
                       children: [
                         const RequestText(
-                            "تم الحل يمكنك تحميل المرفق وشكراً لإستخدامك المساعد",
-                            ),
+                          "تم الحل يمكنك تحميل المرفق وشكراً لإستخدامك المساعد",
+                        ),
                         Align(
-                          alignment: MySharedPreferences.language==LanguageEnum.arabic?
-                             Alignment.bottomLeft:Alignment.bottomRight,
+                          alignment: MySharedPreferences.language ==
+                                  LanguageEnum.arabic
+                              ? Alignment.bottomLeft
+                              : Alignment.bottomRight,
                           child: RequestText(
                             "PM 02:51:23",
                             textColor: context.colorPalette.grey66,
@@ -183,20 +163,13 @@ class _RequestScreenState extends State<RequestScreen> {
                   ),
                   const FileCard(),
                   const SizedBox(height: 15),
-                  _videoController.value.isInitialized
-                      ? AspectRatio(
-                          aspectRatio: _videoController.value.aspectRatio,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
-                            child: Chewie(
-                              controller: _chewieController,
-                            ),
-                          ),
-                        )
-                      : const SizedBox(
-                          height: 200,
-                          child: CustomLoadingIndicator(withBackgroundColor: true),
-                        ),
+                  const SizedBox(
+                    height: 190,
+                    width: double.infinity,
+                    child: VimeoPlayer(
+                      videoId: "849720933",
+                    ),
+                  ),
                   const SizedBox(height: 15),
                   RequestText(context.appLocalization.contactTheAssistant)
                 ],

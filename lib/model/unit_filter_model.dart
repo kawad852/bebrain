@@ -97,7 +97,7 @@ class Section {
     double? discountPrice;
     int? videosCount;
     int? documentsCount;
-    String? numberOfMinutes;
+    int? numberOfMinutes;
     List<Video>? videos;
     List<Document>? documents;
 
@@ -181,7 +181,7 @@ class Document {
 class Video {
     int? id;
     String? name;
-    String? url;
+    String? vimeoId;
     int? courseId;
     String? course;
     int? unitId;
@@ -195,7 +195,7 @@ class Video {
     Video({
         this.id,
         this.name,
-        this.url,
+        this.vimeoId,
         this.courseId,
         this.course,
         this.unitId,
@@ -210,7 +210,7 @@ class Video {
     factory Video.fromJson(Map<String, dynamic> json) => Video(
         id: json["id"],
         name: json["name"],
-        url: json["url"],
+        vimeoId: json["vimeo_id"],
         courseId: json["course_id"],
         course: json["course"],
         unitId: json["unit_id"],
@@ -225,7 +225,7 @@ class Video {
     Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
-        "url": url,
+        "vimeo_id": vimeoId,
         "course_id": courseId,
         "course": course,
         "unit_id": unitId,
