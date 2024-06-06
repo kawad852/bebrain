@@ -1,5 +1,4 @@
-import 'dart:math';
-
+import 'package:bebrain/model/wizard_model.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/my_icons.dart';
 import 'package:bebrain/utils/my_theme.dart';
@@ -8,7 +7,14 @@ import 'package:flutter/material.dart';
 
 class RequestMenu extends StatelessWidget {
   final String hintText;
-  const RequestMenu({super.key, required this.hintText});
+  final List<WizardData> wizardData;
+  final void Function(Map<String,int>?)? onSelected;
+  const RequestMenu({
+    super.key,
+    required this.hintText,
+    required this.wizardData,
+    this.onSelected,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,22 +27,25 @@ class RequestMenu extends StatelessWidget {
           color: context.colorPalette.greyF2F,
         ),
       ),
-      child: DropdownMenu(
-        hintText: hintText,
-        trailingIcon: const CustomSvg(MyIcons.arrowDown),
-        selectedTrailingIcon: Transform.rotate(angle: -pi,child: const CustomSvg(MyIcons.arrowDown)),
-        textStyle: TextStyle(
-          color: context.colorPalette.grey66,
-          fontSize: 14,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        child: DropdownButton(
+          isExpanded: true,
+          hint: Text(
+            hintText,
+            style: TextStyle(
+              color: context.colorPalette.greyDBD,
+              fontSize: 14,
+            ),
+          ),
+          underline: const SizedBox(),
+          icon: const CustomSvg(MyIcons.arrowDown),
+          onChanged: onSelected,
+          items: wizardData.map((wizard) {
+            return DropdownMenuItem<Map<String,int>>(
+                value: {wizard.name!:wizard.id!}, child: Text(wizard.name!));
+          }).toList(),
         ),
-        expandedInsets: EdgeInsets.zero,
-        inputDecorationTheme: const InputDecorationTheme(
-          contentPadding: EdgeInsets.symmetric(horizontal: 16),
-        ),
-        dropdownMenuEntries: const <DropdownMenuEntry<String>>[
-          DropdownMenuEntry(value: "Syria", label: "Syria"),
-          DropdownMenuEntry(value: "Jordon", label: "Jordon"),
-        ],
       ),
     );
   }
