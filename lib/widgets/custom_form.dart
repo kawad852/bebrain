@@ -11,7 +11,7 @@ class CustomForm extends StatefulWidget {
   final String title;
   final String description;
   final bool isGraduationProjects;
-  final FormEnum formEnum;
+  final String formEnum;
   const CustomForm({
     super.key,
     required this.title,

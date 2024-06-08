@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:bebrain/model/college_filter_model.dart';
 import 'package:bebrain/model/country_filter_model.dart';
 import 'package:bebrain/model/course_filter_model.dart';
 import 'package:bebrain/model/major_filter_model.dart';
+import 'package:bebrain/model/new_request_model.dart';
 import 'package:bebrain/model/policy_model.dart';
 import 'package:bebrain/model/professors_model.dart';
 import 'package:bebrain/model/unit_filter_model.dart';
@@ -9,7 +12,9 @@ import 'package:bebrain/model/university_filter_model.dart';
 import 'package:bebrain/model/wizard_model.dart';
 import 'package:bebrain/network/api_service.dart';
 import 'package:bebrain/network/api_url.dart';
+import 'package:bebrain/utils/shared_pref.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class MainProvider extends ChangeNotifier {
   Future<CountryFilterModel> filterByCountry(int countryId) {
@@ -104,4 +109,51 @@ class MainProvider extends ChangeNotifier {
     );
     return snapshot;
   }
+
+  Future<NewRequestModel> createRequest({
+    required String type,
+    required int countryId,
+    required int universityId,
+    required int collegeId,
+    required int majorId,
+    required String title,
+    String? note,
+    required List<File> attachments,
+  }) {
+    final snapshot = ApiService<NewRequestModel>().uploadFiles(
+     url: ApiUrl.newRequest,
+     builder: NewRequestModel.fromJson,
+     onRequest: (request) async{
+      request.headers['Authorization'] = 'Bearer ${MySharedPreferences.accessToken}';
+      request.headers['Content-Type'] = 'application/json';
+      request.headers['x-localization'] = MySharedPreferences.language;
+      request.fields['type'] = type;
+      request.fields['country_id'] = countryId.toString();
+      request.fields['university_id'] = universityId.toString();
+      request.fields['college_id'] = collegeId.toString();
+      request.fields['major_id'] = majorId.toString();
+      request.fields['title'] = title;
+      if(note!=null) request.fields['note'] = note;
+      for(var i=0; i<=attachments.length;i++){
+        var file=attachments[i];
+        var stream= http.ByteStream(file.openRead());
+        var length = await file.length();
+        var multipartFile = http.MultipartFile('attachments[$i]', stream, length, filename: file.path.split('/').last);
+        request.files.add(multipartFile);
+      }
+     }
+    ); 
+    return snapshot;
+  }
+
+  Future<NewRequestModel> fetchRequest(int requestId) {
+    final snapshot = ApiService<NewRequestModel>().build(
+      url: "${ApiUrl.newRequest}/$requestId",
+      isPublic: false,
+      apiType: ApiType.get,
+      builder: NewRequestModel.fromJson,
+    );
+    return snapshot;
+  }
+
 }

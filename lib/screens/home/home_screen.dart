@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:bebrain/model/college_filter_model.dart';
 import 'package:bebrain/model/country_filter_model.dart' as cou;
 import 'package:bebrain/model/university_filter_model.dart' as un;
+import 'package:bebrain/providers/auth_provider.dart';
 import 'package:bebrain/providers/main_provider.dart';
 import 'package:bebrain/screens/home/widgets/action_container.dart';
 import 'package:bebrain/screens/home/widgets/appbar_text.dart';
@@ -34,8 +35,9 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMixin{
+class _HomeScreenState extends State<HomeScreen>with AutomaticKeepAliveClientMixin {
   late MainProvider _mainProvider;
+  late AuthProvider _authProvider;
   late Future<dynamic> _future;
   int currentIndex = 0;
 
@@ -56,7 +58,21 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
     super.initState();
     log(MySharedPreferences.accessToken);
     _mainProvider = context.mainProvider;
+    _authProvider = context.authProvider;
+    _authProvider.addListener(_handleChanged);
     _future = _initializeFuture();
+  }
+
+  @override
+  void dispose() {
+    _authProvider.removeListener(_handleChanged);
+    super.dispose();
+  }
+
+  void _handleChanged() {
+    setState(() {
+      _future = _initializeFuture();
+    });
   }
 
   @override
@@ -148,9 +164,9 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                 SizedBox(
                   height: 110,
                   child: ListView.separated(
-                    separatorBuilder: (context, index) => const SizedBox(width: 7),
+                    separatorBuilder: (context, index) =>const SizedBox(width: 7),
                     itemCount: 10,
-                    padding: const EdgeInsetsDirectional.only(top: 10, start: 13),
+                    padding:const EdgeInsetsDirectional.only(top: 10, start: 13),
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, indxe) {
@@ -201,7 +217,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                     offset: ViewportOffset.zero(),
                     slivers: [
                       SliverList.separated(
-                        separatorBuilder: (context, index) => const SizedBox(height: 8),
+                        separatorBuilder: (context, index) =>const SizedBox(height: 8),
                         itemCount: data.length,
                         itemBuilder: (context, index) {
                           return DepartmentsCard(
@@ -231,6 +247,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
       ),
     );
   }
+
   @override
   bool get wantKeepAlive => true;
 }

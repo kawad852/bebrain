@@ -15,7 +15,7 @@ class _SpecialExplanationScreenState extends State<SpecialExplanationScreen> {
   @override
   Widget build(BuildContext context) {
     return CustomForm(
-      formEnum: FormEnum.specialExplanation,
+      formEnum: FormEnum.studyExplanation,
       title: context.appLocalization.explanation,
       description: context.appLocalization.partNotUnderstood,
     );

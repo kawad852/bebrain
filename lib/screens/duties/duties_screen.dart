@@ -14,7 +14,7 @@ class _DutiesScreenState extends State<DutiesScreen> {
   @override
   Widget build(BuildContext context) {
     return CustomForm(
-      formEnum: FormEnum.duties,
+      formEnum: FormEnum.assignment,
       title: context.appLocalization.duties,
       description: context.appLocalization.requestSolveAssignment,
     );

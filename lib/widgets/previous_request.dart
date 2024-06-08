@@ -10,7 +10,7 @@ class PreviousRequest extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        context.push(const RequestScreen());
+        context.push(const RequestScreen(requestId: 13));
       },
       child: Container(
         width: double.infinity,

@@ -22,6 +22,7 @@ class RequestMenu extends StatelessWidget {
       width: double.infinity,
       height: 48,
       decoration: BoxDecoration(
+        color: context.colorPalette.white,
         borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
         border: Border.all(
           color: context.colorPalette.greyF2F,

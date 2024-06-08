@@ -1,3 +1,4 @@
+import 'package:bebrain/providers/auth_provider.dart';
 import 'package:bebrain/screens/base/widgets/nav_bar_item.dart';
 import 'package:bebrain/screens/duties/duties_screen.dart';
 import 'package:bebrain/screens/graduation_projects/graduation_projects_screen.dart';
@@ -9,10 +10,8 @@ import 'package:bebrain/utils/my_icons.dart';
 import 'package:flutter/material.dart';
 
 class AppNavBar extends StatefulWidget {
-  //final bool initFav;
   const AppNavBar({
     super.key,
-    //this.initFav = false,
   });
 
   @override
@@ -23,7 +22,7 @@ class _AppNavBarState extends State<AppNavBar> {
   int _currentIndex = 0;
   late PageController _pageController;
   // final cloudMessagingService = CloudMessagingService();
-  // late AuthProvider authProvider;
+   late AuthProvider authProvider;
 
   final items = [
     MyIcons.home,
@@ -69,7 +68,7 @@ class _AppNavBarState extends State<AppNavBar> {
   @override
   void initState() {
     super.initState();
-    //authProvider = context.authProvider;
+    authProvider = context.authProvider;
     _pageController = PageController();
     //authProvider.updateDeviceToken(context);
     //cloudMessagingService.init(context);
@@ -109,16 +108,16 @@ class _AppNavBarState extends State<AppNavBar> {
             final index = screens.indexOf(element);
             return NavBarItem(
               onTap: () {
-                //  if (index == 0 || index == 1 || index == 2) {
+                 if (index == 0 ) {
                 _onSelect(index);
-                //} else {
-                //authProvider.checkIfUserAuthenticated(
-                //context,
-                //callback: () {
-                // _onSelect(index);
-                //},
-                // );
-                // }
+                } else {
+                authProvider.checkIfUserAuthenticated(
+                context,
+                callback: () {
+                _onSelect(index);
+                },
+                );
+                }
               },
               isSelected: _currentIndex == index,
               icon: _currentIndex == index ? itemsSelected[index] : items[index],

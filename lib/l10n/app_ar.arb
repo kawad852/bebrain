@@ -177,5 +177,6 @@
   "resetPasswordBody": "يجب أن تكون كلمة المرور الجديدة مختلفة عن كلمة المرور السابقة",
   "passwordUpdatedMsg": "تم تحديث كلمة المرور بنجاح",
   "subscribeToThisPartOnly":"الإشتراك في هذا الجزء فقط",
-  "attachedFile":"ملف مرفق"
+  "attachedFile":"ملف مرفق",
+  "fillAllFields":"يرجى ملئ جميع الحقول المطلوبة"
 }

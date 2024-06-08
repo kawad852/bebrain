@@ -4,7 +4,8 @@ import 'package:bebrain/utils/my_theme.dart';
 import 'package:flutter/material.dart';
 
 class RequestNavBar extends StatelessWidget {
-  const RequestNavBar({super.key});
+  final double price;
+  const RequestNavBar({super.key, required this.price});
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +23,8 @@ class RequestNavBar extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const RequestText(
-              "\$25",
+             RequestText(
+              "\$$price",
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),

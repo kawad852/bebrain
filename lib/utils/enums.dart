@@ -1,11 +1,25 @@
-enum FormEnum { duties, specialExplanation, graduationProjects }
-
-class WizardType{
-  static const String countries='countries';
-  static const String universities='universities';
-  static const String colleges='colleges';
-  static const String specialities='specialities';
+class FormEnum {
+  static const String project = "project";
+  static const String assignment = "assignment";
+  static const String studyExplanation = "study_explanation";
 }
+
+class WizardType {
+  static const String countries = 'countries';
+  static const String universities = 'universities';
+  static const String colleges = 'colleges';
+  static const String specialities = 'specialities';
+}
+
+class RequestType{
+  static const String pending = 'pending';
+  static const String pendingPayment = 'pending_payment';
+  static const String canceled = 'canceled';
+  static const String inProgress = 'in_progress';
+  static const String done = 'done';
+  static const String rejected = 'rejected';
+}
+
 class LanguageEnum {
   static const String english = 'en';
   static const String arabic = 'ar';

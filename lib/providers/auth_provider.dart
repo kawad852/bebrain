@@ -78,10 +78,11 @@ class AuthProvider extends ChangeNotifier {
         return socialLoginFuture;
       },
       onComplete: (snapshot) async {
+        final userData = snapshot.data!.user!;
         if (snapshot.status == true) {
           MySharedPreferences.accessToken = snapshot.data!.token!;
           if (!context.mounted) return;
-          updateUser(context, userModel: snapshot.data!.user);
+          updateUser(context, userModel: userData);
           if (_lastRouteName == null) {
             //context.pushAndRemoveUntil(const AppNavBar());
             context.pushAndRemoveUntil(const WizardScreen(wizardType: WizardType.countries));
@@ -122,6 +123,7 @@ class AuthProvider extends ChangeNotifier {
         return createAccountFuture;
       },
       onComplete: (snapshot) async {
+        final userData= snapshot.data!.user;
         AppOverlayLoader.hide();
         if (snapshot.status == true) {
           MySharedPreferences.accessToken = snapshot.data!.token!;
@@ -149,6 +151,18 @@ class AuthProvider extends ChangeNotifier {
   }) async {
     user = UserData.copy(userModel ?? user);
     MySharedPreferences.saveUser(userModel ?? user);
+    updateFilter(context, filterModel: FilterModel(
+            wizardType: user.majorId!= null? WizardType.specialities: user.collegeId!=null? WizardType.colleges: user.universityId!=null? WizardType.universities:WizardType.countries,
+            countryId: user.countryId?? wizardValues.countryId,
+            countryName: user.country?? wizardValues.countryName,
+            countryCode: user.countryCode?? wizardValues.countryCode,
+            universityId: user.universityId?? wizardValues.universityId,
+            universityName: user.universityName?? wizardValues.universityName,
+            collegeId: user.collegeId?? wizardValues.collegeId,
+            collegeName: user.collegeName?? wizardValues.collegeName,
+            majorId: user.majorId?? wizardValues.majorId,
+            majorName: user.majorName?? wizardValues.majorName, 
+          ));
     debugPrint("User:: ${user.toJson()}");
     if (notify) {
       notifyListeners();
@@ -159,6 +173,7 @@ class AuthProvider extends ChangeNotifier {
     _firebaseAuth.signOut();
     MySharedPreferences.clearStorage();
     updateUser(context, userModel: UserData());
+    updateFilter(context, filterModel: FilterModel());
     // context.pushAndRemoveUntil(const RegistrationScreen());
   }
 

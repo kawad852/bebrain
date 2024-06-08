@@ -21,6 +21,8 @@ class ApiUrl {
   static const String updatePassword = '/api/password/update';
   static const String courseFilter = '/api/courses-filter';
   static const String unitFilter = '/api/units-filter';
+  static const String newRequest = '/api/requests';
+
 
 
 }

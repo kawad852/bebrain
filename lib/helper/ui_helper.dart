@@ -2,6 +2,7 @@ import 'package:bebrain/model/auth_model.dart';
 import 'package:bebrain/model/filter_model.dart';
 import 'package:bebrain/network/api_service.dart';
 import 'package:bebrain/utils/base_extensions.dart';
+import 'package:bebrain/utils/enums.dart';
 import 'package:flutter/material.dart';
 
 class UiHelper {
@@ -17,13 +18,9 @@ class UiHelper {
         context,
         future: () async {
           final updateFilter = context.authProvider.updateProfile(context, {
-            //if (filterModel.countryId != null)
              "country_id": filterModel.countryId??"",
-            //if (filterModel.universityId != null)
              "university_id": filterModel.universityId??"",
-            //if (filterModel.collegeId != null) 
-            "college_id": filterModel.collegeId??"",
-            //if (filterModel.majorId != null)
+             "college_id": filterModel.collegeId??"",
              "major_id": filterModel.majorId??"",
           });
           return updateFilter;
@@ -48,6 +45,24 @@ class UiHelper {
           },
         );
       }
+    }
+  }
+
+  static Color getRequestColor(BuildContext context,{required String type}){
+    switch(type){
+      case RequestType.pending:
+         return context.colorPalette.blue8DD;
+      case RequestType.pendingPayment:
+         return context.colorPalette.yellowFFC;
+      case RequestType.canceled:
+         return context.colorPalette.redE42;
+      case RequestType.inProgress:
+         return context.colorPalette.blue8DD;
+      case RequestType.done:
+         return context.colorPalette.blueC2E;
+      case RequestType.rejected:
+         return context.colorPalette.redE42;
+      default : return context.colorPalette.blue8DD;
     }
   }
 }
