@@ -57,6 +57,10 @@ class AuthProvider extends ChangeNotifier {
           json = {
             "phone_number": phoneNum,
             "password": password,
+            "country_id": wizardValues.countryId?? "",
+            "university_id" :wizardValues.universityId?? "",
+            "college_id" :wizardValues.collegeId?? "",
+            "major_id": wizardValues.majorId?? "",
             "locale": MySharedPreferences.language,
           };
         } else {
@@ -64,6 +68,10 @@ class AuthProvider extends ChangeNotifier {
             "name": displayName,
             "email": email,
             "image": photoURL,
+            "country_id": wizardValues.countryId?? "",
+            "university_id" :wizardValues.universityId?? "",
+            "college_id" :wizardValues.collegeId?? "",
+            "major_id": wizardValues.majorId?? "",
             "locale": MySharedPreferences.language,
           };
         }
@@ -115,6 +123,10 @@ class AuthProvider extends ChangeNotifier {
             "phone_number": phoneNum,
             "password": password,
             "password_confirmation": password,
+            "country_id": wizardValues.countryId?? "",
+            "university_id" :wizardValues.universityId?? "",
+            "college_id" :wizardValues.collegeId?? "",
+            "major_id": wizardValues.majorId?? "",
             "locale": MySharedPreferences.language,
           },
           builder: AuthModel.fromJson,
@@ -122,7 +134,6 @@ class AuthProvider extends ChangeNotifier {
         return createAccountFuture;
       },
       onComplete: (snapshot) async {
-        final userData= snapshot.data!.user;
         AppOverlayLoader.hide();
         if (snapshot.status == true) {
           MySharedPreferences.accessToken = snapshot.data!.token!;
