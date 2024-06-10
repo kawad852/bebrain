@@ -13,6 +13,7 @@ import 'package:bebrain/widgets/shimmer/shimmer_bubble.dart';
 import 'package:bebrain/widgets/shimmer/shimmer_loading.dart';
 import 'package:bebrain/widgets/stretch_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 class CustomForm extends StatefulWidget {
   final String title;
@@ -122,14 +123,6 @@ class _CustomFormState extends State<CustomForm>
                           ],
                         ),
                       ),
-                      Text(
-                        context.appLocalization.previousRequests,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
                     ],
                   ),
                 ),
@@ -137,7 +130,7 @@ class _CustomFormState extends State<CustomForm>
                   future: _myRequestFuture,
                   onLoading: () {
                     return ShimmerLoading(
-                        child: ListView.separated(
+                      child: ListView.separated(
                       separatorBuilder: (context, index) =>const SizedBox(height: 5),
                       itemCount: 8,
                       shrinkWrap: true,
@@ -146,7 +139,7 @@ class _CustomFormState extends State<CustomForm>
                         return const LoadingBubble(
                           width: double.infinity,
                           height: 60,
-                          padding:EdgeInsetsDirectional.symmetric(horizontal: 10),
+                          padding:  EdgeInsetsDirectional.symmetric(horizontal: 10),
                           radius: MyTheme.radiusSecondary,
                         );
                       },
@@ -160,13 +153,34 @@ class _CustomFormState extends State<CustomForm>
                   sliver: true,
                   onComplete: (context, snapshot) {
                     final myRequest = snapshot.data!;
-                    return SliverList.separated(
-                      separatorBuilder: (context, index) =>const SizedBox(height: 5),
-                      itemCount: myRequest.data!.length,
-                      itemBuilder: (context, index) {
-                        return PreviousRequest(request: myRequest.data![index]);
-                      },
-                    );
+                    return SliverToBoxAdapter(
+                        child: ShrinkWrappingViewport(
+                      offset: ViewportOffset.zero(),
+                      slivers: [
+                        SliverToBoxAdapter(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                context.appLocalization.previousRequests,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                            ],
+                          ),
+                        ),
+                        SliverList.separated(
+                          separatorBuilder: (context, index) => const SizedBox(height: 5),
+                          itemCount: myRequest.data!.length,
+                          itemBuilder: (context, index) {
+                            return PreviousRequest( request: myRequest.data![index]);
+                          },
+                        ),
+                      ],
+                    ));
                   },
                 ),
               ],
