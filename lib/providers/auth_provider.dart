@@ -6,7 +6,6 @@ import 'package:bebrain/model/filter_model.dart';
 import 'package:bebrain/model/user_model.dart';
 import 'package:bebrain/network/api_service.dart';
 import 'package:bebrain/network/api_url.dart';
-import 'package:bebrain/screens/base/app_nav_bar.dart';
 import 'package:bebrain/screens/registration/registration_screen.dart';
 import 'package:bebrain/screens/registration/verify_code_screen.dart';
 import 'package:bebrain/screens/registration/wizard_screen.dart';

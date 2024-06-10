@@ -33,6 +33,8 @@ class _RequestScreenState extends State<RequestScreen> {
     _requestFuture = _mainProvider.fetchRequest(widget.requestId);
   }
 
+  
+
   @override
   void initState() {
     super.initState();
@@ -105,7 +107,7 @@ class _RequestScreenState extends State<RequestScreen> {
                         ],
                       ),
                       RequestText(
-                        "${context.appLocalization.dateSendingRequest} : PM 02:51:23",
+                        "${context.appLocalization.dateSendingRequest} : ${request.data!.createdDate} / ${request.data!.createdTime}",
                         textColor: context.colorPalette.grey66,
                         fontSize: 10,
                       ),
@@ -148,7 +150,7 @@ class _RequestScreenState extends State<RequestScreen> {
                       ),
                     ),
                     SizedBox(
-                      height: 93,
+                      height: 95,
                       child: ListView.separated(
                         separatorBuilder: (context, index) => const SizedBox(width: 6),
                         itemCount: request.data!.userAttachment!.length,
@@ -181,7 +183,7 @@ class _RequestScreenState extends State<RequestScreen> {
                         child: Column(
                           children: [
                              RequestText(
-                              request.data!.reply,
+                              request.data!.reply!,
                             ),
                             Align(
                               alignment: MySharedPreferences.language ==
@@ -189,7 +191,7 @@ class _RequestScreenState extends State<RequestScreen> {
                                   ? Alignment.bottomLeft
                                   : Alignment.bottomRight,
                               child: RequestText(
-                                "PM 02:51:23",
+                                "${request.data!.replyDate} / ${request.data!.replyTime}",
                                 textColor: context.colorPalette.grey66,
                                 fontSize: 10,
                               ),
@@ -200,7 +202,7 @@ class _RequestScreenState extends State<RequestScreen> {
                       if(request.data!.adminAttachment!.isNotEmpty)
                       Center(
                         child: SizedBox(
-                        height: 93,
+                        height: 95,
                         child: ListView.separated(
                           separatorBuilder: (context, index) => const SizedBox(width: 6),
                           itemCount: request.data!.adminAttachment!.length,

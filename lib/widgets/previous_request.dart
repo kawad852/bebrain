@@ -1,16 +1,19 @@
+import 'package:bebrain/helper/ui_helper.dart';
+import 'package:bebrain/model/new_request_model.dart';
 import 'package:bebrain/screens/request/request_screen.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/my_theme.dart';
 import 'package:flutter/material.dart';
 
 class PreviousRequest extends StatelessWidget {
-  const PreviousRequest({super.key});
+  final RequestData request;
+  const PreviousRequest({super.key, required this.request});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        context.push(const RequestScreen(requestId: 13));
+        context.push( RequestScreen(requestId: request.id!));
       },
       child: Container(
         width: double.infinity,
@@ -46,7 +49,7 @@ class PreviousRequest extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "حل واجب كالكولاس ",
+                    request.title!,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: context.colorPalette.black33,
@@ -55,7 +58,7 @@ class PreviousRequest extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "${context.appLocalization.requestNumber} : 74358103",
+                    "${context.appLocalization.requestNumber} : ${request.requestNumber}",
                     style: TextStyle(
                       color: context.colorPalette.grey66,
                       fontSize: 12,
@@ -69,12 +72,12 @@ class PreviousRequest extends StatelessWidget {
               height: 23,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: context.colorPalette.yellowFFC,
+                color:UiHelper.getRequestColor(context, type: request.statusType!),
                 borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
               ),
-              child: const Text(
-                "قيد المراجعة",
-                style: TextStyle(
+              child:  Text(
+                request.status!,
+                style:const TextStyle(
                   fontSize: 10,
                 ),
               ),

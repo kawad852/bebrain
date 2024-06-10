@@ -22,6 +22,12 @@ class ApiUrl {
   static const String courseFilter = '/api/courses-filter';
   static const String unitFilter = '/api/units-filter';
   static const String newRequest = '/api/requests';
+  static const String projects = 'projects';
+  static const String assignments = 'assignments';
+  static const String explanations = 'explanations';
+
+
+
 
 
 

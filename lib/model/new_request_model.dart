@@ -2,7 +2,7 @@ class NewRequestModel {
     bool? status;
     int? code;
     String? msg;
-    NewRequestData? data;
+    RequestData? data;
 
     NewRequestModel({
         this.status,
@@ -15,7 +15,7 @@ class NewRequestModel {
         status: json["status"],
         code: json["code"],
         msg: json["msg"],
-        data: json["data"] == null ? null : NewRequestData.fromJson(json["data"]),
+        data: json["data"] == null ? null : RequestData.fromJson(json["data"]),
     );
 
     Map<String, dynamic> toJson() => {
@@ -26,7 +26,7 @@ class NewRequestModel {
     };
 }
 
-class NewRequestData {
+class RequestData {
     int? id;
     int? userId;
     String? userName;
@@ -44,14 +44,18 @@ class NewRequestData {
     double? price;
     int? paymentStatus;
     String? note;
-    dynamic reply;
+    String? reply;
     String? status;
     String? statusType;
+    String? createdDate;
+    String? createdTime;
+    String? replyDate;
+    String? replyTime;
     List<UserAttachment>? userAttachment;
     List<UserAttachment>? adminAttachment;
     List<Videos>? videos;
 
-    NewRequestData({
+    RequestData({
         this.id,
         this.userId,
         this.userName,
@@ -72,12 +76,16 @@ class NewRequestData {
         this.reply,
         this.status,
         this.statusType,
+        this.createdDate,
+        this.createdTime,
+        this.replyDate,
+        this.replyTime,
         this.userAttachment,
         this.adminAttachment,
         this.videos,
     });
 
-    factory NewRequestData.fromJson(Map<String, dynamic> json) => NewRequestData(
+    factory RequestData.fromJson(Map<String, dynamic> json) => RequestData(
         id: json["id"],
         userId: json["user_id"],
         userName: json["user_name"],
@@ -98,6 +106,10 @@ class NewRequestData {
         reply: json["reply"],
         status: json["status"],
         statusType: json["status_type"],
+        createdDate: json["created_date"],
+        createdTime: json["created_time"],
+        replyDate: json["reply_date"],
+        replyTime: json["reply_time"],
         userAttachment: json["user_attachment"] == null ? [] : List<UserAttachment>.from(json["user_attachment"]!.map((x) => UserAttachment.fromJson(x))),
         adminAttachment: json["admin_attachment"] == null ? [] : List<UserAttachment>.from(json["admin_attachment"]!.map((x) => UserAttachment.fromJson(x))),
         videos: json["videos"] == null ? [] : List<Videos>.from(json["videos"]!.map((x) => Videos.fromJson(x))),
@@ -124,6 +136,10 @@ class NewRequestData {
         "reply": reply,
         "status": status,
         "status_type": statusType,
+        "created_date": createdDate,
+        "created_time": createdTime,
+        "reply_date": replyDate,
+        "reply_time": replyTime,
         "user_attachment": userAttachment == null ? [] : List<dynamic>.from(userAttachment!.map((x) => x.toJson())),
         "admin_attachment": adminAttachment == null ? [] : List<dynamic>.from(adminAttachment!.map((x) => x.toJson())),
         "videos": videos == null ? [] : List<dynamic>.from(videos!.map((x) => x.toJson())),
@@ -133,20 +149,24 @@ class NewRequestData {
 class UserAttachment {
     int? id;
     String? attachment;
+    String? filename;
 
     UserAttachment({
         this.id,
         this.attachment,
+        this.filename,
     });
 
     factory UserAttachment.fromJson(Map<String, dynamic> json) => UserAttachment(
         id: json["id"],
         attachment: json["attachment"],
+        filename: json["filename"],
     );
 
     Map<String, dynamic> toJson() => {
         "id": id,
         "attachment": attachment,
+        "filename": filename,
     };
 }
 

@@ -7,6 +7,7 @@ class RequestText extends StatelessWidget {
   final FontWeight? fontWeight;
   final TextOverflow? overflow;
   final int? maxLines;
+  final TextAlign? textAlign;
   const RequestText(
     this.data, {
     super.key,
@@ -15,6 +16,7 @@ class RequestText extends StatelessWidget {
     this.fontWeight,
     this.overflow,
     this.maxLines,
+    this.textAlign,
   });
 
   @override
@@ -23,6 +25,7 @@ class RequestText extends StatelessWidget {
       data,
       overflow: overflow,
       maxLines: maxLines,
+      textAlign: textAlign,
       style: TextStyle(
         color: textColor,
         fontSize: fontSize,
