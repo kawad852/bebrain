@@ -2,6 +2,7 @@ import 'package:bebrain/helper/ui_helper.dart';
 import 'package:bebrain/model/new_request_model.dart';
 import 'package:bebrain/providers/main_provider.dart';
 import 'package:bebrain/screens/request/widgets/file_card.dart';
+import 'package:bebrain/screens/request/widgets/request_loading.dart';
 import 'package:bebrain/screens/request/widgets/request_nav_bar.dart';
 import 'package:bebrain/screens/request/widgets/request_text.dart';
 import 'package:bebrain/screens/request/widgets/request_tile.dart';
@@ -61,6 +62,8 @@ class _RequestScreenState extends State<RequestScreen> {
   Widget build(BuildContext context) {
     return CustomFutureBuilder(
       future: _requestFuture,
+      withBackgroundColor: true,
+      onLoading: () => const RequestLoading(),
       onRetry: () {
         setState(() {
           _initializeFuture();
@@ -96,8 +99,7 @@ class _RequestScreenState extends State<RequestScreen> {
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               color: UiHelper.getRequestColor(context,type: request.data!.statusType!),
-                              borderRadius: BorderRadius.circular(
-                                  MyTheme.radiusSecondary),
+                              borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
                             ),
                             child: RequestText(
                               request.data!.status!,
@@ -139,8 +141,7 @@ class _RequestScreenState extends State<RequestScreen> {
                 child: Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 5),
+                      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                       child: Row(
                         children: [
                           const CustomSvg(MyIcons.attach),
@@ -166,8 +167,7 @@ class _RequestScreenState extends State<RequestScreen> {
                 ),
               ),
               SliverPadding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                 sliver: SliverToBoxAdapter(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

@@ -8,6 +8,7 @@ import 'package:bebrain/network/api_url.dart';
 import 'package:bebrain/providers/main_provider.dart';
 import 'package:bebrain/screens/request/request_screen.dart';
 import 'package:bebrain/screens/send_request/widgets/request_menu.dart';
+import 'package:bebrain/screens/send_request/widgets/send_request_loading.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/enums.dart';
 import 'package:bebrain/utils/my_icons.dart';
@@ -169,6 +170,7 @@ class _SendRequestScreenState extends State<SendRequestScreen> {
     return CustomFutureBuilder(
       future: _futures,
       withBackgroundColor: true,
+      onLoading: () =>  SendRequestLoading(discription: descriptipnPage()),
       onRetry: () {
         setState(() {
           _futures = _initializeFutures();
