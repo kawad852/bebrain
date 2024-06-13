@@ -66,6 +66,7 @@ class Course {
     int? hours;
     int? minutes;
     Professor? professor;
+    Offer? offer;
     List<Unit>? units;
 
     Course({
@@ -86,6 +87,7 @@ class Course {
         this.hours,
         this.minutes,
         this.professor,
+        this.offer,
         this.units,
     });
 
@@ -107,6 +109,7 @@ class Course {
         hours: json["hours"],
         minutes: json["minutes"],
         professor: json["professor"] == null ? null : Professor.fromJson(json["professor"]),
+        offer: json["offer"] == null ? null : Offer.fromJson(json["offer"]),
         units: json["units"] == null ? [] : List<Unit>.from(json["units"]!.map((x) => Unit.fromJson(x))),
     );
 
@@ -128,10 +131,39 @@ class Course {
         "hours": hours,
         "minutes": minutes,
         "professor": professor?.toJson(),
+        "offer": offer?.toJson(),
         "units": units == null ? [] : List<dynamic>.from(units!.map((x) => x.toJson())),
     };
 }
 
+
+class Offer {
+    int? id;
+    String? content;
+    DateTime? startDate;
+    DateTime? endDate;
+
+    Offer({
+        this.id,
+        this.content,
+        this.startDate,
+        this.endDate,
+    });
+
+    factory Offer.fromJson(Map<String, dynamic> json) => Offer(
+        id: json["id"],
+        content: json["content"],
+        startDate: json["start_date"] == null ? null : DateTime.parse(json["start_date"]),
+        endDate: json["end_date"] == null ? null : DateTime.parse(json["end_date"]),
+    );
+
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "content": content,
+        "start_date": startDate?.toIso8601String(),
+        "end_date": endDate?.toIso8601String(),
+    };
+}
 
 class Unit {
     int? id;

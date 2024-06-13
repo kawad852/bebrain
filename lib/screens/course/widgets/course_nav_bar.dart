@@ -1,11 +1,34 @@
+import 'package:bebrain/model/course_filter_model.dart';
 import 'package:bebrain/screens/course/widgets/course_text.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/my_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class CourseNavBar extends StatelessWidget {
-  const CourseNavBar({super.key});
+class CourseNavBar extends StatefulWidget {
+  final Offer offer;
+  final double price;
+  final double? discountPrice;
+  const CourseNavBar({
+    super.key,
+    required this.offer,
+    required this.price,
+    required this.discountPrice,
+  });
+
+  @override
+  State<CourseNavBar> createState() => _CourseNavBarState();
+}
+
+class _CourseNavBarState extends State<CourseNavBar> {
+  Duration difference =const Duration(days: 0, hours: 0, minutes: 0, seconds: 0);
+
+
+  @override
+  void initState() {
+    super.initState();
+    difference = widget.offer.endDate!.toUTC(context).difference(DateTime.now());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,15 +48,16 @@ class CourseNavBar extends StatelessWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                if (widget.discountPrice != null)
+                  CourseText(
+                    "\$${widget.price}",
+                    fontSize: 16,
+                    textColor: context.colorPalette.grey66,
+                    decoration: TextDecoration.lineThrough,
+                    fontWeight: FontWeight.bold,
+                  ),
                 CourseText(
-                  "\$25",
-                  fontSize: 16,
-                  textColor: context.colorPalette.grey66,
-                  decoration: TextDecoration.lineThrough,
-                  fontWeight: FontWeight.bold,
-                ),
-                const CourseText(
-                  "\$11",
+                  "\$${widget.discountPrice ?? widget.price}",
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
@@ -44,14 +68,25 @@ class CourseNavBar extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CourseText(
-                    context.appLocalization.discountEntireCourse(70),
+                    widget.offer.content!,
+                    // context.appLocalization.discountEntireCourse(70),
                     textAlign: TextAlign.center,
                     fontWeight: FontWeight.bold,
                   ),
-                  CourseText(
-                    "15 ${context.appLocalization.second}, 43 ${context.appLocalization.minute}, 5 ${context.appLocalization.hours}, 4 ${context.appLocalization.days}",
-                    fontSize: 12,
-                    textColor: context.colorPalette.grey66,
+                  TweenAnimationBuilder<Duration>(
+                    duration: difference,
+                    tween: Tween(begin: difference, end: Duration.zero),
+                    builder:(BuildContext context, Duration value, Widget? child) {
+                      final days = value.inDays;
+                      final hours = value.inHours.remainder(24);
+                      final minutes = value.inMinutes.remainder(60);
+                      final seconds = value.inSeconds.remainder(60);
+                      return CourseText(
+                        "$seconds ${context.appLocalization.second}, $minutes ${context.appLocalization.minute}, $hours ${context.appLocalization.hours}, $days ${context.appLocalization.days}",
+                        fontSize: 12,
+                        textColor: context.colorPalette.grey66,
+                      );
+                    },
                   ),
                 ],
               ),

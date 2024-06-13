@@ -1,3 +1,5 @@
+import 'package:bebrain/model/course_filter_model.dart';
+
 class UnitFilterModel {
     bool? status;
     int? code;
@@ -38,6 +40,7 @@ class UnitFilterData {
     int? videosCount;
     int? documentsCount;
     int? videosMinutes;
+    Offer? offer;
     List<Section>? sections;
 
     UnitFilterData({
@@ -52,6 +55,7 @@ class UnitFilterData {
         this.videosCount,
         this.documentsCount,
         this.videosMinutes,
+        this.offer,
         this.sections,
     });
 
@@ -67,6 +71,7 @@ class UnitFilterData {
         videosCount: json["videos_count"],
         documentsCount: json["documents_count"],
         videosMinutes: json["videos_minutes"],
+        offer: json["offer"] == null ? null : Offer.fromJson(json["offer"]),
         sections: json["sections"] == null ? [] : List<Section>.from(json["sections"]!.map((x) => Section.fromJson(x))),
     );
 
@@ -82,6 +87,7 @@ class UnitFilterData {
         "videos_count": videosCount,
         "documents_count": documentsCount,
         "videos_minutes": videosMinutes,
+        "offer": offer?.toJson(),
         "sections": sections == null ? [] : List<dynamic>.from(sections!.map((x) => x.toJson())),
     };
 }
@@ -98,6 +104,7 @@ class Section {
     int? videosCount;
     int? documentsCount;
     int? numberOfMinutes;
+    Offer? offer;
     List<Video>? videos;
     List<Document>? documents;
 
@@ -113,6 +120,7 @@ class Section {
         this.videosCount,
         this.documentsCount,
         this.numberOfMinutes,
+        this.offer,
         this.videos,
         this.documents,
     });
@@ -129,6 +137,7 @@ class Section {
         videosCount: json["videos_count"],
         documentsCount: json["documents_count"],
         numberOfMinutes: json["number_of_minutes"],
+        offer: json["offer"] == null ? null : Offer.fromJson(json["offer"]),
         videos: json["videos"] == null ? [] : List<Video>.from(json["videos"]!.map((x) => Video.fromJson(x))),
         documents: json["documents"] == null ? [] : List<Document>.from(json["documents"]!.map((x) => Document.fromJson(x))),
     );
@@ -145,6 +154,7 @@ class Section {
         "videos_count": videosCount,
         "documents_count": documentsCount,
         "number_of_minutes": numberOfMinutes,
+        "offer": offer?.toJson(),
         "videos": videos == null ? [] : List<dynamic>.from(videos!.map((x) => x.toJson())),
         "documents": documents == null ? [] : List<dynamic>.from(documents!.map((x) => x.toJson())),
     };

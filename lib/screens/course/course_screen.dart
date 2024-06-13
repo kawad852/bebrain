@@ -34,9 +34,19 @@ class _CourseScreenState extends State<CourseScreen> {
     _courseFuture = _mainProvider.filterByCourse(widget.courseId);
   }
 
+  bool checkTime(DateTime firstDate, DateTime lastDate){
+    return (firstDate.toUTC(context).compareTo(DateTime.now())==0 ||  DateTime.now().isAfter(firstDate.toUTC(context))) &&
+      (lastDate.toUTC(context).compareTo(DateTime.now())==0 ||  DateTime.now().isBefore(lastDate.toUTC(context)));
+  }
+
+
   @override
   void initState() {
     super.initState();
+    
+
+
+
     _mainProvider = context.mainProvider;
     _initializeFuture();
   }
@@ -55,7 +65,13 @@ class _CourseScreenState extends State<CourseScreen> {
         final data = snapshot.data!;
         final course = data.data!.course!;
         return Scaffold(
-          bottomNavigationBar: const CourseNavBar(),
+          bottomNavigationBar: course.offer == null || !checkTime(course.offer!.startDate!,course.offer!.endDate!)
+              ? null
+              : CourseNavBar(
+                  offer: course.offer!,
+                  price: course.price!,
+                  discountPrice: course.discountPrice,
+                ),
           body: CustomScrollView(
             slivers: [
               SliverAppBar(
@@ -120,11 +136,11 @@ class _CourseScreenState extends State<CourseScreen> {
                         course.description!,
                       ),
                       const SizedBox(height: 10),
-                       CourseInfo(
+                      CourseInfo(
                         hours: course.hours!,
                         minutes: course.minutes!,
                         videoCount: course.videosCount!,
-                       ),
+                      ),
                       StretchedButton(
                         onPressed: () {},
                         margin: const EdgeInsets.symmetric(vertical: 12),
@@ -156,15 +172,15 @@ class _CourseScreenState extends State<CourseScreen> {
               SliverPadding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 sliver: SliverList.separated(
-                  separatorBuilder: (context, index) => const SizedBox(height: 5),
+                  separatorBuilder: (context, index) =>const SizedBox(height: 5),
                   itemCount: course.units!.length,
                   itemBuilder: (context, index) {
-                    return ContentCard(unit:course.units![index]);
+                    return ContentCard(unit: course.units![index]);
                   },
                 ),
               ),
               SliverPadding(
-                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                padding:const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
                 sliver: SliverToBoxAdapter(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -209,28 +225,28 @@ class _CourseScreenState extends State<CourseScreen> {
                 ),
               ),
               //TODO Completion is when it is completed in the back end section
-              if(data.data!.moreCourses!.isNotEmpty)
-              SliverToBoxAdapter(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      child: CourseText(
-                        context.appLocalization.more,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+              if (data.data!.moreCourses!.isNotEmpty)
+                SliverToBoxAdapter(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        child: CourseText(
+                          context.appLocalization.more,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10),
-                      child: CoursesList(
-                        courses: [],
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        child: CoursesList(
+                          courses: [],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
             ],
           ),
         );

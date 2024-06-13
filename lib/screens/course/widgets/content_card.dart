@@ -50,15 +50,15 @@ class ContentCard extends StatelessWidget {
               /// مجاناوتم الاشتراك
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                if(unit.discountPrice!=0)
+                if(unit.discountPrice!=null)
                 CourseText(
-                  "\$${unit.discountPrice}",
+                  "\$${unit.unitPrice}",
                   textColor: context.colorPalette.grey66,
                   fontWeight: FontWeight.bold,
                   decoration: TextDecoration.lineThrough,
                 ),
                  CourseText(
-                  "\$${unit.unitPrice}",
+                  "\$${unit.discountPrice ?? unit.unitPrice}",
                   fontWeight: FontWeight.bold,
                 ),
               ],

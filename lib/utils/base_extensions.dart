@@ -132,3 +132,10 @@ extension DateTimeExtension on DateTime {
     return date;
   }
 }
+
+extension UTCDate on DateTime {
+  DateTime toUTC(BuildContext context){
+    final utcTime = DateTime.utc(year, month, day, hour, minute, second);
+    return utcTime.toLocal();
+  }
+}

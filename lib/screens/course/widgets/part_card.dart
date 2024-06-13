@@ -24,15 +24,15 @@ class PartCard extends StatelessWidget {
           /// مجاناوتم الاشتراك
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            if (section.discountPrice != 0)
+            if (section.discountPrice != null)
               CourseText(
-                "\$${section.discountPrice}",
+                "\$${section.sectionPrice}",
                 textColor: context.colorPalette.grey66,
                 fontWeight: FontWeight.bold,
                 decoration: TextDecoration.lineThrough,
               ),
             CourseText(
-              "\$${section.sectionPrice}",
+              "\$${section.discountPrice?? section.sectionPrice}",
               fontWeight: FontWeight.bold,
             ),
           ],

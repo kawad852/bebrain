@@ -28,6 +28,11 @@ class _UnitScreenState extends State<UnitScreen> {
     _unitFuture = _mainProvider.filterByUnit(widget.unitId);
   }
 
+  bool checkTime(DateTime firstDate, DateTime lastDate){
+    return (firstDate.toUTC(context).compareTo(DateTime.now())==0 ||  DateTime.now().isAfter(firstDate.toUTC(context))) &&
+      (lastDate.toUTC(context).compareTo(DateTime.now())==0 ||  DateTime.now().isBefore(lastDate.toUTC(context)));
+  }
+
   @override
   void initState() {
     super.initState();
@@ -56,7 +61,13 @@ class _UnitScreenState extends State<UnitScreen> {
         final data=snapshot.data!;
         final unit=data.data!;
         return Scaffold(
-          bottomNavigationBar: const CourseNavBar(),
+          bottomNavigationBar: unit.offer==null || !checkTime(unit.offer!.startDate!,unit.offer!.endDate!)
+         ? null 
+          : CourseNavBar(
+            offer: unit.offer!,
+            price: unit.unitPrice!,
+            discountPrice: unit.discountPrice,
+          ),
           body: CustomScrollView(
             slivers: [
               SliverAppBar(
@@ -87,15 +98,15 @@ class _UnitScreenState extends State<UnitScreen> {
                           ),
                           Column(
                             children: [
-                              if(unit.discountPrice!=0)
+                              if(unit.discountPrice!=null)
                               CourseText(
-                                "\$${unit.discountPrice}",
+                                "\$${unit.unitPrice}",
                                 textColor: context.colorPalette.grey66,
                                 decoration: TextDecoration.lineThrough,
                                 fontWeight: FontWeight.bold,
                               ),
                                CourseText(
-                                "\$${unit.unitPrice}",
+                                "\$${unit.discountPrice?? unit.unitPrice}",
                                 fontWeight: FontWeight.bold,
                               ),
                             ],
@@ -115,15 +126,15 @@ class _UnitScreenState extends State<UnitScreen> {
                           children: [
                             Column(
                               children: [
-                                if(unit.discountPrice!=0)
+                                if(unit.discountPrice!=null)
                                 CourseText(
-                                  "\$${unit.discountPrice}",
+                                  "\$${unit.unitPrice}",
                                   textColor: context.colorPalette.grey66,
                                   decoration: TextDecoration.lineThrough,
                                   fontWeight: FontWeight.bold,
                                 ),
                                 CourseText(
-                                  "\$${unit.unitPrice}",
+                                  "\$${unit.discountPrice?? unit.unitPrice}",
                                   textColor: context.colorPalette.black33,
                                   fontWeight: FontWeight.bold,
                                 ),

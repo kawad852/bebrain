@@ -1,14 +1,16 @@
+import 'package:bebrain/model/auth_model.dart';
+import 'package:bebrain/providers/auth_provider.dart';
 import 'package:bebrain/screens/polifcy/policy_screen.dart';
 import 'package:bebrain/screens/profile/edit_profile_screen.dart';
 import 'package:bebrain/screens/profile/widgets/profile_tile.dart';
 import 'package:bebrain/screens/profile/widgets/study_info.dart';
-import 'package:bebrain/utils/app_constants.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/my_icons.dart';
 import 'package:bebrain/utils/my_theme.dart';
 import 'package:bebrain/widgets/custom_network_image.dart';
 import 'package:bebrain/widgets/custom_svg.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -51,40 +53,48 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      const CustomNetworkImage(
-                        kFakeImage,
-                        width: 53,
-                        height: 53,
-                        shape: BoxShape.circle,
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              "Almhyar Zahra",
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              "${context.appLocalization.accountNumber} : 2194625",
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                color: context.colorPalette.grey66,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                  Selector<AuthProvider, UserData>(
+                      selector: (context, provider) => provider.user,
+                      builder: (context, userData, child) {
+                        return Builder(
+                          builder: (context) {
+                            return Row(
+                              children: [
+                                CustomNetworkImage(
+                                  userData.image!,
+                                  width: 53,
+                                  height: 53,
+                                  shape: BoxShape.circle,
+                                ),
+                                const SizedBox(width: 10),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        userData.name!,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Text(
+                                        "${context.appLocalization.accountNumber} : 2194625",
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          color: context.colorPalette.grey66,
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }),
                   const StudyInfo(),
                   ProfileTile(
                     onTap: () {},
