@@ -108,14 +108,26 @@ class _WizardScreenState extends State<WizardScreen> {
         context.authProvider.wizardValues.countryName=_selectedName;
         context.authProvider.wizardValues.wizardType=WizardType.countries;
         context.authProvider.wizardValues.countryCode=countryCode;
+        context.authProvider.wizardValues.universityId = null;
+        context.authProvider.wizardValues.universityName = null;
+        context.authProvider.wizardValues.collegeId = null;
+        context.authProvider.wizardValues.collegeName = null;
+        context.authProvider.wizardValues.majorId = null;
+        context.authProvider.wizardValues.majorName = null;
       case WizardType.universities:
         context.authProvider.wizardValues.universityId = _selectedId;
         context.authProvider.wizardValues.universityName=_selectedName;
         context.authProvider.wizardValues.wizardType=WizardType.universities;
+        context.authProvider.wizardValues.collegeId = null;
+        context.authProvider.wizardValues.collegeName = null;
+        context.authProvider.wizardValues.majorId = null;
+        context.authProvider.wizardValues.majorName = null;
       case WizardType.colleges:
         context.authProvider.wizardValues.collegeId = _selectedId;
         context.authProvider.wizardValues.collegeName=_selectedName;
         context.authProvider.wizardValues.wizardType=WizardType.colleges;
+        context.authProvider.wizardValues.majorId = null;
+        context.authProvider.wizardValues.majorName = null;
       case WizardType.specialities:
         context.authProvider.wizardValues.majorId = _selectedId;
         context.authProvider.wizardValues.majorName=_selectedName;
