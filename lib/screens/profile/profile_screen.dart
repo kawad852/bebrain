@@ -1,5 +1,7 @@
 import 'package:bebrain/model/auth_model.dart';
 import 'package:bebrain/providers/auth_provider.dart';
+import 'package:bebrain/screens/contact/contact_screen.dart';
+import 'package:bebrain/screens/language/language_screen.dart';
 import 'package:bebrain/screens/polifcy/policy_screen.dart';
 import 'package:bebrain/screens/profile/edit_profile_screen.dart';
 import 'package:bebrain/screens/profile/widgets/profile_tile.dart';
@@ -107,7 +109,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     icon: MyIcons.notification,
                   ),
                   ProfileTile(
-                    onTap: () {},
+                    onTap: () {
+                      context.push(const LanguageScreen());
+                    },
                     title: context.appLocalization.appLanguage,
                     icon: MyIcons.appLanguage,
                   ),
@@ -133,12 +137,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     icon: MyIcons.terms,
                   ),
                   ProfileTile(
-                    onTap: () {},
+                    onTap: () {
+                      context.push(const ContactScreen());
+                    },
                     title: context.appLocalization.contactAlmusaed,
                     icon: MyIcons.contact,
                   ),
                   ProfileTile(
-                    onTap: () {},
+                    onTap: () {
+                      context.authProvider.logout(context);
+                    },
                     title: context.appLocalization.logout,
                     icon: MyIcons.logout,
                     color: context.colorPalette.redE66,

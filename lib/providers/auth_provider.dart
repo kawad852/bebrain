@@ -184,7 +184,7 @@ class AuthProvider extends ChangeNotifier {
     MySharedPreferences.clearStorage();
     updateUser(context, userModel: UserData());
     updateFilter(context, filterModel: FilterModel());
-    // context.pushAndRemoveUntil(const RegistrationScreen());
+    context.pushAndRemoveUntil(const RegistrationScreen());
   }
 
   Future<AuthModel> updateProfile(

@@ -8,6 +8,8 @@ class TextEditor extends StatefulWidget {
   final bool required;
   final Widget? suffixIcon;
   final String? hintText;
+  final TextInputType? keyboardType;
+  final int? maxLines;
 
   const TextEditor({
     super.key,
@@ -15,7 +17,9 @@ class TextEditor extends StatefulWidget {
     required this.onChanged,
     this.required = true,
     this.suffixIcon,
-    this.hintText,
+    this.hintText, 
+    this.keyboardType, 
+    this.maxLines,
   });
 
   @override
@@ -31,6 +35,8 @@ class _TextEditorState extends State<TextEditor> with AutomaticKeepAliveClientMi
       required: widget.required,
       suffixIcon: widget.suffixIcon,
       hintText: widget.hintText,
+      keyboardType: widget.keyboardType,
+      maxLines: widget.maxLines ,
       onChanged: (value) {
         if (value.isEmpty) {
           widget.onChanged(null);

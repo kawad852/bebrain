@@ -178,5 +178,12 @@
   "passwordUpdatedMsg": "Password Updated Successfully",
   "subscribeToThisPartOnly":"Subscribe to this part only",
   "attachedFile":"Attached file",
-  "fillAllFields":"Please fill out all required fields"
+  "fillAllFields":"Please fill out all required fields",
+  "contactDiscription":"You can contact Al-Mosaaed at any time by filling out the following form or clicking on the WhatsApp button to chat directly with your Al-Mosaaed",
+  "yourEmail":"Your E-mail",
+  "contactViaWhatsApp":"Contact Al-Mosaaed via WhatsApp",
+  "chat":"Chat",
+  "emailHint":"Enter your email here",
+  "titleHint":"Enter subject title here",
+  "notesHint":"Enter your notes here"
 }
