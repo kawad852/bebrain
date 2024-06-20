@@ -1,7 +1,9 @@
 import 'package:bebrain/model/auth_model.dart';
 import 'package:bebrain/providers/auth_provider.dart';
+import 'package:bebrain/screens/article_subscriptions/article_subscriptions_screen.dart';
 import 'package:bebrain/screens/contact/contact_screen.dart';
 import 'package:bebrain/screens/language/language_screen.dart';
+import 'package:bebrain/screens/notifications/notifications_screen.dart';
 import 'package:bebrain/screens/polifcy/policy_screen.dart';
 import 'package:bebrain/screens/profile/edit_profile_screen.dart';
 import 'package:bebrain/screens/profile/widgets/profile_tile.dart';
@@ -99,12 +101,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       }),
                   const StudyInfo(),
                   ProfileTile(
-                    onTap: () {},
+                    onTap: () {
+                      context.push(const ArticleSubscriptionsScreen());
+                    },
                     title: context.appLocalization.articleSubscriptions,
                     icon: MyIcons.articleSubscriptions,
                   ),
                   ProfileTile(
-                    onTap: () {},
+                    onTap: () {
+                      context.push(const NotificationsScreen());
+                    },
                     title: context.appLocalization.notifications,
                     icon: MyIcons.notification,
                   ),

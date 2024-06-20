@@ -40,7 +40,7 @@ class CourseCard extends StatelessWidget {
               width: 90,
               height: 90,
               radius: MyTheme.radiusSecondary,
-              alignment: Alignment.topLeft,
+              alignment: context.isLTR ? Alignment.topLeft : Alignment.topRight,
               child: const EvaluationStar(
                 margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                 evaluation: "4.8",

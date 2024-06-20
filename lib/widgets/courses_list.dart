@@ -32,8 +32,7 @@ class CoursesList extends StatelessWidget {
                 courses[index].image!,
                 width: 272,
                 height: 180,
-                alignment:
-                    context.isLTR ? Alignment.topLeft : Alignment.topRight,
+                alignment: context.isLTR ? Alignment.topLeft : Alignment.topRight,
                 radius: MyTheme.radiusSecondary,
                 onTap: () {
                   context.authProvider.checkIfUserAuthenticated(
