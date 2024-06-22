@@ -66,9 +66,9 @@ class CourseCard extends StatelessWidget {
                   Row(
                     children: [
                       const CustomSvg(MyIcons.subscription),
-                      const Padding(
-                        padding: EdgeInsetsDirectional.only(start: 5, end: 8),
-                        child: TextCourse("195"),
+                       Padding(
+                        padding: const EdgeInsetsDirectional.only(start: 5, end: 8),
+                        child: TextCourse("${course.subscriptionCount}"),
                       ),
                       const CustomSvg(MyIcons.video),
                       Padding(

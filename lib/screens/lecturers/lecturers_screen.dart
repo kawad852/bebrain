@@ -145,7 +145,7 @@ class _LecturersScreenState extends State<LecturersScreen> {
                             ),
                             Flexible(
                               child: Text(
-                                "4900 ${context.appLocalization.subscriber}",
+                                "${element.subscriptionCount} ${context.appLocalization.subscriber}",
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                   fontSize: 12,

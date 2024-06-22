@@ -77,7 +77,7 @@ class DistinguishedLectures extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            "4950 مشترك",
+                            "${professor.subscriptionCount} ${context.appLocalization.subscriber}",
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               fontSize: 12,

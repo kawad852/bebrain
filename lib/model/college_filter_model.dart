@@ -57,23 +57,27 @@ class CollegeFilterData {
 class Major {
     int? id;
     String? name;
+    int? totalSubscriptions;
     List<Course>? courses;
 
     Major({
         this.id,
         this.name,
+        this.totalSubscriptions,
         this.courses,
     });
 
     factory Major.fromJson(Map<String, dynamic> json) => Major(
         id: json["id"],
         name: json["name"],
+        totalSubscriptions: json["total_subscriptions"],
         courses: json["courses"] == null ? [] : List<Course>.from(json["courses"]!.map((x) => Course.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
+        "total_subscriptions": totalSubscriptions,
         "courses": courses == null ? [] : List<dynamic>.from(courses!.map((x) => x.toJson())),
     };
 }

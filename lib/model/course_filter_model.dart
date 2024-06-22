@@ -65,6 +65,7 @@ class Course {
     int? unitsCount;
     int? hours;
     int? minutes;
+    int? subscriptionCount;
     Professor? professor;
     Offer? offer;
     List<Unit>? units;
@@ -86,6 +87,7 @@ class Course {
         this.unitsCount,
         this.hours,
         this.minutes,
+        this.subscriptionCount,
         this.professor,
         this.offer,
         this.units,
@@ -108,6 +110,7 @@ class Course {
         unitsCount: json["units_count"],
         hours: json["hours"],
         minutes: json["minutes"],
+        subscriptionCount: json["subscription_count"],
         professor: json["professor"] == null ? null : Professor.fromJson(json["professor"]),
         offer: json["offer"] == null ? null : Offer.fromJson(json["offer"]),
         units: json["units"] == null ? [] : List<Unit>.from(json["units"]!.map((x) => Unit.fromJson(x))),
@@ -130,6 +133,7 @@ class Course {
         "units_count": unitsCount,
         "hours": hours,
         "minutes": minutes,
+        "subscription_count": subscriptionCount,
         "professor": professor?.toJson(),
         "offer": offer?.toJson(),
         "units": units == null ? [] : List<dynamic>.from(units!.map((x) => x.toJson())),
@@ -176,6 +180,8 @@ class Unit {
     int? videosCount;
     int? documentsCount;
     int? videosMinutes;
+    int? subscriptionCount;
+    Offer? offer;
 
     Unit({
         this.id,
@@ -188,6 +194,8 @@ class Unit {
         this.videosCount,
         this.documentsCount,
         this.videosMinutes,
+        this.subscriptionCount,
+        this.offer,
     });
 
     factory Unit.fromJson(Map<String, dynamic> json) => Unit(
@@ -201,6 +209,8 @@ class Unit {
         videosCount: json["videos_count"],
         documentsCount: json["documents_count"],
         videosMinutes: json["videos_minutes"],
+        subscriptionCount: json["subscription_count"],
+        offer: json["offer"] == null ? null : Offer.fromJson(json["offer"]),
     );
 
     Map<String, dynamic> toJson() => {
@@ -214,5 +224,7 @@ class Unit {
         "videos_count": videosCount,
         "documents_count": documentsCount,
         "videos_minutes": videosMinutes,
+        "subscription_count": subscriptionCount,
+        "offer": offer?.toJson(),
     };
 }

@@ -33,6 +33,7 @@ class ProfessorData {
     String? image;
     int? universityId;
     String? universityName;
+    int? subscriptionCount;
     List<Major>? majors;
     List<College>? colleges;
 
@@ -43,6 +44,7 @@ class ProfessorData {
         this.image,
         this.universityId,
         this.universityName,
+        this.subscriptionCount,
         this.majors,
         this.colleges,
     });
@@ -54,6 +56,7 @@ class ProfessorData {
         image: json["image"],
         universityId: json["university_id"],
         universityName: json["university_name"],
+        subscriptionCount: json["subscription_count"],
         majors: json["majors"] == null ? [] : List<Major>.from(json["majors"]!.map((x) => Major.fromJson(x))),
         colleges: json["colleges"] == null ? [] : List<College>.from(json["colleges"]!.map((x) => College.fromJson(x))),
     );
@@ -65,6 +68,7 @@ class ProfessorData {
         "image": image,
         "university_id": universityId,
         "university_name": universityName,
+        "subscription_count": subscriptionCount,
         "majors": majors == null ? [] : List<dynamic>.from(majors!.map((x) => x.toJson())),
         "colleges": colleges == null ? [] : List<dynamic>.from(colleges!.map((x) => x.toJson())),
     };

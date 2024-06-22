@@ -86,7 +86,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                             Padding(
                               padding: const EdgeInsetsDirectional.only(start: 5),
                               child: Text(
-                                "2505 ${context.appLocalization.subscriber}",
+                                "${major.major!.totalSubscriptions} ${context.appLocalization.subscriber}",
                                 style: TextStyle(
                                   color: context.colorPalette.grey66,
                                 ),

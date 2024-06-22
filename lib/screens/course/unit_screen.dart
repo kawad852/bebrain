@@ -61,12 +61,12 @@ class _UnitScreenState extends State<UnitScreen> {
         final data=snapshot.data!;
         final unit=data.data!;
         return Scaffold(
-          bottomNavigationBar: unit.offer==null || !checkTime(unit.offer!.startDate!,unit.offer!.endDate!)
+          bottomNavigationBar: unit.courseOffer==null || !checkTime(unit.courseOffer!.startDate!,unit.courseOffer!.endDate!)
          ? null 
           : CourseNavBar(
-            offer: unit.offer!,
-            price: unit.unitPrice!,
-            discountPrice: unit.discountPrice,
+            offer: unit.courseOffer!,
+            price: unit.couursePrice!,
+            discountPrice: unit.courseDiscountPrice,
           ),
           body: CustomScrollView(
             slivers: [

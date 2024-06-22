@@ -88,7 +88,7 @@ class LectureCard extends StatelessWidget {
                 ),
                 const Point(),
                 CourseText(
-                  "4950 ${context.appLocalization.subscriber}",
+                  "${professor.subscriptionCount} ${context.appLocalization.subscriber}",
                   fontSize: 12,
                 ),
                 const Point(),

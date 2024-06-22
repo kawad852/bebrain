@@ -140,6 +140,7 @@ class _CourseScreenState extends State<CourseScreen> {
                         hours: course.hours!,
                         minutes: course.minutes!,
                         videoCount: course.videosCount!,
+                        subscriptionCount: course.subscriptionCount!,
                       ),
                       StretchedButton(
                         onPressed: () {},

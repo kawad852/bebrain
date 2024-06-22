@@ -8,7 +8,14 @@ class CourseInfo extends StatelessWidget {
   final int videoCount;
   final int hours;
   final int minutes;
-  const CourseInfo({super.key, required this.videoCount, required this.hours, required this.minutes});
+  final int subscriptionCount;
+  const CourseInfo({
+    super.key,
+    required this.videoCount,
+    required this.hours,
+    required this.minutes,
+    required this.subscriptionCount,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +24,8 @@ class CourseInfo extends StatelessWidget {
         Expanded(
           child: Column(
             children: [
-              CourseText(
-                "712",
+               CourseText(
+                "$subscriptionCount",
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),

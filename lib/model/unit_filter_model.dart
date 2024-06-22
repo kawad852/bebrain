@@ -40,6 +40,10 @@ class UnitFilterData {
     int? videosCount;
     int? documentsCount;
     int? videosMinutes;
+    int? subscriptionCount;
+    double? couursePrice;
+    double? courseDiscountPrice;
+    Offer? courseOffer;
     Offer? offer;
     List<Section>? sections;
 
@@ -55,6 +59,10 @@ class UnitFilterData {
         this.videosCount,
         this.documentsCount,
         this.videosMinutes,
+        this.subscriptionCount,
+        this.couursePrice,
+        this.courseDiscountPrice,
+        this.courseOffer,
         this.offer,
         this.sections,
     });
@@ -71,6 +79,10 @@ class UnitFilterData {
         videosCount: json["videos_count"],
         documentsCount: json["documents_count"],
         videosMinutes: json["videos_minutes"],
+        subscriptionCount: json["subscription_count"],
+        couursePrice: json["couurse_price"]?.toDouble(),
+        courseDiscountPrice: json["course_discount_price"]?.toDouble(),
+        courseOffer: json["course_offer"] == null ? null : Offer.fromJson(json["course_offer"]),
         offer: json["offer"] == null ? null : Offer.fromJson(json["offer"]),
         sections: json["sections"] == null ? [] : List<Section>.from(json["sections"]!.map((x) => Section.fromJson(x))),
     );
@@ -87,6 +99,10 @@ class UnitFilterData {
         "videos_count": videosCount,
         "documents_count": documentsCount,
         "videos_minutes": videosMinutes,
+        "subscription_count": subscriptionCount,
+        "couurse_price": couursePrice,
+        "course_discount_price": courseDiscountPrice,
+        "course_offer": courseOffer?.toJson(),
         "offer": offer?.toJson(),
         "sections": sections == null ? [] : List<dynamic>.from(sections!.map((x) => x.toJson())),
     };
@@ -104,6 +120,7 @@ class Section {
     int? videosCount;
     int? documentsCount;
     int? numberOfMinutes;
+    int? subscriptionCount;
     Offer? offer;
     List<Video>? videos;
     List<Document>? documents;
@@ -120,6 +137,7 @@ class Section {
         this.videosCount,
         this.documentsCount,
         this.numberOfMinutes,
+        this.subscriptionCount,
         this.offer,
         this.videos,
         this.documents,
@@ -137,6 +155,7 @@ class Section {
         videosCount: json["videos_count"],
         documentsCount: json["documents_count"],
         numberOfMinutes: json["number_of_minutes"],
+        subscriptionCount: json["subscription_count"],
         offer: json["offer"] == null ? null : Offer.fromJson(json["offer"]),
         videos: json["videos"] == null ? [] : List<Video>.from(json["videos"]!.map((x) => Video.fromJson(x))),
         documents: json["documents"] == null ? [] : List<Document>.from(json["documents"]!.map((x) => Document.fromJson(x))),
@@ -154,6 +173,7 @@ class Section {
         "videos_count": videosCount,
         "documents_count": documentsCount,
         "number_of_minutes": numberOfMinutes,
+        "subscription_count": subscriptionCount,
         "offer": offer?.toJson(),
         "videos": videos == null ? [] : List<dynamic>.from(videos!.map((x) => x.toJson())),
         "documents": documents == null ? [] : List<dynamic>.from(documents!.map((x) => x.toJson())),

@@ -51,12 +51,14 @@ class Professor {
     String? name;
     String? description;
     String? image;
+    int? subscriptionCount;
 
     Professor({
         this.id,
         this.name,
         this.description,
         this.image,
+        this.subscriptionCount,
     });
 
     factory Professor.fromJson(Map<String, dynamic> json) => Professor(
@@ -64,6 +66,7 @@ class Professor {
         name: json["name"],
         description: json["description"],
         image: json["image"],
+        subscriptionCount: json["subscription_count"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -71,6 +74,7 @@ class Professor {
         "name": name,
         "description": description,
         "image": image,
+        "subscription_count": subscriptionCount,
     };
 }
 
@@ -143,6 +147,7 @@ class Course {
     String? college;
     int? majorId;
     String? major;
+    int? subscriptionCount;
     int? professorId;
     String? professor;
 
@@ -159,6 +164,7 @@ class Course {
         this.college,
         this.majorId,
         this.major,
+        this.subscriptionCount,
         this.professorId,
         this.professor,
     });
@@ -176,6 +182,7 @@ class Course {
         college: json["college"],
         majorId: json["major_id"],
         major: json["major"],
+        subscriptionCount: json["subscription_count"],
         professorId: json["professor_id"],
         professor: json["professor"],
     );
@@ -193,6 +200,7 @@ class Course {
         "college": college,
         "major_id": majorId,
         "major": major,
+        "subscription_count": subscriptionCount,
         "professor_id": professorId,
         "professor": professor,
     };
