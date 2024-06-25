@@ -20,6 +20,12 @@ class RequestType{
   static const String rejected = 'rejected';
 }
 
+class SubscriptionsType{
+  static const String course = 'course';
+  static const String unit  = 'unit';
+  static const String section = 'section';
+}
+
 class LanguageEnum {
   static const String english = 'en';
   static const String arabic = 'ar';

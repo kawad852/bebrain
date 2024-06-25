@@ -52,6 +52,7 @@ class Professor {
     String? description;
     String? image;
     int? subscriptionCount;
+    double? reviewsRating;
 
     Professor({
         this.id,
@@ -59,6 +60,7 @@ class Professor {
         this.description,
         this.image,
         this.subscriptionCount,
+        this.reviewsRating,
     });
 
     factory Professor.fromJson(Map<String, dynamic> json) => Professor(
@@ -67,6 +69,7 @@ class Professor {
         description: json["description"],
         image: json["image"],
         subscriptionCount: json["subscription_count"],
+        reviewsRating: json["reviews_rating"]?.toDouble(),
     );
 
     Map<String, dynamic> toJson() => {
@@ -75,6 +78,7 @@ class Professor {
         "description": description,
         "image": image,
         "subscription_count": subscriptionCount,
+        "reviews_rating": reviewsRating,
     };
 }
 
@@ -148,6 +152,7 @@ class Course {
     int? majorId;
     String? major;
     int? subscriptionCount;
+    double? reviewsRating;
     int? professorId;
     String? professor;
 
@@ -165,6 +170,7 @@ class Course {
         this.majorId,
         this.major,
         this.subscriptionCount,
+        this.reviewsRating,
         this.professorId,
         this.professor,
     });
@@ -184,6 +190,7 @@ class Course {
         major: json["major"],
         subscriptionCount: json["subscription_count"],
         professorId: json["professor_id"],
+        reviewsRating: json["reviews_rating"]?.toDouble(),
         professor: json["professor"],
     );
 
@@ -201,6 +208,7 @@ class Course {
         "major_id": majorId,
         "major": major,
         "subscription_count": subscriptionCount,
+        "reviews_rating": reviewsRating,
         "professor_id": professorId,
         "professor": professor,
     };

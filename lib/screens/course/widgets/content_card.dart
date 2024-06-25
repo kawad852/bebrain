@@ -1,3 +1,4 @@
+import 'package:bebrain/alerts/feedback/app_feedback.dart';
 import 'package:bebrain/model/course_filter_model.dart';
 import 'package:bebrain/screens/course/unit_screen.dart';
 import 'package:bebrain/screens/course/widgets/course_text.dart';
@@ -15,7 +16,16 @@ class ContentCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        context.push(UnitScreen(unitId: unit.id!));
+        if(unit.videosCount==0 && unit.documentsCount==0){
+           context.showDialog(
+            titleText: "",
+            confirmTitle: context.appLocalization.back,
+            bodyText: context.appLocalization.noContent,
+           );
+        }
+        else{
+          context.push(UnitScreen(unitId: unit.id!));
+        }
       },
       child: Container(
         width: double.infinity,

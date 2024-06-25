@@ -145,6 +145,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             Center(
               child: Image.asset(
                 MyImages.logo,
+                width: 100,
               ),
             ),
             const SizedBox(height: 50),

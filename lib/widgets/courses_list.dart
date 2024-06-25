@@ -17,34 +17,33 @@ class CoursesList extends StatelessWidget {
       itemCount: courses.length,
       options: CarouselOptions(
         padEnds: false,
-        viewportFraction: 0.8,
+        viewportFraction: context.mediaQuery.width * 0.0023,
         enableInfiniteScroll: false,
         height: 235,
         onPageChanged: (index, reason) {},
       ),
       itemBuilder: (context, index, realIndex) {
         return Padding(
-          padding: const EdgeInsetsDirectional.only(top: 5, start: 5),
+          padding: const EdgeInsetsDirectional.only(top: 5, start: 13,end: 4),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomNetworkImage(
                 courses[index].image!,
-                width: 272,
+                width: double.infinity,
                 height: 180,
-                alignment: context.isLTR ? Alignment.topLeft : Alignment.topRight,
+                alignment:
+                    context.isLTR ? Alignment.topLeft : Alignment.topRight,
                 radius: MyTheme.radiusSecondary,
                 onTap: () {
-                  context.authProvider.checkIfUserAuthenticated(
-                    context,
-                    callback: (){
-                      context.push(CourseScreen(courseId: courses[index].id!));
-                    }
-                  );
+                  context.authProvider.checkIfUserAuthenticated(context,
+                      callback: () {
+                    context.push(CourseScreen(courseId: courses[index].id!));
+                  });
                 },
-                child: const EvaluationStar(
-                  margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                  evaluation: "4.8",
+                child:  EvaluationStar(
+                  margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  evaluation: "${courses[index].reviewsRating}",
                 ),
               ),
               Flexible(

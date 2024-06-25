@@ -25,6 +25,8 @@ class ApiUrl {
   static const String projects = 'projects';
   static const String assignments = 'assignments';
   static const String explanations = 'explanations';
+  static const String subscriptions = '/api/subscriptions';
+
 
 
 

@@ -185,5 +185,7 @@
   "chat":"Chat",
   "emailHint":"Enter your email here",
   "titleHint":"Enter subject title here",
-  "notesHint":"Enter your notes here"
+  "notesHint":"Enter your notes here",
+  "back":"Back",
+  "noContent":"No content has been added yet"
 }

@@ -59,13 +59,13 @@ class LectureCard extends StatelessWidget {
                         color: context.colorPalette.white50,
                         borderRadius: BorderRadius.circular(5),
                       ),
-                      child: const Row(
+                      child:  Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          CustomSvg(MyIcons.star),
-                          SizedBox(width: 5),
+                          const CustomSvg(MyIcons.star),
+                          const SizedBox(width: 5),
                           CourseText(
-                            "4.8",
+                            "${professor.reviewsRating}",
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
                           ),

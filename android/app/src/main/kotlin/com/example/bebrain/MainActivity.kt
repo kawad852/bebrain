@@ -8,8 +8,8 @@ import io.flutter.plugins.GeneratedPluginRegistrant
 import android.view.WindowManager.LayoutParams
 
 class MainActivity: FlutterFragmentActivity() {
-    override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
-        window.addFlags(LayoutParams.FLAG_SECURE)
-        GeneratedPluginRegistrant.registerWith(flutterEngine)
-    }
+    // override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
+    //     window.addFlags(LayoutParams.FLAG_SECURE)
+    //     GeneratedPluginRegistrant.registerWith(flutterEngine)
+    // }
 }

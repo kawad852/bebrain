@@ -8,6 +8,7 @@ import 'package:bebrain/model/new_request_model.dart';
 import 'package:bebrain/model/policy_model.dart';
 import 'package:bebrain/model/professors_model.dart';
 import 'package:bebrain/model/projects_model.dart';
+import 'package:bebrain/model/subscriptions_model.dart';
 import 'package:bebrain/model/unit_filter_model.dart';
 import 'package:bebrain/model/university_filter_model.dart';
 import 'package:bebrain/model/wizard_model.dart';
@@ -163,6 +164,23 @@ class MainProvider extends ChangeNotifier {
       isPublic: false,
       apiType: ApiType.get,
       builder: ProjectsModel.fromJson,
+    );
+    return snapshot;
+  }
+
+  Future<SubscriptionsModel> subscribe({
+    required String type,
+    required int id,
+  }) {
+    final snapshot = ApiService<SubscriptionsModel>().build(
+      url: ApiUrl.subscriptions,
+      isPublic: false,
+      apiType: ApiType.post,
+      queryParams: {
+        "type": type,
+        "subscriable_id": id,
+      },
+      builder: SubscriptionsModel.fromJson,
     );
     return snapshot;
   }

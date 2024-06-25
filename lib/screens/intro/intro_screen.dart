@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:bebrain/screens/intro/widgets/intro_bubble.dart';
 import 'package:bebrain/screens/intro/widgets/intro_card.dart';
+import 'package:bebrain/screens/registration/registration_screen.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/my_icons.dart';
 import 'package:bebrain/utils/my_images.dart';
@@ -78,10 +79,15 @@ class _IntroScreenState extends State<IntroScreen> {
             ),
             InkWell(
               onTap: () {
+                if(_pageController.page == 2){
+                  context.pushAndRemoveUntil(const RegistrationScreen());
+                }
+                else{
                 _pageController.nextPage(
                   duration: const Duration(milliseconds: 400),
                   curve: Curves.easeInExpo,
                 );
+                }
               },
               child: Container(
                 width: 50,
@@ -161,7 +167,7 @@ class _IntroScreenState extends State<IntroScreen> {
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage(mainImage[index]),
-                      fit: BoxFit.cover,
+                      fit: BoxFit.fill,
                     ),
                   ),
                   child: Column(

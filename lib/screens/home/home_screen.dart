@@ -1,9 +1,7 @@
 import 'dart:developer';
-
 import 'package:bebrain/model/college_filter_model.dart';
 import 'package:bebrain/model/country_filter_model.dart' as cou;
 import 'package:bebrain/model/university_filter_model.dart' as un;
-import 'package:bebrain/providers/auth_provider.dart';
 import 'package:bebrain/providers/main_provider.dart';
 import 'package:bebrain/screens/home/widgets/action_container.dart';
 import 'package:bebrain/screens/home/widgets/appbar_text.dart';
@@ -37,7 +35,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen>with AutomaticKeepAliveClientMixin {
   late MainProvider _mainProvider;
-  late AuthProvider _authProvider;
+  //late AuthProvider _authProvider;
   late Future<dynamic> _future;
   int currentIndex = 0;
 
@@ -58,22 +56,22 @@ class _HomeScreenState extends State<HomeScreen>with AutomaticKeepAliveClientMix
     super.initState();
     log(MySharedPreferences.accessToken);
     _mainProvider = context.mainProvider;
-    _authProvider = context.authProvider;
-    _authProvider.addListener(_handleChanged);
+    //_authProvider = context.authProvider;
+    //_authProvider.addListener(_handleChanged);
     _future = _initializeFuture();
   }
 
-  @override
-  void dispose() {
-    _authProvider.removeListener(_handleChanged);
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _authProvider.removeListener(_handleChanged);
+  //   super.dispose();
+  // }
 
-  void _handleChanged() {
-    setState(() {
-      _future = _initializeFuture();
-    });
-  }
+  // void _handleChanged() {
+  //   setState(() {
+  //     _future = _initializeFuture();
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -146,34 +144,34 @@ class _HomeScreenState extends State<HomeScreen>with AutomaticKeepAliveClientMix
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Row(
-                    children: [
-                      const CustomSvg(MyIcons.eductionCircle),
-                      const SizedBox(width: 7),
-                      Text(
-                        context.appLocalization.pursueEducation,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 110,
-                  child: ListView.separated(
-                    separatorBuilder: (context, index) =>const SizedBox(width: 7),
-                    itemCount: 10,
-                    padding:const EdgeInsetsDirectional.only(top: 10, start: 13),
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, indxe) {
-                      return const EductionCard();
-                    },
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 15),
+                //   child: Row(
+                //     children: [
+                //       const CustomSvg(MyIcons.eductionCircle),
+                //       const SizedBox(width: 7),
+                //       Text(
+                //         context.appLocalization.pursueEducation,
+                //         style: const TextStyle(
+                //           fontWeight: FontWeight.bold,
+                //         ),
+                //       )
+                //     ],
+                //   ),
+                // ),
+                // SizedBox(
+                //   height: 110,
+                //   child: ListView.separated(
+                //     separatorBuilder: (context, index) =>const SizedBox(width: 7),
+                //     itemCount: 10,
+                //     padding:const EdgeInsetsDirectional.only(top: 10, start: 13),
+                //     shrinkWrap: true,
+                //     scrollDirection: Axis.horizontal,
+                //     itemBuilder: (context, indxe) {
+                //       return const EductionCard();
+                //     },
+                //   ),
+                // ),
               ],
             ),
           ),

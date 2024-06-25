@@ -39,7 +39,7 @@ class DistinguishedLectures extends StatelessWidget {
         SizedBox(
           height: 75,
           child: ListView.separated(
-            padding: const EdgeInsetsDirectional.only(top: 10, bottom: 10, start: 10),
+            padding: const EdgeInsetsDirectional.only(top: 10, bottom: 10, start: 10,end: 5),
             separatorBuilder: (context, index) => const SizedBox(width: 5),
             itemCount: professors.length,
             scrollDirection: Axis.horizontal,

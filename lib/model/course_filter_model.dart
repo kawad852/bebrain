@@ -1,4 +1,5 @@
 import 'package:bebrain/model/country_filter_model.dart';
+import 'package:bebrain/model/subscriptions_model.dart';
 
 class CourseFilterModel {
     bool? status;
@@ -66,6 +67,8 @@ class Course {
     int? hours;
     int? minutes;
     int? subscriptionCount;
+    double? reviewsRating;
+    List<SubscriptionsData>? subscription;
     Professor? professor;
     Offer? offer;
     List<Unit>? units;
@@ -88,6 +91,8 @@ class Course {
         this.hours,
         this.minutes,
         this.subscriptionCount,
+        this.reviewsRating,
+        this.subscription,
         this.professor,
         this.offer,
         this.units,
@@ -111,6 +116,8 @@ class Course {
         hours: json["hours"],
         minutes: json["minutes"],
         subscriptionCount: json["subscription_count"],
+        reviewsRating: json["reviews_rating"]?.toDouble(),
+        subscription: json["subscription"] == null ? [] : List<SubscriptionsData>.from(json["subscription"]!.map((x) => SubscriptionsData.fromJson(x))),
         professor: json["professor"] == null ? null : Professor.fromJson(json["professor"]),
         offer: json["offer"] == null ? null : Offer.fromJson(json["offer"]),
         units: json["units"] == null ? [] : List<Unit>.from(json["units"]!.map((x) => Unit.fromJson(x))),
@@ -134,6 +141,8 @@ class Course {
         "hours": hours,
         "minutes": minutes,
         "subscription_count": subscriptionCount,
+        "reviews_rating": reviewsRating,
+        "subscription": subscription == null ? [] : List<dynamic>.from(subscription!.map((x) => x.toJson())),
         "professor": professor?.toJson(),
         "offer": offer?.toJson(),
         "units": units == null ? [] : List<dynamic>.from(units!.map((x) => x.toJson())),

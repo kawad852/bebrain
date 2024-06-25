@@ -1,4 +1,6 @@
 import 'package:bebrain/model/course_filter_model.dart';
+import 'package:bebrain/model/subscriptions_model.dart';
+import 'package:bebrain/network/api_service.dart';
 import 'package:bebrain/providers/main_provider.dart';
 import 'package:bebrain/screens/course/widgets/content_card.dart';
 import 'package:bebrain/screens/course/widgets/course_info.dart';
@@ -9,6 +11,7 @@ import 'package:bebrain/screens/course/widgets/lecture_card.dart';
 import 'package:bebrain/screens/course/widgets/rating_card.dart';
 import 'package:bebrain/screens/course/widgets/view_ratings_button.dart';
 import 'package:bebrain/utils/base_extensions.dart';
+import 'package:bebrain/utils/enums.dart';
 import 'package:bebrain/utils/my_icons.dart';
 import 'package:bebrain/utils/my_theme.dart';
 import 'package:bebrain/widgets/courses_list.dart';
@@ -35,18 +38,32 @@ class _CourseScreenState extends State<CourseScreen> {
   }
 
   bool checkTime(DateTime firstDate, DateTime lastDate){
-    return (firstDate.toUTC(context).compareTo(DateTime.now())==0 ||  DateTime.now().isAfter(firstDate.toUTC(context))) &&
-      (lastDate.toUTC(context).compareTo(DateTime.now())==0 ||  DateTime.now().isBefore(lastDate.toUTC(context)));
+    return (firstDate.toUTC(context).compareTo(DateTime.now()) == 0 ||  DateTime.now().isAfter(firstDate.toUTC(context))) &&
+      (lastDate.toUTC(context).compareTo(DateTime.now()) == 0 ||  DateTime.now().isBefore(lastDate.toUTC(context)));
   }
 
+
+   void _courseSubscribe(int id) {
+      ApiFutureBuilder<SubscriptionsModel>().fetch(
+        context,
+        future: () async {
+          final subscribe = _mainProvider.subscribe(
+            type: SubscriptionsType.course,
+            id: id
+          );
+          return subscribe;
+        },
+        onComplete: (snapshot) {
+          setState(() {
+            _initializeFuture();
+          });
+        },
+      );
+  }
 
   @override
   void initState() {
     super.initState();
-    
-
-
-
     _mainProvider = context.mainProvider;
     _initializeFuture();
   }
@@ -122,7 +139,9 @@ class _CourseScreenState extends State<CourseScreen> {
                                 const CustomSvg(MyIcons.star),
                                 const SizedBox(width: 5),
                                 CourseText(
-                                  "( 85 ) 4.8",
+                                  //"( 85 ) ${course.reviewsRating}",
+                                  "${course.reviewsRating}",
+
                                   textColor: context.colorPalette.grey66,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 12,
@@ -142,8 +161,11 @@ class _CourseScreenState extends State<CourseScreen> {
                         videoCount: course.videosCount!,
                         subscriptionCount: course.subscriptionCount!,
                       ),
+                      if(course.subscription!.isEmpty)
                       StretchedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          _courseSubscribe(course.id!);
+                        },
                         margin: const EdgeInsets.symmetric(vertical: 12),
                         child: Column(
                           children: [

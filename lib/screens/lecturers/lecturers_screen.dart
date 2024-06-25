@@ -118,8 +118,8 @@ class _LecturersScreenState extends State<LecturersScreen> {
                               alignment: context.isLTR
                                   ? Alignment.topLeft
                                   : Alignment.topRight,
-                              child: const EvaluationStar(
-                                evaluation: "4.8",
+                              child:  EvaluationStar(
+                                evaluation: "${element.reviewsRating}",
                               ),
                             ),
                             Flexible(

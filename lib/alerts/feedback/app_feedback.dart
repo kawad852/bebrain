@@ -79,7 +79,7 @@ extension AppFeedbacks on BuildContext {
                     onPressed: () {
                       context.pop(true);
                     },
-                    child: Text(context.appLocalization.confirm),
+                    child: Text(confirmTitle?? context.appLocalization.confirm),
                   ),
                 ],
           ),
