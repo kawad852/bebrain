@@ -13,64 +13,70 @@ class CoursesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CarouselSlider.builder(
-      itemCount: courses.length,
-      options: CarouselOptions(
-        padEnds: false,
-        viewportFraction: context.mediaQuery.width * 0.0023,
-        enableInfiniteScroll: false,
-        height: 235,
-        onPageChanged: (index, reason) {},
+    return SizedBox(
+      height: 235,
+      child: ListView.builder(
+        itemCount: courses.length,
+        shrinkWrap: true,
+        scrollDirection: Axis.horizontal,
+        // options: CarouselOptions(
+        //   padEnds: false,
+        //   viewportFraction: context.mediaQuery.width * 0.0023,
+        //   enableInfiniteScroll: false,
+        //   height: 235,
+        //   onPageChanged: (index, reason) {},
+        // ),
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsetsDirectional.only(top: 5, start: 13,end: 4),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomNetworkImage(
+                  courses[index].image!,
+                  width: 272,
+                  height: 180,
+                  alignment: context.isLTR ? Alignment.topLeft : Alignment.topRight,
+                  radius: MyTheme.radiusSecondary,
+                  onTap: () {
+                    context.authProvider.checkIfUserAuthenticated(context,
+                        callback: () {
+                      context.push(CourseScreen(courseId: courses[index].id!));
+                    });
+                  },
+                  child:  EvaluationStar(
+                    margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                    evaluation: "${courses[index].reviewsRating}",
+                  ),
+                ),
+                SizedBox(
+                  width: 272,
+                  child: Text(
+                    courses[index].name!,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: context.colorPalette.black33,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 272,
+                  child: Text(
+                    courses[index].professor!,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: context.colorPalette.grey66,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
       ),
-      itemBuilder: (context, index, realIndex) {
-        return Padding(
-          padding: const EdgeInsetsDirectional.only(top: 5, start: 13,end: 4),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CustomNetworkImage(
-                courses[index].image!,
-                width: double.infinity,
-                height: 180,
-                alignment:
-                    context.isLTR ? Alignment.topLeft : Alignment.topRight,
-                radius: MyTheme.radiusSecondary,
-                onTap: () {
-                  context.authProvider.checkIfUserAuthenticated(context,
-                      callback: () {
-                    context.push(CourseScreen(courseId: courses[index].id!));
-                  });
-                },
-                child:  EvaluationStar(
-                  margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                  evaluation: "${courses[index].reviewsRating}",
-                ),
-              ),
-              Flexible(
-                child: Text(
-                  courses[index].name!,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: context.colorPalette.black33,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-              Flexible(
-                child: Text(
-                  courses[index].professor!,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: context.colorPalette.grey66,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
     );
   }
 }
