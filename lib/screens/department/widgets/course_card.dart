@@ -41,9 +41,9 @@ class CourseCard extends StatelessWidget {
               height: 90,
               radius: MyTheme.radiusSecondary,
               alignment: context.isLTR ? Alignment.topLeft : Alignment.topRight,
-              child: const EvaluationStar(
-                margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                evaluation: "4.8",
+              child:  EvaluationStar(
+                margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                evaluation: "${course.reviewsRating}",
               ),
             ),
             const SizedBox(width: 7),
@@ -72,16 +72,13 @@ class CourseCard extends StatelessWidget {
                       ),
                       const CustomSvg(MyIcons.video),
                       Padding(
-                        padding:
-                            const EdgeInsetsDirectional.only(start: 5, end: 8),
-                        child: TextCourse(
-                            "${course.videosCount} ${context.appLocalization.video}"),
+                        padding:const EdgeInsetsDirectional.only(start: 5, end: 8),
+                        child: TextCourse("${course.videosCount} ${context.appLocalization.video}"),
                       ),
                       const CustomSvg(MyIcons.axes),
                       Padding(
                         padding: const EdgeInsetsDirectional.only(start: 5),
-                        child: TextCourse(
-                            "${course.unitCount} ${context.appLocalization.axes}"),
+                        child: TextCourse("${course.unitCount} ${context.appLocalization.axes}"),
                       ),
                     ],
                   ),

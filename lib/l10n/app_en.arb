@@ -187,5 +187,11 @@
   "titleHint":"Enter subject title here",
   "notesHint":"Enter your notes here",
   "back":"Back",
-  "noContent":"No content has been added yet"
+  "noContent":"No content has been added yet",
+  "audioVideoQuality":"Audio and video quality",
+  "valueForPrice":"Value for the price",
+  "teacherAbilityCommunicate":"Teacher's ability to communicate ideas",
+  "similarityCurriculumContent":"Similarity between curriculum and content",
+  "basedOnSubsription":"Based on your subscription in this course , ",
+  "rateYourExperience":" rate your experience"
 }

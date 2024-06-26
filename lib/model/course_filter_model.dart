@@ -67,7 +67,13 @@ class Course {
     int? hours;
     int? minutes;
     int? subscriptionCount;
+    int? available;
     double? reviewsRating;
+    int? reviewsCount;
+    double? audioVideoQuality;
+    double? valueForMoney;
+    double? conveyIdea;
+    double? similarityCurriculumContent;
     List<SubscriptionsData>? subscription;
     Professor? professor;
     Offer? offer;
@@ -91,7 +97,13 @@ class Course {
         this.hours,
         this.minutes,
         this.subscriptionCount,
+        this.available,
         this.reviewsRating,
+        this.reviewsCount,
+        this.audioVideoQuality,
+        this.valueForMoney,
+        this.conveyIdea,
+        this.similarityCurriculumContent,
         this.subscription,
         this.professor,
         this.offer,
@@ -116,7 +128,13 @@ class Course {
         hours: json["hours"],
         minutes: json["minutes"],
         subscriptionCount: json["subscription_count"],
+        available: json["available"],
         reviewsRating: json["reviews_rating"]?.toDouble(),
+        reviewsCount: json["reviews_count"],
+        audioVideoQuality: json["audio_video_quality"]?.toDouble(),
+        valueForMoney: json["value_for_money"]?.toDouble(),
+        conveyIdea: json["convey_idea"]?.toDouble(),
+        similarityCurriculumContent: json["similarity_curriculum_content"]?.toDouble(),
         subscription: json["subscription"] == null ? [] : List<SubscriptionsData>.from(json["subscription"]!.map((x) => SubscriptionsData.fromJson(x))),
         professor: json["professor"] == null ? null : Professor.fromJson(json["professor"]),
         offer: json["offer"] == null ? null : Offer.fromJson(json["offer"]),
@@ -141,7 +159,13 @@ class Course {
         "hours": hours,
         "minutes": minutes,
         "subscription_count": subscriptionCount,
+        "available": available,
         "reviews_rating": reviewsRating,
+        "reviews_count": reviewsCount,
+        "audio_video_quality": audioVideoQuality,
+        "value_for_money": valueForMoney,
+        "convey_idea": conveyIdea,
+        "similarity_curriculum_content": similarityCurriculumContent,
         "subscription": subscription == null ? [] : List<dynamic>.from(subscription!.map((x) => x.toJson())),
         "professor": professor?.toJson(),
         "offer": offer?.toJson(),

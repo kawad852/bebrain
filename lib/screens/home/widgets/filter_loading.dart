@@ -41,42 +41,47 @@ class FilterLoading extends StatelessWidget {
                       ],
                     ),
                   ),
-                  CarouselSlider.builder(
-                      itemCount: 3,
-                      options: CarouselOptions(
-                        padEnds: false,
-                        viewportFraction: 0.8,
-                        enableInfiniteScroll: false,
-                        height: 235,
-                        onPageChanged: (index, reason) {},
-                      ),
-                      itemBuilder: (context, index, realIndex) {
-                        return const Padding(
-                          padding: EdgeInsetsDirectional.only(top: 5, start: 5),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              LoadingBubble(
-                                width: 272,
-                                height: 180,
-                                radius: MyTheme.radiusSecondary,
-                              ),
-                              SizedBox(height: 5),
-                              LoadingBubble(
-                                width: 100,
-                                height: 20,
-                                radius: MyTheme.radiusSecondary,
-                              ),
-                              SizedBox(height: 5),
-                              LoadingBubble(
-                                width: 50,
-                                height: 20,
-                                radius: MyTheme.radiusSecondary,
-                              ),
-                            ],
-                          ),
-                        );
-                      }),
+                  SizedBox(
+                    height: 235,
+                    child: ListView.builder(
+                        itemCount: 3,
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        // options: CarouselOptions(
+                        //   padEnds: false,
+                        //   viewportFraction: 0.8,
+                        //   enableInfiniteScroll: false,
+                        //   height: 235,
+                        //   onPageChanged: (index, reason) {},
+                        // ),
+                        itemBuilder: (context, index) {
+                          return const Padding(
+                            padding: EdgeInsetsDirectional.only(top: 5, start: 5),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                LoadingBubble(
+                                  width: 272,
+                                  height: 180,
+                                  radius: MyTheme.radiusSecondary,
+                                ),
+                                SizedBox(height: 5),
+                                LoadingBubble(
+                                  width: 100,
+                                  height: 20,
+                                  radius: MyTheme.radiusSecondary,
+                                ),
+                                SizedBox(height: 5),
+                                LoadingBubble(
+                                  width: 50,
+                                  height: 20,
+                                  radius: MyTheme.radiusSecondary,
+                                ),
+                              ],
+                            ),
+                          );
+                        }),
+                  ),
                   SizedBox(
                     height: 50,
                     child: ListView.separated(

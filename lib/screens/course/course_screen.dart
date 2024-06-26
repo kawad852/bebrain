@@ -20,6 +20,7 @@ import 'package:bebrain/widgets/custom_network_image.dart';
 import 'package:bebrain/widgets/custom_svg.dart';
 import 'package:bebrain/widgets/stretch_button.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CourseScreen extends StatefulWidget {
   final int courseId;
@@ -139,9 +140,7 @@ class _CourseScreenState extends State<CourseScreen> {
                                 const CustomSvg(MyIcons.star),
                                 const SizedBox(width: 5),
                                 CourseText(
-                                  //"( 85 ) ${course.reviewsRating}",
-                                  "${course.reviewsRating}",
-
+                                "( ${course.reviewsCount} ) ${course.reviewsRating}",
                                   textColor: context.colorPalette.grey66,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 12,
@@ -155,6 +154,39 @@ class _CourseScreenState extends State<CourseScreen> {
                         course.description!,
                       ),
                       const SizedBox(height: 10),
+                      StretchedButton(
+                        onPressed: (){},
+                        height: 7,
+                        child: RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                            style: TextStyle(
+                              fontFamily: GoogleFonts.cairo().fontFamily!,
+                            ),
+                            children: [
+                              TextSpan(
+                                text: context.appLocalization.basedOnSubsription,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  color: context.colorPalette.black33,
+                                ),
+                              ),
+                              const WidgetSpan(
+                                child: CustomSvg(MyIcons.star,height: 19)
+                                ),
+                              TextSpan(
+                                text: context.appLocalization.rateYourExperience,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  color: context.colorPalette.black33,
+                                ),
+                              ),
+                            ]
+                          ),
+                          ), 
+                        ),
                       CourseInfo(
                         hours: course.hours!,
                         minutes: course.minutes!,
@@ -228,21 +260,26 @@ class _CourseScreenState extends State<CourseScreen> {
                       Row(
                         children: [
                           const CustomSvg(MyIcons.star, width: 20),
-                          const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 10),
+                           Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: CourseText(
-                              "5/4.5",
+                              "5/${course.reviewsRating}",
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           CourseText(
-                            context.appLocalization.basedOnRatings(91),
+                            context.appLocalization.basedOnRatings("${course.reviewsCount}"),
                             fontSize: 12,
                           ),
                         ],
                       ),
-                      const RatingCard(),
+                       RatingCard(
+                        audioVideoRating: course.audioVideoQuality!,
+                        conveyIdea: course.conveyIdea!,
+                        valueForMoney: course.valueForMoney!,
+                        similarityCurriculumContent: course.similarityCurriculumContent!,
+                       ),
                     ],
                   ),
                 ),

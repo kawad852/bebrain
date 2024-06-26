@@ -187,6 +187,12 @@
   "titleHint":"ادخل عنوان الموضوع هنا",
   "notesHint":"ادخل ملاحظاتك هنا",
   "back":"رجوع",
-  "noContent":"لم تتم إضافة أي محتوى حتى الآن"
+  "noContent":"لم تتم إضافة أي محتوى حتى الآن",
+  "audioVideoQuality":"جودة الصوت والفيديو",
+  "valueForPrice":"القيمة بالنسبة للثمن",
+  "teacherAbilityCommunicate":"قدرة المعلم على ايصال الأفكار",
+  "similarityCurriculumContent":"التشابه بين المنهج والمحتوى",
+  "basedOnSubsription":"بناءا على اشتراكك في هذا الكورس , ",
+  "rateYourExperience":" قيم تجربتك"
 
 }
