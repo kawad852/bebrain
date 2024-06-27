@@ -22,18 +22,22 @@ class RatingCard extends StatelessWidget {
         RatingBubble(
           title: context.appLocalization.audioVideoQuality,
           rate: audioVideoRating,
+          ignoreGestures: true,
         ),
         RatingBubble(
           title: context.appLocalization.valueForPrice,
           rate: valueForMoney,
+          ignoreGestures: true,
         ),
         RatingBubble(
           title: context.appLocalization.teacherAbilityCommunicate,
           rate: conveyIdea,
+          ignoreGestures: true,
         ),
         RatingBubble(
           title: context.appLocalization.similarityCurriculumContent,
           rate: similarityCurriculumContent,
+          ignoreGestures: true,
         ),
       ],
     );

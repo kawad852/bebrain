@@ -1,14 +1,19 @@
+import 'package:bebrain/model/continue_learning_model.dart';
+import 'package:bebrain/screens/course/course_screen.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/my_theme.dart';
 import 'package:flutter/material.dart';
 
 class EductionCard extends StatelessWidget {
-  const EductionCard({super.key});
+  final LearningData learningData;
+  const EductionCard({super.key, required this.learningData});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        context.push(CourseScreen(courseId: learningData.id!));
+      },
       child: Container(
         width: 100,
         height: 100,
@@ -30,7 +35,7 @@ class EductionCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
               ),
               child: Text(
-                "10\n%",
+                "${learningData.percentage}\n%",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: context.colorPalette.white,
@@ -38,19 +43,19 @@ class EductionCard extends StatelessWidget {
                 ),
               ),
             ),
-            const Flexible(
+             Flexible(
               child: Text(
-                "اساسيات البرمجة المتقدمة",
+                learningData.name!,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 12,
                 ),
               ),
             ),
             Text(
-              "10 فيديو ، 2 س",
+              "${learningData.videosCount} ${context.appLocalization.video}, ${learningData.hours} ${context.appLocalization.hour}",
               style: TextStyle(
                 color: context.colorPalette.grey66,
                 fontSize: 12,

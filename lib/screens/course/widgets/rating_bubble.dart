@@ -8,16 +8,26 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class RatingBubble extends StatelessWidget {
   final String title;
-  final double rate;
-  const RatingBubble({super.key, required this.title, required this.rate});
+  final double? rate;
+  final bool ignoreGestures;
+  final EdgeInsetsGeometry? margin;
+  final void Function(double)? onRatingUpdate;
+  const RatingBubble({
+    super.key,
+    required this.title,
+    this.rate,
+    this.ignoreGestures = false,
+    this.onRatingUpdate,
+    this.margin,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 35,
+      height: 40,
       padding: const EdgeInsets.symmetric(horizontal: 10),
-      margin: const EdgeInsets.symmetric(vertical: 3),
+      margin: margin?? const EdgeInsets.symmetric(vertical: 3),
       decoration: BoxDecoration(
         color: context.colorPalette.greyEEE,
         borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
@@ -25,7 +35,7 @@ class RatingBubble extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-           Flexible(
+          Flexible(
             child: CourseText(
               title,
               fontSize: 12,
@@ -34,17 +44,17 @@ class RatingBubble extends StatelessWidget {
             ),
           ),
           RatingBar.builder(
-            initialRating: rate,
-            minRating: 0,
+            initialRating: rate?? 1,
+            minRating: 1,
             unratedColor: context.colorPalette.greyCBC,
             direction: Axis.horizontal,
-            allowHalfRating: true,
-            ignoreGestures: true,
+            allowHalfRating: false,
+            ignoreGestures: ignoreGestures,
             itemSize: 15,
             itemCount: 5,
             itemPadding: const EdgeInsets.symmetric(horizontal: 3),
             itemBuilder: (context, _) => const CustomSvg(MyIcons.star),
-            onRatingUpdate: (rating) {
+            onRatingUpdate: onRatingUpdate?? (rating) {
               debugPrint(rating.toString());
             },
           )

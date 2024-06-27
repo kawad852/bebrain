@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:bebrain/model/college_filter_model.dart';
+import 'package:bebrain/model/continue_learning_model.dart';
 import 'package:bebrain/model/country_filter_model.dart';
 import 'package:bebrain/model/course_filter_model.dart';
 import 'package:bebrain/model/major_filter_model.dart';
@@ -11,6 +12,7 @@ import 'package:bebrain/model/projects_model.dart';
 import 'package:bebrain/model/subscriptions_model.dart';
 import 'package:bebrain/model/unit_filter_model.dart';
 import 'package:bebrain/model/university_filter_model.dart';
+import 'package:bebrain/model/video_view_model.dart';
 import 'package:bebrain/model/wizard_model.dart';
 import 'package:bebrain/network/api_service.dart';
 import 'package:bebrain/network/api_url.dart';
@@ -181,6 +183,29 @@ class MainProvider extends ChangeNotifier {
         "subscriable_id": id,
       },
       builder: SubscriptionsModel.fromJson,
+    );
+    return snapshot;
+  }
+
+  Future<VideoViewModel> videoView(int videoId) {
+    final snapshot = ApiService<VideoViewModel>().build(
+      url: ApiUrl.videoView,
+      isPublic: false,
+      apiType: ApiType.post,
+      queryParams: {
+        "video_id": videoId,
+      },
+      builder: VideoViewModel.fromJson,
+    );
+    return snapshot;
+  }
+
+  Future<ContinueLearningModel> fetchMyLearning() {
+    final snapshot = ApiService<ContinueLearningModel>().build(
+      url: ApiUrl.continueLearning,
+      isPublic: false,
+      apiType: ApiType.get,
+      builder: ContinueLearningModel.fromJson,
     );
     return snapshot;
   }

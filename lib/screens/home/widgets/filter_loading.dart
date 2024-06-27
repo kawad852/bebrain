@@ -1,6 +1,5 @@
 import 'package:bebrain/utils/my_theme.dart';
 import 'package:bebrain/widgets/shimmer/shimmer_bubble.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 class FilterLoading extends StatelessWidget {
@@ -47,13 +46,6 @@ class FilterLoading extends StatelessWidget {
                         itemCount: 3,
                         shrinkWrap: true,
                         scrollDirection: Axis.horizontal,
-                        // options: CarouselOptions(
-                        //   padEnds: false,
-                        //   viewportFraction: 0.8,
-                        //   enableInfiniteScroll: false,
-                        //   height: 235,
-                        //   onPageChanged: (index, reason) {},
-                        // ),
                         itemBuilder: (context, index) {
                           return const Padding(
                             padding: EdgeInsetsDirectional.only(top: 5, start: 5),

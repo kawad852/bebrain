@@ -26,6 +26,10 @@ class ApiUrl {
   static const String assignments = 'assignments';
   static const String explanations = 'explanations';
   static const String subscriptions = '/api/subscriptions';
+  static const String videoView = '/api/video-views';
+  static const String continueLearning = '/api/video-views/user/all';
+
+
 
 
 

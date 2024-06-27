@@ -4,7 +4,6 @@ import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/my_theme.dart';
 import 'package:bebrain/widgets/custom_network_image.dart';
 import 'package:bebrain/widgets/evaluation_star.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 class CoursesList extends StatelessWidget {
@@ -19,13 +18,6 @@ class CoursesList extends StatelessWidget {
         itemCount: courses.length,
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
-        // options: CarouselOptions(
-        //   padEnds: false,
-        //   viewportFraction: context.mediaQuery.width * 0.0023,
-        //   enableInfiniteScroll: false,
-        //   height: 235,
-        //   onPageChanged: (index, reason) {},
-        // ),
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsetsDirectional.only(top: 5, start: 13,end: 4),

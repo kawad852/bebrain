@@ -193,6 +193,10 @@
   "teacherAbilityCommunicate":"قدرة المعلم على ايصال الأفكار",
   "similarityCurriculumContent":"التشابه بين المنهج والمحتوى",
   "basedOnSubsription":"بناءا على اشتراكك في هذا الكورس , ",
-  "rateYourExperience":" قيم تجربتك"
+  "rateYourExperience":" قيم تجربتك",
+  "hour":"س",
+  "rateExperienceCourse":"قيم تجربتك في {courseName}",
+  "alreadyAddedRating":"لقد قمت بإضافة تقييم مسبقاً",
+  "cannotMoreOneRating":"لا يمكنك اضافة اكثر من تقييم لنفس الكورس او الأستاذ"
 
 }

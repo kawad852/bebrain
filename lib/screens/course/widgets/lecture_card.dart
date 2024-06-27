@@ -83,7 +83,7 @@ class LectureCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CourseText(
-                  "${context.appLocalization.views} ${professor.reviewsCount}",
+                  "${context.appLocalization.views} ${professor.viewsCount}",
                   fontSize: 12,
                 ),
                 const Point(),

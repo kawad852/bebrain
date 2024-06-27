@@ -5,6 +5,7 @@ import 'package:bebrain/providers/main_provider.dart';
 import 'package:bebrain/screens/course/widgets/content_card.dart';
 import 'package:bebrain/screens/course/widgets/course_info.dart';
 import 'package:bebrain/screens/course/widgets/course_nav_bar.dart';
+import 'package:bebrain/screens/course/widgets/course_rate.dart';
 import 'package:bebrain/screens/course/widgets/course_text.dart';
 import 'package:bebrain/screens/course/widgets/leading_back.dart';
 import 'package:bebrain/screens/course/widgets/lecture_card.dart';
@@ -20,7 +21,6 @@ import 'package:bebrain/widgets/custom_network_image.dart';
 import 'package:bebrain/widgets/custom_svg.dart';
 import 'package:bebrain/widgets/stretch_button.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class CourseScreen extends StatefulWidget {
   final int courseId;
@@ -50,7 +50,7 @@ class _CourseScreenState extends State<CourseScreen> {
         future: () async {
           final subscribe = _mainProvider.subscribe(
             type: SubscriptionsType.course,
-            id: id
+            id: id,
           );
           return subscribe;
         },
@@ -154,39 +154,9 @@ class _CourseScreenState extends State<CourseScreen> {
                         course.description!,
                       ),
                       const SizedBox(height: 10),
-                      StretchedButton(
-                        onPressed: (){},
-                        height: 7,
-                        child: RichText(
-                          textAlign: TextAlign.center,
-                          text: TextSpan(
-                            style: TextStyle(
-                              fontFamily: GoogleFonts.cairo().fontFamily!,
-                            ),
-                            children: [
-                              TextSpan(
-                                text: context.appLocalization.basedOnSubsription,
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                  color: context.colorPalette.black33,
-                                ),
-                              ),
-                              const WidgetSpan(
-                                child: CustomSvg(MyIcons.star,height: 19)
-                                ),
-                              TextSpan(
-                                text: context.appLocalization.rateYourExperience,
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                  color: context.colorPalette.black33,
-                                ),
-                              ),
-                            ]
-                          ),
-                          ), 
-                        ),
+                      CourseRate(
+                        courseName: course.name!,
+                      ),
                       CourseInfo(
                         hours: course.hours!,
                         minutes: course.minutes!,
