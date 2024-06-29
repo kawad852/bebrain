@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:bebrain/alerts/loading/app_over_loader.dart';
 import 'package:bebrain/utils/base_extensions.dart';
@@ -61,6 +60,7 @@ class UPayment {
       if (response.statusCode == 201) {
         AppOverlayLoader.hide();
         if (context.mounted) {
+          // _openWeb(context, data['data']['link']);
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -73,8 +73,7 @@ class UPayment {
             ),
           ).then((value) {
             if (value != null) {
-              context.pop();
-              log("success");
+              debugPrint("Paid Successfully");
               // TODO: call your api here
             }
           });

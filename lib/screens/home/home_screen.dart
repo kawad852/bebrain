@@ -207,7 +207,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                                             shrinkWrap: true,
                                             scrollDirection: Axis.horizontal,
                                             itemBuilder: (context, index) {
-                                              return EductionCard(learningData:continueLearningData.data![index]);
+                                              return EductionCard(learningData: continueLearningData.data![index]);
                                             },
                                           ),
                                         ),
@@ -245,7 +245,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                     professors = filter.data!.professors!;
                   case WizardType.universities:
                     filter = snapshot.data! as un.UniversityFilterModel;
-                    data =filter.data!.university!.colleges! as List<un.College>;
+                    data = filter.data!.university!.colleges! as List<un.College>;
                     professors = filter.data!.professors!;
                   case WizardType.colleges:
                   case WizardType.specialities:
@@ -261,7 +261,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                       offset: ViewportOffset.zero(),
                       slivers: [
                         SliverList.separated(
-                          separatorBuilder: (context, index) =>const SizedBox(height: 8),
+                          separatorBuilder: (context, index) => const SizedBox(height: 8),
                           itemCount: data.length,
                           itemBuilder: (context, index) {
                             return DepartmentsCard(

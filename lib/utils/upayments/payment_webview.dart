@@ -40,7 +40,9 @@ class _PaymentWebViewState extends State<PaymentWebView> {
             _changeLoadingStatus(false);
           },
           onPageFinished: (String url) {},
-          onWebResourceError: (WebResourceError error) {},
+          onWebResourceError: (WebResourceError error) {
+            debugPrint("error::::: $error");
+          },
           onNavigationRequest: (NavigationRequest request) async {
             log("URL:: ${request.url}");
             if (request.url.contains('https://upayments.com/en/?payment_id')) {
