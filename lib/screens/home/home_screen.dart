@@ -20,6 +20,7 @@ import 'package:bebrain/utils/enums.dart';
 import 'package:bebrain/utils/my_icons.dart';
 import 'package:bebrain/utils/my_theme.dart';
 import 'package:bebrain/utils/shared_pref.dart';
+import 'package:bebrain/utils/upayments/upayment.dart';
 import 'package:bebrain/widgets/custom_future_builder.dart';
 import 'package:bebrain/widgets/custom_network_image.dart';
 import 'package:bebrain/widgets/custom_smoth_indicator.dart';
@@ -111,7 +112,9 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                 ),
                 const SizedBox(width: 5),
                 ActionContainer(
-                  onTap: () {},
+                  onTap: () {
+                    UPayment.checkout(context: context);
+                  },
                   color: context.colorPalette.blueC2E,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,

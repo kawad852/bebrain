@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:bebrain/alerts/loading/app_over_loader.dart';
 import 'package:bebrain/utils/base_extensions.dart';
@@ -72,6 +73,8 @@ class UPayment {
             ),
           ).then((value) {
             if (value != null) {
+              context.pop();
+              log("success");
               // TODO: call your api here
             }
           });
