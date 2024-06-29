@@ -119,7 +119,7 @@ class _LecturersScreenState extends State<LecturersScreen> {
                                   ? Alignment.topLeft
                                   : Alignment.topRight,
                               child:  EvaluationStar(
-                                evaluation: "${element.reviewsRating}",
+                                evaluation: element.reviewsRating!.toStringAsFixed(1),
                               ),
                             ),
                             Flexible(

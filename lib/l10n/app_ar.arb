@@ -197,6 +197,9 @@
   "hour":"س",
   "rateExperienceCourse":"قيم تجربتك في {courseName}",
   "alreadyAddedRating":"لقد قمت بإضافة تقييم مسبقاً",
-  "cannotMoreOneRating":"لا يمكنك اضافة اكثر من تقييم لنفس الكورس او الأستاذ"
+  "cannotMoreOneRating":"لا يمكنك اضافة اكثر من تقييم لنفس الكورس او الأستاذ",
+  "expiredPeriodCourse":"انتهت فترة الاشتراك في هذا الكورس",
+  "unavailable":"غير متاح",
+  "ratingAddedSuccess":"تمت اضافة تقييمك بنجاح"
 
 }

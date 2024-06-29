@@ -43,7 +43,7 @@ class CourseCard extends StatelessWidget {
               alignment: context.isLTR ? Alignment.topLeft : Alignment.topRight,
               child:  EvaluationStar(
                 margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                evaluation: "${course.reviewsRating}",
+                evaluation: course.reviewsRating!.toStringAsFixed(1),
               ),
             ),
             const SizedBox(width: 7),

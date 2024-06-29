@@ -4,6 +4,7 @@ import 'package:bebrain/model/college_filter_model.dart';
 import 'package:bebrain/model/continue_learning_model.dart';
 import 'package:bebrain/model/country_filter_model.dart';
 import 'package:bebrain/model/course_filter_model.dart';
+import 'package:bebrain/model/course_rating_model.dart';
 import 'package:bebrain/model/major_filter_model.dart';
 import 'package:bebrain/model/new_request_model.dart';
 import 'package:bebrain/model/policy_model.dart';
@@ -206,6 +207,31 @@ class MainProvider extends ChangeNotifier {
       isPublic: false,
       apiType: ApiType.get,
       builder: ContinueLearningModel.fromJson,
+    );
+    return snapshot;
+  }
+
+  Future<CourseRatingModel> rateCourse({
+    required int courseId,
+    required String comment,
+    required double audioVideoQuality,
+    required double valueForMoney,
+    required double conveyIdea,
+    required double similarityCurriculumContent
+  }) {
+    final snapshot = ApiService<CourseRatingModel>().build(
+      url: ApiUrl.courseRating,
+      isPublic: false,
+      apiType: ApiType.post,
+      queryParams: {
+        "comment": comment,
+        "course_id": courseId,
+        "audio_video_quality": audioVideoQuality,
+        "value_for_money": valueForMoney,
+        "convey_idea": conveyIdea,
+        "similarity_curriculum_content": similarityCurriculumContent,
+      },
+      builder: CourseRatingModel.fromJson,
     );
     return snapshot;
   }
