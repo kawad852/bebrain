@@ -11,7 +11,7 @@ import 'package:bebrain/screens/course/widgets/course_text.dart';
 import 'package:bebrain/screens/course/widgets/leading_back.dart';
 import 'package:bebrain/screens/course/widgets/lecture_card.dart';
 import 'package:bebrain/screens/course/widgets/rating_card.dart';
-import 'package:bebrain/screens/course/widgets/view_ratings_button.dart';
+import 'package:bebrain/widgets/view_ratings_button.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/enums.dart';
 import 'package:bebrain/utils/my_icons.dart';

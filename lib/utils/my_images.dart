@@ -5,6 +5,5 @@ class MyImages {
   static const String intro0 = '${_path}intro0.png';
   static const String intro1 = '${_path}intro1.png';
   static const String intro2 = '${_path}intro2.png';
-
-
+  static const String teacherBackground = '${_path}teacher_background.png';
 }

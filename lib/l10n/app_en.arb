@@ -200,5 +200,8 @@
   "cannotMoreOneRating":"You cannot add more than one rating for the same course or professor",
   "expiredPeriodCourse":"The subscription period for this course has expired",
   "unavailable":"Unavailable",
-  "ratingAddedSuccess":"Your rating has been added successfully"
+  "ratingAddedSuccess":"Your rating has been added successfully",
+  "basedOnSubsriptionTeacher":"Based on your subscription with the professor , ",
+  "bookPrivateLecture":"Book a private lecture online with the professor",
+  "booking":"Booking"
 }
