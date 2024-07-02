@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "97702859580-16i510hbuqkcbhtkjae3u59fc92btl7d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bebrain.wecan",
+            "certificate_hash": "09e55cf6f1986f5d9b9ffdcab8f3f793c716b319"
+          }
+        },
+        {
           "client_id": "97702859580-9dq1lni7cb8vbl8vkq6ur47chrlpti7v.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -37,6 +45,13 @@
             {
               "client_id": "97702859580-a791vrfkkanqe4if1qf4j522iuhjath4.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "97702859580-0qkaur9om6l5cm5u5m6982jrrami3val.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.bebrain.wecan"
+              }
             }
           ]
         }
