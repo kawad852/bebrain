@@ -11,6 +11,8 @@ import 'package:bebrain/model/policy_model.dart';
 import 'package:bebrain/model/professors_model.dart';
 import 'package:bebrain/model/projects_model.dart';
 import 'package:bebrain/model/subscriptions_model.dart';
+import 'package:bebrain/model/teacher_model.dart';
+import 'package:bebrain/model/teacher_review_model.dart';
 import 'package:bebrain/model/unit_filter_model.dart';
 import 'package:bebrain/model/university_filter_model.dart';
 import 'package:bebrain/model/video_view_model.dart';
@@ -232,6 +234,35 @@ class MainProvider extends ChangeNotifier {
         "similarity_curriculum_content": similarityCurriculumContent,
       },
       builder: CourseRatingModel.fromJson,
+    );
+    return snapshot;
+  }
+
+  Future<TeacherReviewModel> rateProfessor({
+    required int professorId,
+    required double rating,
+    required String comment,
+  }) {
+    final snapshot = ApiService<TeacherReviewModel>().build(
+      url: ApiUrl.professorRating,
+      isPublic: false,
+      apiType: ApiType.post,
+      queryParams: {
+        "comment": comment,
+        "professor_id": professorId,
+        "rating": rating,
+      },
+      builder: TeacherReviewModel.fromJson,
+    );
+    return snapshot;
+  }
+
+  Future<TeacherModel> fetchProfessorById(int id) {
+    final snapshot = ApiService<TeacherModel>().build(
+      url: "${ApiUrl.professors}/$id",
+      isPublic: true,
+      apiType: ApiType.get,
+      builder: TeacherModel.fromJson,
     );
     return snapshot;
   }

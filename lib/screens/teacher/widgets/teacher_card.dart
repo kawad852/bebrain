@@ -1,6 +1,6 @@
+import 'package:bebrain/model/teacher_model.dart';
 import 'package:bebrain/screens/teacher/widgets/info_bubble.dart';
 import 'package:bebrain/screens/teacher/widgets/teacher_rate.dart';
-import 'package:bebrain/utils/app_constants.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/my_icons.dart';
 import 'package:bebrain/utils/my_images.dart';
@@ -11,17 +11,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class TeacherCard extends StatefulWidget {
-  const TeacherCard({super.key});
+  final TeacherData teacherData;
+  const TeacherCard({super.key, required this.teacherData});
 
   @override
   State<TeacherCard> createState() => _TeacherCardState();
 }
 
 class _TeacherCardState extends State<TeacherCard> {
+  TeacherData get _teacher => widget.teacherData;
   @override
   Widget build(BuildContext context) {
     return Container(
-      //alignment: Alignment.bottomCenter,
       padding: const EdgeInsets.symmetric(horizontal: 15),
       decoration: const BoxDecoration(
         image: DecorationImage(
@@ -35,8 +36,8 @@ class _TeacherCardState extends State<TeacherCard> {
         children: [
           Row(
             children: [
-              const CustomNetworkImage(
-                kFakeImage,
+              CustomNetworkImage(
+                _teacher.image!,
                 width: 90,
                 height: 90,
                 radius: MyTheme.radiusSecondary,
@@ -47,7 +48,7 @@ class _TeacherCardState extends State<TeacherCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "د. عبدالله محمد",
+                      _teacher.name!,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         color: context.colorPalette.black33,
@@ -56,7 +57,7 @@ class _TeacherCardState extends State<TeacherCard> {
                       ),
                     ),
                     Text(
-                      "الجامعة الاردنية",
+                      _teacher.universityName!,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         color: context.colorPalette.grey66,
@@ -67,7 +68,7 @@ class _TeacherCardState extends State<TeacherCard> {
                     Row(
                       children: [
                         RatingBar.builder(
-                          initialRating: 1,
+                          initialRating: _teacher.reviewsRating!,
                           minRating: 1,
                           unratedColor: context.colorPalette.grey66,
                           direction: Axis.horizontal,
@@ -75,17 +76,15 @@ class _TeacherCardState extends State<TeacherCard> {
                           ignoreGestures: true,
                           itemSize: 15,
                           itemCount: 5,
-                          itemPadding:
-                              const EdgeInsets.symmetric(horizontal: 3),
-                          itemBuilder: (context, _) =>
-                              const CustomSvg(MyIcons.star),
+                          itemPadding: const EdgeInsets.symmetric(horizontal: 3),
+                          itemBuilder: (context, _) => const CustomSvg(MyIcons.star),
                           onRatingUpdate: (rating) {
                             debugPrint(rating.toString());
                           },
                         ),
                         const SizedBox(width: 10),
                         Text(
-                          "(4.8)",
+                          "(${_teacher.reviewsRating!.toStringAsFixed(1)})",
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             color: context.colorPalette.grey66,
@@ -102,18 +101,23 @@ class _TeacherCardState extends State<TeacherCard> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
-            child: Text(
-              "استاذ ومحاضر في الجامعة الاردنية ، كلية الاعمال و محاضر في جامعة الزيتونة الاردنية استاذ ومحاضر في الجامعة الاردنية ، كلية الاعمال و محاضر في جامعة الزيتونة الاردنية",
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                color: context.colorPalette.grey66,
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
+            child: SizedBox(
+              height: 50,
+              child: Text(
+                _teacher.description!,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  color: context.colorPalette.grey66,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ),
-          const TeacherRate(),
+          context.authProvider.isAuthenticated
+              ? const TeacherRate()
+              : const SizedBox(height: 45),
           const SizedBox(height: 10),
           Container(
             width: double.infinity,
@@ -128,17 +132,17 @@ class _TeacherCardState extends State<TeacherCard> {
               children: [
                 InfoBubble(
                   title: context.appLocalization.course,
-                  value: "4",
+                  value: "${_teacher.coursesCount}",
                   icon: MyIcons.axes,
                 ),
                 InfoBubble(
                   title: context.appLocalization.video,
-                  value: "20",
+                  value: "${_teacher.videosCount}",
                   icon: MyIcons.video,
                 ),
                 InfoBubble(
                   title: context.appLocalization.subscriber,
-                  value: "4500",
+                  value: "${_teacher.subscriptionCount}",
                   icon: MyIcons.subscription,
                 ),
               ],

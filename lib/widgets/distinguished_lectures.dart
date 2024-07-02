@@ -48,7 +48,7 @@ class DistinguishedLectures extends StatelessWidget {
             itemBuilder: (context, index) {
               final professor=professors[index];
               return GestureDetector(
-                onTap: () => context.push(const TeacherScreen()),
+                onTap: () => context.push(TeacherScreen(professorId: professor.id!)),
                 child: Container(
                   width: 160,
                   padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),

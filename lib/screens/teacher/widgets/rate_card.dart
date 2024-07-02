@@ -1,4 +1,4 @@
-import 'package:bebrain/utils/app_constants.dart';
+import 'package:bebrain/model/teacher_model.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/my_icons.dart';
 import 'package:bebrain/utils/my_theme.dart';
@@ -6,9 +6,11 @@ import 'package:bebrain/widgets/custom_network_image.dart';
 import 'package:bebrain/widgets/custom_svg.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:intl/intl.dart';
 
 class RateCard extends StatelessWidget {
-  const RateCard({super.key});
+  final Review review;
+  const RateCard({super.key, required this.review});
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +26,8 @@ class RateCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              const CustomNetworkImage(
-                kFakeImage,
+               CustomNetworkImage(
+                review.userImage!,
                 width: 40,
                 height: 40,
                 shape: BoxShape.circle,
@@ -36,7 +38,7 @@ class RateCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "المهيار زهرة",
+                      review.userName!,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         color: context.colorPalette.black33,
@@ -45,7 +47,7 @@ class RateCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "12/08/2024",
+                      DateFormat("dd/MM/yyyy").format(review.createdAt!),
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         color: context.colorPalette.black33,
@@ -56,7 +58,7 @@ class RateCard extends StatelessWidget {
                 ),
               ),
               RatingBar.builder(
-                initialRating: 1,
+                initialRating: double.parse(review.rating!),
                 minRating: 1,
                 unratedColor: context.colorPalette.grey66,
                 direction: Axis.horizontal,
@@ -73,7 +75,7 @@ class RateCard extends StatelessWidget {
             ],
           ),
           Text(
-            "استاذ مميز جداً وهذا مثال على نص يمكن كتابته عند اضافة تقييم من قبل الطالب الذي اشترك لديه في الكورس ",
+            review.comment!,
             style: TextStyle(
               color: context.colorPalette.black33,
               fontSize: 12,

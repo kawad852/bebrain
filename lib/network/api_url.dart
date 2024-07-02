@@ -29,6 +29,8 @@ class ApiUrl {
   static const String videoView = '/api/video-views';
   static const String continueLearning = '/api/video-views/user/all';
   static const String courseRating = '/api/course-reviews';
+  static const String professorRating = '/api/professor-reviews';
+
 
 
 
