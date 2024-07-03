@@ -1,3 +1,4 @@
+import 'package:bebrain/alerts/feedback/app_feedback.dart';
 import 'package:bebrain/model/course_filter_model.dart';
 import 'package:bebrain/model/subscriptions_model.dart';
 import 'package:bebrain/network/api_service.dart';
@@ -10,7 +11,7 @@ import 'package:bebrain/screens/course/widgets/course_text.dart';
 import 'package:bebrain/screens/course/widgets/leading_back.dart';
 import 'package:bebrain/screens/course/widgets/lecture_card.dart';
 import 'package:bebrain/screens/course/widgets/rating_card.dart';
-import 'package:bebrain/screens/course/widgets/view_ratings_button.dart';
+import 'package:bebrain/widgets/view_ratings_button.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/enums.dart';
 import 'package:bebrain/utils/my_icons.dart';
@@ -140,7 +141,7 @@ class _CourseScreenState extends State<CourseScreen> {
                                 const CustomSvg(MyIcons.star),
                                 const SizedBox(width: 5),
                                 CourseText(
-                                "( ${course.reviewsCount} ) ${course.reviewsRating}",
+                                "( ${course.reviewsCount} ) ${course.reviewsRating!.toStringAsFixed(1)}",
                                   textColor: context.colorPalette.grey66,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 12,
@@ -156,6 +157,7 @@ class _CourseScreenState extends State<CourseScreen> {
                       const SizedBox(height: 10),
                       CourseRate(
                         courseName: course.name!,
+                        courseId: course.id!,
                       ),
                       CourseInfo(
                         hours: course.hours!,
@@ -166,7 +168,15 @@ class _CourseScreenState extends State<CourseScreen> {
                       if(course.subscription!.isEmpty)
                       StretchedButton(
                         onPressed: () {
+                          if(course.available == 0){
+                             context.showDialog(
+                              titleText: context.appLocalization.unavailable,
+                              bodyText: context.appLocalization.expiredPeriodCourse,
+                              confirmTitle: context.appLocalization.back,
+                             );
+                          } else{
                           _courseSubscribe(course.id!);
+                          }
                         },
                         margin: const EdgeInsets.symmetric(vertical: 12),
                         child: Column(
@@ -233,7 +243,7 @@ class _CourseScreenState extends State<CourseScreen> {
                            Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: CourseText(
-                              "5/${course.reviewsRating}",
+                              "5/${course.reviewsRating!.toStringAsFixed(1)}",
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),

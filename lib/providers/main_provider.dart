@@ -4,12 +4,15 @@ import 'package:bebrain/model/college_filter_model.dart';
 import 'package:bebrain/model/continue_learning_model.dart';
 import 'package:bebrain/model/country_filter_model.dart';
 import 'package:bebrain/model/course_filter_model.dart';
+import 'package:bebrain/model/course_rating_model.dart';
 import 'package:bebrain/model/major_filter_model.dart';
 import 'package:bebrain/model/new_request_model.dart';
 import 'package:bebrain/model/policy_model.dart';
 import 'package:bebrain/model/professors_model.dart';
 import 'package:bebrain/model/projects_model.dart';
 import 'package:bebrain/model/subscriptions_model.dart';
+import 'package:bebrain/model/teacher_model.dart';
+import 'package:bebrain/model/teacher_review_model.dart';
 import 'package:bebrain/model/unit_filter_model.dart';
 import 'package:bebrain/model/university_filter_model.dart';
 import 'package:bebrain/model/video_view_model.dart';
@@ -206,6 +209,60 @@ class MainProvider extends ChangeNotifier {
       isPublic: false,
       apiType: ApiType.get,
       builder: ContinueLearningModel.fromJson,
+    );
+    return snapshot;
+  }
+
+  Future<CourseRatingModel> rateCourse({
+    required int courseId,
+    required String comment,
+    required double audioVideoQuality,
+    required double valueForMoney,
+    required double conveyIdea,
+    required double similarityCurriculumContent
+  }) {
+    final snapshot = ApiService<CourseRatingModel>().build(
+      url: ApiUrl.courseRating,
+      isPublic: false,
+      apiType: ApiType.post,
+      queryParams: {
+        "comment": comment,
+        "course_id": courseId,
+        "audio_video_quality": audioVideoQuality,
+        "value_for_money": valueForMoney,
+        "convey_idea": conveyIdea,
+        "similarity_curriculum_content": similarityCurriculumContent,
+      },
+      builder: CourseRatingModel.fromJson,
+    );
+    return snapshot;
+  }
+
+  Future<TeacherReviewModel> rateProfessor({
+    required int professorId,
+    required double rating,
+    required String comment,
+  }) {
+    final snapshot = ApiService<TeacherReviewModel>().build(
+      url: ApiUrl.professorRating,
+      isPublic: false,
+      apiType: ApiType.post,
+      queryParams: {
+        "comment": comment,
+        "professor_id": professorId,
+        "rating": rating,
+      },
+      builder: TeacherReviewModel.fromJson,
+    );
+    return snapshot;
+  }
+
+  Future<TeacherModel> fetchProfessorById(int id) {
+    final snapshot = ApiService<TeacherModel>().build(
+      url: "${ApiUrl.professors}/$id",
+      isPublic: true,
+      apiType: ApiType.get,
+      builder: TeacherModel.fromJson,
     );
     return snapshot;
   }

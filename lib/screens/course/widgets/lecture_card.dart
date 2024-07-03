@@ -65,7 +65,7 @@ class LectureCard extends StatelessWidget {
                           const CustomSvg(MyIcons.star),
                           const SizedBox(width: 5),
                           CourseText(
-                            "${professor.reviewsRating}",
+                            professor.reviewsRating!.toStringAsFixed(1),
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
                           ),

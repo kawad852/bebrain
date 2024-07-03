@@ -1,3 +1,7 @@
+import 'package:bebrain/alerts/errors/app_error_feedback.dart';
+import 'package:bebrain/alerts/feedback/app_feedback.dart';
+import 'package:bebrain/model/course_rating_model.dart';
+import 'package:bebrain/network/api_service.dart';
 import 'package:bebrain/screens/course/widgets/course_text.dart';
 import 'package:bebrain/screens/course/widgets/rating_bubble.dart';
 import 'package:bebrain/utils/base_extensions.dart';
@@ -5,13 +9,15 @@ import 'package:bebrain/utils/my_icons.dart';
 import 'package:bebrain/utils/my_theme.dart';
 import 'package:bebrain/widgets/custom_svg.dart';
 import 'package:bebrain/widgets/editors/text_editor.dart';
+import 'package:bebrain/widgets/rating_failer.dart';
 import 'package:bebrain/widgets/stretch_button.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CourseRate extends StatefulWidget {
   final String courseName;
-  const CourseRate({super.key, required this.courseName});
+  final int courseId;
+  const CourseRate({super.key, required this.courseName, required this.courseId});
 
   @override
   State<CourseRate> createState() => _CourseRateState();
@@ -20,6 +26,47 @@ class CourseRate extends StatefulWidget {
 class _CourseRateState extends State<CourseRate> {
   final _formKey = GlobalKey<FormState>();
   String? _notes;
+  double _audioVideoQuality = 1;
+  double _conveyIdea = 1 ;
+  double _similarityCurriculumContent = 1;
+  double _valueForMoney = 1;
+
+  void _rateCourse(){
+    if(_formKey.currentState!.validate()) {
+    context.pop();
+    ApiFutureBuilder<CourseRatingModel>().fetch(
+        context,
+        future: () async {
+          final rating = context.mainProvider.rateCourse(
+            courseId: widget.courseId,
+            comment: _notes!,
+            audioVideoQuality: _audioVideoQuality,
+            conveyIdea: _conveyIdea,
+            similarityCurriculumContent: _similarityCurriculumContent,
+            valueForMoney: _valueForMoney,
+          );
+          return rating;
+        },
+        onComplete: (snapshot) {
+          if(snapshot.code == 200){
+            context.showSnackBar(context.appLocalization.ratingAddedSuccess);
+          }
+          else if(snapshot.code == 500){
+            showDialog(
+              context: context,
+              builder: (context){
+                 return const Dialog(
+                  insetPadding: EdgeInsets.symmetric(horizontal: 15),
+                  child: RatingFailer(),
+                );
+              },
+            );
+          }
+        },
+        onError: (failure) => AppErrorFeedback.show(context, failure),
+      );
+  }
+}
   @override
   Widget build(BuildContext context) {
     return StretchedButton(
@@ -56,18 +103,22 @@ class _CourseRateState extends State<CourseRate> {
                         RatingBubble(
                           title: context.appLocalization.audioVideoQuality,
                           margin: const EdgeInsets.symmetric(vertical: 3, horizontal: 10),
+                          onRatingUpdate: (value) => _audioVideoQuality = value,
                         ),
                         RatingBubble(
                           title: context.appLocalization.valueForPrice,
                           margin: const EdgeInsets.symmetric(vertical: 3, horizontal: 10),
+                          onRatingUpdate: (value) => _valueForMoney = value,
                         ),
                         RatingBubble(
                           title: context.appLocalization.teacherAbilityCommunicate,
                           margin: const EdgeInsets.symmetric(vertical: 3, horizontal: 10),
+                          onRatingUpdate: (value) => _conveyIdea = value,
                         ),
                         RatingBubble(
                           title: context.appLocalization.similarityCurriculumContent,
                           margin: const EdgeInsets.symmetric(vertical: 3, horizontal: 10),
+                          onRatingUpdate: (value) => _similarityCurriculumContent = value,
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
@@ -80,7 +131,9 @@ class _CourseRateState extends State<CourseRate> {
                         ),
                         const Spacer(),
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            _rateCourse();
+                          },
                           child: Container(
                             width: double.infinity,
                             height: 48,

@@ -38,7 +38,7 @@ class CoursesList extends StatelessWidget {
                   },
                   child:  EvaluationStar(
                     margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                    evaluation: "${courses[index].reviewsRating}",
+                    evaluation: courses[index].reviewsRating!.toStringAsFixed(1),
                   ),
                 ),
                 SizedBox(
