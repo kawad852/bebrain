@@ -11,6 +11,7 @@ import 'package:bebrain/model/policy_model.dart';
 import 'package:bebrain/model/professors_model.dart';
 import 'package:bebrain/model/projects_model.dart';
 import 'package:bebrain/model/subscriptions_model.dart';
+import 'package:bebrain/model/teacher_evalution_model.dart';
 import 'package:bebrain/model/teacher_model.dart';
 import 'package:bebrain/model/teacher_review_model.dart';
 import 'package:bebrain/model/unit_filter_model.dart';
@@ -263,6 +264,19 @@ class MainProvider extends ChangeNotifier {
       isPublic: true,
       apiType: ApiType.get,
       builder: TeacherModel.fromJson,
+    );
+    return snapshot;
+  }
+
+  Future<TeacherEvalutionModel> fetchProfessorReviews({
+    required int pageKey,
+    required int professorId,
+    }) {
+    final snapshot = ApiService<TeacherEvalutionModel>().build(
+      url: "${ApiUrl.professorAllRating}/$professorId?page=$pageKey",
+      isPublic: true,
+      apiType: ApiType.get,
+      builder: TeacherEvalutionModel.fromJson,
     );
     return snapshot;
   }

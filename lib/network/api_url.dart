@@ -30,6 +30,10 @@ class ApiUrl {
   static const String continueLearning = '/api/video-views/user/all';
   static const String courseRating = '/api/course-reviews';
   static const String professorRating = '/api/professor-reviews';
+  static const String professorAllRating = '/api/professor-reviews/all/professor';
+  static const String notification = '/api/notifications/user';
+
+
 
 
 

@@ -203,5 +203,8 @@
   "ratingAddedSuccess":"Your rating has been added successfully",
   "basedOnSubsriptionTeacher":"Based on your subscription with the professor , ",
   "bookPrivateLecture":"Book a private lecture online with the professor",
-  "booking":"Booking"
+  "booking":"Booking",
+  "rateExperienceProfessor":"Rate your experience with {professorName}",
+  "notSubscribedProfessor":"You are not subscribed with this professor",
+  "mustSubscriberWithProfessor":"You must be a subscriber with the professor in order to be able to rating him"
 }

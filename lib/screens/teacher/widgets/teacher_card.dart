@@ -115,9 +115,7 @@ class _TeacherCardState extends State<TeacherCard> {
               ),
             ),
           ),
-          context.authProvider.isAuthenticated
-              ? const TeacherRate()
-              : const SizedBox(height: 45),
+          TeacherRate(professorName:_teacher.name! , professorId: _teacher.id!),
           const SizedBox(height: 10),
           Container(
             width: double.infinity,

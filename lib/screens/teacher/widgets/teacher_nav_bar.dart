@@ -31,18 +31,23 @@ class TeacherNavBar extends StatelessWidget {
                 ),
               ),
             ),
-            Container(
-              width: 55,
-              height: 30,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: context.colorPalette.blue8DD,
-                borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
-              ),
-              child: Text(
-                context.appLocalization.booking,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
+            GestureDetector(
+              onTap: (){
+                context.authProvider.checkIfUserAuthenticated(context, callback: (){});
+              },
+              child: Container(
+                width: 55,
+                height: 30,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: context.colorPalette.blue8DD,
+                  borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
+                ),
+                child: Text(
+                  context.appLocalization.booking,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),

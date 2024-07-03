@@ -203,6 +203,9 @@
   "ratingAddedSuccess":"تمت اضافة تقييمك بنجاح",
   "basedOnSubsriptionTeacher":"بناءا على اشتراكك مع الاستاذ , ",
   "bookPrivateLecture":"إحجز موعد محاضرة خاصة اون لاين مع الأستاذ",
-  "booking":"حجز"
+  "booking":"حجز",
+  "rateExperienceProfessor":"قيم تجربتك مع {professorName}",
+  "notSubscribedProfessor":"انت غير مشترك مع هذا الاستاذ",
+  "mustSubscriberWithProfessor":"يجب ان تكون مشتركا مع الاستاذ لتتمكن من تقييمه"
 
 }

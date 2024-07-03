@@ -1,3 +1,4 @@
+import 'package:bebrain/notifications/cloud_messaging_service.dart';
 import 'package:bebrain/providers/auth_provider.dart';
 import 'package:bebrain/screens/base/widgets/nav_bar_item.dart';
 import 'package:bebrain/screens/duties/duties_screen.dart';
@@ -21,8 +22,8 @@ class AppNavBar extends StatefulWidget {
 class _AppNavBarState extends State<AppNavBar> {
   int _currentIndex = 0;
   late PageController _pageController;
-  // final cloudMessagingService = CloudMessagingService();
-   late AuthProvider authProvider;
+  final cloudMessagingService = CloudMessagingService();
+  late AuthProvider authProvider;
 
   final items = [
     MyIcons.home,
@@ -70,9 +71,9 @@ class _AppNavBarState extends State<AppNavBar> {
     super.initState();
     authProvider = context.authProvider;
     _pageController = PageController();
-    //authProvider.updateDeviceToken(context);
-    //cloudMessagingService.init(context);
-    //cloudMessagingService.requestPermission();
+     authProvider.updateDeviceToken(context);
+    cloudMessagingService.requestPermission();
+    cloudMessagingService.init(context);
   }
 
   @override
@@ -108,17 +109,17 @@ class _AppNavBarState extends State<AppNavBar> {
             final index = screens.indexOf(element);
             return NavBarItem(
               onTap: () {
-                 if (index == 0 ) {
-                _onSelect(index);
-                } else {
-                authProvider.checkIfUserAuthenticated(
-                context,
-                callback: () {
-                _onSelect(index);
-                },
+              if (index == 0 ) {
+               _onSelect(index);
+              } else {
+                   authProvider.checkIfUserAuthenticated(
+                   context,
+                   callback: () {
+                  _onSelect(index);
+                  },
                 );
-                }
-              },
+              }
+             },
               isSelected: _currentIndex == index,
               icon: _currentIndex == index ? itemsSelected[index] : items[index],
               title: _getTitle(context)[index],

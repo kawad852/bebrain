@@ -12,7 +12,7 @@ class CloudMessagingService {
   }
 
   Future<void> init(BuildContext context) async {
-    await LocalNotificationsService().initialize();
+    //await LocalNotificationsService().initialize();
 
     FirebaseMessaging.onMessage.listen(
       (event) {

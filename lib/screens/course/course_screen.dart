@@ -121,7 +121,9 @@ class _CourseScreenState extends State<CourseScreen> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          const ViewRatingsButton(),
+                         ViewRatingsButton(
+                          onTap: (){},
+                         ),
                         ],
                       ),
                       Padding(
@@ -234,7 +236,9 @@ class _CourseScreenState extends State<CourseScreen> {
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
-                          const ViewRatingsButton(),
+                         ViewRatingsButton(
+                          onTap: (){},
+                         ),
                         ],
                       ),
                       Row(
