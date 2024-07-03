@@ -71,9 +71,9 @@ dependencies:
   webview_flutter: ^4.8.0
 
   #firebase
-  firebase_core: ^2.25.4
-  firebase_auth: ^4.12.1
-  firebase_messaging: ^14.7.16
+  firebase_core: ^3.1.1
+  firebase_auth: ^5.1.1
+  firebase_messaging: ^15.0.2
   #  firebase_analytics: ^10.7.4
 
 dev_dependencies:
