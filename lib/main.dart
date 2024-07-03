@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:bebrain/notifications/local_notifications_service.dart';
 import 'package:bebrain/providers/app_provider.dart';
@@ -13,7 +12,6 @@ import 'package:bebrain/utils/my_theme.dart';
 import 'package:bebrain/utils/shared_pref.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -36,18 +34,18 @@ Future<void> onBackgroundMessage(RemoteMessage message) async {
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    options: Platform.isAndroid
-        ? const FirebaseOptions(
-            apiKey: "AIzaSyBx-u_p9-gXqy7KjbmfF12UAvWNMlsd-ww",
-            authDomain: "almosaedapp.firebaseapp.com",
-            projectId: "almosaedapp",
-            storageBucket: "almosaedapp.appspot.com",
-            messagingSenderId: "97702859580",
-            appId: "1:97702859580:web:d355a19b08456fedb14439",
-            measurementId: "G-NTPXWDYBY0",
-          )
-        : null,
-  );
+      // options: Platform.isAndroid
+      //     ? const FirebaseOptions(
+      //         apiKey: "AIzaSyBx-u_p9-gXqy7KjbmfF12UAvWNMlsd-ww",
+      //         authDomain: "almosaedapp.firebaseapp.com",
+      //         projectId: "almosaedapp",
+      //         storageBucket: "almosaedapp.appspot.com",
+      //         messagingSenderId: "97702859580",
+      //         appId: "1:97702859580:web:d355a19b08456fedb14439",
+      //         measurementId: "G-NTPXWDYBY0",
+      //       )
+      //     : null,
+      );
   unawaited(AppProvider.getCountryCode());
   await MySharedPreferences.init();
   // FlutterBranchSdk.validateSDKIntegration();
@@ -104,8 +102,6 @@ class _MyAppState extends State<MyApp> {
       playSound: true,
       // sound: RawResourceAndroidNotificationSound('notification'),
     );
-    final countryCode = PlatformDispatcher.instance.locale.countryCode;
-    print("countryCode:: $countryCode");
   }
 
   @override
