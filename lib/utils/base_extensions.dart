@@ -1,3 +1,4 @@
+import 'package:bebrain/alerts/feedback/app_feedback.dart';
 import 'package:bebrain/alerts/loading/app_loading_indicators.dart';
 import 'package:bebrain/network/api_url.dart';
 import 'package:bebrain/providers/app_provider.dart';
@@ -139,4 +140,14 @@ extension UTCDate on DateTime {
     return utcTime.toLocal();
   }
 }
+
+extension CustomDialog on BuildContext{
+  Future dialogNotAvailble(){
+    return this.showDialog(
+      titleText: appLocalization.unavailable,
+      bodyText: appLocalization.expiredPeriodCourse,
+      confirmTitle: appLocalization.back,
+    );
+  }
+} 
 

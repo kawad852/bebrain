@@ -7,6 +7,7 @@ import 'package:bebrain/model/course_filter_model.dart';
 import 'package:bebrain/model/course_rating_model.dart';
 import 'package:bebrain/model/major_filter_model.dart';
 import 'package:bebrain/model/new_request_model.dart';
+import 'package:bebrain/model/order_model.dart';
 import 'package:bebrain/model/policy_model.dart';
 import 'package:bebrain/model/professors_model.dart';
 import 'package:bebrain/model/projects_model.dart';
@@ -281,4 +282,23 @@ class MainProvider extends ChangeNotifier {
     return snapshot;
   }
 
+  Future<OrderModel> createOrder({
+    required String type,
+    required int orderableId,
+    required double amount,
+    }) {
+    final snapshot = ApiService<OrderModel>().build(
+      url: ApiUrl.orders,
+      isPublic: false,
+      apiType: ApiType.post,
+      queryParams: {
+        "type": type,
+        "orderable_id": orderableId,
+        "amount": amount,
+      },
+      builder: OrderModel.fromJson,
+    );
+    return snapshot;
+  }
+  
 }

@@ -32,6 +32,7 @@ class SubscriptionsData {
     int? typeId;
     DateTime? createdAt;
     Period? period;
+    Order? order;
 
     SubscriptionsData({
         this.id,
@@ -39,6 +40,7 @@ class SubscriptionsData {
         this.typeId,
         this.createdAt,
         this.period,
+        this.order,
     });
 
     factory SubscriptionsData.fromJson(Map<String, dynamic> json) => SubscriptionsData(
@@ -47,6 +49,7 @@ class SubscriptionsData {
         typeId: json["type_id"],
         createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
         period: json["period"] == null ? null : Period.fromJson(json["period"]),
+        order: json["order"] == null ? null : Order.fromJson(json["order"]),
     );
 
     Map<String, dynamic> toJson() => {
@@ -55,6 +58,59 @@ class SubscriptionsData {
         "type_id": typeId,
         "created_at": createdAt?.toIso8601String(),
         "period": period?.toJson(),
+        "order": order?.toJson(),
+    };
+}
+
+class Order {
+    int? id;
+    int? amount;
+    DateTime? createdAt;
+    int? userId;
+    String? userName;
+    String? userImage;
+    String? status;
+    String? orderNumber;
+    String? type;
+    int? typeId;
+
+    Order({
+        this.id,
+        this.amount,
+        this.createdAt,
+        this.userId,
+        this.userName,
+        this.userImage,
+        this.status,
+        this.orderNumber,
+        this.type,
+        this.typeId,
+    });
+
+    factory Order.fromJson(Map<String, dynamic> json) => Order(
+        id: json["id"],
+        amount: json["amount"],
+        createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
+        userId: json["user_id"],
+        userName: json["user_name"],
+        userImage: json["user_image"],
+        status: json["status"],
+        orderNumber: json["order_number"],
+        type: json["type"],
+        typeId: json["type_id"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "amount": amount,
+        "created_at": createdAt?.toIso8601String(),
+        "user_id": userId,
+        "user_name": userName,
+        "user_image": userImage,
+        "status": status,
+        "order_number": orderNumber,
+        "type": type,
+        "type_id": typeId,
     };
 }
 

@@ -26,9 +26,24 @@ class SubscriptionsType{
   static const String section = 'section';
 }
 
+class PaymentStatus{
+  static const int paid = 1;
+  static const int unPaid = 0;
+}
+
+class PaymentType{
+  static const String free = "free";
+  static const String notFree = "paid";
+}
+
 class LanguageEnum {
   static const String english = 'en';
   static const String arabic = 'ar';
+}
+
+class OrderType{
+  static const String subscription = "subscription";
+  static const String request = "request";
 }
 
 class ThemeEnum {

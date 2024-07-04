@@ -1,4 +1,3 @@
-import 'package:bebrain/alerts/feedback/app_feedback.dart';
 import 'package:bebrain/model/course_filter_model.dart';
 import 'package:bebrain/model/subscriptions_model.dart';
 import 'package:bebrain/network/api_service.dart';
@@ -157,6 +156,7 @@ class _CourseScreenState extends State<CourseScreen> {
                         course.description!,
                       ),
                       const SizedBox(height: 10),
+                      //if(course.paymentStatus == PaymentStatus.paid)
                       CourseRate(
                         courseName: course.name!,
                         courseId: course.id!,
@@ -171,11 +171,7 @@ class _CourseScreenState extends State<CourseScreen> {
                       StretchedButton(
                         onPressed: () {
                           if(course.available == 0){
-                             context.showDialog(
-                              titleText: context.appLocalization.unavailable,
-                              bodyText: context.appLocalization.expiredPeriodCourse,
-                              confirmTitle: context.appLocalization.back,
-                             );
+                             context.dialogNotAvailble();
                           } else{
                           _courseSubscribe(course.id!);
                           }
@@ -212,7 +208,7 @@ class _CourseScreenState extends State<CourseScreen> {
                   separatorBuilder: (context, index) =>const SizedBox(height: 5),
                   itemCount: course.units!.length,
                   itemBuilder: (context, index) {
-                    return ContentCard(unit: course.units![index]);
+                    return ContentCard(unit: course.units![index],available: course.available!);
                   },
                 ),
               ),

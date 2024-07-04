@@ -2,21 +2,28 @@ import 'package:bebrain/alerts/feedback/app_feedback.dart';
 import 'package:bebrain/model/course_filter_model.dart';
 import 'package:bebrain/screens/course/unit_screen.dart';
 import 'package:bebrain/screens/course/widgets/course_text.dart';
+import 'package:bebrain/screens/course/widgets/free_bubble.dart';
+import 'package:bebrain/screens/course/widgets/subscribed_bubble.dart';
 import 'package:bebrain/utils/base_extensions.dart';
+import 'package:bebrain/utils/enums.dart';
 import 'package:bebrain/utils/my_icons.dart';
 import 'package:bebrain/utils/my_theme.dart';
 import 'package:bebrain/widgets/custom_svg.dart';
 import 'package:flutter/material.dart';
 
 class ContentCard extends StatelessWidget {
+  final int available;
   final Unit unit;
-  const ContentCard({super.key, required this.unit});
+  const ContentCard({super.key, required this.unit, required this.available});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        if(unit.videosCount==0 && unit.documentsCount==0){
+        if(available == 0){
+          context.dialogNotAvailble();
+        }
+        else if(unit.videosCount==0 && unit.documentsCount==0){
            context.showDialog(
             titleText: "",
             confirmTitle: context.appLocalization.back,
@@ -37,7 +44,11 @@ class ContentCard extends StatelessWidget {
         ),
         child: Row(
           children: [
-            const CustomSvg(MyIcons.lock), //un lock
+            CustomSvg(
+              unit.type == PaymentType.free || unit.paymentStatus == PaymentStatus.paid
+               ? MyIcons.unLock 
+               : MyIcons.lock,
+              ),
             const SizedBox(width: 7),
             Expanded(
               child: Column(
@@ -56,7 +67,11 @@ class ContentCard extends StatelessWidget {
                 ],
               ),
             ),
-            Column(
+            unit.type == PaymentType.free?
+            const FreeBubble()
+            : unit.paymentStatus == PaymentStatus.paid?
+             const SubscribedBubble()
+            :Column(
               /// مجاناوتم الاشتراك
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

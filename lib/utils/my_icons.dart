@@ -24,6 +24,7 @@ class MyIcons {
   static const String message = '${_path}message.svg';
   static const String arrowDown = '${_path}arrow_down.svg';
   static const String attach = '${_path}attach.svg';
+  static const String attachPaid = '${_path}attach-paid.svg';
   static const String line = '${_path}line.svg';
   static const String lock = '${_path}lock.svg';
   static const String unLock = '${_path}un_lock.svg';
@@ -54,5 +55,6 @@ class MyIcons {
   static const String messageEdit = '${_path}message-edit.svg';
   static const String phone = '${_path}phone.svg';
   static const String playCircle = '${_path}play-circle.svg';
+  static const String playCirclePaid = '${_path}play-circle-paid.svg';
   static const String whatsApp = '${_path}whatsapp.svg';
 }

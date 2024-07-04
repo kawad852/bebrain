@@ -5,6 +5,7 @@ import 'package:bebrain/screens/course/widgets/course_text.dart';
 import 'package:bebrain/screens/course/widgets/leading_back.dart';
 import 'package:bebrain/screens/course/widgets/part_card.dart';
 import 'package:bebrain/utils/base_extensions.dart';
+import 'package:bebrain/utils/enums.dart';
 import 'package:bebrain/utils/my_theme.dart';
 import 'package:bebrain/widgets/custom_future_builder.dart';
 import 'package:bebrain/widgets/stretch_button.dart';
@@ -118,6 +119,7 @@ class _UnitScreenState extends State<UnitScreen> {
                         textColor: context.colorPalette.grey66,
                         fontWeight: FontWeight.bold,
                       ),
+                     // if(unit.type != PaymentType.free && unit.paymentStatus != PaymentStatus.paid)
                       StretchedButton(
                         onPressed: () {},
                         margin: const EdgeInsets.symmetric(vertical: 10),
