@@ -6,6 +6,7 @@ import 'package:bebrain/notifications/local_notifications_service.dart';
 import 'package:bebrain/providers/app_provider.dart';
 import 'package:bebrain/providers/auth_provider.dart';
 import 'package:bebrain/providers/main_provider.dart';
+import 'package:bebrain/providers/payment_provider.dart';
 import 'package:bebrain/screens/intro/intro_screen.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/enums.dart';
@@ -61,6 +62,7 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (context) => AuthProvider()),
         ChangeNotifierProvider(create: (context) => AppProvider()),
         ChangeNotifierProvider(create: (context) => MainProvider()),
+        ChangeNotifierProvider(create: (context) => PaymentProvider()),
       ],
       child: const MyApp(),
     ),

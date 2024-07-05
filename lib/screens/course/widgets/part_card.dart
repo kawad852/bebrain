@@ -13,7 +13,8 @@ import 'package:flutter/material.dart';
 
 class PartCard extends StatelessWidget {
   final Section section;
-  const PartCard({super.key, required this.section});
+  final void Function() onTap;
+  const PartCard({super.key, required this.section, required this.onTap});
 
   bool get _sectionAllow => section.type == PaymentType.free || section.paymentStatus == PaymentStatus.paid;
 
@@ -161,7 +162,7 @@ class PartCard extends StatelessWidget {
           }).toList(),
           if(section.type != PaymentType.free && section.paymentStatus != PaymentStatus.paid)
           GestureDetector(
-            onTap: () {},
+            onTap: onTap,
             child: Container(
               width: double.infinity,
               height: 28,

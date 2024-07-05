@@ -1,3 +1,4 @@
+import 'package:bebrain/alerts/errors/app_error_feedback.dart';
 import 'package:bebrain/model/course_filter_model.dart';
 import 'package:bebrain/model/subscriptions_model.dart';
 import 'package:bebrain/network/api_service.dart';
@@ -55,10 +56,13 @@ class _CourseScreenState extends State<CourseScreen> {
           return subscribe;
         },
         onComplete: (snapshot) {
+          if(snapshot.code == 200){
           setState(() {
             _initializeFuture();
           });
+         }
         },
+        onError: (failure) => AppErrorFeedback.show(context, failure),
       );
   }
 
@@ -264,7 +268,6 @@ class _CourseScreenState extends State<CourseScreen> {
                   ),
                 ),
               ),
-              //TODO Completion is when it is completed in the back end section
               if (data.data!.moreCourses!.isNotEmpty)
                 SliverToBoxAdapter(
                   child: Column(
@@ -278,10 +281,10 @@ class _CourseScreenState extends State<CourseScreen> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 10),
+                       Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
                         child: CoursesList(
-                          courses: [],
+                          courses: data.data!.moreCourses!,
                         ),
                       ),
                     ],

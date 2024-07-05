@@ -4,6 +4,7 @@ import 'package:bebrain/screens/course/widgets/course_nav_bar.dart';
 import 'package:bebrain/screens/course/widgets/course_text.dart';
 import 'package:bebrain/screens/course/widgets/leading_back.dart';
 import 'package:bebrain/screens/course/widgets/part_card.dart';
+import 'package:bebrain/screens/vimeo_player/vimeo_player_screen.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/enums.dart';
 import 'package:bebrain/utils/my_theme.dart';
@@ -76,8 +77,8 @@ class _UnitScreenState extends State<UnitScreen> {
                 scrolledUnderElevation: 0,
                 collapsedHeight: 170,
                 leading: const LeadingBack(),
-                flexibleSpace:VimeoPlayer(
-                videoId: unit.sections![0].videos![0].vimeoId!,
+                flexibleSpace:VimeoPlayerScreen(
+                vimeoId: unit.sections![0].videos![0].vimeoId!,
               ),
               ),
               SliverPadding(
@@ -174,7 +175,30 @@ class _UnitScreenState extends State<UnitScreen> {
                   separatorBuilder: (context, index) => const SizedBox(height: 5),
                   itemCount: unit.sections!.length,
                   itemBuilder: (context, index) {
-                    return  PartCard(section: unit.sections![index]);
+                    final section = unit.sections![index];
+                    return  PartCard(
+                      section: section,
+                      onTap: (){
+                        context.paymentProvider.pay(
+                          context, 
+                          id: section.id!, 
+                          amount: section.discountPrice?? section.sectionPrice!, 
+                          orderType: OrderType.subscription,
+                          orderId: section.subscription!.isEmpty || section.subscription == null
+                          ? null 
+                          : section.subscription?[0].order?.orderNumber,
+                          subscribtionId: section.subscription!.isEmpty || section.subscription == null
+                          ? null
+                          : section.subscription?[0].id,
+                          subscriptionsType: SubscriptionsType.section,
+                          afterPay: (){
+                            setState(() {
+                              _initializeFuture();
+                            });
+                          },
+                          );
+                      },
+                    );
                   },
                 ),
               ),

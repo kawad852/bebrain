@@ -14,6 +14,8 @@ class UPayment {
     required BuildContext context,
     required String orderId,
     required double amount,
+    Function? afterPay,
+    bool withOverlayLoader = false,
   }) async {
     try {
       String url = 'https://sandboxapi.upayments.com/api/v1/charge';
@@ -56,7 +58,9 @@ class UPayment {
           "customerExtraData": "User define data"
         },
       );
-      AppOverlayLoader.show();
+      if(withOverlayLoader){
+        AppOverlayLoader.show();
+      }
       debugPrint("Response:: CheckoutResponse\nUrl:: $url\nheaders:: ${headers.toString()}");
       http.Response response = await http.post(uri, headers: headers, body: body);
       debugPrint("CheckoutStatusCode:: ${response.statusCode} CheckoutBody:: ${response.body}");
@@ -76,13 +80,17 @@ class UPayment {
             ),
           ).then((value) {
             if (value != null) {
-              //context.pop();
               log("success");
-              // TODO: call your api here
+              if(afterPay !=null){
+                afterPay();
+              }
             }
           });
         }
       } else {
+        if(afterPay != null){
+          afterPay();
+        }
         AppOverlayLoader.hide();
         if (context.mounted) {
           Fluttertoast.showToast(msg: context.appLocalization.generalError);
@@ -90,6 +98,9 @@ class UPayment {
       }
     } catch (e) {
       debugPrint("$e");
+      if(afterPay != null){
+          afterPay();
+        }
       if (context.mounted) {
         Fluttertoast.showToast(msg: context.appLocalization.generalError);
       }

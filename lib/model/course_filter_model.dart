@@ -1,4 +1,4 @@
-import 'package:bebrain/model/country_filter_model.dart';
+import 'package:bebrain/model/country_filter_model.dart' as co;
 import 'package:bebrain/model/subscriptions_model.dart';
 
 class CourseFilterModel {
@@ -31,7 +31,7 @@ class CourseFilterModel {
 
 class CourseFilterData {
     Course? course;
-    List<dynamic>? moreCourses;
+    List<co.Course>? moreCourses;
 
     CourseFilterData({
         this.course,
@@ -40,12 +40,12 @@ class CourseFilterData {
 
     factory CourseFilterData.fromJson(Map<String, dynamic> json) => CourseFilterData(
         course: json["course"] == null ? null : Course.fromJson(json["course"]),
-        moreCourses: json["more_courses"] == null ? [] : List<dynamic>.from(json["more_courses"]!.map((x) => x)),
+        moreCourses: json["more_courses"] == null ? [] : List<co.Course>.from(json["more_courses"]!.map((x) => co.Course.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
         "course": course?.toJson(),
-        "more_courses": moreCourses == null ? [] : List<dynamic>.from(moreCourses!.map((x) => x)),
+        "more_courses": moreCourses == null ? [] : List<dynamic>.from(moreCourses!.map((x) => x.toJson())),
     };
 }
 
@@ -76,7 +76,7 @@ class Course {
     double? similarityCurriculumContent;
     int? paymentStatus;
     List<SubscriptionsData>? subscription;
-    Professor? professor;
+    co.Professor? professor;
     Offer? offer;
     List<Unit>? units;
 
@@ -139,7 +139,7 @@ class Course {
         similarityCurriculumContent: json["similarity_curriculum_content"]?.toDouble(),
         paymentStatus: json["payment_status"],
         subscription: json["subscription"] == null ? [] : List<SubscriptionsData>.from(json["subscription"]!.map((x) => SubscriptionsData.fromJson(x))),
-        professor: json["professor"] == null ? null : Professor.fromJson(json["professor"]),
+        professor: json["professor"] == null ? null : co.Professor.fromJson(json["professor"]),
         offer: json["offer"] == null ? null : Offer.fromJson(json["offer"]),
         units: json["units"] == null ? [] : List<Unit>.from(json["units"]!.map((x) => Unit.fromJson(x))),
     );

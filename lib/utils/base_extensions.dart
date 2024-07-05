@@ -4,6 +4,7 @@ import 'package:bebrain/network/api_url.dart';
 import 'package:bebrain/providers/app_provider.dart';
 import 'package:bebrain/providers/auth_provider.dart';
 import 'package:bebrain/providers/main_provider.dart';
+import 'package:bebrain/providers/payment_provider.dart';
 import 'package:bebrain/utils/app_routes.dart';
 import 'package:bebrain/utils/color_palette.dart';
 import 'package:bebrain/utils/enums.dart';
@@ -96,7 +97,7 @@ extension ProvidersExtension on BuildContext {
   AuthProvider get authProvider => read<AuthProvider>();
   AppProvider get appProvider => read<AppProvider>();
   MainProvider get mainProvider => read<MainProvider>();
-
+  PaymentProvider get paymentProvider => read<PaymentProvider>();
 }
 
 extension CommonExtensions on BuildContext {
