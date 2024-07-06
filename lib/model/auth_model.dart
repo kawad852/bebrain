@@ -48,6 +48,7 @@ class UserData {
     String? email;
     String? phoneNumber;
     String? image;
+    String? accountNumber;
     String? code;
     String? deviceToken;
     int? status;
@@ -72,6 +73,7 @@ class UserData {
         this.email,
         this.phoneNumber,
         this.image,
+        this.accountNumber,
         this.code,
         this.deviceToken,
         this.status,
@@ -99,6 +101,7 @@ class UserData {
         email: json["email"],
         phoneNumber: json["phone_number"],
         image: json["image"] ??'',
+        accountNumber: json["account_number"],
         code: json["code"],
         deviceToken: json["device_token"],
         status: json["status"],
@@ -124,6 +127,7 @@ class UserData {
         "email": email,
         "phone_number": phoneNumber,
         "image": image,
+        "account_number": accountNumber,
         "code": code,
         "device_token": deviceToken,
         "status": status,

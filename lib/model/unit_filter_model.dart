@@ -45,6 +45,8 @@ class UnitFilterData {
     double? couursePrice;
     double? courseDiscountPrice;
     String? type;
+    int? paymentStatus;
+    List<SubscriptionsData>? subscription;
     Offer? courseOffer;
     Offer? offer;
     List<Section>? sections;
@@ -65,6 +67,8 @@ class UnitFilterData {
         this.couursePrice,
         this.courseDiscountPrice,
         this.type,
+        this.paymentStatus,
+        this.subscription,
         this.courseOffer,
         this.offer,
         this.sections,
@@ -86,6 +90,8 @@ class UnitFilterData {
         couursePrice: json["couurse_price"]?.toDouble(),
         courseDiscountPrice: json["course_discount_price"]?.toDouble(),
         type: json["type"],
+        paymentStatus: json["payment_status"],
+        subscription: json["subscription"] == null ? [] : List<SubscriptionsData>.from(json["subscription"]!.map((x) => SubscriptionsData.fromJson(x))),
         courseOffer: json["course_offer"] == null ? null : Offer.fromJson(json["course_offer"]),
         offer: json["offer"] == null ? null : Offer.fromJson(json["offer"]),
         sections: json["sections"] == null ? [] : List<Section>.from(json["sections"]!.map((x) => Section.fromJson(x))),
@@ -107,6 +113,8 @@ class UnitFilterData {
         "couurse_price": couursePrice,
         "course_discount_price": courseDiscountPrice,
         "type": type,
+        "payment_status": paymentStatus,
+        "subscription": subscription == null ? [] : List<dynamic>.from(subscription!.map((x) => x.toJson())),
         "course_offer": courseOffer?.toJson(),
         "offer": offer?.toJson(),
         "sections": sections == null ? [] : List<dynamic>.from(sections!.map((x) => x.toJson())),

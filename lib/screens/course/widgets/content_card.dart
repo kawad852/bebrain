@@ -1,5 +1,6 @@
 import 'package:bebrain/alerts/feedback/app_feedback.dart';
 import 'package:bebrain/model/course_filter_model.dart';
+import 'package:bebrain/model/subscriptions_model.dart';
 import 'package:bebrain/screens/course/unit_screen.dart';
 import 'package:bebrain/screens/course/widgets/course_text.dart';
 import 'package:bebrain/screens/course/widgets/free_bubble.dart';
@@ -13,25 +14,40 @@ import 'package:flutter/material.dart';
 
 class ContentCard extends StatelessWidget {
   final int available;
+  final bool isSubscribedCourse;
   final Unit unit;
-  const ContentCard({super.key, required this.unit, required this.available});
+  final List<SubscriptionsData>? subscriptionCourse;
+  final void Function() afterNavigate;
+  const ContentCard(
+      {super.key,
+      required this.unit,
+      required this.available,
+      required this.isSubscribedCourse, 
+      required this.subscriptionCourse, 
+      required this.afterNavigate,
+      });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        if(available == 0){
-          context.dialogNotAvailble();
-        }
-        else if(unit.videosCount==0 && unit.documentsCount==0){
-           context.showDialog(
+      onTap: () async{
+        if (unit.videosCount == 0 && unit.documentsCount == 0) {
+          context.showDialog(
             titleText: "",
             confirmTitle: context.appLocalization.back,
             bodyText: context.appLocalization.noContent,
-           );
-        }
-        else{
-          context.push(UnitScreen(unitId: unit.id!));
+          );
+        } else {
+         await context.push(
+            UnitScreen(
+              unitId: unit.id!,
+              isSubscribedCourse: isSubscribedCourse,
+              available: available,
+              subscriptionCourse: subscriptionCourse,
+            ),
+          ).then((value){
+            afterNavigate();
+          });
         }
       },
       child: Container(
@@ -46,16 +62,16 @@ class ContentCard extends StatelessWidget {
           children: [
             CustomSvg(
               unit.type == PaymentType.free || unit.paymentStatus == PaymentStatus.paid
-               ? MyIcons.unLock 
-               : MyIcons.lock,
-              ),
+                  ? MyIcons.unLock
+                  : MyIcons.lock,
+            ),
             const SizedBox(width: 7),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                   CourseText(
+                  CourseText(
                     unit.name!,
                     fontWeight: FontWeight.bold,
                   ),
@@ -67,27 +83,26 @@ class ContentCard extends StatelessWidget {
                 ],
               ),
             ),
-            unit.type == PaymentType.free?
-            const FreeBubble()
-            : unit.paymentStatus == PaymentStatus.paid?
-             const SubscribedBubble()
-            :Column(
-              /// مجاناوتم الاشتراك
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                if(unit.discountPrice!=null)
-                CourseText(
-                  "\$${unit.unitPrice}",
-                  textColor: context.colorPalette.grey66,
-                  fontWeight: FontWeight.bold,
-                  decoration: TextDecoration.lineThrough,
-                ),
-                 CourseText(
-                  "\$${unit.discountPrice ?? unit.unitPrice}",
-                  fontWeight: FontWeight.bold,
-                ),
-              ],
-            ),
+            unit.type == PaymentType.free
+                ? const FreeBubble()
+                : unit.paymentStatus == PaymentStatus.paid
+                    ? const SubscribedBubble()
+                    : Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          if (unit.discountPrice != null)
+                            CourseText(
+                              "\$${unit.unitPrice}",
+                              textColor: context.colorPalette.grey66,
+                              fontWeight: FontWeight.bold,
+                              decoration: TextDecoration.lineThrough,
+                            ),
+                          CourseText(
+                            "\$${unit.discountPrice ?? unit.unitPrice}",
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ],
+                      ),
           ],
         ),
       ),

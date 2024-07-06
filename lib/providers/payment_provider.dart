@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:bebrain/alerts/errors/app_error_feedback.dart';
+import 'package:bebrain/alerts/feedback/app_feedback.dart';
 import 'package:bebrain/alerts/loading/app_over_loader.dart';
 import 'package:bebrain/model/order_model.dart';
 import 'package:bebrain/model/subscriptions_model.dart';
@@ -36,6 +39,10 @@ class PaymentProvider extends ChangeNotifier {
           afterPay: afterPay,
         );
       }
+      else {
+        AppOverlayLoader.hide();
+        context.showSnackBar(context.appLocalization.generalError);
+      }
     }, onError: (failure) {
       AppOverlayLoader.hide();
       AppErrorFeedback.show(context, failure);
@@ -64,6 +71,7 @@ class PaymentProvider extends ChangeNotifier {
       );
       return order;
     }, onComplete: (snapshot) {
+      log("jjjj");
       if (snapshot.code == 200) {
         UPayment.checkout(
           context: context,
@@ -71,6 +79,10 @@ class PaymentProvider extends ChangeNotifier {
           amount: amount,
           afterPay: afterPay,
         );
+      }
+      else {
+        AppOverlayLoader.hide();
+        context.showSnackBar(context.appLocalization.generalError);
       }
     }, onError: (failure) {
       if(afterPay != null){
@@ -87,7 +99,7 @@ class PaymentProvider extends ChangeNotifier {
       String? subscriptionsType,
       String? orderId,
       Function? afterPay,
-      required int id,
+      int? id,
       required double amount,
       required String orderType,
     }
@@ -117,7 +129,7 @@ class PaymentProvider extends ChangeNotifier {
         orderType: orderType,
         subscriptionsType: subscriptionsType!,
         amount: amount,
-        id: id,
+        id: id!,
         afterPay: afterPay,
       );
     }

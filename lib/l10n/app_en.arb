@@ -206,5 +206,8 @@
   "booking":"Booking",
   "rateExperienceProfessor":"Rate your experience with {professorName}",
   "notSubscribedProfessor":"You are not subscribed with this professor",
-  "mustSubscriberWithProfessor":"You must be a subscriber with the professor in order to be able to rating him"
+  "mustSubscriberWithProfessor":"You must be a subscriber with the professor in order to be able to rating him",
+  "noReviewsYet":"There are no reviews yet",
+  "feesPaid":"The fees due to complete the application have been paid",
+  "feesNotPaid":"The fees due to complete the application have not been paid"
 }

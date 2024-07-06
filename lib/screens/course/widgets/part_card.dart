@@ -13,10 +13,13 @@ import 'package:flutter/material.dart';
 
 class PartCard extends StatelessWidget {
   final Section section;
+  final bool isSubscribedCourse;
   final void Function() onTap;
-  const PartCard({super.key, required this.section, required this.onTap});
+  const PartCard({super.key, required this.section, required this.onTap, required this.isSubscribedCourse});
 
   bool get _sectionAllow => section.type == PaymentType.free || section.paymentStatus == PaymentStatus.paid;
+
+  bool get _allowShow => (isSubscribedCourse && section.type == PaymentType.free) || (section.paymentStatus == PaymentStatus.paid && section.type == PaymentType.notFree);
 
   @override
   Widget build(BuildContext context) {
@@ -77,9 +80,9 @@ class PartCard extends StatelessWidget {
               child: Column(
                 children: [
                   GestureDetector(
-                    onTap: () {
+                    onTap:_allowShow? () {
                       context.push(VideoScreen(vimeoId: element.vimeoId!, videoId: element.id!));
-                    },
+                    } : null ,
                     child: Row(
                       children: [
                         CustomSvg( _sectionAllow ? MyIcons.playCirclePaid : MyIcons.playCircle),
@@ -103,14 +106,14 @@ class PartCard extends StatelessWidget {
                   if (element.document != null) const SizedBox(height: 5),
                   if (element.document != null)
                     GestureDetector(
-                      onTap: () {
+                      onTap: _allowShow? () {
                         context.push(
                           FileScreen(
                             url: element.document!,
                             fileName: element.name!,
                           ),
                         );
-                      },
+                      } : null,
                       child: Row(
                         children: [
                            CustomSvg(_sectionAllow ? MyIcons.attachPaid : MyIcons.attach),
@@ -132,14 +135,14 @@ class PartCard extends StatelessWidget {
           }).toList(),
           ...section.documents!.map((document) {
             return GestureDetector(
-              onTap: () {
+              onTap:  _allowShow? () {
                 context.push(
                   FileScreen(
                     url: document.document!,
                     fileName: document.name!,
                   ),
                 );
-              },
+              } : null,
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 5),

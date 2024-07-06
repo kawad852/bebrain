@@ -57,7 +57,7 @@ class _VimeoPlayerScreenState extends State<VimeoPlayerScreen> {
         </head>
              <body>
                 <iframe 
-                src="https://player.vimeo.com/video/${widget.vimeoId}?loop=0&autoplay=0" 
+                src="https://player.vimeo.com/video/${widget.vimeoId}&loop=0&autoplay=0" 
                 width="100%" height="100%" frameborder="0" allow="fullscreen" 
                 allowfullscreen></iframe>
              </body>

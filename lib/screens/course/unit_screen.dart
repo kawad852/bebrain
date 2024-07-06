@@ -1,3 +1,4 @@
+import 'package:bebrain/model/subscriptions_model.dart';
 import 'package:bebrain/model/unit_filter_model.dart';
 import 'package:bebrain/providers/main_provider.dart';
 import 'package:bebrain/screens/course/widgets/course_nav_bar.dart';
@@ -15,7 +16,16 @@ import 'package:vimeo_player_flutter/vimeo_player_flutter.dart';
 
 class UnitScreen extends StatefulWidget {
   final int unitId;
-  const UnitScreen({super.key, required this.unitId});
+  final bool isSubscribedCourse;
+  final int available;
+  final List<SubscriptionsData>? subscriptionCourse;
+  const UnitScreen({
+    super.key, 
+    required this.unitId, 
+    required this.isSubscribedCourse, 
+    required this.available, 
+    required this.subscriptionCourse,
+    });
 
   @override
   State<UnitScreen> createState() => _UnitScreenState();
@@ -63,12 +73,36 @@ class _UnitScreenState extends State<UnitScreen> {
         final data=snapshot.data!;
         final unit=data.data!;
         return Scaffold(
-          bottomNavigationBar: unit.courseOffer==null || !checkTime(unit.courseOffer!.startDate!,unit.courseOffer!.endDate!)
+          bottomNavigationBar: unit.courseOffer==null || !checkTime(unit.courseOffer!.startDate!,unit.courseOffer!.endDate!) || unit.courseOffer == null
          ? null 
           : CourseNavBar(
             offer: unit.courseOffer!,
             price: unit.couursePrice!,
             discountPrice: unit.courseDiscountPrice,
+            onTap: (){
+              if(widget.available == 0){
+                context.dialogNotAvailble();
+              } else{
+                context.paymentProvider.pay(
+                  context,
+                  id: unit.courseId!,
+                  amount: unit.courseDiscountPrice?? unit.couursePrice!,
+                  orderType: OrderType.subscription,
+                  subscriptionsType: SubscriptionsType.course,
+                  subscribtionId: widget.subscriptionCourse!.isEmpty || widget.subscriptionCourse == null
+                  ? null
+                  : widget.subscriptionCourse?[0].id,
+                  orderId: widget.subscriptionCourse!.isEmpty || widget.subscriptionCourse == null
+                  ? null
+                  : widget.subscriptionCourse?[0].order?.orderNumber,
+                  afterPay: (){
+                    setState(() {
+                      _initializeFuture();
+                   });
+                  },
+                );
+              }
+            },
           ),
           body: CustomScrollView(
             slivers: [
@@ -120,14 +154,21 @@ class _UnitScreenState extends State<UnitScreen> {
                         textColor: context.colorPalette.grey66,
                         fontWeight: FontWeight.bold,
                       ),
-                     // if(unit.type != PaymentType.free && unit.paymentStatus != PaymentStatus.paid)
-                      StretchedButton(
-                        onPressed: () {},
+                     if(unit.paymentStatus == PaymentStatus.unPaid)
+                      Container(
+                        width: double.infinity,
+                        height: 50,
                         margin: const EdgeInsets.symmetric(vertical: 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        decoration: BoxDecoration(
+                          color: context.colorPalette.blueC2E,
+                          borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
+                        ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 if(unit.discountPrice!=null)
                                 CourseText(
@@ -148,18 +189,45 @@ class _UnitScreenState extends State<UnitScreen> {
                               fontWeight: FontWeight.bold,
                               textColor: context.colorPalette.black33,
                             ),
-                            Container(
-                              width: 46,
-                              height: 30,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                color: context.colorPalette.blue8DD,
-                                borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
-                              ),
-                              child: CourseText(
-                                context.appLocalization.buying,
-                                textColor: context.colorPalette.black33,
-                                fontWeight: FontWeight.bold,
+                            GestureDetector(
+                              onTap: (){
+                                 if(widget.available == 0){
+                                    context.dialogNotAvailble();
+                                 }
+                                 else {
+                                  context.paymentProvider.pay(
+                                    context, 
+                                    id: unit.id!, 
+                                    amount: unit.discountPrice?? unit.unitPrice!, 
+                                    orderType: OrderType.subscription,
+                                    subscriptionsType: SubscriptionsType.unit,
+                                    orderId: unit.subscription!.isEmpty || unit.subscription == null
+                                    ? null
+                                    : unit.subscription?[0].order?.orderNumber,
+                                    subscribtionId: unit.subscription!.isEmpty || unit.subscription == null
+                                    ? null
+                                    : unit.subscription?[0].id ,
+                                    afterPay: (){
+                                      setState(() {
+                                         _initializeFuture();
+                                      });
+                                    },
+                                    );
+                                 }
+                              },
+                              child: Container(
+                                width: 46,
+                                height: 30,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  color: context.colorPalette.blue8DD,
+                                  borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
+                                ),
+                                child: CourseText(
+                                  context.appLocalization.buying,
+                                  textColor: context.colorPalette.black33,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ],
@@ -170,7 +238,7 @@ class _UnitScreenState extends State<UnitScreen> {
                 ),
               ),
               SliverPadding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
+                padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
                 sliver: SliverList.separated(
                   separatorBuilder: (context, index) => const SizedBox(height: 5),
                   itemCount: unit.sections!.length,
@@ -178,8 +246,11 @@ class _UnitScreenState extends State<UnitScreen> {
                     final section = unit.sections![index];
                     return  PartCard(
                       section: section,
+                      isSubscribedCourse: widget.isSubscribedCourse,
                       onTap: (){
-                        context.paymentProvider.pay(
+                        widget.available == 0
+                        ? context.dialogNotAvailble()
+                        : context.paymentProvider.pay(
                           context, 
                           id: section.id!, 
                           amount: section.discountPrice?? section.sectionPrice!, 

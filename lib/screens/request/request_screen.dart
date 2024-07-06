@@ -72,7 +72,27 @@ class _RequestScreenState extends State<RequestScreen> {
       onComplete: (context, snapshot) {
         final request = snapshot.data!;
         return Scaffold(
-          bottomNavigationBar: RequestNavBar(price: request.data!.price!),
+          bottomNavigationBar:
+          request.data!.statusType == RequestType.pending || request.data!.statusType == RequestType.rejected || request.data!.statusType == RequestType.done
+          ? null
+          : RequestNavBar(
+            price: request.data!.price!,
+            statusType: request.data!.statusType!,
+            paymentDueDate: request.data!.paymentDueDate,
+            onTap: (){
+              context.paymentProvider.pay(
+                context,
+                subscribtionId: request.data!.id!,
+                amount: request.data!.price!,
+                orderType: OrderType.request,
+                afterPay: (){
+                  setState(() {
+                    _initializeFuture();
+                  });
+                },
+              );
+            },
+            ),
           body: CustomScrollView(
             slivers: [
               const SliverAppBar(pinned: true),
@@ -186,8 +206,7 @@ class _RequestScreenState extends State<RequestScreen> {
                               request.data!.reply!,
                             ),
                             Align(
-                              alignment: MySharedPreferences.language ==
-                                      LanguageEnum.arabic
+                              alignment: MySharedPreferences.language == LanguageEnum.arabic
                                   ? Alignment.bottomLeft
                                   : Alignment.bottomRight,
                               child: RequestText(

@@ -1,4 +1,5 @@
 import 'package:bebrain/alerts/errors/app_error_feedback.dart';
+import 'package:bebrain/alerts/feedback/app_feedback.dart';
 import 'package:bebrain/model/course_filter_model.dart';
 import 'package:bebrain/model/subscriptions_model.dart';
 import 'package:bebrain/network/api_service.dart';
@@ -7,6 +8,7 @@ import 'package:bebrain/screens/course/widgets/content_card.dart';
 import 'package:bebrain/screens/course/widgets/course_info.dart';
 import 'package:bebrain/screens/course/widgets/course_nav_bar.dart';
 import 'package:bebrain/screens/course/widgets/course_rate.dart';
+import 'package:bebrain/screens/course/widgets/course_review.dart';
 import 'package:bebrain/screens/course/widgets/course_text.dart';
 import 'package:bebrain/screens/course/widgets/leading_back.dart';
 import 'package:bebrain/screens/course/widgets/lecture_card.dart';
@@ -87,12 +89,36 @@ class _CourseScreenState extends State<CourseScreen> {
         final data = snapshot.data!;
         final course = data.data!.course!;
         return Scaffold(
-          bottomNavigationBar: course.offer == null || !checkTime(course.offer!.startDate!,course.offer!.endDate!)
+          bottomNavigationBar: course.offer == null || !checkTime(course.offer!.startDate!,course.offer!.endDate!) || course.paymentStatus == PaymentStatus.paid 
               ? null
               : CourseNavBar(
                   offer: course.offer!,
                   price: course.price!,
                   discountPrice: course.discountPrice,
+                  onTap: (){
+                    if(course.available == 0){
+                      context.dialogNotAvailble();
+                    } else{
+                      context.paymentProvider.pay(
+                        context,
+                        id: course.id!,
+                        amount: course.discountPrice?? course.price!,
+                        orderType: OrderType.subscription,
+                        subscriptionsType: SubscriptionsType.course,
+                        subscribtionId: course.subscription!.isEmpty || course.subscription == null
+                        ? null
+                        : course.subscription?[0].id,
+                        orderId: course.subscription!.isEmpty || course.subscription == null
+                        ? null
+                        : course.subscription?[0].order?.orderNumber, 
+                        afterPay: (){
+                          setState(() {
+                            _initializeFuture();
+                          });
+                        },
+                      );
+                    }
+                  },
                 ),
           body: CustomScrollView(
             slivers: [
@@ -125,7 +151,14 @@ class _CourseScreenState extends State<CourseScreen> {
                             ),
                           ),
                          ViewRatingsButton(
-                          onTap: (){},
+                          onTap: (){
+                            context.showBottomSheet(
+                              context, 
+                              builder: (context){
+                                return CourseReview(courseId: course.id!);
+                              },
+                              );
+                          },
                          ),
                         ],
                       ),
@@ -160,7 +193,7 @@ class _CourseScreenState extends State<CourseScreen> {
                         course.description!,
                       ),
                       const SizedBox(height: 10),
-                      //if(course.paymentStatus == PaymentStatus.paid)
+                     if(course.isSubscribed == 1)
                       CourseRate(
                         courseName: course.name!,
                         courseId: course.id!,
@@ -209,10 +242,20 @@ class _CourseScreenState extends State<CourseScreen> {
               SliverPadding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 sliver: SliverList.separated(
-                  separatorBuilder: (context, index) =>const SizedBox(height: 5),
+                  separatorBuilder: (context, index) => const SizedBox(height: 5),
                   itemCount: course.units!.length,
                   itemBuilder: (context, index) {
-                    return ContentCard(unit: course.units![index],available: course.available!);
+                    return ContentCard(
+                      unit: course.units![index],
+                      available: course.available!,
+                      isSubscribedCourse: course.subscription!.isNotEmpty,
+                      subscriptionCourse: course.subscription,
+                      afterNavigate: (){
+                        setState(() {
+                           _initializeFuture();
+                        });
+                      },
+                      );
                   },
                 ),
               ),
@@ -237,7 +280,14 @@ class _CourseScreenState extends State<CourseScreen> {
                             fontWeight: FontWeight.bold,
                           ),
                          ViewRatingsButton(
-                          onTap: (){},
+                          onTap: (){
+                            context.showBottomSheet(
+                              context, 
+                              builder: (context){
+                                return CourseReview(courseId: course.id!);
+                              },
+                              );
+                          },
                          ),
                         ],
                       ),

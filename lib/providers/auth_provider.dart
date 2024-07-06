@@ -250,9 +250,9 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  Future<UserModel> getUserProfile(BuildContext context, int id) {
+  Future<UserModel> getUserProfile(BuildContext context) {
     final snapshot = ApiService<UserModel>().build(
-        url: '${ApiUrl.user}/$id',
+        url: ApiUrl.user,
         isPublic: false,
         apiType: ApiType.get,
         builder: UserModel.fromJson,

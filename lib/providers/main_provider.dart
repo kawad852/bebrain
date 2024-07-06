@@ -5,6 +5,7 @@ import 'package:bebrain/model/continue_learning_model.dart';
 import 'package:bebrain/model/country_filter_model.dart';
 import 'package:bebrain/model/course_filter_model.dart';
 import 'package:bebrain/model/course_rating_model.dart';
+import 'package:bebrain/model/course_review_model.dart';
 import 'package:bebrain/model/major_filter_model.dart';
 import 'package:bebrain/model/new_request_model.dart';
 import 'package:bebrain/model/order_model.dart';
@@ -297,6 +298,19 @@ class MainProvider extends ChangeNotifier {
         "amount": amount,
       },
       builder: OrderModel.fromJson,
+    );
+    return snapshot;
+  }
+
+  Future<CourseReviewModel> fetchCourseReviews({
+    required int pageKey,
+    required int courseId,
+    }) {
+    final snapshot = ApiService<CourseReviewModel>().build(
+      url: "${ApiUrl.courseReview}/$courseId?page=$pageKey",
+      isPublic: true,
+      apiType: ApiType.get,
+      builder: CourseReviewModel.fromJson,
     );
     return snapshot;
   }

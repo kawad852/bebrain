@@ -9,11 +9,13 @@ class CourseNavBar extends StatefulWidget {
   final Offer offer;
   final double price;
   final double? discountPrice;
+  final void Function() onTap;
   const CourseNavBar({
     super.key,
     required this.offer,
     required this.price,
-    required this.discountPrice,
+    required this.discountPrice, 
+    required this.onTap,
   });
 
   @override
@@ -91,17 +93,20 @@ class _CourseNavBarState extends State<CourseNavBar> {
                 ],
               ),
             ),
-            Container(
-              width: 46,
-              height: 30,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: context.colorPalette.blue8DD,
-                borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
-              ),
-              child: CourseText(
-                context.appLocalization.buying,
-                fontWeight: FontWeight.bold,
+            GestureDetector(
+              onTap: widget.onTap,
+              child: Container(
+                width: 46,
+                height: 30,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: context.colorPalette.blue8DD,
+                  borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
+                ),
+                child: CourseText(
+                  context.appLocalization.buying,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ],
