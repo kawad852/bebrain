@@ -51,7 +51,7 @@ class LocalNotificationsService {
             playSound: androidChannel.playSound,
             icon: '@mipmap/ic_launcher',
             color: context.colorScheme.primary,
-            sound: const RawResourceAndroidNotificationSound('end_match_helf'),
+            //sound: const RawResourceAndroidNotificationSound('end_match_helf'),
           ),
           iOS: const DarwinNotificationDetails(),
         ),

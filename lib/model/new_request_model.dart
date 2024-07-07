@@ -1,3 +1,5 @@
+import 'package:bebrain/model/subscriptions_model.dart';
+
 class NewRequestModel {
     bool? status;
     int? code;
@@ -47,10 +49,12 @@ class RequestData {
     String? reply;
     String? status;
     String? statusType;
+    DateTime? paymentDueDate;
     String? createdDate;
     String? createdTime;
     String? replyDate;
     String? replyTime;
+    SubscriptionsData? myOrder;
     List<UserAttachment>? userAttachment;
     List<UserAttachment>? adminAttachment;
     List<Videos>? videos;
@@ -76,10 +80,12 @@ class RequestData {
         this.reply,
         this.status,
         this.statusType,
+        this.paymentDueDate,
         this.createdDate,
         this.createdTime,
         this.replyDate,
         this.replyTime,
+        this.myOrder,
         this.userAttachment,
         this.adminAttachment,
         this.videos,
@@ -106,10 +112,12 @@ class RequestData {
         reply: json["reply"],
         status: json["status"],
         statusType: json["status_type"],
+        paymentDueDate: json["payment_due_date"] == null ? null : DateTime.parse(json["payment_due_date"]),
         createdDate: json["created_date"],
         createdTime: json["created_time"],
         replyDate: json["reply_date"],
         replyTime: json["reply_time"],
+        myOrder: json["my_order"] == null ? null : SubscriptionsData.fromJson(json["my_order"]),
         userAttachment: json["user_attachment"] == null ? [] : List<UserAttachment>.from(json["user_attachment"]!.map((x) => UserAttachment.fromJson(x))),
         adminAttachment: json["admin_attachment"] == null ? [] : List<UserAttachment>.from(json["admin_attachment"]!.map((x) => UserAttachment.fromJson(x))),
         videos: json["videos"] == null ? [] : List<Videos>.from(json["videos"]!.map((x) => Videos.fromJson(x))),
@@ -136,10 +144,12 @@ class RequestData {
         "reply": reply,
         "status": status,
         "status_type": statusType,
+        "payment_due_date": paymentDueDate?.toIso8601String(),
         "created_date": createdDate,
         "created_time": createdTime,
         "reply_date": replyDate,
         "reply_time": replyTime,
+        "my_order": myOrder?.toJson(),
         "user_attachment": userAttachment == null ? [] : List<dynamic>.from(userAttachment!.map((x) => x.toJson())),
         "admin_attachment": adminAttachment == null ? [] : List<dynamic>.from(adminAttachment!.map((x) => x.toJson())),
         "videos": videos == null ? [] : List<dynamic>.from(videos!.map((x) => x.toJson())),

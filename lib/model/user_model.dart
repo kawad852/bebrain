@@ -17,13 +17,13 @@ class UserModel {
         status: json["status"],
         code: json["code"],
         msg: json["msg"],
-        data: json["data"] == null ? null : UserData.fromJson(json["data"]),
+        data: json["user"] == null ? null : UserData.fromJson(json["user"]),
       );
 
   Map<String, dynamic> toJson() => {
         "status": status,
         "code": code,
         "msg": msg,
-        "data": data?.toJson(),
+        "user": data?.toJson(),
       };
 }

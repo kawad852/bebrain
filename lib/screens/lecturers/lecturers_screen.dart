@@ -1,6 +1,7 @@
 import 'package:bebrain/model/professors_model.dart';
 import 'package:bebrain/providers/main_provider.dart';
 import 'package:bebrain/screens/lecturers/widgets/lectures_loading.dart';
+import 'package:bebrain/screens/teacher/teacher_screen.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/my_icons.dart';
 import 'package:bebrain/utils/my_theme.dart';
@@ -115,9 +116,8 @@ class _LecturersScreenState extends State<LecturersScreen> {
                               width: 91,
                               height: 91,
                               shape: BoxShape.circle,
-                              alignment: context.isLTR
-                                  ? Alignment.topLeft
-                                  : Alignment.topRight,
+                              alignment: context.isLTR? Alignment.topLeft: Alignment.topRight,
+                              onTap: () => context.push(TeacherScreen(professorId: element.id!)),
                               child:  EvaluationStar(
                                 evaluation: element.reviewsRating!.toStringAsFixed(1),
                               ),

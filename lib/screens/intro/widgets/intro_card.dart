@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:animate_do/animate_do.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/my_icons.dart';
+import 'package:bebrain/utils/my_images.dart';
 import 'package:bebrain/utils/my_theme.dart';
 import 'package:bebrain/widgets/custom_svg.dart';
 import 'package:flutter/material.dart';
@@ -42,8 +43,7 @@ class IntroCard extends StatelessWidget {
                       MyTheme.radiusSecondary,
                     ),
                   ),
-                  child: CustomSvg(
-                      isRating ? MyIcons.fakeProfile : MyIcons.bebrain),
+                  child: isRating ? const CustomSvg(MyIcons.fakeProfile): Image.asset(MyImages.logo,width: 40),
                 ),
                 const SizedBox(width: 10),
                 Expanded(

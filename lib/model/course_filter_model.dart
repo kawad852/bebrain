@@ -1,4 +1,4 @@
-import 'package:bebrain/model/country_filter_model.dart';
+import 'package:bebrain/model/country_filter_model.dart' as co;
 import 'package:bebrain/model/subscriptions_model.dart';
 
 class CourseFilterModel {
@@ -31,7 +31,7 @@ class CourseFilterModel {
 
 class CourseFilterData {
     Course? course;
-    List<dynamic>? moreCourses;
+    List<co.Course>? moreCourses;
 
     CourseFilterData({
         this.course,
@@ -40,12 +40,12 @@ class CourseFilterData {
 
     factory CourseFilterData.fromJson(Map<String, dynamic> json) => CourseFilterData(
         course: json["course"] == null ? null : Course.fromJson(json["course"]),
-        moreCourses: json["more_courses"] == null ? [] : List<dynamic>.from(json["more_courses"]!.map((x) => x)),
+        moreCourses: json["more_courses"] == null ? [] : List<co.Course>.from(json["more_courses"]!.map((x) => co.Course.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
         "course": course?.toJson(),
-        "more_courses": moreCourses == null ? [] : List<dynamic>.from(moreCourses!.map((x) => x)),
+        "more_courses": moreCourses == null ? [] : List<dynamic>.from(moreCourses!.map((x) => x.toJson())),
     };
 }
 
@@ -74,8 +74,10 @@ class Course {
     double? valueForMoney;
     double? conveyIdea;
     double? similarityCurriculumContent;
+    int? paymentStatus;
+    int? isSubscribed;
     List<SubscriptionsData>? subscription;
-    Professor? professor;
+    co.Professor? professor;
     Offer? offer;
     List<Unit>? units;
 
@@ -104,6 +106,8 @@ class Course {
         this.valueForMoney,
         this.conveyIdea,
         this.similarityCurriculumContent,
+        this.paymentStatus,
+        this.isSubscribed,
         this.subscription,
         this.professor,
         this.offer,
@@ -135,8 +139,10 @@ class Course {
         valueForMoney: json["value_for_money"]?.toDouble(),
         conveyIdea: json["convey_idea"]?.toDouble(),
         similarityCurriculumContent: json["similarity_curriculum_content"]?.toDouble(),
+        paymentStatus: json["payment_status"],
+        isSubscribed: json["is_subscribed"],
         subscription: json["subscription"] == null ? [] : List<SubscriptionsData>.from(json["subscription"]!.map((x) => SubscriptionsData.fromJson(x))),
-        professor: json["professor"] == null ? null : Professor.fromJson(json["professor"]),
+        professor: json["professor"] == null ? null : co.Professor.fromJson(json["professor"]),
         offer: json["offer"] == null ? null : Offer.fromJson(json["offer"]),
         units: json["units"] == null ? [] : List<Unit>.from(json["units"]!.map((x) => Unit.fromJson(x))),
     );
@@ -166,6 +172,8 @@ class Course {
         "value_for_money": valueForMoney,
         "convey_idea": conveyIdea,
         "similarity_curriculum_content": similarityCurriculumContent,
+        "payment_status": paymentStatus,
+        "is_subscribed": isSubscribed,
         "subscription": subscription == null ? [] : List<dynamic>.from(subscription!.map((x) => x.toJson())),
         "professor": professor?.toJson(),
         "offer": offer?.toJson(),
@@ -213,7 +221,10 @@ class Unit {
     int? videosCount;
     int? documentsCount;
     int? videosMinutes;
+    String? type;
+    int? paymentStatus;
     int? subscriptionCount;
+    List<SubscriptionsData>? subscription;
     Offer? offer;
 
     Unit({
@@ -227,7 +238,10 @@ class Unit {
         this.videosCount,
         this.documentsCount,
         this.videosMinutes,
+        this.type,
+        this.paymentStatus,
         this.subscriptionCount,
+        this.subscription,
         this.offer,
     });
 
@@ -242,7 +256,10 @@ class Unit {
         videosCount: json["videos_count"],
         documentsCount: json["documents_count"],
         videosMinutes: json["videos_minutes"],
+        type: json["type"],
+        paymentStatus: json["payment_status"],
         subscriptionCount: json["subscription_count"],
+        subscription: json["subscription"] == null ? [] : List<SubscriptionsData>.from(json["subscription"]!.map((x) => SubscriptionsData.fromJson(x))),
         offer: json["offer"] == null ? null : Offer.fromJson(json["offer"]),
     );
 
@@ -257,7 +274,10 @@ class Unit {
         "videos_count": videosCount,
         "documents_count": documentsCount,
         "videos_minutes": videosMinutes,
+        "type":type,
+        "payment_status":paymentStatus,
         "subscription_count": subscriptionCount,
+        "subscription": subscription == null ? [] : List<dynamic>.from(subscription!.map((x) => x.toJson())),
         "offer": offer?.toJson(),
     };
 }

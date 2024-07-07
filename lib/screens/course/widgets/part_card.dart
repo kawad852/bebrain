@@ -1,8 +1,11 @@
 import 'package:bebrain/model/unit_filter_model.dart';
 import 'package:bebrain/screens/course/widgets/course_text.dart';
+import 'package:bebrain/screens/course/widgets/free_bubble.dart';
+import 'package:bebrain/screens/course/widgets/subscribed_bubble.dart';
 import 'package:bebrain/screens/file/file_screen.dart';
 import 'package:bebrain/screens/video/video_screen.dart';
 import 'package:bebrain/utils/base_extensions.dart';
+import 'package:bebrain/utils/enums.dart';
 import 'package:bebrain/utils/my_icons.dart';
 import 'package:bebrain/utils/my_theme.dart';
 import 'package:bebrain/widgets/custom_svg.dart';
@@ -10,7 +13,13 @@ import 'package:flutter/material.dart';
 
 class PartCard extends StatelessWidget {
   final Section section;
-  const PartCard({super.key, required this.section});
+  final bool isSubscribedCourse;
+  final void Function() onTap;
+  const PartCard({super.key, required this.section, required this.onTap, required this.isSubscribedCourse});
+
+  bool get _sectionAllow => section.type == PaymentType.free || section.paymentStatus == PaymentStatus.paid;
+
+  bool get _allowShow => (isSubscribedCourse && section.type == PaymentType.free) || (section.paymentStatus == PaymentStatus.paid && section.type == PaymentType.notFree);
 
   @override
   Widget build(BuildContext context) {
@@ -18,28 +27,32 @@ class PartCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
       child: ExpansionTile(
         shape: const Border(),
+        tilePadding: const EdgeInsets.symmetric(horizontal: 10),
         backgroundColor: context.colorPalette.greyEEE,
         collapsedBackgroundColor: context.colorPalette.greyEEE,
-        trailing: Column(
-          /// مجاناوتم الاشتراك
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (section.discountPrice != null)
-              CourseText(
-                "\$${section.sectionPrice}",
-                textColor: context.colorPalette.grey66,
-                fontWeight: FontWeight.bold,
-                decoration: TextDecoration.lineThrough,
-              ),
-            CourseText(
-              "\$${section.discountPrice?? section.sectionPrice}",
-              fontWeight: FontWeight.bold,
-            ),
-          ],
-        ),
+        trailing: section.type == PaymentType.free
+            ? const FreeBubble()
+            : section.paymentStatus == PaymentStatus.paid
+                ? const SubscribedBubble()
+                : Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      if (section.discountPrice != null)
+                        CourseText(
+                          "\$${section.sectionPrice}",
+                          textColor: context.colorPalette.grey66,
+                          fontWeight: FontWeight.bold,
+                          decoration: TextDecoration.lineThrough,
+                        ),
+                      CourseText(
+                        "\$${section.discountPrice ?? section.sectionPrice}",
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ],
+                  ),
         title: Row(
           children: [
-            const CustomSvg(MyIcons.lock), //un lock
+            CustomSvg(_sectionAllow ? MyIcons.unLock : MyIcons.lock),
             const SizedBox(width: 7),
             Expanded(
               child: Column(
@@ -67,12 +80,12 @@ class PartCard extends StatelessWidget {
               child: Column(
                 children: [
                   GestureDetector(
-                    onTap: (){
-                      context.push(VideoScreen(vimeoId: element.vimeoId!,videoId: element.id!));
-                    },
+                    onTap:_allowShow? () {
+                      context.push(VideoScreen(vimeoId: element.vimeoId!, videoId: element.id!));
+                    } : null ,
                     child: Row(
                       children: [
-                        const CustomSvg(MyIcons.playCircle),
+                        CustomSvg( _sectionAllow ? MyIcons.playCirclePaid : MyIcons.playCircle),
                         const SizedBox(width: 7),
                         Expanded(
                           child: CourseText(
@@ -93,17 +106,17 @@ class PartCard extends StatelessWidget {
                   if (element.document != null) const SizedBox(height: 5),
                   if (element.document != null)
                     GestureDetector(
-                      onTap: () {
+                      onTap: _allowShow? () {
                         context.push(
                           FileScreen(
                             url: element.document!,
                             fileName: element.name!,
                           ),
                         );
-                      },
+                      } : null,
                       child: Row(
                         children: [
-                          const CustomSvg(MyIcons.attach),
+                           CustomSvg(_sectionAllow ? MyIcons.attachPaid : MyIcons.attach),
                           const SizedBox(width: 7),
                           Expanded(
                             child: CourseText(
@@ -122,20 +135,20 @@ class PartCard extends StatelessWidget {
           }).toList(),
           ...section.documents!.map((document) {
             return GestureDetector(
-              onTap: () {
+              onTap:  _allowShow? () {
                 context.push(
                   FileScreen(
                     url: document.document!,
                     fileName: document.name!,
                   ),
                 );
-              },
+              } : null,
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 child: Row(
                   children: [
-                    const CustomSvg(MyIcons.attach),
+                    CustomSvg(_sectionAllow ? MyIcons.attachPaid: MyIcons.attach),
                     const SizedBox(width: 7),
                     Expanded(
                       child: CourseText(
@@ -150,8 +163,9 @@ class PartCard extends StatelessWidget {
               ),
             );
           }).toList(),
+          if(section.type != PaymentType.free && section.paymentStatus != PaymentStatus.paid)
           GestureDetector(
-            onTap: () {},
+            onTap: onTap,
             child: Container(
               width: double.infinity,
               height: 28,

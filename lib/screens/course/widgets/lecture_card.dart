@@ -1,6 +1,7 @@
 import 'package:bebrain/model/country_filter_model.dart';
 import 'package:bebrain/screens/course/widgets/course_text.dart';
 import 'package:bebrain/screens/course/widgets/point.dart';
+import 'package:bebrain/screens/teacher/teacher_screen.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/my_icons.dart';
 import 'package:bebrain/utils/my_theme.dart';
@@ -49,7 +50,9 @@ class LectureCard extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                        MoreButton(onTap: () {}),
+                        MoreButton(onTap: () {
+                          context.push(TeacherScreen(professorId:professor.id!));
+                        }),
                       ],
                     ),
                     Container(

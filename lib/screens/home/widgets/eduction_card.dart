@@ -43,17 +43,16 @@ class EductionCard extends StatelessWidget {
                 ),
               ),
             ),
-             Flexible(
-              child: Text(
-                learningData.name!,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 12,
-                ),
-              ),
-            ),
+             Text(
+               learningData.name!,
+               maxLines: 2,
+               overflow: TextOverflow.ellipsis,
+               style: const TextStyle(
+                 fontWeight: FontWeight.w600,
+                 fontSize: 12,
+               ),
+             ),
+            const Spacer(),
             Text(
               "${learningData.videosCount} ${context.appLocalization.video}, ${learningData.hours} ${context.appLocalization.hour}",
               style: TextStyle(

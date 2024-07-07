@@ -20,7 +20,6 @@ import 'package:bebrain/utils/enums.dart';
 import 'package:bebrain/utils/my_icons.dart';
 import 'package:bebrain/utils/my_theme.dart';
 import 'package:bebrain/utils/shared_pref.dart';
-import 'package:bebrain/utils/upayments/upayment.dart';
 import 'package:bebrain/widgets/custom_future_builder.dart';
 import 'package:bebrain/widgets/custom_network_image.dart';
 import 'package:bebrain/widgets/custom_smoth_indicator.dart';
@@ -112,9 +111,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                 ),
                 const SizedBox(width: 5),
                 ActionContainer(
-                  onTap: () {
-                    UPayment.checkout(context: context);
-                  },
+                  onTap: () {},
                   color: context.colorPalette.blueC2E,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -139,7 +136,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                     options: CarouselOptions(
                       viewportFraction: 1,
                       enableInfiniteScroll: false,
-                      height: 130.0,
+                      height: context.mediaQuery.height * 0.28,
                       onPageChanged: (index, reason) {
                         setState(() {
                           currentIndex = index;
@@ -182,6 +179,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                                   final continueLearningData = snapshot.data!;
                                   return ZoomIn(
                                     child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Padding(
                                           padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -207,7 +205,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                                             shrinkWrap: true,
                                             scrollDirection: Axis.horizontal,
                                             itemBuilder: (context, index) {
-                                              return EductionCard(learningData: continueLearningData.data![index]);
+                                              return EductionCard(learningData:continueLearningData.data![index]);
                                             },
                                           ),
                                         ),
@@ -235,6 +233,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
               onComplete: (context, snapshot) {
                 late final dynamic filter;
                 late final List<dynamic> data;
+                List<dynamic> filterData=[];
                 late final List<cou.Professor> professors;
                 int? collegeId;
 
@@ -245,7 +244,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                     professors = filter.data!.professors!;
                   case WizardType.universities:
                     filter = snapshot.data! as un.UniversityFilterModel;
-                    data = filter.data!.university!.colleges! as List<un.College>;
+                    data =filter.data!.university!.colleges! as List<un.College>;
                     professors = filter.data!.professors!;
                   case WizardType.colleges:
                   case WizardType.specialities:
@@ -254,6 +253,11 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                     collegeId = filter.data!.college!.id!;
                     professors = filter.data!.professors!;
                 }
+                data.map((element){
+                  if(element.courses.isNotEmpty){
+                    filterData.add(element);
+                  }
+                }).toSet();
                 return SliverPadding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   sliver: SliverToBoxAdapter(
@@ -262,10 +266,10 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                       slivers: [
                         SliverList.separated(
                           separatorBuilder: (context, index) => const SizedBox(height: 8),
-                          itemCount: data.length,
+                          itemCount: filterData.length,
                           itemBuilder: (context, index) {
                             return DepartmentsCard(
-                              data: data[index],
+                              data: filterData[index],
                               collegeId: collegeId,
                               onTapSubData: () {
                                 setState(() {

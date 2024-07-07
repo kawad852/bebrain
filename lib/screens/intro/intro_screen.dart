@@ -184,7 +184,7 @@ class _IntroScreenState extends State<IntroScreen> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 10, bottom: 80),
+                        padding: const EdgeInsets.only(top: 10, bottom: 120),
                         child: Text(
                           discriptionIntro[index],
                           style: TextStyle(

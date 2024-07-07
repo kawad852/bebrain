@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:bebrain/alerts/loading/app_over_loader.dart';
 import 'package:bebrain/utils/base_extensions.dart';
+import 'package:bebrain/utils/shared_pref.dart';
 import 'package:bebrain/utils/upayments/payment_webview.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -10,6 +12,10 @@ import 'package:http/http.dart' as http;
 class UPayment {
   static Future<void> checkout({
     required BuildContext context,
+    required String orderId,
+    required double amount,
+    Function? afterPay,
+    bool withOverlayLoader = false,
   }) async {
     try {
       String url = 'https://sandboxapi.upayments.com/api/v1/charge';
@@ -30,29 +36,31 @@ class UPayment {
             },
           ],
           "order": {
-            "id": "202210101255255144669",
+            "id": orderId,
             "reference": "11111991",
             "description": "Purchase order received for Logitech K380 Keyboard",
-            "currency": "KWD",
-            "amount": 20,
+            "currency": "USD",
+            "amount": amount,
           },
           "language": "en",
           "reference": {
             "id": "202210101202210101",
           },
           "customer": {
-            "uniqueId": "2129879kjbljg767881",
-            "name": "Dharmendra Kakde",
-            "email": "kakde.dharmendra@upayments.com",
-            "mobile": "+96566336537",
+            "uniqueId": "${MySharedPreferences.user.id}",
+            "name": MySharedPreferences.user.name,
+            "email": MySharedPreferences.user.email??"",
+            "mobile": MySharedPreferences.user.phoneNumber??"",
           },
-          "returnUrl": "https://upayments.com/en/",
-          "cancelUrl": "https://error.com",
+          "returnUrl": "https://almosaaed.com/api/payment/confirm",
+          "cancelUrl": "https://almosaaed.com/api/payment/fail",
           "notificationUrl": "https://webhook.site/d7c6e1c8-b98b-4f77-8b51-b487540df336",
           "customerExtraData": "User define data"
         },
       );
-      AppOverlayLoader.show();
+      if(withOverlayLoader){
+        AppOverlayLoader.show();
+      }
       debugPrint("Response:: CheckoutResponse\nUrl:: $url\nheaders:: ${headers.toString()}");
       http.Response response = await http.post(uri, headers: headers, body: body);
       debugPrint("CheckoutStatusCode:: ${response.statusCode} CheckoutBody:: ${response.body}");
@@ -60,7 +68,6 @@ class UPayment {
       if (response.statusCode == 201) {
         AppOverlayLoader.hide();
         if (context.mounted) {
-          // _openWeb(context, data['data']['link']);
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -73,12 +80,17 @@ class UPayment {
             ),
           ).then((value) {
             if (value != null) {
-              debugPrint("Paid Successfully");
-              // TODO: call your api here
+              log("success");
+              if(afterPay !=null){
+                afterPay();
+              }
             }
           });
         }
       } else {
+        if(afterPay != null){
+          afterPay();
+        }
         AppOverlayLoader.hide();
         if (context.mounted) {
           Fluttertoast.showToast(msg: context.appLocalization.generalError);
@@ -86,6 +98,9 @@ class UPayment {
       }
     } catch (e) {
       debugPrint("$e");
+      if(afterPay != null){
+          afterPay();
+        }
       if (context.mounted) {
         Fluttertoast.showToast(msg: context.appLocalization.generalError);
       }

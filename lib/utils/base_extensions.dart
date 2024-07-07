@@ -1,8 +1,10 @@
+import 'package:bebrain/alerts/feedback/app_feedback.dart';
 import 'package:bebrain/alerts/loading/app_loading_indicators.dart';
 import 'package:bebrain/network/api_url.dart';
 import 'package:bebrain/providers/app_provider.dart';
 import 'package:bebrain/providers/auth_provider.dart';
 import 'package:bebrain/providers/main_provider.dart';
+import 'package:bebrain/providers/payment_provider.dart';
 import 'package:bebrain/utils/app_routes.dart';
 import 'package:bebrain/utils/color_palette.dart';
 import 'package:bebrain/utils/enums.dart';
@@ -95,7 +97,7 @@ extension ProvidersExtension on BuildContext {
   AuthProvider get authProvider => read<AuthProvider>();
   AppProvider get appProvider => read<AppProvider>();
   MainProvider get mainProvider => read<MainProvider>();
-
+  PaymentProvider get paymentProvider => read<PaymentProvider>();
 }
 
 extension CommonExtensions on BuildContext {
@@ -139,4 +141,14 @@ extension UTCDate on DateTime {
     return utcTime.toLocal();
   }
 }
+
+extension CustomDialog on BuildContext{
+  Future dialogNotAvailble(){
+    return this.showDialog(
+      titleText: appLocalization.unavailable,
+      bodyText: appLocalization.expiredPeriodCourse,
+      confirmTitle: appLocalization.back,
+    );
+  }
+} 
 

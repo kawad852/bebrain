@@ -45,9 +45,9 @@ class _PaymentWebViewState extends State<PaymentWebView> {
           },
           onNavigationRequest: (NavigationRequest request) async {
             log("URL:: ${request.url}");
-            if (request.url.contains('https://upayments.com/en/?payment_id')) {
+            if (request.url.contains('https://almosaaed.com/api/payment/confirm')) {
               if (context.mounted) {
-                Navigator.pop(context, true);
+                context.pop( true);
               }
             }
             return NavigationDecision.navigate;

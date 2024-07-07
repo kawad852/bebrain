@@ -1,4 +1,5 @@
 import 'package:bebrain/model/course_filter_model.dart';
+import 'package:bebrain/model/subscriptions_model.dart';
 
 class UnitFilterModel {
     bool? status;
@@ -43,6 +44,9 @@ class UnitFilterData {
     int? subscriptionCount;
     double? couursePrice;
     double? courseDiscountPrice;
+    String? type;
+    int? paymentStatus;
+    List<SubscriptionsData>? subscription;
     Offer? courseOffer;
     Offer? offer;
     List<Section>? sections;
@@ -62,6 +66,9 @@ class UnitFilterData {
         this.subscriptionCount,
         this.couursePrice,
         this.courseDiscountPrice,
+        this.type,
+        this.paymentStatus,
+        this.subscription,
         this.courseOffer,
         this.offer,
         this.sections,
@@ -82,6 +89,9 @@ class UnitFilterData {
         subscriptionCount: json["subscription_count"],
         couursePrice: json["couurse_price"]?.toDouble(),
         courseDiscountPrice: json["course_discount_price"]?.toDouble(),
+        type: json["type"],
+        paymentStatus: json["payment_status"],
+        subscription: json["subscription"] == null ? [] : List<SubscriptionsData>.from(json["subscription"]!.map((x) => SubscriptionsData.fromJson(x))),
         courseOffer: json["course_offer"] == null ? null : Offer.fromJson(json["course_offer"]),
         offer: json["offer"] == null ? null : Offer.fromJson(json["offer"]),
         sections: json["sections"] == null ? [] : List<Section>.from(json["sections"]!.map((x) => Section.fromJson(x))),
@@ -102,6 +112,9 @@ class UnitFilterData {
         "subscription_count": subscriptionCount,
         "couurse_price": couursePrice,
         "course_discount_price": courseDiscountPrice,
+        "type": type,
+        "payment_status": paymentStatus,
+        "subscription": subscription == null ? [] : List<dynamic>.from(subscription!.map((x) => x.toJson())),
         "course_offer": courseOffer?.toJson(),
         "offer": offer?.toJson(),
         "sections": sections == null ? [] : List<dynamic>.from(sections!.map((x) => x.toJson())),
@@ -121,6 +134,9 @@ class Section {
     int? documentsCount;
     int? numberOfMinutes;
     int? subscriptionCount;
+    String? type;
+    int? paymentStatus;
+    List<SubscriptionsData>? subscription;
     Offer? offer;
     List<Video>? videos;
     List<Document>? documents;
@@ -138,6 +154,9 @@ class Section {
         this.documentsCount,
         this.numberOfMinutes,
         this.subscriptionCount,
+        this.type,
+        this.paymentStatus,
+        this.subscription,
         this.offer,
         this.videos,
         this.documents,
@@ -156,7 +175,10 @@ class Section {
         documentsCount: json["documents_count"],
         numberOfMinutes: json["number_of_minutes"],
         subscriptionCount: json["subscription_count"],
+        type: json["type"],
+        paymentStatus: json["payment_status"],
         offer: json["offer"] == null ? null : Offer.fromJson(json["offer"]),
+        subscription: json["subscription"] == null ? [] : List<SubscriptionsData>.from(json["subscription"]!.map((x) => SubscriptionsData.fromJson(x))),
         videos: json["videos"] == null ? [] : List<Video>.from(json["videos"]!.map((x) => Video.fromJson(x))),
         documents: json["documents"] == null ? [] : List<Document>.from(json["documents"]!.map((x) => Document.fromJson(x))),
     );
@@ -174,7 +196,10 @@ class Section {
         "documents_count": documentsCount,
         "number_of_minutes": numberOfMinutes,
         "subscription_count": subscriptionCount,
+        "type": type,
+        "payment_status": paymentStatus,
         "offer": offer?.toJson(),
+        "subscription": subscription == null ? [] : List<dynamic>.from(subscription!.map((x) => x.toJson())),
         "videos": videos == null ? [] : List<dynamic>.from(videos!.map((x) => x.toJson())),
         "documents": documents == null ? [] : List<dynamic>.from(documents!.map((x) => x.toJson())),
     };

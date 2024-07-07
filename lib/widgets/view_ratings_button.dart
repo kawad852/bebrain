@@ -3,12 +3,13 @@ import 'package:bebrain/utils/base_extensions.dart';
 import 'package:flutter/material.dart';
 
 class ViewRatingsButton extends StatelessWidget {
-  const ViewRatingsButton({super.key});
+  final void Function() onTap;
+  const ViewRatingsButton({super.key, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: onTap,
       child: Row(
         children: [
           CourseText(

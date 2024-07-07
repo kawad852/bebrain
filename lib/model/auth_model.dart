@@ -48,6 +48,7 @@ class UserData {
     String? email;
     String? phoneNumber;
     String? image;
+    String? accountNumber;
     String? code;
     String? deviceToken;
     int? status;
@@ -61,6 +62,10 @@ class UserData {
     String? collegeName;
     int? majorId;
     String? majorName;
+    int? numberOfCourses;
+    int? videosCount;
+    int? hours;
+    int? minutes;
 
     UserData({
         this.id,
@@ -68,6 +73,7 @@ class UserData {
         this.email,
         this.phoneNumber,
         this.image,
+        this.accountNumber,
         this.code,
         this.deviceToken,
         this.status,
@@ -81,6 +87,10 @@ class UserData {
         this.collegeName,
         this.majorId,
         this.majorName,
+        this.numberOfCourses,
+        this.videosCount,
+        this.hours,
+        this.minutes,
     });
 
     factory UserData.copy(UserData userModel) => UserData.fromJson(userModel.toJson());
@@ -91,6 +101,7 @@ class UserData {
         email: json["email"],
         phoneNumber: json["phone_number"],
         image: json["image"] ??'',
+        accountNumber: json["account_number"],
         code: json["code"],
         deviceToken: json["device_token"],
         status: json["status"],
@@ -104,6 +115,10 @@ class UserData {
         collegeName: json["college_name"],
         majorId: json["major_id"],
         majorName: json["major_name"],
+        numberOfCourses: json["number_of_courses"],
+        videosCount: json["videos_count"],
+        hours: json["hours"],
+        minutes: json["minutes"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -112,6 +127,7 @@ class UserData {
         "email": email,
         "phone_number": phoneNumber,
         "image": image,
+        "account_number": accountNumber,
         "code": code,
         "device_token": deviceToken,
         "status": status,
@@ -125,6 +141,10 @@ class UserData {
         "college_name": collegeName,
         "major_id": majorId,
         "major_name": majorName,
+        "number_of_courses": numberOfCourses,
+        "videos_count": videosCount,
+        "hours": hours,
+        "minutes": minutes,
     };
 }
 

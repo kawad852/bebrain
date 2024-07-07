@@ -69,7 +69,7 @@ class PreviousRequest extends StatelessWidget {
             ),
             Container(
               width: 68,
-              height: 23,
+              height: 30,
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color:UiHelper.getRequestColor(context, type: request.statusType!),
@@ -77,6 +77,8 @@ class PreviousRequest extends StatelessWidget {
               ),
               child:  Text(
                 request.status!,
+                maxLines: 2,
+                textAlign: TextAlign.center,
                 style:const TextStyle(
                   fontSize: 10,
                 ),

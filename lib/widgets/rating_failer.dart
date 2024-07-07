@@ -4,7 +4,9 @@ import 'package:bebrain/utils/my_theme.dart';
 import 'package:flutter/material.dart';
 
 class RatingFailer extends StatelessWidget {
-  const RatingFailer({super.key});
+  final String? title;
+  final String? body;
+  const RatingFailer({super.key, this.title, this.body});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class RatingFailer extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
             child: CourseText(
-              context.appLocalization.alreadyAddedRating,
+              title?? context.appLocalization.alreadyAddedRating,
               textAlign: TextAlign.center,
               fontSize: 16,
               fontWeight: FontWeight.bold,
@@ -29,7 +31,7 @@ class RatingFailer extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: CourseText(
-              context.appLocalization.cannotMoreOneRating,
+              body?? context.appLocalization.cannotMoreOneRating,
               textAlign: TextAlign.center,
               fontSize: 14,
             ),
