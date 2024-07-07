@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:bebrain/notifications/local_notifications_service.dart';
 import 'package:bebrain/providers/app_provider.dart';
@@ -35,18 +36,18 @@ Future<void> onBackgroundMessage(RemoteMessage message) async {
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-      // options: Platform.isAndroid
-      //     ? const FirebaseOptions(
-      //         apiKey: "AIzaSyBx-u_p9-gXqy7KjbmfF12UAvWNMlsd-ww",
-      //         authDomain: "almosaedapp.firebaseapp.com",
-      //         projectId: "almosaedapp",
-      //         storageBucket: "almosaedapp.appspot.com",
-      //         messagingSenderId: "97702859580",
-      //         appId: "1:97702859580:web:d355a19b08456fedb14439",
-      //         measurementId: "G-NTPXWDYBY0",
-      //       )
-      //     : null,
-      );
+    options: Platform.isAndroid
+        ? const FirebaseOptions(
+            apiKey: "AIzaSyBx-u_p9-gXqy7KjbmfF12UAvWNMlsd-ww",
+            authDomain: "almosaedapp.firebaseapp.com",
+            projectId: "almosaedapp",
+            storageBucket: "almosaedapp.appspot.com",
+            messagingSenderId: "97702859580",
+            appId: "1:97702859580:web:d355a19b08456fedb14439",
+            measurementId: "G-NTPXWDYBY0",
+          )
+        : null,
+  );
   unawaited(AppProvider.getCountryCode());
   await MySharedPreferences.init();
   // FlutterBranchSdk.validateSDKIntegration();

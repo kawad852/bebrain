@@ -47,7 +47,7 @@ class _PaymentWebViewState extends State<PaymentWebView> {
             log("URL:: ${request.url}");
             if (request.url.contains('https://almosaaed.com/api/payment/confirm')) {
               if (context.mounted) {
-                context.pop( true);
+                context.pop(true);
               }
             }
             return NavigationDecision.navigate;
