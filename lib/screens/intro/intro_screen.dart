@@ -6,6 +6,7 @@ import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/my_icons.dart';
 import 'package:bebrain/utils/my_images.dart';
 import 'package:bebrain/utils/my_theme.dart';
+import 'package:bebrain/utils/shared_pref.dart';
 import 'package:bebrain/widgets/custom_smoth_indicator.dart';
 import 'package:bebrain/widgets/custom_svg.dart';
 import 'package:flutter/material.dart';
@@ -80,6 +81,7 @@ class _IntroScreenState extends State<IntroScreen> {
             InkWell(
               onTap: () {
                 if(_pageController.page == 2){
+                  MySharedPreferences.isPassedIntro = true;
                   context.pushAndRemoveUntil(const RegistrationScreen());
                 }
                 else{

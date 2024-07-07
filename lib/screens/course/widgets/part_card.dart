@@ -3,7 +3,7 @@ import 'package:bebrain/screens/course/widgets/course_text.dart';
 import 'package:bebrain/screens/course/widgets/free_bubble.dart';
 import 'package:bebrain/screens/course/widgets/subscribed_bubble.dart';
 import 'package:bebrain/screens/file/file_screen.dart';
-import 'package:bebrain/screens/video/video_screen.dart';
+import 'package:bebrain/screens/vimeo_player/vimeo_player_screen.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/enums.dart';
 import 'package:bebrain/utils/my_icons.dart';
@@ -81,7 +81,7 @@ class PartCard extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap:_allowShow? () {
-                      context.push(VideoScreen(vimeoId: element.vimeoId!, videoId: element.id!));
+                      context.push(VimeoPlayerScreen(vimeoId: element.vimeoId!, videoId: element.id!));
                     } : null ,
                     child: Row(
                       children: [

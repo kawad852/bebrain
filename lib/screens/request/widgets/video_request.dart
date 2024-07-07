@@ -1,31 +1,18 @@
-import 'package:bebrain/model/video_view_model.dart';
-import 'package:bebrain/providers/main_provider.dart';
-import 'package:bebrain/utils/base_extensions.dart';
-import 'package:bebrain/widgets/custom_future_builder.dart';
 import 'package:bebrain/widgets/custom_loading_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class VimeoPlayerScreen extends StatefulWidget {
+class VideoRequest extends StatefulWidget {
   final String vimeoId;
-  final int videoId;
-  const VimeoPlayerScreen(
-      {super.key, required this.vimeoId, required this.videoId});
+  const VideoRequest({super.key, required this.vimeoId});
 
   @override
-  State<VimeoPlayerScreen> createState() => _VimeoPlayerScreenState();
+  State<VideoRequest> createState() => _VideoRequestState();
 }
 
-class _VimeoPlayerScreenState extends State<VimeoPlayerScreen> {
-  late MainProvider _mainProvider;
-  late Future<VideoViewModel> _videoFuture;
+class _VideoRequestState extends State<VideoRequest> {
   late WebViewController controller;
   bool showPage = false;
-
-  void _initializeFuture() async {
-    _videoFuture = _mainProvider.videoView(widget.videoId);
-  }
 
   void _initialize() async {
     controller = WebViewController()
@@ -81,46 +68,13 @@ class _VimeoPlayerScreenState extends State<VimeoPlayerScreen> {
   void initState() {
     super.initState();
     _initialize();
-    _mainProvider = context.mainProvider;
-    _initializeFuture();
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeRight,
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
   }
-
-  @override
-  void dispose() {
-    super.dispose();
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: CustomFutureBuilder(
-        future: _videoFuture,
-        onRetry: () {},
-        onError: (snapshot) {
-          return !showPage
-              ? const CustomLoadingIndicator()
-              : WebViewWidget(
-                  controller: controller,
-                );
-        },
-        onComplete: (context, snapshot) {
-          return !showPage
-              ? const CustomLoadingIndicator()
-              : WebViewWidget(
-                  controller: controller,
-                );
-        },
-      ),
-    );
+    return !showPage
+        ? const CustomLoadingIndicator()
+        : WebViewWidget(
+            controller: controller,
+          );
   }
 }

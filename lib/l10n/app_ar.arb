@@ -209,6 +209,9 @@
   "mustSubscriberWithProfessor":"يجب ان تكون مشتركا مع الاستاذ لتتمكن من تقييمه",
   "noReviewsYet":"لا يوجد تقييمات يعد",
   "feesPaid":"تم دفع الرسوم المستحقة لإنجاز الطلب",
-  "feesNotPaid":"لم يتم دفع الرسوم المستحقة لإنجاز الطلب"
+  "feesNotPaid":"لم يتم دفع الرسوم المستحقة لإنجاز الطلب",
+  "subscriptionActiveUntil":"الاشتراك فعال حتى تاريخ: ",
+  "subscriptionEnded":"انتهى الاشتراك بتاريخ: ",
+  "dontHaveSubscription":"لا يوجد لديك اي اشتراكات حتى الآن"
 
 }

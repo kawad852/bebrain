@@ -66,7 +66,7 @@ class _DepartmentsCardState extends State<DepartmentsCard> {
               MoreButton(
                 onTap: () {
                   if(context.authProvider.wizardValues.wizardType==WizardType.countries){
-                    UiHelper.addFilter(context, 
+                    UiHelper().addFilter(context, 
                     filterModel:FilterModel(
                       wizardType: WizardType.universities,
                       countryId: context.authProvider.wizardValues.countryId,
@@ -79,7 +79,7 @@ class _DepartmentsCardState extends State<DepartmentsCard> {
                     );
                   }
                   else if(context.authProvider.wizardValues.wizardType==WizardType.universities){
-                    UiHelper.addFilter(context, 
+                    UiHelper().addFilter(context, 
                     filterModel:FilterModel(
                       wizardType: WizardType.colleges,
                       countryId: context.authProvider.wizardValues.countryId,
@@ -121,7 +121,7 @@ class _DepartmentsCardState extends State<DepartmentsCard> {
                 return GestureDetector(
                   onTap: () {
                     if (context.authProvider.wizardValues.wizardType == WizardType.countries) {
-                      UiHelper.addFilter(
+                      UiHelper().addFilter(
                         context,
                         filterModel: FilterModel(
                             wizardType: WizardType.colleges,

@@ -62,7 +62,7 @@ dependencies:
   android_intent_plus: ^4.0.3
   url_launcher: ^6.2.5
   file_picker: ^8.0.2
-  vimeo_player_flutter: ^0.1.0
+  #vimeo_player_flutter: ^0.1.0
   flutter_rating_bar: ^4.0.1
   flutter_cached_pdfview: ^0.4.2
   path_provider: ^2.1.3

@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:animate_do/animate_do.dart';
+import 'package:bebrain/helper/ui_helper.dart';
 import 'package:bebrain/model/college_filter_model.dart';
 import 'package:bebrain/model/continue_learning_model.dart';
 import 'package:bebrain/model/country_filter_model.dart' as cou;
@@ -46,14 +47,14 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
   int currentIndex = 0;
 
   Future<dynamic> _initializeFuture() async {
-    switch (context.authProvider.wizardValues.wizardType) {
+    switch (_authProvider.wizardValues.wizardType) {
       case WizardType.countries:
-        return _mainProvider.filterByCountry(context.authProvider.wizardValues.countryId!);
+        return _mainProvider.filterByCountry(_authProvider.wizardValues.countryId!);
       case WizardType.universities:
-        return _mainProvider.filterByUniversity(context.authProvider.wizardValues.universityId!);
+        return _mainProvider.filterByUniversity(_authProvider.wizardValues.universityId!);
       case WizardType.colleges:
       case WizardType.specialities:
-        return _mainProvider.filterByCollege(context.authProvider.wizardValues.collegeId!);
+        return _mainProvider.filterByCollege(_authProvider.wizardValues.collegeId!);
     }
   }
 
@@ -67,20 +68,21 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
     log(MySharedPreferences.accessToken);
     _mainProvider = context.mainProvider;
     _authProvider = context.authProvider;
-    _authProvider.addListener(_handleChanged);
+    UiHelper().addListener(_handleChanged);
     _future = _initializeFuture();
     _initializeLearningFuture();
   }
 
   @override
   void dispose() {
-    _authProvider.removeListener(_handleChanged);
+    UiHelper().removeListener(_handleChanged);
     super.dispose();
   }
 
   void _handleChanged() {
     setState(() {
       _initializeLearningFuture();
+      _future = _initializeFuture();
     });
   }
 
@@ -237,7 +239,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                 late final List<cou.Professor> professors;
                 int? collegeId;
 
-                switch (context.authProvider.wizardValues.wizardType) {
+                switch (_authProvider.wizardValues.wizardType) {
                   case WizardType.countries:
                     filter = snapshot.data! as cou.CountryFilterModel;
                     data = filter.data!.universities! as List<cou.University>;

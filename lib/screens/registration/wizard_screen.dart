@@ -140,7 +140,7 @@ class _WizardScreenState extends State<WizardScreen> {
   void _onNext(BuildContext context) {
     saveWizardValue();
     if (_info!.nextType == null) {
-      UiHelper.addFilter(context, filterModel: context.authProvider.wizardValues,
+      UiHelper().addFilter(context, filterModel: context.authProvider.wizardValues,
       afterAdd: (){
         context.pushAndRemoveUntil(const AppNavBar());
        // Navigator.popUntil(context, (route) => route.isFirst);
@@ -199,7 +199,7 @@ class _WizardScreenState extends State<WizardScreen> {
               if(widget.wizardType != WizardType.countries)
               TextButton(
                 onPressed: () {
-                  UiHelper.addFilter(context, filterModel: context.authProvider.wizardValues,
+                  UiHelper().addFilter(context, filterModel: context.authProvider.wizardValues,
                    afterAdd: (){
                    context.pushAndRemoveUntil(const AppNavBar());
                    });

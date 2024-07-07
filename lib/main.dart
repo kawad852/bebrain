@@ -7,7 +7,9 @@ import 'package:bebrain/providers/app_provider.dart';
 import 'package:bebrain/providers/auth_provider.dart';
 import 'package:bebrain/providers/main_provider.dart';
 import 'package:bebrain/providers/payment_provider.dart';
+import 'package:bebrain/screens/base/app_nav_bar.dart';
 import 'package:bebrain/screens/intro/intro_screen.dart';
+import 'package:bebrain/screens/registration/registration_screen.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/enums.dart';
 import 'package:bebrain/utils/my_theme.dart';
@@ -51,7 +53,7 @@ Future<void> main() async {
   unawaited(AppProvider.getCountryCode());
   await MySharedPreferences.init();
   // FlutterBranchSdk.validateSDKIntegration();
-  MySharedPreferences.clearStorage();
+  //MySharedPreferences.clearStorage();
   // MySharedPreferences.isPassedIntro = false;
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   FirebaseMessaging.onBackgroundMessage(onBackgroundMessage);
@@ -79,16 +81,15 @@ class _MyAppState extends State<MyApp> {
   late AuthProvider _authProvider;
 
   Widget _toggleRoute(BuildContext context) {
-    return const IntroScreen();
-    // if (_authProvider.user.id != null) {
-    //   return const AppNavBar(initFav: true);
-    // } else {
-    //   if (MySharedPreferences.isPassedIntro) {
-    //     return const RegistrationScreen();
-    //   } else {
-    //     return const IntroScreen();
-    //   }
-    // }
+    if (_authProvider.user.id != null) {
+      return const AppNavBar();
+    } else {
+      if (MySharedPreferences.isPassedIntro) {
+        return const RegistrationScreen();
+      } else {
+        return const IntroScreen();
+      }
+    }
   }
 
   @override

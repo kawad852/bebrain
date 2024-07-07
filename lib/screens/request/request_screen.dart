@@ -7,6 +7,7 @@ import 'package:bebrain/screens/request/widgets/request_nav_bar.dart';
 import 'package:bebrain/screens/request/widgets/request_text.dart';
 import 'package:bebrain/screens/request/widgets/request_tile.dart';
 import 'package:bebrain/screens/request/widgets/shared_container.dart';
+import 'package:bebrain/screens/request/widgets/video_request.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/enums.dart';
 import 'package:bebrain/utils/my_icons.dart';
@@ -16,7 +17,7 @@ import 'package:bebrain/widgets/custom_future_builder.dart';
 import 'package:bebrain/widgets/custom_svg.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:vimeo_player_flutter/vimeo_player_flutter.dart';
+//import 'package:vimeo_player_flutter/vimeo_player_flutter.dart';
 
 class RequestScreen extends StatefulWidget {
   final int requestId;
@@ -246,8 +247,8 @@ class _RequestScreenState extends State<RequestScreen> {
                          itemBuilder: (contxet, index) {
                            return  SizedBox(
                             height: 190,
-                             child: VimeoPlayer(
-                              videoId: request.data!.videos![index].vimeoId!,
+                             child: VideoRequest(
+                              vimeoId: request.data!.videos![index].vimeoId!,
                               ),
                            );
                          },

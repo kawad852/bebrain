@@ -34,6 +34,10 @@ class ApiUrl {
   static const String notification = '/api/notifications/user';
   static const String orders = '/api/orders';
   static const String courseReview = '/api/course-reviews/all/course';
+  static const String userSubscription = '/api/courses/user';
+  static const String professorsSearch = '/api/professors/search';
+
+
 
 
 

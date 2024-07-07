@@ -5,10 +5,10 @@ import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/enums.dart';
 import 'package:flutter/material.dart';
 
-class UiHelper {
+class UiHelper extends ChangeNotifier {
   static String getFlag(String code) => 'assets/flags/${code.toLowerCase()}.svg';
 
-  static Future<void> addFilter(
+   Future<void> addFilter(
     BuildContext context, {
     required FilterModel filterModel,
     Function? afterAdd,
@@ -35,6 +35,7 @@ class UiHelper {
           );
         },
       );
+      notifyListeners();
     } else {
       if (context.mounted) {
         await context.authProvider.updateFilter(context, filterModel: filterModel).then(
