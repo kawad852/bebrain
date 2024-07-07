@@ -56,32 +56,36 @@ class _PhoneFieldState extends State<PhoneField> {
   Widget build(BuildContext context) {
     return TitledTextField(
       title: context.appLocalization.phoneNum,
-      child: BaseEditor(
-        initialValue: _controller.phoneNum,
-        onChanged: (value) {
-          if (value.isEmpty) {
-            _controller.phoneNum = null;
-          } else {
-            _controller.phoneNum = value;
-          }
-        },
-        hintText: '000 - 000 - 000',
-        keyboardType: TextInputType.phone,
-        required: widget.required,
-        validator: (value) {
-          if (!widget.required && (value == null || value.isEmpty)) {
-            return null;
-          }
-          return ValidationHelper.general(context, value);
-        },
-        prefixIcon: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 4),
-          child: TextButton.icon(
-            onPressed: () {
-              _showCountriesSheet(context);
-            },
-            label: Text(_controller.getDialCode()),
-            icon: const Icon(Icons.arrow_drop_down_rounded),
+      child: Directionality(
+        textDirection: TextDirection.ltr,
+        child: BaseEditor(
+          initialValue: _controller.phoneNum,
+          textDirection: TextDirection.ltr,
+          onChanged: (value) {
+            if (value.isEmpty) {
+              _controller.phoneNum = null;
+            } else {
+              _controller.phoneNum = value;
+            }
+          },
+          hintText: '000 - 000 - 000',
+          keyboardType: TextInputType.phone,
+          required: widget.required,
+          validator: (value) {
+            if (!widget.required && (value == null || value.isEmpty)) {
+              return null;
+            }
+            return ValidationHelper.general(context, value);
+          },
+          prefixIcon: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4),
+            child: TextButton.icon(
+              onPressed: () {
+                _showCountriesSheet(context);
+              },
+              label: Text(_controller.getDialCode()),
+              icon: const Icon(Icons.arrow_drop_down_rounded),
+            ),
           ),
         ),
       ),
