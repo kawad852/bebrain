@@ -84,7 +84,7 @@ class _CourseReviewState extends State<CourseReview> {
                           Row(
                             children: [
                               CustomNetworkImage(
-                                review.userImage!,
+                                review.userImage?? "",
                                 width: 40,
                                 height: 40,
                                 shape: BoxShape.circle,
