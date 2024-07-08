@@ -31,8 +31,8 @@ class Datum {
     String? name;
     String? description;
     String? image;
-    int? price;
-    int? discountPrice;
+    double? price;
+    double? discountPrice;
     int? videosCount;
     int? unitsCount;
     int? universityId;
@@ -45,7 +45,7 @@ class Datum {
     double? reviewsRating;
     double? audioVideoQuality;
     double? valueForMoney;
-    int? conveyIdea;
+    double? conveyIdea;
     double? similarityCurriculumContent;
     int? available;
     int? viewsCount;
@@ -86,8 +86,8 @@ class Datum {
         name: json["name"],
         description: json["description"],
         image: json["image"],
-        price: json["price"],
-        discountPrice: json["discount_price"],
+        price: json["price"]?.toDouble(),
+        discountPrice: json["discount_price"]?.toDouble(),
         videosCount: json["videos_count"],
         unitsCount: json["units_count"],
         universityId: json["university_id"],
@@ -100,7 +100,7 @@ class Datum {
         reviewsRating: json["reviews_rating"]?.toDouble(),
         audioVideoQuality: json["audio_video_quality"]?.toDouble(),
         valueForMoney: json["value_for_money"]?.toDouble(),
-        conveyIdea: json["convey_idea"],
+        conveyIdea: json["convey_idea"]?.toDouble(),
         similarityCurriculumContent: json["similarity_curriculum_content"]?.toDouble(),
         available: json["available"],
         viewsCount: json["views_count"],
