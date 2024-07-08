@@ -82,7 +82,7 @@ class _UnitScreenState extends State<UnitScreen> {
         final data=snapshot.data!;
         final unit=data.data!;
         return Scaffold(
-          bottomNavigationBar: unit.courseOffer==null || !checkTime(unit.courseOffer!.startDate!,unit.courseOffer!.endDate!) || unit.courseOffer == null
+          bottomNavigationBar: unit.courseOffer==null || !checkTime(unit.courseOffer!.startDate!,unit.courseOffer!.endDate!)
          ? null 
           : CourseNavBar(
             offer: unit.courseOffer!,

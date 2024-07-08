@@ -70,15 +70,18 @@ class PaymentProvider extends ChangeNotifier {
         amount: amount,
       );
       return order;
-    }, onComplete: (snapshot) {
+    }, onComplete: (snapshot)async {
       log("jjjj");
       if (snapshot.code == 200) {
-        UPayment.checkout(
+       await UPayment.checkout(
           context: context,
           orderId: snapshot.data!.orderNumber!,
           amount: amount,
           afterPay: afterPay,
         );
+        if(afterPay !=null){
+          afterPay();
+        }
       }
       else {
         AppOverlayLoader.hide();
@@ -105,13 +108,16 @@ class PaymentProvider extends ChangeNotifier {
     }
   ) async{
     if(orderId != null){
-     return  UPayment.checkout(
+      await UPayment.checkout(
         context: context,
         withOverlayLoader: true,
         orderId: orderId, 
         amount: amount,
         afterPay: afterPay,
        );
+       if(afterPay !=null){
+          afterPay();
+        }
     }
     else if(subscribtionId != null){
       return createOrder(

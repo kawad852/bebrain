@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:math';
+
 import 'package:bebrain/model/video_view_model.dart';
 import 'package:bebrain/providers/main_provider.dart';
 import 'package:bebrain/utils/base_extensions.dart';
@@ -22,6 +25,9 @@ class _VimeoPlayerScreenState extends State<VimeoPlayerScreen> {
   late Future<VideoViewModel> _videoFuture;
   late WebViewController controller;
   bool showPage = false;
+  bool _showWatermark = true;
+  Offset _watermarkPosition = const Offset(20, 20);
+  Timer? _timer;
 
   void _initializeFuture() async {
     _videoFuture = _mainProvider.videoView(widget.videoId);
@@ -68,7 +74,7 @@ class _VimeoPlayerScreenState extends State<VimeoPlayerScreen> {
                 img-src * data: blob: android-webview-video-poster:; style-src * 'unsafe-inline';">
         </head>
              <body>
-                <iframe 
+               <iframe 
                 src="https://player.vimeo.com/video/${widget.vimeoId}&loop=0&autoplay=0" 
                 width="100%" height="100%" frameborder="0" allow="fullscreen" 
                 allowfullscreen></iframe>
@@ -81,6 +87,7 @@ class _VimeoPlayerScreenState extends State<VimeoPlayerScreen> {
   void initState() {
     super.initState();
     _initialize();
+    _startWatermarkAnimation();
     _mainProvider = context.mainProvider;
     _initializeFuture();
     SystemChrome.setPreferredOrientations([
@@ -94,10 +101,28 @@ class _VimeoPlayerScreenState extends State<VimeoPlayerScreen> {
   @override
   void dispose() {
     super.dispose();
+    _timer?.cancel();
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+  }
+
+   void _startWatermarkAnimation() {
+    _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
+      setState(() {
+        _showWatermark = !_showWatermark;
+        _updateWatermarkPosition();
+      });
+    });
+  }
+
+  void _updateWatermarkPosition() {
+    double maxX = MediaQuery.of(context).size.width - 100;
+    double maxY = MediaQuery.of(context).size.height - 100;
+    double newX = Random().nextDouble() * maxX;
+    double newY = Random().nextDouble() * maxY;
+    _watermarkPosition = Offset(newX, newY);
   }
 
   @override
@@ -116,11 +141,36 @@ class _VimeoPlayerScreenState extends State<VimeoPlayerScreen> {
         onComplete: (context, snapshot) {
           return !showPage
               ? const CustomLoadingIndicator()
-              : WebViewWidget(
-                  controller: controller,
-                );
+              : Stack(
+                children: [
+                  WebViewWidget(
+                      controller: controller,
+                    ),
+                    if (_showWatermark)
+            Positioned(
+              left: _watermarkPosition.dx,
+              top: _watermarkPosition.dy,
+              child: const Text(
+                'My Watermark',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  shadows: [
+                    Shadow(
+                      offset: Offset(2, 2),
+                      blurRadius: 4,
+                      color: Colors.black54,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+                ],
+              );
         },
       ),
     );
   }
 }
+ 
