@@ -36,21 +36,6 @@ class ApiUrl {
   static const String courseReview = '/api/course-reviews/all/course';
   static const String userSubscription = '/api/courses/user';
   static const String professorsSearch = '/api/professors/search';
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  static const String slider = '/api/sliders/user';
 
 }

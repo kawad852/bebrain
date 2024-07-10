@@ -12,6 +12,7 @@ import 'package:bebrain/model/order_model.dart';
 import 'package:bebrain/model/policy_model.dart';
 import 'package:bebrain/model/professors_model.dart';
 import 'package:bebrain/model/projects_model.dart';
+import 'package:bebrain/model/slider_model.dart';
 import 'package:bebrain/model/subscriptions_model.dart';
 import 'package:bebrain/model/teacher_evalution_model.dart';
 import 'package:bebrain/model/teacher_model.dart';
@@ -335,6 +336,16 @@ class MainProvider extends ChangeNotifier {
         "search": value,
       },
       builder: ProfessorsModel.fromJson,
+    );
+    return snapshot;
+  }
+
+   Future<SliderModel> fetchMySlider(int countryId) {
+    final snapshot = ApiService<SliderModel>().build(
+      url: "${ApiUrl.slider}/$countryId",
+      isPublic: true,
+      apiType: ApiType.get,
+      builder: SliderModel.fromJson,
     );
     return snapshot;
   }

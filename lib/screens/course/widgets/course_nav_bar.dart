@@ -23,7 +23,7 @@ class CourseNavBar extends StatefulWidget {
 }
 
 class _CourseNavBarState extends State<CourseNavBar> {
-  Duration difference =const Duration(days: 0, hours: 0, minutes: 0, seconds: 0);
+  Duration difference = const Duration(days: 0, hours: 0, minutes: 0, seconds: 0);
 
 
   @override

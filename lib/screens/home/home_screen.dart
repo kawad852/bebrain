@@ -5,6 +5,7 @@ import 'package:bebrain/helper/ui_helper.dart';
 import 'package:bebrain/model/college_filter_model.dart';
 import 'package:bebrain/model/continue_learning_model.dart';
 import 'package:bebrain/model/country_filter_model.dart' as cou;
+import 'package:bebrain/model/slider_model.dart';
 import 'package:bebrain/model/university_filter_model.dart' as un;
 import 'package:bebrain/providers/auth_provider.dart';
 import 'package:bebrain/providers/main_provider.dart';
@@ -13,21 +14,19 @@ import 'package:bebrain/screens/home/widgets/appbar_text.dart';
 import 'package:bebrain/screens/home/widgets/departments_card.dart';
 import 'package:bebrain/screens/home/widgets/eduction_card.dart';
 import 'package:bebrain/screens/home/widgets/filter_loading.dart';
+import 'package:bebrain/screens/home/widgets/my_slider.dart';
 import 'package:bebrain/screens/home/widgets/my_subscription.dart';
+import 'package:bebrain/screens/home/widgets/slider_loading.dart';
 import 'package:bebrain/screens/registration/wizard_screen.dart';
-import 'package:bebrain/utils/app_constants.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/enums.dart';
 import 'package:bebrain/utils/my_icons.dart';
 import 'package:bebrain/utils/my_theme.dart';
 import 'package:bebrain/utils/shared_pref.dart';
 import 'package:bebrain/widgets/custom_future_builder.dart';
-import 'package:bebrain/widgets/custom_network_image.dart';
-import 'package:bebrain/widgets/custom_smoth_indicator.dart';
 import 'package:bebrain/widgets/custom_svg.dart';
 import 'package:bebrain/widgets/distinguished_lectures.dart';
 import 'package:bebrain/widgets/shimmer/shimmer_loading.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
@@ -44,6 +43,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
   late AuthProvider _authProvider;
   late Future<dynamic> _future;
   late Future<ContinueLearningModel> _learningFuture;
+  late Future<SliderModel> _sliderFuture;
   int currentIndex = 0;
 
   Future<dynamic> _initializeFuture() async {
@@ -58,6 +58,11 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
     }
   }
 
+  void _initializeSliderFuture() async {
+    _sliderFuture =_mainProvider.fetchMySlider(_authProvider.wizardValues.countryId!);
+  }
+
+
   void _initializeLearningFuture() async {
     _learningFuture = _mainProvider.fetchMyLearning();
   }
@@ -70,6 +75,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
     _authProvider = context.authProvider;
     UiHelper().addListener(_handleChanged);
     _future = _initializeFuture();
+    _initializeSliderFuture();
     _initializeLearningFuture();
   }
 
@@ -82,6 +88,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
   void _handleChanged() {
     setState(() {
       _initializeLearningFuture();
+      _initializeSliderFuture();
       _future = _initializeFuture();
     });
   }
@@ -95,6 +102,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
           setState(() {
             _future = _initializeFuture();
             _initializeLearningFuture();
+            _initializeSliderFuture();
           });
         },
         child: CustomScrollView(
@@ -133,37 +141,21 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CarouselSlider.builder(
-                    itemCount: 5,
-                    options: CarouselOptions(
-                      viewportFraction: 1,
-                      enableInfiniteScroll: false,
-                      height: context.mediaQuery.height * 0.28,
-                      onPageChanged: (index, reason) {
-                        setState(() {
-                          currentIndex = index;
-                        });
-                      },
-                    ),
-                    itemBuilder: (context, index, realIndex) {
-                      return const CustomNetworkImage(
-                        kFakeImage,
-                        width: double.infinity,
-                        height: 130,
-                        margin: EdgeInsets.symmetric(horizontal: 15),
-                        radius: MyTheme.radiusSecondary,
-                      );
-                    },
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: Center(
-                      child: CustomSmoothIndicator(
-                        count: 5,
-                        index: currentIndex,
-                      ),
-                    ),
-                  ),
+                 CustomFutureBuilder(
+                  future: _sliderFuture,
+                  onRetry: (){
+                    setState(() {
+                      _initializeSliderFuture();
+                    });
+                  },
+                  onLoading: () => const SliderLoading(),
+                  onComplete: (context,snapshot){
+                    final slider =snapshot.data!;
+                    return slider.data!.isEmpty
+                    ? const SizedBox.shrink()
+                    : MySlider(slider: slider.data!);
+                  },
+                 ),
                   Selector<AuthProvider, bool>(
                       selector: (context, provider) => provider.isAuthenticated,
                       builder: (context, isAuthenticated, child) {
