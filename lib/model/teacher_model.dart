@@ -31,7 +31,7 @@ class TeacherModel {
 class TeacherData {
     int? id;
     String? name;
-    dynamic email;
+    String? email;
     String? description;
     String? image;
     int? universityId;
@@ -46,6 +46,7 @@ class TeacherData {
     List<College>? colleges;
     List<Course>? courses;
     List<Review>? reviews;
+    List<Subject>? subjects;
 
     TeacherData({
         this.id,
@@ -65,6 +66,7 @@ class TeacherData {
         this.colleges,
         this.courses,
         this.reviews,
+        this.subjects,
     });
 
     factory TeacherData.fromJson(Map<String, dynamic> json) => TeacherData(
@@ -85,6 +87,8 @@ class TeacherData {
         colleges: json["colleges"] == null ? [] : List<College>.from(json["colleges"]!.map((x) => College.fromJson(x))),
         courses: json["courses"] == null ? [] : List<Course>.from(json["courses"]!.map((x) => Course.fromJson(x))),
         reviews: json["reviews"] == null ? [] : List<Review>.from(json["reviews"]!.map((x) => Review.fromJson(x))),
+        subjects: json["subjects"] == null ? [] : List<Subject>.from(json["subjects"]!.map((x) => Subject.fromJson(x))),
+
     );
 
     Map<String, dynamic> toJson() => {
@@ -105,6 +109,7 @@ class TeacherData {
         "colleges": colleges == null ? [] : List<dynamic>.from(colleges!.map((x) => x.toJson())),
         "courses": courses == null ? [] : List<dynamic>.from(courses!.map((x) => x.toJson())),
         "reviews": reviews == null ? [] : List<dynamic>.from(reviews!.map((x) => x.toJson())),
+        "subjects": subjects == null ? [] : List<dynamic>.from(subjects!.map((x) => x.toJson())),
     };
 }
 
@@ -199,5 +204,25 @@ class Review {
         "comment": comment,
         "rating": rating,
         "created_at": createdAt?.toIso8601String(),
+    };
+}
+
+class Subject {
+    int? id;
+    String? name;
+
+    Subject({
+        this.id,
+        this.name,
+    });
+
+    factory Subject.fromJson(Map<String, dynamic> json) => Subject(
+        id: json["id"],
+        name: json["name"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
     };
 }

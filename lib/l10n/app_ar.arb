@@ -212,6 +212,13 @@
   "feesNotPaid":"لم يتم دفع الرسوم المستحقة لإنجاز الطلب",
   "subscriptionActiveUntil":"الاشتراك فعال حتى تاريخ: ",
   "subscriptionEnded":"انتهى الاشتراك بتاريخ: ",
-  "dontHaveSubscription":"لا يوجد لديك اي اشتراكات حتى الآن"
+  "dontHaveSubscription":"لا يوجد لديك اي اشتراكات حتى الآن",
+  "onlineLectures":"محاضرات اون لاين",
+  "bookOnlineLecture":"يمكنك حجز محاضرة اون لاين يشرح لك الأستاذ جزئية من إحدى المواد التالية",
+  "pleaseChoose":"اختر من فضلك",
+  "files":"ملفات",
+  "gallery":"المعرض",
+  "noRequestyet":"ليس لديك اي طلبات حتى الآن",
+  "toBookLectureWithProfessor":"لحجز موعد محاضرة اون لاين يرجى تعبئة النموذج التالي وسيتم ارسال طلبك للأستاذ مباشرة"
 
 }

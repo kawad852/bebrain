@@ -32,8 +32,7 @@ class CustomForm extends StatefulWidget {
   State<CustomForm> createState() => _CustomFormState();
 }
 
-class _CustomFormState extends State<CustomForm>
-    with AutomaticKeepAliveClientMixin {
+class _CustomFormState extends State<CustomForm> with AutomaticKeepAliveClientMixin {
   late MainProvider _mainProvider;
   late Future<ProjectsModel> _myRequestFuture;
 
@@ -75,7 +74,7 @@ class _CustomFormState extends State<CustomForm>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsetsDirectional.only( top: 25, bottom: 5),
+                        padding: const EdgeInsetsDirectional.only(top: 25, bottom: 5),
                         child: Text(
                           widget.title,
                           style: const TextStyle(
@@ -93,18 +92,14 @@ class _CustomFormState extends State<CustomForm>
                       ),
                       StretchedButton(
                         onPressed: () async {
-                          await context
-                              .push(SendRequestScreen(
-                            formEnum: widget.formEnum,
-                          ))
+                          await context.push(SendRequestScreen(formEnum: widget.formEnum))
                               .then((value) {
                             setState(() {
                               _initializeFuture();
                             });
                           });
                         },
-                        margin: const EdgeInsetsDirectional.only(
-                            top: 25, bottom: 10),
+                        margin: const EdgeInsetsDirectional.only(top: 25, bottom: 10),
                         child: Row(
                           children: [
                             const CustomSvg(MyIcons.message),
@@ -130,8 +125,8 @@ class _CustomFormState extends State<CustomForm>
                   future: _myRequestFuture,
                   onLoading: () {
                     return ShimmerLoading(
-                      child: ListView.separated(
-                      separatorBuilder: (context, index) =>const SizedBox(height: 5),
+                        child: ListView.separated(
+                      separatorBuilder: (context, index) => const SizedBox(height: 5),
                       itemCount: 8,
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
@@ -139,7 +134,7 @@ class _CustomFormState extends State<CustomForm>
                         return const LoadingBubble(
                           width: double.infinity,
                           height: 60,
-                          padding:  EdgeInsetsDirectional.symmetric(horizontal: 10),
+                          padding: EdgeInsetsDirectional.symmetric(horizontal: 10),
                           radius: MyTheme.radiusSecondary,
                         );
                       },
@@ -153,34 +148,41 @@ class _CustomFormState extends State<CustomForm>
                   sliver: true,
                   onComplete: (context, snapshot) {
                     final myRequest = snapshot.data!;
-                    return SliverToBoxAdapter(
-                        child: ShrinkWrappingViewport(
-                      offset: ViewportOffset.zero(),
-                      slivers: [
-                        SliverToBoxAdapter(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                context.appLocalization.previousRequests,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
+                    return myRequest.data!.isEmpty
+                        ? SliverFillRemaining(
+                            child: Center(
+                              child: Text(context.appLocalization.noRequestyet),
+                            ),
+                          )
+                        : SliverToBoxAdapter(
+                            child: ShrinkWrappingViewport(
+                            offset: ViewportOffset.zero(),
+                            slivers: [
+                              SliverToBoxAdapter(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      context.appLocalization.previousRequests,
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 10),
+                                  ],
                                 ),
                               ),
-                              const SizedBox(height: 10),
+                              SliverList.separated(
+                                separatorBuilder: (context, index) => const SizedBox(height: 5),
+                                itemCount: myRequest.data!.length,
+                                itemBuilder: (context, index) {
+                                  return PreviousRequest(request: myRequest.data![index]);
+                                },
+                              ),
                             ],
                           ),
-                        ),
-                        SliverList.separated(
-                          separatorBuilder: (context, index) => const SizedBox(height: 5),
-                          itemCount: myRequest.data!.length,
-                          itemBuilder: (context, index) {
-                            return PreviousRequest( request: myRequest.data![index]);
-                          },
-                        ),
-                      ],
-                    ));
+                        );
                   },
                 ),
               ],

@@ -8,6 +8,7 @@ import 'package:bebrain/screens/teacher/widgets/teacher_nav_bar.dart';
 import 'package:bebrain/screens/teacher/widgets/teacher_reviews.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/my_icons.dart';
+import 'package:bebrain/utils/my_theme.dart';
 import 'package:bebrain/widgets/courses_list.dart';
 import 'package:bebrain/widgets/custom_future_builder.dart';
 import 'package:bebrain/widgets/custom_svg.dart';
@@ -51,7 +52,7 @@ class _TeacherScreenState extends State<TeacherScreen> {
       onComplete: (context, snapshot) {
         final professor = snapshot.data!;
         return Scaffold(
-          bottomNavigationBar: const TeacherNavBar(),
+          bottomNavigationBar: professor.data!.subjects!.isNotEmpty? TeacherNavBar(teacherData: professor.data!) : null,
           body: RefreshIndicator(
             onRefresh: ()async{
               setState(() {
@@ -64,6 +65,62 @@ class _TeacherScreenState extends State<TeacherScreen> {
                   pinned: true,
                   collapsedHeight: 320,
                   flexibleSpace: TeacherCard(teacherData: professor.data!),
+                ),
+                if(professor.data!.subjects!.isNotEmpty)
+                SliverPadding(
+                  padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 15),
+                  sliver: SliverToBoxAdapter(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          context.appLocalization.onlineLectures,
+                          style: TextStyle(
+                            color: context.colorPalette.black33,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          context.appLocalization.bookOnlineLecture,
+                          style: TextStyle(
+                            color: context.colorPalette.grey66,
+                            fontSize: 12,
+                          ),
+                        ),
+                        Wrap(
+                          direction: Axis.horizontal,
+                          children: professor.data!.subjects!.map((item){
+                             return Row(
+                              mainAxisSize: MainAxisSize.min,
+                               children: [
+                                 Container(
+                                  height: 34,
+                                  alignment: Alignment.center,
+                                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                                  margin: const EdgeInsets.symmetric(horizontal: 2,vertical: 3),
+                                  decoration: BoxDecoration(
+                                    color: context.colorPalette.greyEEE,
+                                    borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
+                                  ),
+                                  child: Text(
+                                    item.name!,
+                                    style: TextStyle(
+                                      color: context.colorPalette.grey66,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                 ),
+                               ],
+                             );
+                          },
+                          ).toList(),
+                        ),
+
+                      ],
+                    ),
+                  ),
                 ),
                 if(professor.data!.courses!.isNotEmpty)
                 SliverPadding(

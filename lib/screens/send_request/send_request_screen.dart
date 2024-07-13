@@ -140,14 +140,15 @@ class _SendRequestScreenState extends State<SendRequestScreen> {
     );
   }
 
-  void _selectFiles() async {
+  void _selectFiles(FileType type) async {
+    context.pop();
     result = await FilePicker.platform.pickFiles(
       allowMultiple: true,
-      type: FileType.custom,
-      allowedExtensions: ['jpg', 'pdf','jpeg','png'],
+      type: type,
+      allowedExtensions:type == FileType.image? null: ['jpg', 'pdf', 'jpeg', 'png'],
     );
     if (result != null) {
-      files = result!.paths.map((path) => File(path!)).toList();
+      files =  result!.paths.map((path) => File(path!)).toList();
       setState(() {});
     }
   }
@@ -170,7 +171,7 @@ class _SendRequestScreenState extends State<SendRequestScreen> {
     return CustomFutureBuilder(
       future: _futures,
       withBackgroundColor: true,
-      onLoading: () =>  SendRequestLoading(discription: descriptipnPage()),
+      onLoading: () => SendRequestLoading(discription: descriptipnPage()),
       onRetry: () {
         setState(() {
           _futures = _initializeFutures();
@@ -213,7 +214,7 @@ class _SendRequestScreenState extends State<SendRequestScreen> {
                             wizardData: _countries,
                             onSelected: (value) {
                               var entryList = value!.entries.toList();
-                              _fetchData('${ApiUrl.universities}/${entryList[0].value}', WizardType.universities);
+                              _fetchData('${ApiUrl.universities}/${entryList[0].value}',WizardType.universities);
                               setState(() {
                                 countryId = entryList[0].value;
                                 countryHintText = entryList[0].key;
@@ -236,7 +237,7 @@ class _SendRequestScreenState extends State<SendRequestScreen> {
                             wizardData: _universities,
                             onSelected: (value) {
                               var entryList = value!.entries.toList();
-                              _fetchData('${ApiUrl.colleges}/${entryList[0].value}', WizardType.colleges);
+                              _fetchData('${ApiUrl.colleges}/${entryList[0].value}',WizardType.colleges);
                               setState(() {
                                 universityId = entryList[0].value;
                                 universityHintText = entryList[0].key;
@@ -256,7 +257,7 @@ class _SendRequestScreenState extends State<SendRequestScreen> {
                             wizardData: _colleges,
                             onSelected: (value) {
                               var entryList = value!.entries.toList();
-                              _fetchData('${ApiUrl.specialties}/${entryList[0].value}', WizardType.specialities);
+                              _fetchData('${ApiUrl.specialties}/${entryList[0].value}',WizardType.specialities);
                               setState(() {
                                 collegeId = entryList[0].value;
                                 collegeHintText = entryList[0].key;
@@ -283,9 +284,9 @@ class _SendRequestScreenState extends State<SendRequestScreen> {
                         TitledTextField(
                           title: "${context.appLocalization.title} *",
                           child: BaseEditor(
-                            hintText: context.appLocalization.titleOfReportOrResarch,
+                            hintText:context.appLocalization.titleOfReportOrResarch,
                             initialValue: null,
-                            onChanged: (value) => _title = value.isEmpty ? null : value,
+                            onChanged: (value) =>_title = value.isEmpty ? null : value,
                           ),
                         ),
                         TitledTextField(
@@ -301,7 +302,52 @@ class _SendRequestScreenState extends State<SendRequestScreen> {
                           padding: const EdgeInsets.symmetric(vertical: 10),
                           child: InkWell(
                             onTap: () {
-                              _selectFiles();
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return Dialog(
+                                      insetPadding: const EdgeInsets.symmetric(horizontal: 15),
+                                      child: Container(
+                                        width: double.infinity,
+                                        height: 200,
+                                        decoration: BoxDecoration(
+                                          color: context.colorPalette.white,
+                                          borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
+                                        ),
+                                        child: Column(
+                                          children: [
+                                            Padding(
+                                              padding:const EdgeInsets.symmetric(vertical: 15,horizontal: 10),
+                                              child: Text(
+                                                context.appLocalization.pleaseChoose,
+                                                textAlign: TextAlign.center,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: const TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                            StretchedButton(
+                                              onPressed: (){
+                                                _selectFiles(FileType.custom);
+                                              },
+                                              margin: const EdgeInsets.symmetric(horizontal: 40,vertical: 10),
+                                              child: Text(context.appLocalization.files),
+                                            ),
+                                            StretchedButton(
+                                              onPressed: (){
+                                                _selectFiles(FileType.image);
+                                              },
+                                              margin: const EdgeInsets.symmetric(horizontal: 40),
+                                              child: Text(context.appLocalization.gallery),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                );
                             },
                             child: Row(
                               children: [

@@ -37,6 +37,7 @@ class _MySliderState extends State<MySlider> {
             return CustomNetworkImage(
               widget.slider[index].image!,
               width: double.infinity,
+              boxFit: BoxFit.fill,
               height: 130,
               margin: const EdgeInsets.symmetric(horizontal: 15),
               radius: MyTheme.radiusSecondary,

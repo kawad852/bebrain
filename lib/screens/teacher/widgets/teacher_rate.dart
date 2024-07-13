@@ -93,8 +93,7 @@ class _TeacherRateState extends State<TeacherRate> {
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color: context.colorPalette.white,
-                      borderRadius:
-                          BorderRadius.circular(MyTheme.radiusSecondary),
+                      borderRadius:BorderRadius.circular(MyTheme.radiusSecondary),
                     ),
                     child: Form(
                       key: _formKey,

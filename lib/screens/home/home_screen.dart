@@ -171,7 +171,9 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                                 onLoading: () => const SizedBox.shrink(),
                                 onComplete: (context, snapshot) {
                                   final continueLearningData = snapshot.data!;
-                                  return ZoomIn(
+                                  return  continueLearningData.data!.isEmpty
+                                  ? const SizedBox.shrink()
+                                  : ZoomIn(
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [

@@ -66,6 +66,46 @@ class TeacherLoading extends StatelessWidget {
               ),
             ),
           ),
+           SliverPadding(
+            padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 15),
+            sliver: SliverToBoxAdapter(
+              child: ShimmerLoading(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const LoadingBubble(
+                      width: 110,
+                      height: 30,
+                      radius: MyTheme.radiusPrimary,
+                    ),
+                    const LoadingBubble(
+                      width: double.infinity,
+                      height: 25,
+                      radius: MyTheme.radiusPrimary,
+                      margin: EdgeInsets.symmetric(vertical: 3),
+                    ),
+                    SizedBox(
+                      height: 34,
+                      child: ListView.separated(
+                        separatorBuilder: (context, index) => const SizedBox(width: 2),
+                        itemCount: 5,
+                        scrollDirection: Axis.horizontal,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (context,index){
+                          return const LoadingBubble(
+                            width: 84,
+                            height: 34,
+                            radius: MyTheme.radiusSecondary,
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
           SliverPadding(
             padding: const EdgeInsets.symmetric(vertical: 10),
             sliver: SliverToBoxAdapter(
