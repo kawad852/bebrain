@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:bebrain/alerts/feedback/app_feedback.dart';
+import 'package:bebrain/helper/ui_helper.dart';
 import 'package:bebrain/model/new_request_model.dart';
 import 'package:bebrain/model/wizard_model.dart';
 import 'package:bebrain/network/api_service.dart';
@@ -302,52 +303,15 @@ class _SendRequestScreenState extends State<SendRequestScreen> {
                           padding: const EdgeInsets.symmetric(vertical: 10),
                           child: InkWell(
                             onTap: () {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return Dialog(
-                                      insetPadding: const EdgeInsets.symmetric(horizontal: 15),
-                                      child: Container(
-                                        width: double.infinity,
-                                        height: 200,
-                                        decoration: BoxDecoration(
-                                          color: context.colorPalette.white,
-                                          borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
-                                        ),
-                                        child: Column(
-                                          children: [
-                                            Padding(
-                                              padding:const EdgeInsets.symmetric(vertical: 15,horizontal: 10),
-                                              child: Text(
-                                                context.appLocalization.pleaseChoose,
-                                                textAlign: TextAlign.center,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: const TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                            ),
-                                            StretchedButton(
-                                              onPressed: (){
-                                                _selectFiles(FileType.custom);
-                                              },
-                                              margin: const EdgeInsets.symmetric(horizontal: 40,vertical: 10),
-                                              child: Text(context.appLocalization.files),
-                                            ),
-                                            StretchedButton(
-                                              onPressed: (){
-                                                _selectFiles(FileType.image);
-                                              },
-                                              margin: const EdgeInsets.symmetric(horizontal: 40),
-                                              child: Text(context.appLocalization.gallery),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                );
+                              UiHelper.selectFileDialog(
+                                context,
+                                onTapFiles: (){
+                                  _selectFiles(FileType.custom);
+                                },
+                                onTapGallery: (){
+                                  _selectFiles(FileType.image);
+                                },
+                              );
                             },
                             child: Row(
                               children: [

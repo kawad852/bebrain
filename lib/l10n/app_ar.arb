@@ -219,6 +219,14 @@
   "files":"ملفات",
   "gallery":"المعرض",
   "noRequestyet":"ليس لديك اي طلبات حتى الآن",
-  "toBookLectureWithProfessor":"لحجز موعد محاضرة اون لاين يرجى تعبئة النموذج التالي وسيتم ارسال طلبك للأستاذ مباشرة"
+  "toBookLectureWithProfessor":"لحجز موعد محاضرة اون لاين يرجى تعبئة النموذج التالي وسيتم ارسال طلبك للأستاذ مباشرة",
+  "subject":"المادة",
+  "selectSubject":"اختر المادة",
+  "date":"التاريخ",
+  "suggestedDate":"التاريخ المقترح",
+  "theHour":"الساعة",
+  "suggestedHour":"الساعة المقترحة",
+  "hoursRequired":"عدد الساعات المطلوبة",
+  "hoursToBeReserved":"الساعات المراد حجزها"
 
 }
