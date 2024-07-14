@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:bebrain/alerts/feedback/app_feedback.dart';
 import 'package:bebrain/model/new_request_model.dart';
-import 'package:bebrain/screens/request/widgets/request_text.dart';
+import 'package:bebrain/widgets/request_text.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/my_icons.dart';
 import 'package:bebrain/utils/my_theme.dart';
@@ -32,8 +32,7 @@ class _FileCardState extends State<FileCard> {
     if (permissionStatus.isGranted) {
       try {
         var httpClient = HttpClient();
-        var request =
-            await httpClient.getUrl(Uri.parse(widget.attachment.attachment!));
+        var request =await httpClient.getUrl(Uri.parse(widget.attachment.attachment!));
         var response = await request.close();
         var bytes = await consolidateHttpClientResponseBytes(response);
         String dir = Platform.isIOS?(await getApplicationDocumentsDirectory()).path:(await getExternalStorageDirectory())!.path;
@@ -77,8 +76,7 @@ class _FileCardState extends State<FileCard> {
                     width: 40,
                     height: 40,
                     child: Padding(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                       child: CircularProgressIndicator(strokeWidth: 1.8),
                     ),
                   )

@@ -227,5 +227,10 @@
   "theHour":"Hour",
   "suggestedHour":"Suggested hour",
   "hoursRequired":"Number of hours required",
-  "hoursToBeReserved":"Hours to be reserved"
+  "hoursToBeReserved":"Hours to be reserved",
+  "appointmentsAndBookings":"Appointments and bookings",
+  "doYouNeedOnlineLecture":"Do you need to have an online lecture with one of our teachers? You can submit a request to book an online lecture and get it.",
+  "previousBookings":"Previous bookings",
+  "bookWith":"Book with : ",
+  "professorWillCheckAppointment":"The professor will check the appointment, and if he is not available on the date proposed by you, he will change the appointment to another date"
 }

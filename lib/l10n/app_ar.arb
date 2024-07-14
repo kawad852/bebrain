@@ -227,6 +227,11 @@
   "theHour":"الساعة",
   "suggestedHour":"الساعة المقترحة",
   "hoursRequired":"عدد الساعات المطلوبة",
-  "hoursToBeReserved":"الساعات المراد حجزها"
+  "hoursToBeReserved":"الساعات المراد حجزها",
+  "appointmentsAndBookings":"المواعيد والحجوزات",
+  "doYouNeedOnlineLecture":"هل انت بحاجة للحصول على محاضرة اون لاين مع مدرس من مدرسينا ؟ يمكنك تقديم طلب حجز محاضرة اون لاين والحصول عليها",
+  "previousBookings":"الحجوزات السابقة",
+  "bookWith":"حجز مع : ",
+  "professorWillCheckAppointment":"سيقوم الأستاذ بالتحقق من الموعد وفي حال عدم توفره في الموعد المقترح من قبلك سيقوم بتغيير الموعد إلى موعد اخر"
 
 }

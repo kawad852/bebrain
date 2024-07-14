@@ -1,11 +1,11 @@
 import 'package:bebrain/helper/ui_helper.dart';
 import 'package:bebrain/model/new_request_model.dart';
 import 'package:bebrain/providers/main_provider.dart';
-import 'package:bebrain/screens/request/widgets/file_card.dart';
+import 'package:bebrain/widgets/file_card.dart';
 import 'package:bebrain/screens/request/widgets/request_loading.dart';
 import 'package:bebrain/screens/request/widgets/request_nav_bar.dart';
-import 'package:bebrain/screens/request/widgets/request_text.dart';
-import 'package:bebrain/screens/request/widgets/request_tile.dart';
+import 'package:bebrain/widgets/request_text.dart';
+import 'package:bebrain/widgets/request_tile.dart';
 import 'package:bebrain/screens/request/widgets/shared_container.dart';
 import 'package:bebrain/screens/request/widgets/video_request.dart';
 import 'package:bebrain/utils/base_extensions.dart';
