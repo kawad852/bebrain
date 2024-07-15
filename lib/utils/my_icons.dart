@@ -57,4 +57,5 @@ class MyIcons {
   static const String playCircle = '${_path}play-circle.svg';
   static const String playCirclePaid = '${_path}play-circle-paid.svg';
   static const String whatsApp = '${_path}whatsapp.svg';
+  static const String booking = '${_path}booking.svg';
 }

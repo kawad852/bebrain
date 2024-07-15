@@ -2,6 +2,7 @@ import 'package:bebrain/model/auth_model.dart';
 import 'package:bebrain/model/user_model.dart';
 import 'package:bebrain/providers/auth_provider.dart';
 import 'package:bebrain/screens/article_subscriptions/article_subscriptions_screen.dart';
+import 'package:bebrain/screens/booking/booking_screen.dart';
 import 'package:bebrain/screens/contact/contact_screen.dart';
 import 'package:bebrain/screens/language/language_screen.dart';
 import 'package:bebrain/screens/notifications/notifications_screen.dart';
@@ -147,6 +148,13 @@ class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveCl
                       },
                       title: context.appLocalization.articleSubscriptions,
                       icon: MyIcons.articleSubscriptions,
+                    ),
+                    ProfileTile(
+                      onTap: () {
+                        context.push(const BookingScreen());
+                      },
+                      title: context.appLocalization.appointmentsAndBookings,
+                      icon: MyIcons.booking,
                     ),
                     ProfileTile(
                       onTap: () {

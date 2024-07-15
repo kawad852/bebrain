@@ -1,9 +1,12 @@
+import 'package:bebrain/model/teacher_model.dart';
+import 'package:bebrain/screens/teacher/booking_lecture_screen.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/my_theme.dart';
 import 'package:flutter/material.dart';
 
 class TeacherNavBar extends StatelessWidget {
-  const TeacherNavBar({super.key});
+  final TeacherData teacherData;
+  const TeacherNavBar({super.key, required this.teacherData});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +36,9 @@ class TeacherNavBar extends StatelessWidget {
             ),
             GestureDetector(
               onTap: (){
-                context.authProvider.checkIfUserAuthenticated(context, callback: (){});
+                context.authProvider.checkIfUserAuthenticated(context, callback: (){
+                  context.push(BookingLectureScreen(teacherData: teacherData));
+                });
               },
               child: Container(
                 width: 55,

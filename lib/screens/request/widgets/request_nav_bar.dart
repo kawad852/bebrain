@@ -1,4 +1,4 @@
-import 'package:bebrain/screens/request/widgets/request_text.dart';
+import 'package:bebrain/widgets/request_text.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/enums.dart';
 import 'package:bebrain/utils/my_theme.dart';

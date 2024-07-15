@@ -1,4 +1,4 @@
-import 'package:bebrain/screens/request/widgets/request_text.dart';
+import 'package:bebrain/widgets/request_text.dart';
 import 'package:bebrain/screens/request/widgets/shared_container.dart';
 import 'package:flutter/material.dart';
 
