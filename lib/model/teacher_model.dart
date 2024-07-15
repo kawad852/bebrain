@@ -47,6 +47,7 @@ class TeacherData {
     List<Course>? courses;
     List<Review>? reviews;
     List<Subject>? subjects;
+    List<InterviewDay>? interviewDays;
 
     TeacherData({
         this.id,
@@ -67,6 +68,7 @@ class TeacherData {
         this.courses,
         this.reviews,
         this.subjects,
+        this.interviewDays,
     });
 
     factory TeacherData.fromJson(Map<String, dynamic> json) => TeacherData(
@@ -88,7 +90,7 @@ class TeacherData {
         courses: json["courses"] == null ? [] : List<Course>.from(json["courses"]!.map((x) => Course.fromJson(x))),
         reviews: json["reviews"] == null ? [] : List<Review>.from(json["reviews"]!.map((x) => Review.fromJson(x))),
         subjects: json["subjects"] == null ? [] : List<Subject>.from(json["subjects"]!.map((x) => Subject.fromJson(x))),
-
+        interviewDays: json["interview_days"] == null ? [] : List<InterviewDay>.from(json["interview_days"]!.map((x) => InterviewDay.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
@@ -110,6 +112,7 @@ class TeacherData {
         "courses": courses == null ? [] : List<dynamic>.from(courses!.map((x) => x.toJson())),
         "reviews": reviews == null ? [] : List<dynamic>.from(reviews!.map((x) => x.toJson())),
         "subjects": subjects == null ? [] : List<dynamic>.from(subjects!.map((x) => x.toJson())),
+        "interview_days": interviewDays == null ? [] : List<dynamic>.from(interviewDays!.map((x) => x.toJson())),
     };
 }
 
@@ -224,5 +227,37 @@ class Subject {
     Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
+    };
+}
+
+class InterviewDay {
+    int? id;
+    String? day;
+    String? from;
+    String? to;
+    int? dayId;
+
+    InterviewDay({
+        this.id,
+        this.day,
+        this.from,
+        this.to,
+        this.dayId,
+    });
+
+    factory InterviewDay.fromJson(Map<String, dynamic> json) => InterviewDay(
+        id: json["id"],
+        day: json["day"],
+        from: json["from"],
+        to: json["to"],
+        dayId: json["day_id"]
+    );
+
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "day": day,
+        "from": from,
+        "to": to,
+        "day_id": dayId,
     };
 }

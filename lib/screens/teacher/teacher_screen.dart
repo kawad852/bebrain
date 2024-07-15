@@ -52,7 +52,7 @@ class _TeacherScreenState extends State<TeacherScreen> {
       onComplete: (context, snapshot) {
         final professor = snapshot.data!;
         return Scaffold(
-          bottomNavigationBar: professor.data!.subjects!.isNotEmpty? TeacherNavBar(teacherData: professor.data!) : null,
+          bottomNavigationBar: professor.data!.subjects!.isNotEmpty && professor.data!.interviewDays!.isNotEmpty? TeacherNavBar(teacherData: professor.data!) : null,
           body: RefreshIndicator(
             onRefresh: ()async{
               setState(() {

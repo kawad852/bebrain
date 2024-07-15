@@ -65,6 +65,7 @@ class UiHelper extends ChangeNotifier {
       case RequestType.inProgress:
         return context.colorPalette.blue8DD;
       case RequestType.done:
+      case RequestType.interviewAdded:
         return context.colorPalette.blueC2E;
       case RequestType.rejected:
         return context.colorPalette.redE42;

@@ -17,6 +17,7 @@ import 'package:bebrain/widgets/custom_future_builder.dart';
 import 'package:bebrain/widgets/custom_svg.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 //import 'package:vimeo_player_flutter/vimeo_player_flutter.dart';
 
 class RequestScreen extends StatefulWidget {
@@ -35,7 +36,9 @@ class _RequestScreenState extends State<RequestScreen> {
     _requestFuture = _mainProvider.fetchRequest(widget.requestId);
   }
 
-  
+ String _formatTime(String time){
+   return DateFormat("hh:mm a").format(DateFormat("hh:mm:ss").parse(time).toUTC(context));
+  }  
 
   @override
   void initState() {
@@ -130,7 +133,7 @@ class _RequestScreenState extends State<RequestScreen> {
                         ],
                       ),
                       RequestText(
-                        "${context.appLocalization.dateSendingRequest} : ${request.data!.createdDate} / ${request.data!.createdTime}",
+                        "${context.appLocalization.dateSendingRequest} : ${request.data!.createdDate} / ${_formatTime(request.data!.createdTime!)}",
                         textColor: context.colorPalette.grey66,
                         fontSize: 10,
                       ),
@@ -160,6 +163,7 @@ class _RequestScreenState extends State<RequestScreen> {
               ),
               SliverToBoxAdapter(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),

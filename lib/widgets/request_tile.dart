@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 
 class RequestTile extends StatelessWidget {
   final String data;
-  const RequestTile(this.data, {super.key});
+  final double fontSize;
+  const RequestTile(this.data, {super.key, this.fontSize =14});
 
   @override
   Widget build(BuildContext context) {
     return SharedContainer(
-      child: RequestText(data),
+      child: RequestText(data,fontSize: fontSize),
     );
   }
 }

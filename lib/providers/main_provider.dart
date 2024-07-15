@@ -6,12 +6,14 @@ import 'package:bebrain/model/country_filter_model.dart';
 import 'package:bebrain/model/course_filter_model.dart';
 import 'package:bebrain/model/course_rating_model.dart';
 import 'package:bebrain/model/course_review_model.dart';
+import 'package:bebrain/model/interview_model.dart';
 import 'package:bebrain/model/major_filter_model.dart';
 import 'package:bebrain/model/new_request_model.dart';
 import 'package:bebrain/model/order_model.dart';
 import 'package:bebrain/model/policy_model.dart';
 import 'package:bebrain/model/professors_model.dart';
 import 'package:bebrain/model/projects_model.dart';
+import 'package:bebrain/model/single_interview_model.dart';
 import 'package:bebrain/model/slider_model.dart';
 import 'package:bebrain/model/subscriptions_model.dart';
 import 'package:bebrain/model/teacher_evalution_model.dart';
@@ -346,6 +348,26 @@ class MainProvider extends ChangeNotifier {
       isPublic: true,
       apiType: ApiType.get,
       builder: SliderModel.fromJson,
+    );
+    return snapshot;
+  }
+
+  Future<InterviewModel> fetchMyInterViews() {
+    final snapshot = ApiService<InterviewModel>().build(
+      url: ApiUrl.myInterviews,
+      isPublic: false,
+      apiType: ApiType.get,
+      builder: InterviewModel.fromJson,
+    );
+    return snapshot;
+  }
+
+  Future<SingleInterviewModel> fetchInterViewById(int id) {
+    final snapshot = ApiService<SingleInterviewModel>().build(
+      url: "${ApiUrl.showInterview}/$id",
+      isPublic: false,
+      apiType: ApiType.get,
+      builder: SingleInterviewModel.fromJson,
     );
     return snapshot;
   }

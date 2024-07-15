@@ -1,16 +1,19 @@
+import 'package:bebrain/helper/ui_helper.dart';
+import 'package:bebrain/model/interview_model.dart';
 import 'package:bebrain/screens/booking/booking_request_screen.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/my_theme.dart';
 import 'package:flutter/material.dart';
 
 class PreviousBooking extends StatelessWidget {
-  const PreviousBooking({super.key});
+  final InterviewData interviewData;
+  const PreviousBooking({super.key, required this.interviewData});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        context.push(const BookingRequestScreen());
+      onTap: () {
+        context.push(BookingRequestScreen(interViewId: interviewData.id!));
       },
       child: Container(
         width: double.infinity,
@@ -46,7 +49,7 @@ class PreviousBooking extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "${context.appLocalization.bookWith}د.محمد",
+                    "${context.appLocalization.bookWith}${interviewData.professorName}",
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: context.colorPalette.black33,
@@ -55,7 +58,7 @@ class PreviousBooking extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "${context.appLocalization.requestNumber} : 545454545454",
+                    "${context.appLocalization.requestNumber} : ${interviewData.interviewNumber}",
                     style: TextStyle(
                       color: context.colorPalette.grey66,
                       fontSize: 12,
@@ -69,15 +72,14 @@ class PreviousBooking extends StatelessWidget {
               height: 30,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color:context.colorPalette.blueA3C,
-                //UiHelper.getRequestColor(context, type: request.statusType!),
+                color: UiHelper.getRequestColor(context, type: interviewData.statusType!),
                 borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
               ),
-              child:  Text(
-                  "بانتظار الدفع",
+              child: Text(
+                interviewData.status!,
                 maxLines: 2,
                 textAlign: TextAlign.center,
-                style:const TextStyle(
+                style: const TextStyle(
                   fontSize: 10,
                 ),
               ),

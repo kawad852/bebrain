@@ -17,6 +17,7 @@ class RequestType{
   static const String canceled = 'canceled';
   static const String inProgress = 'in_progress';
   static const String done = 'done';
+  static const String interviewAdded = 'interview_added';
   static const String rejected = 'rejected';
 }
 
@@ -44,6 +45,7 @@ class LanguageEnum {
 class OrderType{
   static const String subscription = "subscription";
   static const String request = "request";
+  static const String interview = "interview";
 }
 
 class ThemeEnum {

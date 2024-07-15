@@ -51,11 +51,14 @@ class _BookingLectureScreenState extends State<BookingLectureScreen> {
       setState(() {});
     }
   }
-
+ List<int> days =[2,3,4,5,6,];
   Future<void> _showDatePicker(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: _selectedDate,
+      //initialDate: _selectedDate.add(Duration(days: 1)),
+      selectableDayPredicate: (DateTime day) => 
+        days.contains(day.weekday),
+      
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(const Duration(days: 30)),
     );

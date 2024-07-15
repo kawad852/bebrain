@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class RequestText extends StatelessWidget {
   final String data;
   final Color? textColor;
-  final double fontSize;
+  final double? fontSize;
   final FontWeight? fontWeight;
   final TextOverflow? overflow;
   final int? maxLines;
