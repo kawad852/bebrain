@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>97702859580-0qkaur9om6l5cm5u5m6982jrrami3val.apps.googleusercontent.com</string>
+	<string>97702859580-q88agioh3p0jkfgbua3pochne5f141tv.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.97702859580-0qkaur9om6l5cm5u5m6982jrrami3val</string>
+	<string>com.googleusercontent.apps.97702859580-q88agioh3p0jkfgbua3pochne5f141tv</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>97702859580-16i510hbuqkcbhtkjae3u59fc92btl7d.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.bebrain.wecan</string>
+	<string>com.almosaaed.wecan</string>
 	<key>PROJECT_ID</key>
 	<string>almosaedapp</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:97702859580:ios:fcd054da64bac0fcb14439</string>
+	<string>1:97702859580:ios:41c0b4ad9a0e7d0cb14439</string>
 </dict>
 </plist>
