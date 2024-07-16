@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:bebrain/alerts/feedback/app_feedback.dart';
 import 'package:bebrain/helper/ui_helper.dart';
 import 'package:bebrain/model/single_interview_model.dart';
 import 'package:bebrain/providers/main_provider.dart';
@@ -13,6 +16,7 @@ import 'package:bebrain/widgets/request_text.dart';
 import 'package:bebrain/widgets/request_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class BookingRequestScreen extends StatefulWidget {
   final int interViewId;
@@ -38,11 +42,27 @@ class _BookingRequestScreenState extends State<BookingRequestScreen> {
   }
 
   String _formatTime(String time){
-   return DateFormat("hh:mm a").format(DateFormat("hh:mm:ss").parse(time).toUTC(context));
+   return DateFormat("hh:mm a").format(DateFormat("hh:mm:ss").parse(time));
   }
 
   String _finishMeetingTime(String time, int meetingPeriod){
-    return DateFormat("hh:mm").format(DateFormat("hh:mm:ss").parse(time).add(Duration(hours: meetingPeriod)).toUTC(context));
+    return DateFormat("hh:mm").format(DateFormat("hh:mm:ss").parse(time).add(Duration(hours: meetingPeriod)));
+  }
+
+  void _openZoom(BuildContext context,String joinUrl) async {
+    try {
+      final uri = Uri.parse(joinUrl);
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
+      } else {
+        await launchUrl(uri);
+      }
+    } catch (e) {
+      log("ErrorLauncher:: $e");
+      if (context.mounted) {
+        context.showSnackBar(context.appLocalization.generalError);
+      }
+    }
   }
 
   @override
@@ -66,8 +86,10 @@ class _BookingRequestScreenState extends State<BookingRequestScreen> {
             price: interView.price!,
             statusType: interView.statusType!,
             paymentDueDate: interView.paymentDueDate,
-            onTap: (){
-              context.paymentProvider.pay(
+            onTap: () {
+              interView.statusType == RequestType.interviewAdded
+              ? _openZoom(context, interView.joinUrl!)
+              : context.paymentProvider.pay(
                 context,
                 subscribtionId: interView.id!,
                 amount: interView.price!,
@@ -137,7 +159,7 @@ class _BookingRequestScreenState extends State<BookingRequestScreen> {
                           const SizedBox(width: 10),
                           Expanded(
                             child: RequestTile(
-                              "${context.appLocalization.theHour} : ${DateFormat("hh:mm").format(DateFormat("hh:mm:ss").parse(interView.meetingTime!).toUTC(context))} - ${_finishMeetingTime(interView.meetingTime!, interView.meetingPeriod!)}",
+                              "${context.appLocalization.theHour} : ${DateFormat("hh:mm").format(DateFormat("hh:mm:ss").parse(interView.meetingTime!))} - ${_finishMeetingTime(interView.meetingTime!, interView.meetingPeriod!)}",
                             ),
                           ),
                         ],

@@ -364,7 +364,7 @@ class MainProvider extends ChangeNotifier {
 
   Future<SingleInterviewModel> fetchInterViewById(int id) {
     final snapshot = ApiService<SingleInterviewModel>().build(
-      url: "${ApiUrl.showInterview}/$id",
+      url: "${ApiUrl.interview}/$id",
       isPublic: false,
       apiType: ApiType.get,
       builder: SingleInterviewModel.fromJson,
@@ -372,5 +372,37 @@ class MainProvider extends ChangeNotifier {
     return snapshot;
   }
 
-  
+  Future<SingleInterviewModel> createInterView({
+    required int professorId,
+    required int subjectId,
+    required String title,
+    required String meetingTime,
+    required String meetingPeriod,
+    String? note,
+    required List<File> attachments,
+  }) {
+    final snapshot = ApiService<SingleInterviewModel>().uploadFiles(
+     url: ApiUrl.interview,
+     builder: SingleInterviewModel.fromJson,
+     onRequest: (request) async{
+      request.headers['Authorization'] = 'Bearer ${MySharedPreferences.accessToken}';
+      request.headers['Content-Type'] = 'application/json';
+      request.headers['x-localization'] = MySharedPreferences.language;
+      request.fields['professor_id'] = professorId.toString();
+      request.fields['subject_id'] = subjectId.toString();
+      request.fields['topic'] = title;
+      request.fields['meeting_time'] = meetingTime;
+      request.fields['meeting_period'] = meetingPeriod;
+      if(note!=null) request.fields['note'] = note;
+      for(var i=0; i<=attachments.length;i++){
+        var file=attachments[i];
+        var stream= http.ByteStream(file.openRead());
+        var length = await file.length();
+        var multipartFile = http.MultipartFile('attachments[$i]', stream, length, filename: file.path.split('/').last);
+        request.files.add(multipartFile);
+      }
+     }
+    ); 
+    return snapshot;
+  }
 }

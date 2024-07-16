@@ -233,5 +233,6 @@
   "previousBookings":"Previous bookings",
   "bookWith":"Book with : ",
   "professorWillCheckAppointment":"The professor will check the appointment, and if he is not available on the date proposed by you, he will change the appointment to another date",
-  "noBookingsYet":"You don't have bookings yet"
+  "noBookingsYet":"You don't have bookings yet",
+  "professorNotAvailable":"Sorry, the professor is not available at the specified hour"
 }

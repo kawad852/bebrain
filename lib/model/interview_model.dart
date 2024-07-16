@@ -50,7 +50,7 @@ class InterviewData {
     String? createdTime;
     DateTime? meetingDate;
     String? meetingTime;
-    int? meetingId;
+    String? meetingId;
     String? meetingPassword;
     int? meetingPeriod;
     String? joinUrl;

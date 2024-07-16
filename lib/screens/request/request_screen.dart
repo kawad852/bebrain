@@ -37,7 +37,7 @@ class _RequestScreenState extends State<RequestScreen> {
   }
 
  String _formatTime(String time){
-   return DateFormat("hh:mm a").format(DateFormat("hh:mm:ss").parse(time).toUTC(context));
+   return DateFormat("hh:mm a").format(DateFormat("hh:mm:ss").parse(time));
   }  
 
   @override

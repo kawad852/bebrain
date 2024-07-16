@@ -52,6 +52,8 @@ class ColorPalette {
 
   //green
   Color get green008 => const Color(0xBB00894A);
+  Color get green2EA => const Color(0xFF2EA756);
+
 
   Color get facebook => const Color(0xFF1877F2);
 

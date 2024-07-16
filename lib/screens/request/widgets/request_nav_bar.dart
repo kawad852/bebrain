@@ -59,7 +59,7 @@ class _RequestNavBarState extends State<RequestNavBar> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   RequestText(
-                    widget.statusType == RequestType.inProgress
+                    widget.statusType == RequestType.inProgress || widget.statusType == RequestType.interviewAdded
                         ? context.appLocalization.feesPaid
                         : widget.statusType == RequestType.canceled
                             ? context.appLocalization.feesNotPaid
@@ -86,20 +86,25 @@ class _RequestNavBarState extends State<RequestNavBar> {
                 ],
               ),
             ),
-            if (widget.statusType == RequestType.pendingPayment)
+            if (widget.statusType == RequestType.pendingPayment || widget.statusType ==RequestType.interviewAdded)
               GestureDetector(
                 onTap: widget.onTap,
                 child: Container(
-                  width: 46,
+                  width: 55,
                   height: 30,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: context.colorPalette.blue8DD,
+                    color: widget.statusType ==RequestType.interviewAdded
+                    ? context.colorPalette.green2EA
+                    : context.colorPalette.blue8DD,
                     borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
                   ),
                   child: RequestText(
-                    context.appLocalization.pay,
+                    widget.statusType ==RequestType.interviewAdded
+                    ? context.appLocalization.join
+                    : context.appLocalization.pay,
                     fontWeight: FontWeight.bold,
+                    fontSize: 12,
                   ),
                 ),
               ),

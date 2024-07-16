@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:bebrain/alerts/errors/app_error_feedback.dart';
 import 'package:bebrain/alerts/feedback/app_feedback.dart';
 import 'package:bebrain/helper/ui_helper.dart';
 import 'package:bebrain/model/new_request_model.dart';
@@ -105,7 +106,9 @@ class _SendRequestScreenState extends State<SendRequestScreen> {
       }, onComplete: (snapshot) {
         context.pop();
         context.push(RequestScreen(requestId: snapshot.data!.id!));
-      });
+      },
+      onError: (failure) => AppErrorFeedback.show(context, failure),
+     );
     }
   }
 

@@ -1,7 +1,12 @@
 import 'dart:io';
 
+import 'package:bebrain/alerts/errors/app_error_feedback.dart';
+import 'package:bebrain/alerts/feedback/app_feedback.dart';
 import 'package:bebrain/helper/ui_helper.dart';
+import 'package:bebrain/model/single_interview_model.dart';
 import 'package:bebrain/model/teacher_model.dart';
+import 'package:bebrain/network/api_service.dart';
+import 'package:bebrain/screens/booking/booking_request_screen.dart';
 import 'package:bebrain/screens/teacher/widgets/date_bubble.dart';
 import 'package:bebrain/screens/teacher/widgets/subject_menu.dart';
 import 'package:bebrain/screens/teacher/widgets/teacher_info.dart';
@@ -14,6 +19,8 @@ import 'package:bebrain/widgets/stretch_button.dart';
 import 'package:bebrain/widgets/titled_textfield.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 
 class BookingLectureScreen extends StatefulWidget {
   final TeacherData teacherData;
@@ -29,12 +36,15 @@ class _BookingLectureScreenState extends State<BookingLectureScreen> {
   late String subjectHintText = context.appLocalization.selectSubject;
   late String dateHintText = context.appLocalization.suggestedDate;
   late String hourHintText = context.appLocalization.suggestedHour;
-  late DateTime _selectedDate;
+  DateTime? _selectedDate;
   late TimeOfDay _selectedHour;
+  final List<int> _days = [];
   int? _subjectId;
   String? _hoursNumber;
   String? _title;
   String? _notes;
+  String? _day;
+  String? _hour;
 
   FilePickerResult? result;
   List<File> files = [];
@@ -51,24 +61,53 @@ class _BookingLectureScreenState extends State<BookingLectureScreen> {
       setState(() {});
     }
   }
- List<int> days =[2,3,4,5,6,];
+
+  void _sendInterView() {
+    if (_subjectId == null || _title == null || files.isEmpty || _hoursNumber == null || _day == null || _hour == null) {
+      context.showSnackBar(context.appLocalization.fillAllFields);
+    } else {
+      ApiFutureBuilder<SingleInterviewModel>().fetch(context, future: () async {
+        final createInterview = context.mainProvider.createInterView(
+          professorId: _teacher.id!,
+          subjectId: _subjectId!,
+          meetingPeriod: _hoursNumber!,
+          meetingTime: "$_day $_hour",
+          title: _title!,
+          note: _notes,
+          attachments: files,
+        );
+        return createInterview;
+      }, onComplete: (snapshot) {
+        if(snapshot.code == 200){
+           context.pop();
+           context.push(BookingRequestScreen(interViewId: snapshot.data!.id!));
+        }
+        else {
+          context.showSnackBar(context.appLocalization.professorNotAvailable);
+        }
+      },
+      onError: (failure) => AppErrorFeedback.show(context, failure),
+     );
+    }
+  }
   Future<void> _showDatePicker(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
-      //initialDate: _selectedDate.add(Duration(days: 1)),
-      selectableDayPredicate: (DateTime day) => 
-        days.contains(day.weekday),
-      
+      initialDate: _selectedDate,
+      selectableDayPredicate: (DateTime day) => _days.contains(day.weekday),
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(const Duration(days: 30)),
     );
     if (picked != null) {
       setState(() {
         _selectedDate = picked;
-        dateHintText = _selectedDate.formatDate(context);
+        _day = DateFormat("yyyy-MM-dd").format(_selectedDate!);
+        dateHintText = _selectedDate!.formatDate(context);
       });
     }
   }
+
+
 
   Future<void> _showTimePicker(BuildContext context) async {
     final TimeOfDay? picked = await showTimePicker(
@@ -78,9 +117,8 @@ class _BookingLectureScreenState extends State<BookingLectureScreen> {
     if (picked != null) {
       setState(() {
         _selectedHour = picked;
-        if (context.mounted) {
-          hourHintText = picked.format(context);
-        }
+        _hour = "${MaterialLocalizations.of(context).formatTimeOfDay(picked,alwaysUse24HourFormat: true)}:00";
+        hourHintText = picked.format(context);
       });
     }
   }
@@ -88,7 +126,9 @@ class _BookingLectureScreenState extends State<BookingLectureScreen> {
   @override
   void initState() {
     super.initState();
-    _selectedDate = DateTime.now();
+    _teacher.interviewDays!.map((element) {
+       _days.add(element.dayId!);
+    }).toSet();
     _selectedHour = TimeOfDay.now();
   }
 
@@ -98,7 +138,9 @@ class _BookingLectureScreenState extends State<BookingLectureScreen> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(bottom: 10),
         child: StretchedButton(
-          onPressed: (){},
+          onPressed: (){
+            _sendInterView();
+          },
           margin: const EdgeInsets.symmetric(horizontal: 15),
           child: Text(context.appLocalization.send),
         ),
@@ -182,9 +224,10 @@ class _BookingLectureScreenState extends State<BookingLectureScreen> {
                           title: "${context.appLocalization.theHour} *",
                           child: DateBubble(
                             hintText: hourHintText,
-                            onTap: () {
+                            onTap: (){
                               _showTimePicker(context);
                             },
+                            
                           ),
                         ),
                       ),
@@ -196,6 +239,7 @@ class _BookingLectureScreenState extends State<BookingLectureScreen> {
                       title: "${context.appLocalization.hoursRequired} *",
                       child: BaseEditor(
                         hintText: context.appLocalization.hoursToBeReserved,
+                        inputFormatters:<TextInputFormatter>[FilteringTextInputFormatter.digitsOnly], 
                         keyboardType: TextInputType.number,
                         initialValue: null,
                         onChanged: (value) => _hoursNumber = value.isEmpty ? null : value,

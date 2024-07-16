@@ -38,7 +38,7 @@ class ApiUrl {
   static const String professorsSearch = '/api/professors/search';
   static const String slider = '/api/sliders/user';
   static const String myInterviews = '/api/interviews/user';
-  static const String showInterview = '/api/interviews';
+  static const String interview = '/api/interviews';
 
 
 
