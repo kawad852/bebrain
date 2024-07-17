@@ -1,3 +1,4 @@
+import 'package:bebrain/helper/ui_helper.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/my_icons.dart';
 import 'package:bebrain/utils/my_theme.dart';
@@ -33,20 +34,23 @@ class ContactNavBar extends StatelessWidget {
                 ),
               ),
             ),
-            Container(
-              width: 46,
-              height: 30,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: context.colorPalette.blue8DD,
-                borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
-              ),
-              child: Text(
-                context.appLocalization.chat,
-                style: TextStyle(
-                  color: context.colorPalette.white,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
+            GestureDetector(
+              onTap: () => UiHelper.whatsAppContact(context),
+              child: Container(
+                width: 46,
+                height: 30,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: context.colorPalette.blue8DD,
+                  borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
+                ),
+                child: Text(
+                  context.appLocalization.chat,
+                  style: TextStyle(
+                    color: context.colorPalette.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
             ),

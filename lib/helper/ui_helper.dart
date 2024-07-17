@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:bebrain/alerts/feedback/app_feedback.dart';
 import 'package:bebrain/model/auth_model.dart';
 import 'package:bebrain/model/filter_model.dart';
 import 'package:bebrain/network/api_service.dart';
@@ -6,10 +8,10 @@ import 'package:bebrain/utils/enums.dart';
 import 'package:bebrain/utils/my_theme.dart';
 import 'package:bebrain/widgets/stretch_button.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class UiHelper extends ChangeNotifier {
-  static String getFlag(String code) =>
-      'assets/flags/${code.toLowerCase()}.svg';
+  static String getFlag(String code) =>'assets/flags/${code.toLowerCase()}.svg';
 
   Future<void> addFilter(
     BuildContext context, {
@@ -122,5 +124,23 @@ class UiHelper extends ChangeNotifier {
         );
       },
     );
+  }
+
+  static void whatsAppContact(BuildContext context) async {
+    var contactNumber = "+96555800822";
+    var androidUrl = "whatsapp://send?phone=$contactNumber";
+    var iosUrl = "https://wa.me/$contactNumber";
+    try{
+      if(Platform.isIOS){
+        await launchUrl(Uri.parse(iosUrl));
+      }
+      else if(Platform.isAndroid){
+        await launchUrl(Uri.parse(androidUrl));
+      }
+    } on Exception{
+      if(context.mounted){
+        context.showSnackBar(context.appLocalization.installWhatsApp);
+      }
+    }
   }
 }

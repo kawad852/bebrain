@@ -121,7 +121,9 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                 ),
                 const SizedBox(width: 5),
                 ActionContainer(
-                  onTap: () {},
+                  onTap: () {
+                    UiHelper.whatsAppContact(context);
+                  },
                   color: context.colorPalette.blueC2E,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
