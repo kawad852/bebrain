@@ -46,7 +46,7 @@ class RequestLoading extends StatelessWidget {
                       shrinkWrap: true,
                       padding: EdgeInsets.zero,
                       physics: const NeverScrollableScrollPhysics(),
-                      separatorBuilder: (context, index) =>const SizedBox(height: 5),
+                      separatorBuilder: (context, index) => const SizedBox(height: 5),
                       itemBuilder: (context, index) {
                         return const LoadingBubble(
                           width: double.infinity,

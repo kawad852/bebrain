@@ -4,6 +4,7 @@ import 'package:bebrain/alerts/feedback/app_feedback.dart';
 import 'package:bebrain/helper/ui_helper.dart';
 import 'package:bebrain/model/single_interview_model.dart';
 import 'package:bebrain/providers/main_provider.dart';
+import 'package:bebrain/screens/booking/widgets/booking_request_loading.dart';
 import 'package:bebrain/screens/request/widgets/request_nav_bar.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/enums.dart';
@@ -75,6 +76,7 @@ class _BookingRequestScreenState extends State<BookingRequestScreen> {
         });
       },
       withBackgroundColor: true,
+      onLoading: () => const BookingRequestLoading(),
       onComplete: (context, snapshot) {
         final data = snapshot.data!;
         final interView = data.data!;
