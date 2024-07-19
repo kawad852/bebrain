@@ -10,6 +10,7 @@ import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/enums.dart';
 import 'package:bebrain/utils/my_theme.dart';
 import 'package:bebrain/widgets/custom_future_builder.dart';
+import 'package:bebrain/widgets/custom_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -17,6 +18,7 @@ class UnitScreen extends StatefulWidget {
   final int unitId;
   final bool isSubscribedCourse;
   final int available;
+  final String courseImage;
   final List<SubscriptionsData>? subscriptionCourse;
   const UnitScreen({
     super.key, 
@@ -24,6 +26,7 @@ class UnitScreen extends StatefulWidget {
     required this.isSubscribedCourse, 
     required this.available, 
     required this.subscriptionCourse,
+    required this.courseImage,
     });
 
   @override
@@ -120,10 +123,15 @@ class _UnitScreenState extends State<UnitScreen> {
                 scrolledUnderElevation: 0,
                 collapsedHeight: 170,
                 leading: const LeadingBack(),
-                flexibleSpace:VimeoPlayerScreen(
-                vimeoId: unit.sections![0].videos![0].vimeoId!,
-                videoId: unit.sections![0].videos![0].id!,
-              ),
+                flexibleSpace: widget.isSubscribedCourse || unit.paymentStatus == PaymentStatus.paid
+                ? VimeoPlayerScreen(
+                  vimeoId: unit.sections![0].videos![0].vimeoId!,
+                  videoId: unit.sections![0].videos![0].id!,
+                )
+                : CustomNetworkImage(
+                    widget.courseImage,
+                    radius: 0,
+                )
               ),
               SliverPadding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -256,6 +264,7 @@ class _UnitScreenState extends State<UnitScreen> {
                     final section = unit.sections![index];
                     return  PartCard(
                       section: section,
+                      unitStatus: unit.paymentStatus!,
                       isSubscribedCourse: widget.isSubscribedCourse,
                       onTap: (){
                         widget.available == 0

@@ -14,12 +14,19 @@ import 'package:flutter/material.dart';
 class PartCard extends StatelessWidget {
   final Section section;
   final bool isSubscribedCourse;
+  final int unitStatus;
   final void Function() onTap;
-  const PartCard({super.key, required this.section, required this.onTap, required this.isSubscribedCourse});
+  const PartCard({
+    super.key, 
+    required this.section, 
+    required this.onTap, 
+    required this.isSubscribedCourse, 
+    required this.unitStatus,
+    });
 
   bool get _sectionAllow => section.type == PaymentType.free || section.paymentStatus == PaymentStatus.paid;
 
-  bool get _allowShow => (isSubscribedCourse && section.type == PaymentType.free) || (section.paymentStatus == PaymentStatus.paid && section.type == PaymentType.notFree);
+  bool get _allowShow => (isSubscribedCourse && section.type == PaymentType.free) || (section.paymentStatus == PaymentStatus.paid && section.type == PaymentType.notFree) || ( unitStatus == PaymentStatus.paid );
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +59,7 @@ class PartCard extends StatelessWidget {
                   ),
         title: Row(
           children: [
-            CustomSvg(_sectionAllow ? MyIcons.unLock : MyIcons.lock),
+            CustomSvg(_allowShow ? MyIcons.unLock : MyIcons.lock),
             const SizedBox(width: 7),
             Expanded(
               child: Column(
@@ -85,7 +92,7 @@ class PartCard extends StatelessWidget {
                     } : null ,
                     child: Row(
                       children: [
-                        CustomSvg( _sectionAllow ? MyIcons.playCirclePaid : MyIcons.playCircle),
+                        CustomSvg( _allowShow ? MyIcons.playCirclePaid : MyIcons.playCircle),
                         const SizedBox(width: 7),
                         Expanded(
                           child: CourseText(

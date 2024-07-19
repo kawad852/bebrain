@@ -250,6 +250,7 @@ class _CourseScreenState extends State<CourseScreen> {
                       available: course.available!,
                       isSubscribedCourse: course.subscription!.isNotEmpty,
                       subscriptionCourse: course.subscription,
+                      courseImage: course.image!,
                       afterNavigate: (){
                         setState(() {
                            _initializeFuture();
