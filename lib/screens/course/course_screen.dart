@@ -13,7 +13,6 @@ import 'package:bebrain/screens/course/widgets/course_text.dart';
 import 'package:bebrain/screens/course/widgets/leading_back.dart';
 import 'package:bebrain/screens/course/widgets/lecture_card.dart';
 import 'package:bebrain/screens/course/widgets/rating_card.dart';
-import 'package:bebrain/widgets/view_ratings_button.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/enums.dart';
 import 'package:bebrain/utils/my_icons.dart';
@@ -23,6 +22,7 @@ import 'package:bebrain/widgets/custom_future_builder.dart';
 import 'package:bebrain/widgets/custom_network_image.dart';
 import 'package:bebrain/widgets/custom_svg.dart';
 import 'package:bebrain/widgets/stretch_button.dart';
+import 'package:bebrain/widgets/view_ratings_button.dart';
 import 'package:flutter/material.dart';
 
 class CourseScreen extends StatefulWidget {
@@ -41,31 +41,31 @@ class _CourseScreenState extends State<CourseScreen> {
     _courseFuture = _mainProvider.filterByCourse(widget.courseId);
   }
 
-  bool checkTime(DateTime firstDate, DateTime lastDate){
-    return (firstDate.toUTC(context).compareTo(DateTime.now()) == 0 ||  DateTime.now().isAfter(firstDate.toUTC(context))) &&
-      (lastDate.toUTC(context).compareTo(DateTime.now()) == 0 ||  DateTime.now().isBefore(lastDate.toUTC(context)));
+  bool checkTime(DateTime firstDate, DateTime lastDate) {
+    return (firstDate.toUTC(context).compareTo(DateTime.now()) == 0 ||
+            DateTime.now().isAfter(firstDate.toUTC(context))) &&
+        (lastDate.toUTC(context).compareTo(DateTime.now()) == 0 || DateTime.now().isBefore(lastDate.toUTC(context)));
   }
 
-
-   void _courseSubscribe(int id) {
-      ApiFutureBuilder<SubscriptionsModel>().fetch(
-        context,
-        future: () async {
-          final subscribe = _mainProvider.subscribe(
-            type: SubscriptionsType.course,
-            id: id,
-          );
-          return subscribe;
-        },
-        onComplete: (snapshot) {
-          if(snapshot.code == 200){
+  void _courseSubscribe(int id) {
+    ApiFutureBuilder<SubscriptionsModel>().fetch(
+      context,
+      future: () async {
+        final subscribe = _mainProvider.subscribe(
+          type: SubscriptionsType.course,
+          id: id,
+        );
+        return subscribe;
+      },
+      onComplete: (snapshot) {
+        if (snapshot.code == 200) {
           setState(() {
             _initializeFuture();
           });
-         }
-        },
-        onError: (failure) => AppErrorFeedback.show(context, failure),
-      );
+        }
+      },
+      onError: (failure) => AppErrorFeedback.show(context, failure),
+    );
   }
 
   @override
@@ -89,29 +89,31 @@ class _CourseScreenState extends State<CourseScreen> {
         final data = snapshot.data!;
         final course = data.data!.course!;
         return Scaffold(
-          bottomNavigationBar: course.offer == null || !checkTime(course.offer!.startDate!,course.offer!.endDate!) || course.paymentStatus == PaymentStatus.paid 
+          bottomNavigationBar: course.offer == null ||
+                  !checkTime(course.offer!.startDate!, course.offer!.endDate!) ||
+                  course.paymentStatus == PaymentStatus.paid
               ? null
               : CourseNavBar(
                   offer: course.offer!,
                   price: course.price!,
                   discountPrice: course.discountPrice,
-                  onTap: (){
-                    if(course.available == 0){
+                  onTap: () {
+                    if (course.available == 0) {
                       context.dialogNotAvailble();
-                    } else{
+                    } else {
                       context.paymentProvider.pay(
                         context,
                         id: course.id!,
-                        amount: course.discountPrice?? course.price!,
+                        amount: course.discountPrice ?? course.price!,
                         orderType: OrderType.subscription,
                         subscriptionsType: SubscriptionsType.course,
                         subscribtionId: course.subscription!.isEmpty || course.subscription == null
-                        ? null
-                        : course.subscription?[0].id,
+                            ? null
+                            : course.subscription?[0].id,
                         orderId: course.subscription!.isEmpty || course.subscription == null
-                        ? null
-                        : course.subscription?[0].order?.orderNumber, 
-                        afterPay: (){
+                            ? null
+                            : course.subscription?[0].order?.orderNumber,
+                        afterPay: () {
                           setState(() {
                             _initializeFuture();
                           });
@@ -150,16 +152,16 @@ class _CourseScreenState extends State<CourseScreen> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                         ViewRatingsButton(
-                          onTap: (){
-                            context.showBottomSheet(
-                              context, 
-                              builder: (context){
-                                return CourseReview(courseId: course.id!);
-                              },
+                          ViewRatingsButton(
+                            onTap: () {
+                              context.showBottomSheet(
+                                context,
+                                builder: (context) {
+                                  return CourseReview(courseId: course.id!);
+                                },
                               );
-                          },
-                         ),
+                            },
+                          ),
                         ],
                       ),
                       Padding(
@@ -179,7 +181,7 @@ class _CourseScreenState extends State<CourseScreen> {
                                 const CustomSvg(MyIcons.star),
                                 const SizedBox(width: 5),
                                 CourseText(
-                                "( ${course.reviewsCount} ) ${course.reviewsRating!.toStringAsFixed(1)}",
+                                  "( ${course.reviewsCount} ) ${course.reviewsRating!.toStringAsFixed(1)}",
                                   textColor: context.colorPalette.grey66,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 12,
@@ -193,43 +195,43 @@ class _CourseScreenState extends State<CourseScreen> {
                         course.description!,
                       ),
                       const SizedBox(height: 10),
-                     if(course.isSubscribed == 1)
-                      CourseRate(
-                        courseName: course.name!,
-                        courseId: course.id!,
-                      ),
+                      if (course.isSubscribed == 1)
+                        CourseRate(
+                          courseName: course.name!,
+                          courseId: course.id!,
+                        ),
                       CourseInfo(
                         hours: course.hours!,
                         minutes: course.minutes!,
                         videoCount: course.videosCount!,
                         subscriptionCount: course.subscriptionCount!,
                       ),
-                      if(course.subscription!.isEmpty)
-                      StretchedButton(
-                        onPressed: () {
-                          if(course.available == 0){
-                             context.dialogNotAvailble();
-                          } else{
-                          _courseSubscribe(course.id!);
-                          }
-                        },
-                        margin: const EdgeInsets.symmetric(vertical: 12),
-                        child: Column(
-                          children: [
-                            CourseText(
-                              context.appLocalization.join,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              textColor: context.colorPalette.black33,
-                            ),
-                            CourseText(
-                              context.appLocalization.getPatFree,
-                              fontSize: 12,
-                              textColor: context.colorPalette.black33,
-                            ),
-                          ],
+                      if (course.subscription!.isEmpty)
+                        StretchedButton(
+                          onPressed: () {
+                            if (course.available == 0) {
+                              context.dialogNotAvailble();
+                            } else {
+                              _courseSubscribe(course.id!);
+                            }
+                          },
+                          margin: const EdgeInsets.symmetric(vertical: 12),
+                          child: Column(
+                            children: [
+                              CourseText(
+                                context.appLocalization.join,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                textColor: context.colorPalette.black33,
+                              ),
+                              CourseText(
+                                context.appLocalization.getPatFree,
+                                fontSize: 12,
+                                textColor: context.colorPalette.black33,
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
                       CourseText(
                         context.appLocalization.contents,
                         fontSize: 16,
@@ -251,17 +253,17 @@ class _CourseScreenState extends State<CourseScreen> {
                       isSubscribedCourse: course.subscription!.isNotEmpty,
                       subscriptionCourse: course.subscription,
                       courseImage: course.image!,
-                      afterNavigate: (){
+                      afterNavigate: () {
                         setState(() {
-                           _initializeFuture();
+                          _initializeFuture();
                         });
                       },
-                      );
+                    );
                   },
                 ),
               ),
               SliverPadding(
-                padding:const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
                 sliver: SliverToBoxAdapter(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -280,22 +282,22 @@ class _CourseScreenState extends State<CourseScreen> {
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
-                         ViewRatingsButton(
-                          onTap: (){
-                            context.showBottomSheet(
-                              context, 
-                              builder: (context){
-                                return CourseReview(courseId: course.id!);
-                              },
+                          ViewRatingsButton(
+                            onTap: () {
+                              context.showBottomSheet(
+                                context,
+                                builder: (context) {
+                                  return CourseReview(courseId: course.id!);
+                                },
                               );
-                          },
-                         ),
+                            },
+                          ),
                         ],
                       ),
                       Row(
                         children: [
                           const CustomSvg(MyIcons.star, width: 20),
-                           Padding(
+                          Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: CourseText(
                               "5/${course.reviewsRating!.toStringAsFixed(1)}",
@@ -309,12 +311,12 @@ class _CourseScreenState extends State<CourseScreen> {
                           ),
                         ],
                       ),
-                       RatingCard(
+                      RatingCard(
                         audioVideoRating: course.audioVideoQuality!,
                         conveyIdea: course.conveyIdea!,
                         valueForMoney: course.valueForMoney!,
                         similarityCurriculumContent: course.similarityCurriculumContent!,
-                       ),
+                      ),
                     ],
                   ),
                 ),
@@ -332,7 +334,7 @@ class _CourseScreenState extends State<CourseScreen> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                       Padding(
+                      Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         child: CoursesList(
                           courses: data.data!.moreCourses!,
