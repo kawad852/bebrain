@@ -14,11 +14,63 @@
       },
       "oauth_client": [
         {
+          "client_id": "97702859580-ihi6kv1ogsb7fpfop9iu8bg4rjvr2gm1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.almosaaed.wecan",
+            "certificate_hash": "09e55cf6f1986f5d9b9ffdcab8f3f793c716b319"
+          }
+        },
+        {
           "client_id": "97702859580-jpsufpeofqfssqd56v73vj2mlavae2f1.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.almosaaed.wecan",
             "certificate_hash": "08c64fa4301e5b4b352751a6b9b944bb3067e109"
+          }
+        },
+        {
+          "client_id": "97702859580-a791vrfkkanqe4if1qf4j522iuhjath4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACjyPXax7ffJiZskDvC-9SYt3vMt-TWHk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "97702859580-a791vrfkkanqe4if1qf4j522iuhjath4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "97702859580-0qkaur9om6l5cm5u5m6982jrrami3val.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.bebrain.wecan"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:97702859580:android:4f18a01d11edfc3cb14439",
+        "android_client_info": {
+          "package_name": "com.almusaed.wecan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "97702859580-j869jhuppgd62jt2rgf72rb69gl9gi5j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.almusaed.wecan",
+            "certificate_hash": "b7d249b0e962bcaabb77a8c814967d1739132af7"
           }
         },
         {
