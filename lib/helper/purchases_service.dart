@@ -37,7 +37,7 @@ class PurchasesService {
   }) async {
     for (final purchaseDetails in purchaseDetailsList) {
       var purchaseStatus = purchaseDetails.status;
-      print("aklsjfalksjfkaljsfkjl $purchaseStatus");
+      log("purchaseStatus: $purchaseStatus");
       if (purchaseStatus == PurchaseStatus.pending) {
         // handle pending
       } else {
