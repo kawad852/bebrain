@@ -3,6 +3,7 @@ import 'package:bebrain/alerts/feedback/app_feedback.dart';
 import 'package:bebrain/alerts/loading/app_over_loader.dart';
 import 'package:bebrain/model/auth_model.dart';
 import 'package:bebrain/model/filter_model.dart';
+import 'package:bebrain/model/general_model.dart';
 import 'package:bebrain/model/user_model.dart';
 import 'package:bebrain/network/api_service.dart';
 import 'package:bebrain/network/api_url.dart';
@@ -30,8 +31,8 @@ class AuthProvider extends ChangeNotifier {
     user = UserData.copy(MySharedPreferences.user);
   }
 
-  void initFilter(){
-    wizardValues=FilterModel.copy(MySharedPreferences.filter);
+  void initFilter() {
+    wizardValues = FilterModel.copy(MySharedPreferences.filter);
   }
 
   void _popUntilLastPage(BuildContext context) {
@@ -57,10 +58,10 @@ class AuthProvider extends ChangeNotifier {
           json = {
             "phone_number": phoneNum,
             "password": password,
-            "country_id": wizardValues.countryId?? "",
-            "university_id" :wizardValues.universityId?? "",
-            "college_id" :wizardValues.collegeId?? "",
-            "major_id": wizardValues.majorId?? "",
+            "country_id": wizardValues.countryId ?? "",
+            "university_id": wizardValues.universityId ?? "",
+            "college_id": wizardValues.collegeId ?? "",
+            "major_id": wizardValues.majorId ?? "",
             "locale": MySharedPreferences.language,
           };
         } else {
@@ -68,10 +69,10 @@ class AuthProvider extends ChangeNotifier {
             "name": displayName,
             "email": email,
             "image": photoURL,
-            "country_id": wizardValues.countryId?? "",
-            "university_id" :wizardValues.universityId?? "",
-            "college_id" :wizardValues.collegeId?? "",
-            "major_id": wizardValues.majorId?? "",
+            "country_id": wizardValues.countryId ?? "",
+            "university_id": wizardValues.universityId ?? "",
+            "college_id": wizardValues.collegeId ?? "",
+            "major_id": wizardValues.majorId ?? "",
             "locale": MySharedPreferences.language,
           };
         }
@@ -123,10 +124,10 @@ class AuthProvider extends ChangeNotifier {
             "phone_number": phoneNum,
             "password": password,
             "password_confirmation": password,
-            "country_id": wizardValues.countryId?? "",
-            "university_id" :wizardValues.universityId?? "",
-            "college_id" :wizardValues.collegeId?? "",
-            "major_id": wizardValues.majorId?? "",
+            "country_id": wizardValues.countryId ?? "",
+            "university_id": wizardValues.universityId ?? "",
+            "college_id": wizardValues.collegeId ?? "",
+            "major_id": wizardValues.majorId ?? "",
             "locale": MySharedPreferences.language,
           },
           builder: AuthModel.fromJson,
@@ -141,7 +142,7 @@ class AuthProvider extends ChangeNotifier {
           context.showSnackBar(context.appLocalization.accountCreatedMsg, duration: 10);
           updateUser(context, userModel: snapshot.data!.user);
           if (_lastRouteName == null) {
-           // context.pushAndRemoveUntil(const AppNavBar());
+            // context.pushAndRemoveUntil(const AppNavBar());
             context.pushAndRemoveUntil(const WizardScreen(wizardType: WizardType.countries));
           } else {
             _popUntilLastPage(context);
@@ -161,18 +162,25 @@ class AuthProvider extends ChangeNotifier {
   }) async {
     user = UserData.copy(userModel ?? user);
     MySharedPreferences.saveUser(userModel ?? user);
-    updateFilter(context, filterModel: FilterModel(
-            wizardType: user.majorId!= null? WizardType.specialities: user.collegeId!=null? WizardType.colleges: user.universityId!=null? WizardType.universities:WizardType.countries,
-            countryId: user.countryId?? wizardValues.countryId,
-            countryName: user.country?? wizardValues.countryName,
-            countryCode: user.countryCode?? wizardValues.countryCode,
-            universityId: user.universityId?? wizardValues.universityId,
-            universityName: user.universityName?? wizardValues.universityName,
-            collegeId: user.collegeId?? wizardValues.collegeId,
-            collegeName: user.collegeName?? wizardValues.collegeName,
-            majorId: user.majorId?? wizardValues.majorId,
-            majorName: user.majorName?? wizardValues.majorName, 
-          ));
+    updateFilter(context,
+        filterModel: FilterModel(
+          wizardType: user.majorId != null
+              ? WizardType.specialities
+              : user.collegeId != null
+                  ? WizardType.colleges
+                  : user.universityId != null
+                      ? WizardType.universities
+                      : WizardType.countries,
+          countryId: user.countryId ?? wizardValues.countryId,
+          countryName: user.country ?? wizardValues.countryName,
+          countryCode: user.countryCode ?? wizardValues.countryCode,
+          universityId: user.universityId ?? wizardValues.universityId,
+          universityName: user.universityName ?? wizardValues.universityName,
+          collegeId: user.collegeId ?? wizardValues.collegeId,
+          collegeName: user.collegeName ?? wizardValues.collegeName,
+          majorId: user.majorId ?? wizardValues.majorId,
+          majorName: user.majorName ?? wizardValues.majorName,
+        ));
     debugPrint("User:: ${user.toJson()}");
     if (notify) {
       notifyListeners();
@@ -304,6 +312,47 @@ class AuthProvider extends ChangeNotifier {
     if (withOverLayLoading) {
       AppOverlayLoader.show();
     }
+    ApiFutureBuilder<GeneralModel>().fetch(
+      context,
+      future: () async {
+        final otpFuture = ApiService<GeneralModel>().build(
+          url: '',
+          link: "https://api.doverifyit.com/api/otp-send/6879141732",
+          isPublic: true,
+          additionalHeaders: {
+            "Authorization": "878|ddl4NYnlSKlCeYwrDtfUcTa2RNeIvdv1MPEA9rAwF3nqUxU6VIjXa4H2J9CY",
+          },
+          queryParams: {
+            "contact": "$dialCode$phoneNum",
+          },
+          apiType: ApiType.post,
+          builder: AuthModel.fromJson,
+        );
+        return otpFuture;
+      },
+      onComplete: (snapshot) {
+        if (snapshot.status == 200) {
+          if (onResent != null) {
+            onResent('verificationId');
+          } else {
+            if (context.mounted) {
+              context.push(
+                VerifyCodeScreen(
+                  verificationId: 'verificationId',
+                  dialCode: dialCode,
+                  phoneNum: phoneNum,
+                  guestRoute: '',
+                  password: password,
+                  fullName: fullName,
+                ),
+              );
+            }
+          }
+        } else {
+          context.showSnackBar(snapshot.message ?? context.appLocalization.generalError);
+        }
+      },
+    );
     await FirebaseAuth.instance.verifyPhoneNumber(
       forceResendingToken: 10,
       phoneNumber: '$dialCode$phoneNum',
