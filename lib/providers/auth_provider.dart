@@ -353,57 +353,6 @@ class AuthProvider extends ChangeNotifier {
         }
       },
     );
-    await FirebaseAuth.instance.verifyPhoneNumber(
-      forceResendingToken: 10,
-      phoneNumber: '$dialCode$phoneNum',
-      verificationCompleted: (PhoneAuthCredential credential) async {
-        debugPrint("verificationCompleted:: $credential");
-      },
-      codeSent: (String verificationId, int? resendToken) async {
-        debugPrint("codeSent:: $verificationId");
-        AppOverlayLoader.hide();
-        if (onResent != null) {
-          onResent(verificationId);
-        } else {
-          if (context.mounted) {
-            context.push(
-              VerifyCodeScreen(
-                verificationId: verificationId,
-                dialCode: dialCode,
-                phoneNum: phoneNum,
-                guestRoute: '',
-                password: password,
-                fullName: fullName,
-              ),
-            );
-            // VerifyCodeRoute(
-            //   dialCode: _phoneController.getDialCode(context),
-            //   phoneNum: _phoneController.phoneNum!,
-            //   $extra: verificationId,
-            //   guestRoute: widget.guestRoute,
-            // ).go(context);
-          }
-        }
-      },
-      verificationFailed: (FirebaseAuthException e) {
-        debugPrint("verificationFailed:: $e ${e.code}");
-        AppOverlayLoader.hide();
-        if (e.code == AppErrorFeedback.webCanceled) return;
-        if (e.code == AppErrorFeedback.networkRequestFailed) {
-          context.showSnackBar(context.appLocalization.networkError);
-        } else if (e.code == AppErrorFeedback.invalidPhoneNumber) {
-          context.showSnackBar(context.appLocalization.invalidPhoneNum);
-        } else if (e.code == AppErrorFeedback.tooManyRequests) {
-          context.showSnackBar(context.appLocalization.pinCodeBlockMsg);
-        } else {
-          context.showSnackBar(e.message ?? context.appLocalization.generalError);
-        }
-      },
-      codeAutoRetrievalTimeout: (String verificationId) {
-        debugPrint("Sms time out error");
-        AppOverlayLoader.hide();
-      },
-    );
   }
 
   Future<void> updateFilter(
