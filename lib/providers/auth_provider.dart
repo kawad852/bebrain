@@ -326,7 +326,7 @@ class AuthProvider extends ChangeNotifier {
             "contact": "$dialCode$phoneNum",
           },
           apiType: ApiType.post,
-          builder: AuthModel.fromJson,
+          builder: GeneralModel.fromJson,
         );
         return otpFuture;
       },

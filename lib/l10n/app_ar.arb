@@ -159,7 +159,7 @@
   "enterPhoneCode": "أدخل رمز التحقق",
   "verifyCode": "تفعيل الحساب",
   "verifyPhoneNum": "تحقق من هاتفك",
-  "verifyCodeMsg": "يرجى إدخال رمز التحقق OTP الذي تم ارساله الى رقم الهاتف المحمول.",
+  "verifyCodeMsg": "يرجى إدخال رمز التحقق OTP الذي تم ارساله الى الواتس اب.",
   "noPinReceived": "لم يتم استلام الرمز؟",
   "resend": "إعادة الإرسال",
   "accountCreatedMsg": "تم إنشاء حسابك بنجاح",
