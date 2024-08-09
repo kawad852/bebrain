@@ -217,7 +217,7 @@ class _UnitScreenState extends State<UnitScreen> {
                                   } else {
                                     PurchasesService.buy(
                                       context,
-                                      "lectures_2024",
+                                      "test_22_24",
                                       title: "title",
                                       description: "description",
                                       price: 32.0,
