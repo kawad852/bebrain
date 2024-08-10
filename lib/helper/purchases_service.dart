@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:bebrain/alerts/loading/app_over_loader.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
@@ -37,7 +38,7 @@ class PurchasesService {
   }) async {
     for (final purchaseDetails in purchaseDetailsList) {
       var purchaseStatus = purchaseDetails.status;
-      print("aklsjfalksjfkaljsfkjl $purchaseStatus");
+      log("purchaseStatus: $purchaseStatus");
       if (purchaseStatus == PurchaseStatus.pending) {
         // handle pending
       } else {
@@ -64,6 +65,7 @@ class PurchasesService {
     required double price,
   }) async {
     try {
+      AppOverlayLoader.show();
       final productDetails = await inAppPurchases.queryProductDetails({productId});
       if (productDetails.productDetails.isEmpty) {
         Fluttertoast.showToast(msg: "No Products Found");
@@ -82,6 +84,8 @@ class PurchasesService {
     } catch (e) {
       log("error:: $e");
       Fluttertoast.showToast(msg: "$e");
+    } finally {
+      AppOverlayLoader.hide();
     }
   }
 }

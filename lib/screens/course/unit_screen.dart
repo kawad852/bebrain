@@ -215,10 +215,9 @@ class _UnitScreenState extends State<UnitScreen> {
                                   if (widget.available == 0) {
                                     context.dialogNotAvailble();
                                   } else {
-                                    print("alksfalksjflkajsf");
                                     PurchasesService.buy(
                                       context,
-                                      "lectures_2024",
+                                      "test_22_24",
                                       title: "title",
                                       description: "description",
                                       price: 32.0,

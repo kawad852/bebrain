@@ -159,7 +159,7 @@
   "enterPhoneCode": "Enter Verification Code",
   "verifyCode": "Verify Account",
   "verifyPhoneNum": "Verify Your Phone Number",
-  "verifyCodeMsg": "Please enter the OTP verification code sent to the mobile number.",
+  "verifyCodeMsg": "Please enter the OTP verification code sent to the WhatsApp.",
   "noPinReceived": "Didn't receive pin code ?",
   "resend": "Resend",
   "accountCreatedMsg": "Your account has been successfully created.",
