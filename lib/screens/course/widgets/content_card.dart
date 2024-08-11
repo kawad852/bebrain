@@ -17,6 +17,7 @@ class ContentCard extends StatelessWidget {
   final bool isSubscribedCourse;
   final Unit unit;
   final String courseImage;
+  final String? productId;
   final List<SubscriptionsData>? subscriptionCourse;
   final void Function() afterNavigate;
   const ContentCard(
@@ -27,6 +28,7 @@ class ContentCard extends StatelessWidget {
       required this.subscriptionCourse, 
       required this.afterNavigate,
       required this.courseImage,
+      required this.productId,
       });
 
   @override
@@ -47,6 +49,7 @@ class ContentCard extends StatelessWidget {
               available: available,
               subscriptionCourse: subscriptionCourse,
               courseImage: courseImage,
+              productIdCourse: productId,
             ),
           ).then((value){
             afterNavigate();

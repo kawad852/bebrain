@@ -63,9 +63,13 @@ class PurchasesService {
     required String title,
     required String description,
     required double price,
+    bool withOverlayLoader = false,
+    Function? afterPay,
   }) async {
     try {
-      AppOverlayLoader.show();
+      if(withOverlayLoader){
+        AppOverlayLoader.show();
+      }
       final productDetails = await inAppPurchases.queryProductDetails({productId});
       if (productDetails.productDetails.isEmpty) {
         Fluttertoast.showToast(msg: "No Products Found");
@@ -86,6 +90,9 @@ class PurchasesService {
       Fluttertoast.showToast(msg: "$e");
     } finally {
       AppOverlayLoader.hide();
+      if(afterPay !=null){
+        afterPay();
+      }
     }
   }
 }

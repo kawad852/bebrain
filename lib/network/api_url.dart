@@ -39,6 +39,8 @@ class ApiUrl {
   static const String slider = '/api/sliders/user';
   static const String myInterviews = '/api/interviews/user';
   static const String interview = '/api/interviews';
+  static const String paymentConfirm = '/api/payment/confirm';
+
 
 
 

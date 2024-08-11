@@ -76,6 +76,7 @@ class Course {
     double? similarityCurriculumContent;
     int? paymentStatus;
     int? isSubscribed;
+    String? productId;
     List<SubscriptionsData>? subscription;
     co.Professor? professor;
     Offer? offer;
@@ -108,6 +109,7 @@ class Course {
         this.similarityCurriculumContent,
         this.paymentStatus,
         this.isSubscribed,
+        this.productId,
         this.subscription,
         this.professor,
         this.offer,
@@ -141,6 +143,7 @@ class Course {
         similarityCurriculumContent: json["similarity_curriculum_content"]?.toDouble(),
         paymentStatus: json["payment_status"],
         isSubscribed: json["is_subscribed"],
+        productId: json["product_id"],
         subscription: json["subscription"] == null ? [] : List<SubscriptionsData>.from(json["subscription"]!.map((x) => SubscriptionsData.fromJson(x))),
         professor: json["professor"] == null ? null : co.Professor.fromJson(json["professor"]),
         offer: json["offer"] == null ? null : Offer.fromJson(json["offer"]),
@@ -174,6 +177,7 @@ class Course {
         "similarity_curriculum_content": similarityCurriculumContent,
         "payment_status": paymentStatus,
         "is_subscribed": isSubscribed,
+        "product_id": productId,
         "subscription": subscription == null ? [] : List<dynamic>.from(subscription!.map((x) => x.toJson())),
         "professor": professor?.toJson(),
         "offer": offer?.toJson(),

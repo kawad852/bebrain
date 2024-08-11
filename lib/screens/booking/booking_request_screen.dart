@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:bebrain/alerts/feedback/app_feedback.dart';
+import 'package:bebrain/helper/purchases_service.dart';
 import 'package:bebrain/helper/ui_helper.dart';
 import 'package:bebrain/model/single_interview_model.dart';
 import 'package:bebrain/providers/main_provider.dart';
@@ -30,9 +31,13 @@ class BookingRequestScreen extends StatefulWidget {
 class _BookingRequestScreenState extends State<BookingRequestScreen> {
   late MainProvider _mainProvider;
   late Future<SingleInterviewModel> _interviewFuture;
+  String? _orderNumber;
 
-  void _initializeFuture() {
+  void _initializeFuture() async{
     _interviewFuture = _mainProvider.fetchInterViewById(widget.interViewId);
+    final _interview = await _interviewFuture;
+    _orderNumber = _interview.data!.myOrder?.orderNumber;
+    log(_orderNumber.toString());
   }
 
   @override
@@ -40,6 +45,24 @@ class _BookingRequestScreenState extends State<BookingRequestScreen> {
     super.initState();
     _mainProvider = context.mainProvider;
     _initializeFuture();
+    PurchasesService.initialize(
+      onPurchase: () {
+        UiHelper.confirmPayment(
+          context, 
+          orderNumber: _orderNumber!,
+          afterPay: (){
+            setState(() {
+              _initializeFuture();
+            });
+          }
+        );
+      },
+    );
+  }
+  @override
+  void dispose(){
+    PurchasesService.cancel();
+    super.dispose();
   }
 
   String _formatTime(String time){
@@ -93,6 +116,8 @@ class _BookingRequestScreenState extends State<BookingRequestScreen> {
               ? _openZoom(context, interView.joinUrl!)
               : context.paymentProvider.pay(
                 context,
+                productId: interView.productId,
+                title: interView.topic!,
                 subscribtionId: interView.id!,
                 amount: interView.price!,
                 orderType: OrderType.interview,

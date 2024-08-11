@@ -1,5 +1,7 @@
 import 'package:bebrain/alerts/errors/app_error_feedback.dart';
 import 'package:bebrain/alerts/feedback/app_feedback.dart';
+import 'package:bebrain/helper/purchases_service.dart';
+import 'package:bebrain/helper/ui_helper.dart';
 import 'package:bebrain/model/course_filter_model.dart';
 import 'package:bebrain/model/subscriptions_model.dart';
 import 'package:bebrain/network/api_service.dart';
@@ -36,9 +38,12 @@ class CourseScreen extends StatefulWidget {
 class _CourseScreenState extends State<CourseScreen> {
   late MainProvider _mainProvider;
   late Future<CourseFilterModel> _courseFuture;
+  String? _orderNumber;
 
   void _initializeFuture() async {
     _courseFuture = _mainProvider.filterByCourse(widget.courseId);
+    final _course = await _courseFuture;
+    _orderNumber = _course.data!.course!.subscription?[0].order?.orderNumber;
   }
 
   bool checkTime(DateTime firstDate, DateTime lastDate) {
@@ -73,6 +78,25 @@ class _CourseScreenState extends State<CourseScreen> {
     super.initState();
     _mainProvider = context.mainProvider;
     _initializeFuture();
+    PurchasesService.initialize(
+      onPurchase: () {
+        UiHelper.confirmPayment(
+          context, 
+          orderNumber: _orderNumber!,
+          afterPay: (){
+            setState(() {
+              _initializeFuture();
+            });
+          }
+        );
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    PurchasesService.cancel();
+    super.dispose();
   }
 
   @override
@@ -103,6 +127,9 @@ class _CourseScreenState extends State<CourseScreen> {
                     } else {
                       context.paymentProvider.pay(
                         context,
+                        productId: course.productId,
+                        title: course.name!,
+                        discription: course.description,
                         id: course.id!,
                         amount: course.discountPrice ?? course.price!,
                         orderType: OrderType.subscription,
@@ -249,6 +276,7 @@ class _CourseScreenState extends State<CourseScreen> {
                   itemBuilder: (context, index) {
                     return ContentCard(
                       unit: course.units![index],
+                      productId: course.productId,
                       available: course.available!,
                       isSubscribedCourse: course.subscription!.isNotEmpty,
                       subscriptionCourse: course.subscription,

@@ -46,6 +46,8 @@ class UnitFilterData {
     double? courseDiscountPrice;
     String? type;
     int? paymentStatus;
+    String? productId;
+    List<SubscriptionsData>? courseSubscription;
     List<SubscriptionsData>? subscription;
     Offer? courseOffer;
     Offer? offer;
@@ -68,6 +70,8 @@ class UnitFilterData {
         this.courseDiscountPrice,
         this.type,
         this.paymentStatus,
+        this.productId,
+        this.courseSubscription,
         this.subscription,
         this.courseOffer,
         this.offer,
@@ -91,6 +95,8 @@ class UnitFilterData {
         courseDiscountPrice: json["course_discount_price"]?.toDouble(),
         type: json["type"],
         paymentStatus: json["payment_status"],
+        productId: json["product_id"],
+        courseSubscription: json["course_subscription"] == null ? [] : List<SubscriptionsData>.from(json["course_subscription"]!.map((x) => SubscriptionsData.fromJson(x))),
         subscription: json["subscription"] == null ? [] : List<SubscriptionsData>.from(json["subscription"]!.map((x) => SubscriptionsData.fromJson(x))),
         courseOffer: json["course_offer"] == null ? null : Offer.fromJson(json["course_offer"]),
         offer: json["offer"] == null ? null : Offer.fromJson(json["offer"]),
@@ -114,6 +120,8 @@ class UnitFilterData {
         "course_discount_price": courseDiscountPrice,
         "type": type,
         "payment_status": paymentStatus,
+        "product_id": productId,
+        "course_subscription": courseSubscription == null ? [] : List<dynamic>.from(courseSubscription!.map((x) => x.toJson())),
         "subscription": subscription == null ? [] : List<dynamic>.from(subscription!.map((x) => x.toJson())),
         "course_offer": courseOffer?.toJson(),
         "offer": offer?.toJson(),
@@ -136,6 +144,7 @@ class Section {
     int? subscriptionCount;
     String? type;
     int? paymentStatus;
+    String? productId;
     List<SubscriptionsData>? subscription;
     Offer? offer;
     List<Video>? videos;
@@ -156,6 +165,7 @@ class Section {
         this.subscriptionCount,
         this.type,
         this.paymentStatus,
+        this.productId,
         this.subscription,
         this.offer,
         this.videos,
@@ -177,6 +187,7 @@ class Section {
         subscriptionCount: json["subscription_count"],
         type: json["type"],
         paymentStatus: json["payment_status"],
+        productId: json["product_id"],
         offer: json["offer"] == null ? null : Offer.fromJson(json["offer"]),
         subscription: json["subscription"] == null ? [] : List<SubscriptionsData>.from(json["subscription"]!.map((x) => SubscriptionsData.fromJson(x))),
         videos: json["videos"] == null ? [] : List<Video>.from(json["videos"]!.map((x) => Video.fromJson(x))),
@@ -198,6 +209,7 @@ class Section {
         "subscription_count": subscriptionCount,
         "type": type,
         "payment_status": paymentStatus,
+        "product_id": productId,
         "offer": offer?.toJson(),
         "subscription": subscription == null ? [] : List<dynamic>.from(subscription!.map((x) => x.toJson())),
         "videos": videos == null ? [] : List<dynamic>.from(videos!.map((x) => x.toJson())),

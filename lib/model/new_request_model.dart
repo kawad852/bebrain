@@ -54,7 +54,8 @@ class RequestData {
     String? createdTime;
     String? replyDate;
     String? replyTime;
-    SubscriptionsData? myOrder;
+    String? productId;
+    Order? myOrder;
     List<UserAttachment>? userAttachment;
     List<UserAttachment>? adminAttachment;
     List<Videos>? videos;
@@ -85,6 +86,7 @@ class RequestData {
         this.createdTime,
         this.replyDate,
         this.replyTime,
+        this.productId,
         this.myOrder,
         this.userAttachment,
         this.adminAttachment,
@@ -117,7 +119,8 @@ class RequestData {
         createdTime: json["created_time"],
         replyDate: json["reply_date"],
         replyTime: json["reply_time"],
-        myOrder: json["my_order"] == null ? null : SubscriptionsData.fromJson(json["my_order"]),
+        productId: json["product_id"],
+        myOrder: json["my_order"] == null ? null : Order.fromJson(json["my_order"]),
         userAttachment: json["user_attachment"] == null ? [] : List<UserAttachment>.from(json["user_attachment"]!.map((x) => UserAttachment.fromJson(x))),
         adminAttachment: json["admin_attachment"] == null ? [] : List<UserAttachment>.from(json["admin_attachment"]!.map((x) => UserAttachment.fromJson(x))),
         videos: json["videos"] == null ? [] : List<Videos>.from(json["videos"]!.map((x) => Videos.fromJson(x))),
@@ -149,6 +152,7 @@ class RequestData {
         "created_time": createdTime,
         "reply_date": replyDate,
         "reply_time": replyTime,
+        "product_id": productId,
         "my_order": myOrder?.toJson(),
         "user_attachment": userAttachment == null ? [] : List<dynamic>.from(userAttachment!.map((x) => x.toJson())),
         "admin_attachment": adminAttachment == null ? [] : List<dynamic>.from(adminAttachment!.map((x) => x.toJson())),

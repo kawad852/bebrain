@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:bebrain/helper/purchases_service.dart';
 import 'package:bebrain/helper/ui_helper.dart';
 import 'package:bebrain/model/new_request_model.dart';
 import 'package:bebrain/providers/main_provider.dart';
@@ -18,7 +21,6 @@ import 'package:bebrain/widgets/custom_svg.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-//import 'package:vimeo_player_flutter/vimeo_player_flutter.dart';
 
 class RequestScreen extends StatefulWidget {
   final int requestId;
@@ -31,9 +33,13 @@ class RequestScreen extends StatefulWidget {
 class _RequestScreenState extends State<RequestScreen> {
   late MainProvider _mainProvider;
   late Future<NewRequestModel> _requestFuture;
+  String? _orderNumber;
 
   void _initializeFuture() async {
     _requestFuture = _mainProvider.fetchRequest(widget.requestId);
+    final _request = await _requestFuture;
+    _orderNumber = _request.data!.myOrder?.orderNumber!;
+    log(_orderNumber.toString());
   }
 
  String _formatTime(String time){
@@ -51,15 +57,29 @@ class _RequestScreenState extends State<RequestScreen> {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+    PurchasesService.initialize(
+      onPurchase: () {
+        UiHelper.confirmPayment(
+          context, 
+          orderNumber: _orderNumber!,
+          afterPay: (){
+            setState(() {
+              _initializeFuture();
+            });
+          }
+        );
+      },
+    );
   }
 
   @override
   void dispose() {
-    super.dispose();
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+    PurchasesService.cancel();
+    super.dispose();
   }
 
   @override
@@ -86,6 +106,8 @@ class _RequestScreenState extends State<RequestScreen> {
             onTap: (){
               context.paymentProvider.pay(
                 context,
+                productId: request.data!.productId,
+                title: request.data!.title!,
                 subscribtionId: request.data!.id!,
                 amount: request.data!.price!,
                 orderType: OrderType.request,

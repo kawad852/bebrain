@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:bebrain/model/college_filter_model.dart';
+import 'package:bebrain/model/confirm_pay_model.dart';
 import 'package:bebrain/model/continue_learning_model.dart';
 import 'package:bebrain/model/country_filter_model.dart';
 import 'package:bebrain/model/course_filter_model.dart';
@@ -403,6 +404,19 @@ class MainProvider extends ChangeNotifier {
       }
      }
     ); 
+    return snapshot;
+  }
+
+  Future<ConfirmPayModel> confirmPayment(String orderNumber) {
+    final snapshot = ApiService<ConfirmPayModel>().build(
+      url: ApiUrl.paymentConfirm,
+      isPublic: false,
+      apiType: ApiType.post,
+      queryParams: {
+        "order_number": orderNumber,
+      },
+      builder: ConfirmPayModel.fromJson,
+    );
     return snapshot;
   }
 }

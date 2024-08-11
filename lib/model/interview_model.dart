@@ -54,7 +54,8 @@ class InterviewData {
     String? meetingPassword;
     int? meetingPeriod;
     String? joinUrl;
-    SubscriptionsData? myOrder;
+    String? productId;
+    Order? myOrder;
     List<UserAttachment>? userAttachment;
     List<UserAttachment>? adminAttachment;
 
@@ -83,6 +84,7 @@ class InterviewData {
         this.meetingPassword,
         this.meetingPeriod,
         this.joinUrl,
+        this.productId,
         this.myOrder,
         this.userAttachment,
         this.adminAttachment,
@@ -113,7 +115,8 @@ class InterviewData {
         meetingPassword: json["meeting_password"],
         meetingPeriod: json["meeting_period"],
         joinUrl: json["join_url"],
-        myOrder: json["my_order"] == null ? null : SubscriptionsData.fromJson(json["my_order"]),
+        productId: json["product_id"],
+        myOrder: json["my_order"] == null ? null : Order.fromJson(json["my_order"]),
         userAttachment: json["user_attachment"] == null ? [] : List<UserAttachment>.from(json["user_attachment"]!.map((x) => UserAttachment.fromJson(x))),
         adminAttachment: json["admin_attachment"] == null ? [] : List<UserAttachment>.from(json["admin_attachment"]!.map((x) => UserAttachment.fromJson(x))),
     );
@@ -143,6 +146,7 @@ class InterviewData {
         "meeting_password": meetingPassword,
         "meeting_period": meetingPeriod,
         "join_url": joinUrl,
+        "product_id": productId,
         "my_order": myOrder?.toJson(),
         "user_attachment": userAttachment == null ? [] : List<dynamic>.from(userAttachment!.map((x) => x.toJson())),
         "admin_attachment": adminAttachment == null ? [] : List<dynamic>.from(adminAttachment!.map((x) => x.toJson())),

@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:bebrain/helper/purchases_service.dart';
+import 'package:bebrain/helper/ui_helper.dart';
 import 'package:bebrain/model/subscriptions_model.dart';
 import 'package:bebrain/model/unit_filter_model.dart';
 import 'package:bebrain/providers/main_provider.dart';
@@ -20,6 +23,7 @@ class UnitScreen extends StatefulWidget {
   final bool isSubscribedCourse;
   final int available;
   final String courseImage;
+  final String? productIdCourse;
   final List<SubscriptionsData>? subscriptionCourse;
   const UnitScreen({
     super.key,
@@ -27,7 +31,8 @@ class UnitScreen extends StatefulWidget {
     required this.isSubscribedCourse,
     required this.available,
     required this.subscriptionCourse,
-    required this.courseImage,
+    required this.courseImage, 
+    required this.productIdCourse,
   });
 
   @override
@@ -37,9 +42,20 @@ class UnitScreen extends StatefulWidget {
 class _UnitScreenState extends State<UnitScreen> {
   late MainProvider _mainProvider;
   late Future<UnitFilterModel> _unitFuture;
+  String? _orderNumber;
 
-  void _initializeFuture() async {
+  _initializeFuture(String? type, int? index ) async {
     _unitFuture = _mainProvider.filterByUnit(widget.unitId);
+    final _unit = await _unitFuture;
+    switch(type){
+      case SubscriptionsType.course:
+        _orderNumber = _unit.data!.courseSubscription?[0].order?.orderNumber;
+      case SubscriptionsType.unit:
+        _orderNumber = _unit.data!.subscription?[0].order?.orderNumber;
+      case SubscriptionsType.section:
+        _orderNumber = _unit.data!.sections?[index!].subscription?[0].order?.orderNumber;
+     }
+    log(_orderNumber.toString());
   }
 
   bool checkTime(DateTime firstDate, DateTime lastDate) {
@@ -52,7 +68,7 @@ class _UnitScreenState extends State<UnitScreen> {
   void initState() {
     super.initState();
     _mainProvider = context.mainProvider;
-    _initializeFuture();
+    _initializeFuture(null,null);
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeRight,
       DeviceOrientation.landscapeLeft,
@@ -60,18 +76,28 @@ class _UnitScreenState extends State<UnitScreen> {
       DeviceOrientation.portraitDown,
     ]);
     PurchasesService.initialize(
-      onPurchase: () {},
+      onPurchase: () {
+        UiHelper.confirmPayment(
+          context, 
+          orderNumber: _orderNumber!,
+          afterPay: (){
+            setState(() {
+              _initializeFuture(null , null);
+            });
+          }
+          );
+      },
     );
   }
 
   @override
   void dispose() {
-    super.dispose();
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
     PurchasesService.cancel();
+    super.dispose();
   }
 
   @override
@@ -81,7 +107,7 @@ class _UnitScreenState extends State<UnitScreen> {
       withBackgroundColor: true,
       onRetry: () {
         setState(() {
-          _initializeFuture();
+          _initializeFuture(null ,null);
         });
       },
       onComplete: (context, snapshot) {
@@ -102,18 +128,20 @@ class _UnitScreenState extends State<UnitScreen> {
                           context.paymentProvider.pay(
                             context,
                             id: unit.courseId!,
+                            productId:widget.productIdCourse,
+                            title: unit.courseName!,
                             amount: unit.courseDiscountPrice ?? unit.couursePrice!,
                             orderType: OrderType.subscription,
                             subscriptionsType: SubscriptionsType.course,
-                            subscribtionId: widget.subscriptionCourse!.isEmpty || widget.subscriptionCourse == null
+                            subscribtionId: unit.courseSubscription!.isEmpty || unit.courseSubscription == null
                                 ? null
-                                : widget.subscriptionCourse?[0].id,
-                            orderId: widget.subscriptionCourse!.isEmpty || widget.subscriptionCourse == null
+                                : unit.courseSubscription?[0].id,
+                            orderId: unit.courseSubscription!.isEmpty || unit.courseSubscription == null
                                 ? null
-                                : widget.subscriptionCourse?[0].order?.orderNumber,
+                                : unit.courseSubscription?[0].order?.orderNumber,
                             afterPay: () {
                               setState(() {
-                                _initializeFuture();
+                                _initializeFuture(SubscriptionsType.course, 0);
                               });
                             },
                           );
@@ -211,36 +239,30 @@ class _UnitScreenState extends State<UnitScreen> {
                                 textColor: context.colorPalette.black33,
                               ),
                               GestureDetector(
-                                onTap: () {
+                                onTap: ()async {
                                   if (widget.available == 0) {
                                     context.dialogNotAvailble();
                                   } else {
-                                    PurchasesService.buy(
+                                    context.paymentProvider.pay(
                                       context,
-                                      "test_22_24",
-                                      title: "title",
-                                      description: "description",
-                                      price: 32.0,
+                                      id: unit.id!,
+                                      productId: unit.productId,
+                                      title: unit.name!,
+                                      amount: unit.discountPrice?? unit.unitPrice!,
+                                      orderType: OrderType.subscription,
+                                      subscriptionsType: SubscriptionsType.unit,
+                                      orderId: unit.subscription!.isEmpty || unit.subscription == null
+                                      ? null
+                                      : unit.subscription?[0].order?.orderNumber,
+                                      subscribtionId: unit.subscription!.isEmpty || unit.subscription == null
+                                      ? null
+                                      : unit.subscription?[0].id ,
+                                      afterPay: (){
+                                        setState(() {
+                                            _initializeFuture(SubscriptionsType.unit,0);
+                                        });
+                                      },
                                     );
-
-                                    // context.paymentProvider.pay(
-                                    //   context,
-                                    //   id: unit.id!,
-                                    //   amount: unit.discountPrice?? unit.unitPrice!,
-                                    //   orderType: OrderType.subscription,
-                                    //   subscriptionsType: SubscriptionsType.unit,
-                                    //   orderId: unit.subscription!.isEmpty || unit.subscription == null
-                                    //   ? null
-                                    //   : unit.subscription?[0].order?.orderNumber,
-                                    //   subscribtionId: unit.subscription!.isEmpty || unit.subscription == null
-                                    //   ? null
-                                    //   : unit.subscription?[0].id ,
-                                    //   afterPay: (){
-                                    //     setState(() {
-                                    //        _initializeFuture();
-                                    //     });
-                                    //   },
-                                    //   );
                                   }
                                 },
                                 child: Container(
@@ -282,6 +304,8 @@ class _UnitScreenState extends State<UnitScreen> {
                             : context.paymentProvider.pay(
                                 context,
                                 id: section.id!,
+                                productId: section.productId,
+                                title: section.name!,
                                 amount: section.discountPrice ?? section.sectionPrice!,
                                 orderType: OrderType.subscription,
                                 orderId: section.subscription!.isEmpty || section.subscription == null
@@ -293,7 +317,7 @@ class _UnitScreenState extends State<UnitScreen> {
                                 subscriptionsType: SubscriptionsType.section,
                                 afterPay: () {
                                   setState(() {
-                                    _initializeFuture();
+                                    _initializeFuture(SubscriptionsType.section, index);
                                   });
                                 },
                               );

@@ -1,6 +1,8 @@
 import 'dart:io';
+import 'package:bebrain/alerts/errors/app_error_feedback.dart';
 import 'package:bebrain/alerts/feedback/app_feedback.dart';
 import 'package:bebrain/model/auth_model.dart';
+import 'package:bebrain/model/confirm_pay_model.dart';
 import 'package:bebrain/model/filter_model.dart';
 import 'package:bebrain/network/api_service.dart';
 import 'package:bebrain/utils/base_extensions.dart';
@@ -142,5 +144,25 @@ class UiHelper extends ChangeNotifier {
         context.showSnackBar(context.appLocalization.installWhatsApp);
       }
     }
+  }
+
+  static Future<void> confirmPayment(
+    BuildContext context,{
+    required String orderNumber,
+    Function? afterPay,
+  }) async{
+     await ApiFutureBuilder<ConfirmPayModel>().fetch(
+        context,
+        future: () async {
+          final confirmPay = context.mainProvider.confirmPayment(orderNumber);
+          return confirmPay;
+        },
+        onComplete: (snapshot) {
+          if(snapshot.code == 200 && afterPay != null){
+            afterPay();
+          }
+        },
+        onError: (failure) =>  AppErrorFeedback.show(context, failure),
+     );
   }
 }
