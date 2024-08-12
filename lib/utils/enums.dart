@@ -37,6 +37,11 @@ class PaymentType{
   static const String notFree = "paid";
 }
 
+class PaymentMethodType{
+  static const String upayment = "upament";
+  static const String inAppPurchases= "inAppPurchases";
+}
+
 class LanguageEnum {
   static const String english = 'en';
   static const String arabic = 'ar';

@@ -18,6 +18,7 @@ class ContentCard extends StatelessWidget {
   final Unit unit;
   final String courseImage;
   final String? productId;
+  final int unitStatus;
   final List<SubscriptionsData>? subscriptionCourse;
   final void Function() afterNavigate;
   const ContentCard(
@@ -29,7 +30,10 @@ class ContentCard extends StatelessWidget {
       required this.afterNavigate,
       required this.courseImage,
       required this.productId,
+      required this.unitStatus,
       });
+
+  bool get _allowShow => (isSubscribedCourse && unit.type == PaymentType.free) || (unit.paymentStatus == PaymentStatus.paid && unit.type == PaymentType.notFree) || ( unitStatus == PaymentStatus.paid );
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +71,8 @@ class ContentCard extends StatelessWidget {
         child: Row(
           children: [
             CustomSvg(
-              unit.type == PaymentType.free || unit.paymentStatus == PaymentStatus.paid
+              _allowShow
+             // unit.type == PaymentType.free || unit.paymentStatus == PaymentStatus.paid
                   ? MyIcons.unLock
                   : MyIcons.lock,
             ),

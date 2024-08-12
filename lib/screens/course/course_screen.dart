@@ -42,14 +42,15 @@ class _CourseScreenState extends State<CourseScreen> {
 
   void _initializeFuture() async {
     _courseFuture = _mainProvider.filterByCourse(widget.courseId);
-    final _course = await _courseFuture;
-    _orderNumber = _course.data!.course!.subscription?[0].order?.orderNumber;
+    final course = await _courseFuture;
+    _orderNumber = course.data!.course!.subscription?[0].order?.orderNumber;
   }
 
   bool checkTime(DateTime firstDate, DateTime lastDate) {
     return (firstDate.toUTC(context).compareTo(DateTime.now()) == 0 ||
             DateTime.now().isAfter(firstDate.toUTC(context))) &&
-        (lastDate.toUTC(context).compareTo(DateTime.now()) == 0 || DateTime.now().isBefore(lastDate.toUTC(context)));
+        (lastDate.toUTC(context).compareTo(DateTime.now()) == 0 ||
+            DateTime.now().isBefore(lastDate.toUTC(context)));
   }
 
   void _courseSubscribe(int id) {
@@ -80,15 +81,12 @@ class _CourseScreenState extends State<CourseScreen> {
     _initializeFuture();
     PurchasesService.initialize(
       onPurchase: () {
-        UiHelper.confirmPayment(
-          context, 
-          orderNumber: _orderNumber!,
-          afterPay: (){
-            setState(() {
-              _initializeFuture();
-            });
-          }
-        );
+        UiHelper.confirmPayment(context, orderNumber: _orderNumber!,
+            afterPay: () {
+          setState(() {
+            _initializeFuture();
+          });
+        });
       },
     );
   }
@@ -113,9 +111,7 @@ class _CourseScreenState extends State<CourseScreen> {
         final data = snapshot.data!;
         final course = data.data!.course!;
         return Scaffold(
-          bottomNavigationBar: course.offer == null ||
-                  !checkTime(course.offer!.startDate!, course.offer!.endDate!) ||
-                  course.paymentStatus == PaymentStatus.paid
+          bottomNavigationBar: course.offer == null || !checkTime(course.offer!.startDate!, course.offer!.endDate!) || course.paymentStatus == PaymentStatus.paid
               ? null
               : CourseNavBar(
                   offer: course.offer!,
@@ -125,22 +121,22 @@ class _CourseScreenState extends State<CourseScreen> {
                     if (course.available == 0) {
                       context.dialogNotAvailble();
                     } else {
-                      context.paymentProvider.pay(
+                      UiHelper.payment(
                         context,
-                        productId: course.productId,
                         title: course.name!,
                         discription: course.description,
-                        id: course.id!,
                         amount: course.discountPrice ?? course.price!,
-                        orderType: OrderType.subscription,
-                        subscriptionsType: SubscriptionsType.course,
-                        subscribtionId: course.subscription!.isEmpty || course.subscription == null
-                            ? null
-                            : course.subscription?[0].id,
+                        id: course.id!,
                         orderId: course.subscription!.isEmpty || course.subscription == null
                             ? null
                             : course.subscription?[0].order?.orderNumber,
-                        afterPay: () {
+                        orderType: OrderType.subscription,
+                        productId: course.productId,
+                        subscribtionId: course.subscription!.isEmpty || course.subscription == null
+                            ? null
+                            : course.subscription?[0].id,
+                        subscriptionsType: SubscriptionsType.course,
+                        afterPay: (){
                           setState(() {
                             _initializeFuture();
                           });
@@ -270,12 +266,13 @@ class _CourseScreenState extends State<CourseScreen> {
               ),
               SliverPadding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
-                sliver: SliverList.separated(
+                sliver: SliverList.separated( 
                   separatorBuilder: (context, index) => const SizedBox(height: 5),
                   itemCount: course.units!.length,
                   itemBuilder: (context, index) {
                     return ContentCard(
                       unit: course.units![index],
+                      unitStatus: course.units![index].paymentStatus!,
                       productId: course.productId,
                       available: course.available!,
                       isSubscribedCourse: course.subscription!.isNotEmpty,

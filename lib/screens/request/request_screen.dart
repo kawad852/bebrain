@@ -104,7 +104,7 @@ class _RequestScreenState extends State<RequestScreen> {
             statusType: request.data!.statusType!,
             paymentDueDate: request.data!.paymentDueDate,
             onTap: (){
-              context.paymentProvider.pay(
+              UiHelper.payment(
                 context,
                 productId: request.data!.productId,
                 title: request.data!.title!,
@@ -115,7 +115,7 @@ class _RequestScreenState extends State<RequestScreen> {
                   setState(() {
                     _initializeFuture();
                   });
-                },
+                }
               );
             },
             ),

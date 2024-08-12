@@ -78,7 +78,7 @@ class TeacherData {
         description: json["description"],
         image: json["image"],
         universityId: json["university_id"],
-        universityName: json["university_name"],
+        universityName: json["university_name"]??'',
         reviewsCount: json["reviews_count"],
         reviewsRating: json["reviews_rating"]?.toDouble(),
         subscriptionCount: json["subscription_count"],

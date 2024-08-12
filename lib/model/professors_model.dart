@@ -57,7 +57,7 @@ class ProfessorData {
         description: json["description"],
         image: json["image"],
         universityId: json["university_id"],
-        universityName: json["university_name"],
+        universityName: json["university_name"]??'',
         subscriptionCount: json["subscription_count"],
         reviewsRating: json["reviews_rating"]?.toDouble(),
         majors: json["majors"] == null ? [] : List<Major>.from(json["majors"]!.map((x) => Major.fromJson(x))),

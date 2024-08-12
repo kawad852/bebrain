@@ -114,10 +114,10 @@ class _BookingRequestScreenState extends State<BookingRequestScreen> {
             onTap: () {
               interView.statusType == RequestType.interviewAdded
               ? _openZoom(context, interView.joinUrl!)
-              : context.paymentProvider.pay(
+              : UiHelper.payment(
                 context,
-                productId: interView.productId,
                 title: interView.topic!,
+                productId: interView.productId,
                 subscribtionId: interView.id!,
                 amount: interView.price!,
                 orderType: OrderType.interview,
@@ -125,7 +125,7 @@ class _BookingRequestScreenState extends State<BookingRequestScreen> {
                   setState(() {
                     _initializeFuture();
                   });
-                },
+                }
               );
             },
             ),

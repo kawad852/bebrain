@@ -52,8 +52,8 @@ class UPayment {
             "email": MySharedPreferences.user.email??"",
             "mobile": MySharedPreferences.user.phoneNumber??"",
           },
-          "returnUrl": "https://almosaaed.com/api/payment/confirm",
-          "cancelUrl": "https://almosaaed.com/api/payment/fail",
+          "returnUrl": "https://almosaaed.com/api/upayment/confirm",
+          "cancelUrl": "https://almosaaed.com/api/upayment/fail",
           "notificationUrl": "https://webhook.site/d7c6e1c8-b98b-4f77-8b51-b487540df336",
           "customerExtraData": "User define data"
         },

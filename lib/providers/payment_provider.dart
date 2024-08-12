@@ -8,6 +8,8 @@ import 'package:bebrain/model/order_model.dart';
 import 'package:bebrain/model/subscriptions_model.dart';
 import 'package:bebrain/network/api_service.dart';
 import 'package:bebrain/utils/base_extensions.dart';
+import 'package:bebrain/utils/enums.dart';
+import 'package:bebrain/utils/upayments/upayment.dart';
 import 'package:flutter/material.dart';
 
 class PaymentProvider extends ChangeNotifier {
@@ -19,6 +21,7 @@ class PaymentProvider extends ChangeNotifier {
     required double amount,
     required String title,
     required String? productId,
+    required String paymentMethod,
     String? description,
     Function? afterPay,
   }) async {
@@ -34,6 +37,7 @@ class PaymentProvider extends ChangeNotifier {
         createOrder(
           context,
           orderType: orderType,
+          paymentMethod: paymentMethod,
           orderableId: snapshot.data!.id!,
           amount: amount,
           afterPay: afterPay,
@@ -58,6 +62,7 @@ class PaymentProvider extends ChangeNotifier {
     required double amount,
     required String title,
     required String? productId,
+    required String paymentMethod,
     String? description,
     Function? afterPay,
     bool withOverlayLoader = false,
@@ -65,7 +70,8 @@ class PaymentProvider extends ChangeNotifier {
     if (withOverlayLoader) {
       AppOverlayLoader.show();
     }
-    ApiFutureBuilder<OrderModel>().fetch(context, withOverlayLoader: false, future: () async {
+    ApiFutureBuilder<OrderModel>().fetch(context, withOverlayLoader: false,
+        future: () async {
       final order = context.mainProvider.createOrder(
         type: orderType,
         orderableId: orderableId,
@@ -75,20 +81,23 @@ class PaymentProvider extends ChangeNotifier {
     }, onComplete: (snapshot) async {
       log("khaled");
       if (snapshot.code == 200) {
-        await PurchasesService.buy(
-          context,
-          productId ?? "test_22_24",
-          title: title,
-          description: description ?? "",
-          price: amount,
-          afterPay: afterPay,
-        );
-        //  UPayment.checkout(
-        //     context: context,
-        //     orderId: snapshot.data!.orderNumber!,
-        //     amount: amount,
-        //     afterPay: afterPay,
-        //   );
+        if (paymentMethod == PaymentMethodType.inAppPurchases) {
+          await PurchasesService.buy(
+            context,
+            productId ?? "dash_consumable_2k",
+            title: title,
+            description: description ?? "",
+            price: amount,
+            afterPay: afterPay,
+          );
+        } else {
+          UPayment.checkout(
+            context: context,
+            orderId: snapshot.data!.orderNumber!,
+            amount: amount,
+            afterPay: afterPay,
+          );
+        }
         if (afterPay != null) {
           afterPay();
         }
@@ -113,6 +122,7 @@ class PaymentProvider extends ChangeNotifier {
     Function? afterPay,
     int? id,
     String? discription,
+    required String paymentMethod,
     required double amount,
     required String orderType,
     required String title,
@@ -120,28 +130,32 @@ class PaymentProvider extends ChangeNotifier {
   }) async {
     if (orderId != null) {
       print("khaled 2222");
-      await PurchasesService.buy(
-        context,
-        productId ?? "lecutes_11",
-        title: title,
-        description: discription ?? "",
-        price: amount,
-        withOverlayLoader: true,
-        afterPay: afterPay,
-      );
-      // UPayment.checkout(
-      //   context: context,
-      //   withOverlayLoader: true,
-      //   orderId: orderId,
-      //   amount: amount,
-      //   afterPay: afterPay,
-      //  );
+      if (paymentMethod == PaymentMethodType.inAppPurchases) {
+        await PurchasesService.buy(
+          context,
+          productId ?? "lecutes_11",
+          title: title,
+          description: discription ?? "",
+          price: amount,
+          withOverlayLoader: true,
+          afterPay: afterPay,
+        );
+      } else {
+        UPayment.checkout(
+          context: context,
+          withOverlayLoader: true,
+          orderId: orderId,
+          amount: amount,
+          afterPay: afterPay,
+        );
+      }
       if (afterPay != null) {
         afterPay();
       }
     } else if (subscribtionId != null) {
       return createOrder(
         context,
+        paymentMethod: paymentMethod,
         withOverlayLoader: true,
         amount: amount,
         orderType: orderType,
@@ -155,6 +169,7 @@ class PaymentProvider extends ChangeNotifier {
       return subscribe(
         context,
         orderType: orderType,
+        paymentMethod: paymentMethod,
         subscriptionsType: subscriptionsType!,
         amount: amount,
         id: id!,

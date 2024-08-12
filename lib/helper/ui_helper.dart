@@ -165,4 +165,106 @@ class UiHelper extends ChangeNotifier {
         onError: (failure) =>  AppErrorFeedback.show(context, failure),
      );
   }
+
+  static Future selectPaymentDialog(
+    BuildContext context,{
+      required void Function() onUpayment,
+      required void Function() onAppPurchases,
+    }
+  ) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          insetPadding: const EdgeInsets.symmetric(horizontal: 15),
+          child: Container(
+            width: double.infinity,
+            height: 200,
+            decoration: BoxDecoration(
+              color: context.colorPalette.white,
+              borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
+            ),
+            child: Column(
+              children: [
+                Padding(
+                  padding:const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                  child: Text(
+                    context.appLocalization.choosePaymentMethod,
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                StretchedButton(
+                  onPressed: onUpayment,
+                  margin:const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                  child: const Text("Upayment"),
+                ),
+                StretchedButton(
+                  onPressed:onAppPurchases,
+                  margin: const EdgeInsets.symmetric(horizontal: 40),
+                  child: const Text("In App Purchases"),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  static void payment(
+    BuildContext context,{
+    required String? productId,
+    required String title,
+    String? discription,
+    Function? afterPay,
+    int? id,
+    required double amount,
+    required String orderType,
+    String? subscriptionsType,
+    required int? subscribtionId,
+    String? orderId,
+  }) {
+    selectPaymentDialog(
+      context,
+      onUpayment: () {
+        context.pop();
+        context.paymentProvider.pay(
+          context,
+          paymentMethod: PaymentMethodType.upayment,
+          productId: productId,
+          title: title,
+          discription: discription,
+          id: id,
+          amount: amount,
+          orderType: orderType,
+          subscriptionsType: subscriptionsType,
+          subscribtionId: subscribtionId,
+          orderId: orderId,
+          afterPay: afterPay,
+        );
+      },
+      onAppPurchases: () {
+        context.pop();
+        context.paymentProvider.pay(
+          context,
+          paymentMethod: PaymentMethodType.inAppPurchases,
+          productId: productId,
+          title: title,
+          discription: discription,
+          id: id,
+          amount: amount,
+          orderType: orderType,
+          subscriptionsType: subscriptionsType,
+          subscribtionId: subscribtionId,
+          orderId: orderId,
+          afterPay: afterPay,
+        );
+      },
+    );
+  }
 }

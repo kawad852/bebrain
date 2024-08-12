@@ -125,21 +125,21 @@ class _UnitScreenState extends State<UnitScreen> {
                         if (widget.available == 0) {
                           context.dialogNotAvailble();
                         } else {
-                          context.paymentProvider.pay(
+                          UiHelper.payment(
                             context,
-                            id: unit.courseId!,
-                            productId:widget.productIdCourse,
-                            title: unit.courseName!,
+                            title: unit.courseName! ,
                             amount: unit.courseDiscountPrice ?? unit.couursePrice!,
-                            orderType: OrderType.subscription,
-                            subscriptionsType: SubscriptionsType.course,
-                            subscribtionId: unit.courseSubscription!.isEmpty || unit.courseSubscription == null
-                                ? null
-                                : unit.courseSubscription?[0].id,
+                            id: unit.courseId!,
                             orderId: unit.courseSubscription!.isEmpty || unit.courseSubscription == null
                                 ? null
                                 : unit.courseSubscription?[0].order?.orderNumber,
-                            afterPay: () {
+                            orderType: OrderType.subscription,
+                            productId: widget.productIdCourse,
+                            subscribtionId: unit.courseSubscription!.isEmpty || unit.courseSubscription == null
+                                ? null
+                                : unit.courseSubscription?[0].id,
+                            subscriptionsType: SubscriptionsType.course,
+                            afterPay: (){
                               setState(() {
                                 _initializeFuture(SubscriptionsType.course, 0);
                               });
@@ -243,23 +243,23 @@ class _UnitScreenState extends State<UnitScreen> {
                                   if (widget.available == 0) {
                                     context.dialogNotAvailble();
                                   } else {
-                                    context.paymentProvider.pay(
+                                    UiHelper.payment(
                                       context,
-                                      id: unit.id!,
-                                      productId: unit.productId,
                                       title: unit.name!,
                                       amount: unit.discountPrice?? unit.unitPrice!,
-                                      orderType: OrderType.subscription,
-                                      subscriptionsType: SubscriptionsType.unit,
+                                      id: unit.id!,
                                       orderId: unit.subscription!.isEmpty || unit.subscription == null
                                       ? null
                                       : unit.subscription?[0].order?.orderNumber,
+                                      orderType: OrderType.subscription,
+                                      productId: unit.productId,
                                       subscribtionId: unit.subscription!.isEmpty || unit.subscription == null
                                       ? null
-                                      : unit.subscription?[0].id ,
+                                      : unit.subscription?[0].id,
+                                      subscriptionsType: SubscriptionsType.unit,
                                       afterPay: (){
                                         setState(() {
-                                            _initializeFuture(SubscriptionsType.unit,0);
+                                          _initializeFuture(SubscriptionsType.unit,0);
                                         });
                                       },
                                     );
@@ -301,26 +301,26 @@ class _UnitScreenState extends State<UnitScreen> {
                       onTap: () {
                         widget.available == 0
                             ? context.dialogNotAvailble()
-                            : context.paymentProvider.pay(
-                                context,
-                                id: section.id!,
-                                productId: section.productId,
-                                title: section.name!,
-                                amount: section.discountPrice ?? section.sectionPrice!,
-                                orderType: OrderType.subscription,
-                                orderId: section.subscription!.isEmpty || section.subscription == null
+                            : UiHelper.payment(
+                              context,
+                              title: section.name!,
+                              amount: section.discountPrice ?? section.sectionPrice!,
+                              id: section.id!,
+                              orderId: section.subscription!.isEmpty || section.subscription == null
                                     ? null
                                     : section.subscription?[0].order?.orderNumber,
-                                subscribtionId: section.subscription!.isEmpty || section.subscription == null
+                              orderType: OrderType.subscription,
+                              productId: section.productId,
+                              subscribtionId: section.subscription!.isEmpty || section.subscription == null
                                     ? null
                                     : section.subscription?[0].id,
-                                subscriptionsType: SubscriptionsType.section,
-                                afterPay: () {
-                                  setState(() {
-                                    _initializeFuture(SubscriptionsType.section, index);
-                                  });
-                                },
-                              );
+                              subscriptionsType: SubscriptionsType.section,
+                              afterPay: (){
+                                setState(() {
+                                  _initializeFuture(SubscriptionsType.section, index);
+                                });
+                              },
+                            );
                       },
                     );
                   },
