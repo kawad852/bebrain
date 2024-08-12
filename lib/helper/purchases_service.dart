@@ -14,9 +14,11 @@ class PurchasesService {
     required Function() onPurchase,
   }) async {
     if (!(await inAppPurchases.isAvailable())) return;
+    print("aklsjfalksjfjlaksf");
 
     _purchasesSubscription = InAppPurchase.instance.purchaseStream.listen(
       (List<PurchaseDetails> purchaseDetailsList) {
+        print("id:::: ${purchaseDetailsList.first.productID}");
         _handlePurchaseUpdates(purchaseDetailsList, onPurchase: onPurchase);
       },
       onDone: () {
@@ -67,12 +69,13 @@ class PurchasesService {
     Function? afterPay,
   }) async {
     try {
-      if(withOverlayLoader){
+      if (withOverlayLoader) {
         AppOverlayLoader.show();
       }
+      debugPrint("productId:: $productId");
       final productDetails = await inAppPurchases.queryProductDetails({productId});
       if (productDetails.productDetails.isEmpty) {
-        Fluttertoast.showToast(msg: "No Products Found");
+        Fluttertoast.showToast(msg: "Product Id ($productId) Not Found.");
         return;
       }
       final details = ProductDetails(
@@ -90,7 +93,7 @@ class PurchasesService {
       Fluttertoast.showToast(msg: "$e");
     } finally {
       AppOverlayLoader.hide();
-      if(afterPay !=null){
+      if (afterPay != null) {
         afterPay();
       }
     }

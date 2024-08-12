@@ -23,8 +23,7 @@ class PaymentProvider extends ChangeNotifier {
     Function? afterPay,
   }) async {
     AppOverlayLoader.show();
-    await ApiFutureBuilder<SubscriptionsModel>()
-        .fetch(context, withOverlayLoader: false, future: () async {
+    await ApiFutureBuilder<SubscriptionsModel>().fetch(context, withOverlayLoader: false, future: () async {
       final subscribe = context.mainProvider.subscribe(
         type: subscriptionsType,
         id: id,
@@ -66,8 +65,7 @@ class PaymentProvider extends ChangeNotifier {
     if (withOverlayLoader) {
       AppOverlayLoader.show();
     }
-    ApiFutureBuilder<OrderModel>().fetch(context, withOverlayLoader: false,
-        future: () async {
+    ApiFutureBuilder<OrderModel>().fetch(context, withOverlayLoader: false, future: () async {
       final order = context.mainProvider.createOrder(
         type: orderType,
         orderableId: orderableId,
@@ -75,13 +73,13 @@ class PaymentProvider extends ChangeNotifier {
       );
       return order;
     }, onComplete: (snapshot) async {
-      log("jjjj");
+      log("khaled");
       if (snapshot.code == 200) {
         await PurchasesService.buy(
           context,
-          productId?? "test_22_24",
+          productId ?? "test_22_24",
           title: title,
-          description: description??"",
+          description: description ?? "",
           price: amount,
           afterPay: afterPay,
         );
@@ -121,11 +119,12 @@ class PaymentProvider extends ChangeNotifier {
     required String? productId,
   }) async {
     if (orderId != null) {
+      print("khaled 2222");
       await PurchasesService.buy(
         context,
-        productId?? "test_22_24",
+        productId ?? "lecutes_11",
         title: title,
-        description: discription?? "",
+        description: discription ?? "",
         price: amount,
         withOverlayLoader: true,
         afterPay: afterPay,
