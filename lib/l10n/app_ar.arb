@@ -236,6 +236,7 @@
   "noBookingsYet":"ليس لديك حجوزات بعد",
   "professorNotAvailable":"عذرا، الأستاذ غير متوفر في الساعة المحددة",
   "installWhatsApp":"الرجاء تثبيت تطبيق الواتساب لتتمكن من الدردشة معنا",
-  "choosePaymentMethod":"اختر طريقة الدفع"
+  "choosePaymentMethod":"اختر طريقة الدفع",
+  "buyFullCourse":"اشتري الكورس كاملاً"
 
 }

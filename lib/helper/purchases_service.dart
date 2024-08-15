@@ -84,7 +84,7 @@ class PurchasesService {
         description: description,
         price: "$price",
         rawPrice: price,
-        currencyCode: "JOD",
+        currencyCode: "USD",
       );
       final purchaseParam = PurchaseParam(productDetails: details);
       await inAppPurchases.buyNonConsumable(purchaseParam: purchaseParam);

@@ -236,5 +236,6 @@
   "noBookingsYet":"You don't have bookings yet",
   "professorNotAvailable":"Sorry, the professor is not available at the specified hour",
   "installWhatsApp":"Please install the WhatsApp application to be able to chat with us",
-  "choosePaymentMethod":"Choose payment method"
+  "choosePaymentMethod":"Choose payment method",
+  "buyFullCourse":"Buy the full course"
 }

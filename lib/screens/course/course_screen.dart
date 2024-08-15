@@ -111,10 +111,10 @@ class _CourseScreenState extends State<CourseScreen> {
         final data = snapshot.data!;
         final course = data.data!.course!;
         return Scaffold(
-          bottomNavigationBar: course.offer == null || !checkTime(course.offer!.startDate!, course.offer!.endDate!) || course.paymentStatus == PaymentStatus.paid
+          bottomNavigationBar: course.paymentStatus == PaymentStatus.paid
               ? null
               : CourseNavBar(
-                  offer: course.offer!,
+                  offer: course.offer,
                   price: course.price!,
                   discountPrice: course.discountPrice,
                   onTap: () {

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class CourseNavBar extends StatefulWidget {
-  final Offer offer;
+  final Offer? offer;
   final double price;
   final double? discountPrice;
   final void Function() onTap;
@@ -29,8 +29,12 @@ class _CourseNavBarState extends State<CourseNavBar> {
   @override
   void initState() {
     super.initState();
-    difference = widget.offer.endDate!.toUTC(context).difference(DateTime.now());
+    if(widget.offer != null){
+    difference = widget.offer!.endDate!.toUTC(context).difference(DateTime.now());
+    }  
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -70,11 +74,12 @@ class _CourseNavBarState extends State<CourseNavBar> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CourseText(
-                    widget.offer.content!,
+                    widget.offer?.content?? context.appLocalization.buyFullCourse,
                     // context.appLocalization.discountEntireCourse(70),
                     textAlign: TextAlign.center,
                     fontWeight: FontWeight.bold,
                   ),
+                  if(widget.offer != null)
                   TweenAnimationBuilder<Duration>(
                     duration: difference,
                     tween: Tween(begin: difference, end: Duration.zero),

@@ -133,7 +133,7 @@ class PaymentProvider extends ChangeNotifier {
       if (paymentMethod == PaymentMethodType.inAppPurchases) {
         await PurchasesService.buy(
           context,
-          productId ?? "lecutes_11",
+          productId ?? "dash_consumable_2k",
           title: title,
           description: discription ?? "",
           price: amount,
