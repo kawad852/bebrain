@@ -72,7 +72,6 @@ class PurchasesService {
       if (withOverlayLoader) {
         AppOverlayLoader.show();
       }
-      debugPrint("productId:: $productId");
       final productDetails = await inAppPurchases.queryProductDetails({productId});
       if (productDetails.productDetails.isEmpty) {
         Fluttertoast.showToast(msg: "Product Id ($productId) Not Found.");
@@ -86,6 +85,7 @@ class PurchasesService {
         rawPrice: price,
         currencyCode: "USD",
       );
+      debugPrint("productId:: ${details.id}\nprice:: ${details.price}\ncurrency:: ${details.currencyCode}");
       final purchaseParam = PurchaseParam(productDetails: details);
       await inAppPurchases.buyNonConsumable(purchaseParam: purchaseParam);
     } catch (e) {
