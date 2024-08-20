@@ -237,5 +237,8 @@
   "professorNotAvailable":"Sorry, the professor is not available at the specified hour",
   "installWhatsApp":"Please install the WhatsApp application to be able to chat with us",
   "choosePaymentMethod":"Choose payment method",
-  "buyFullCourse":"Buy the full course"
+  "buyFullCourse":"Buy the full course",
+  "successEditProfile":"The profile has been successfully modified",
+  "checkInfo":"Please check the information entered",
+  "deleteAccountMsg": "Are you sure you want to delete your account?"
 }

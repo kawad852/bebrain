@@ -1,22 +1,26 @@
 class AuthModel {
   bool? status;
+  int? code;
   String? msg;
   Data? data;
 
   AuthModel({
     this.status,
+    this.code,
     this.msg,
     this.data,
   });
 
   factory AuthModel.fromJson(Map<String, dynamic> json) => AuthModel(
         status: json["status"],
+        code: json["code"],
         msg: json["msg"],
         data: json["data"] == null ? null : Data.fromJson(json["data"]),
       );
 
   Map<String, dynamic> toJson() => {
         "status": status,
+        "code": code,
         "msg": msg,
         "data": data?.toJson(),
       };

@@ -219,7 +219,7 @@ class AuthProvider extends ChangeNotifier {
       context,
       future: () async {
         final updateProfileFuture = ApiService<AuthModel>().build(
-          url: '${ApiUrl.deleteAccount}/${user.id}',
+          url: ApiUrl.deleteAccount,
           isPublic: false,
           apiType: ApiType.get,
           builder: AuthModel.fromJson,

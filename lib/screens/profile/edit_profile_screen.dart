@@ -1,16 +1,25 @@
-import 'package:bebrain/helper/phone_controller.dart';
-import 'package:bebrain/utils/app_constants.dart';
+import 'dart:io';
+
+import 'package:bebrain/alerts/errors/app_error_feedback.dart';
+import 'package:bebrain/alerts/feedback/app_feedback.dart';
+import 'package:bebrain/model/auth_model.dart';
+import 'package:bebrain/network/api_service.dart';
+import 'package:bebrain/network/api_url.dart';
+import 'package:bebrain/screens/profile/widgets/change_bubble.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/my_icons.dart';
 import 'package:bebrain/utils/my_theme.dart';
+import 'package:bebrain/utils/shared_pref.dart';
 import 'package:bebrain/widgets/custom_network_image.dart';
 import 'package:bebrain/widgets/custom_svg.dart';
 import 'package:bebrain/widgets/editors/base_editor.dart';
 import 'package:bebrain/widgets/editors/password_editor.dart';
-import 'package:bebrain/widgets/phone_field.dart';
+import 'package:bebrain/widgets/editors/text_editor.dart';
 import 'package:bebrain/widgets/stretch_button.dart';
 import 'package:bebrain/widgets/titled_textfield.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
@@ -20,18 +29,86 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-  late PhoneController _phoneController;
+  FilePickerResult? result;
+  File? _file;
+  File? imageFile;
+  bool selectFile = false;
+  String? currentPassword;
+  String? password;
+  String? passwordConfirmation;
+  String? userName;
 
   @override
   void initState() {
     super.initState();
-    _phoneController = PhoneController(context);
   }
 
   @override
   void dispose() {
     super.dispose();
-    _phoneController.dispose();
+  }
+
+  void _selectFile() async {
+    result = await FilePicker.platform.pickFiles(
+      type: FileType.image,
+    );
+    if (result != null) {
+      setState(() {
+        selectFile = true;
+        _file = File(result!.files.single.path!);
+      });
+    }
+  }
+
+  void _deleteDialog(BuildContext context) {
+    context.showDialog(
+      titleText: context.appLocalization.deleteAccount,
+      bodyText: context.appLocalization.deleteAccountMsg,
+      warning: true,
+    )
+        .then((value) {
+      if (value != null) {
+        context.authProvider.deleteAccount(context);
+      }
+    });
+  }
+
+  void _editProfile() {
+    ApiFutureBuilder<AuthModel>().fetch(
+      context,
+      future: () async {
+        final snapshot = ApiService<AuthModel>().uploadFiles(
+            url: ApiUrl.updateProfile,
+            builder: AuthModel.fromJson,
+            onRequest: (request) async {
+              request.headers['Authorization'] = 'Bearer ${MySharedPreferences.accessToken}';
+              request.headers['Content-Type'] = 'application/json';
+              request.headers['x-localization'] = MySharedPreferences.language;
+              if (userName != null) request.fields["name"] = userName!;
+              if (currentPassword != null)  request.fields["current_password"] = currentPassword!;
+              if (password != null) request.fields["password"] = password!;
+              if (passwordConfirmation != null)  request.fields["password_confirmation"] = passwordConfirmation!;
+              if (_file != null) {
+                var file = _file;
+                var stream = http.ByteStream(file!.openRead());
+                var length = await file.length();
+                var multipartFile = http.MultipartFile('image', stream, length,filename: file.path.split('/').last);
+                request.files.add(multipartFile);
+              }
+            });
+        return snapshot;
+      },
+      onComplete: (snapshot) {
+        if (snapshot.code == 200) {
+          context.authProvider.updateUser(context, userModel: snapshot.data!.user);
+          context.pop();
+          context.showSnackBar(context.appLocalization.successEditProfile);
+        } else {
+          context.showSnackBar(context.appLocalization.checkInfo);
+        }
+      },
+      onError: (failure) => AppErrorFeedback.show(context, failure),
+    );
   }
 
   @override
@@ -40,7 +117,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       bottomNavigationBar: BottomAppBar(
         child: StretchedButton(
           child: Text(context.appLocalization.save),
-          onPressed: () {},
+          onPressed: () {
+            _editProfile();
+          },
         ),
       ),
       body: CustomScrollView(
@@ -60,58 +139,82 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     ),
                   ),
                   Center(
-                    child: CustomNetworkImage(
-                      kFakeImage,
-                      margin: const EdgeInsets.only(top: 25, bottom: 10),
-                      width: 80,
-                      height: 80,
-                      clipBehavior: Clip.hardEdge,
-                      alignment: Alignment.bottomCenter,
-                      shape: BoxShape.circle,
-                      child: Container(
-                        width: double.infinity,
-                        height: 20,
-                        alignment: Alignment.center,
-                        color: context.colorPalette.blue8DD,
-                        child: Text(
-                          context.appLocalization.edit,
-                          style: TextStyle(
-                            color: context.colorPalette.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
+                    child: selectFile
+                        ? Container(
+                            width: 80,
+                            height: 80,
+                            alignment: Alignment.bottomCenter,
+                            margin: const EdgeInsets.only(top: 25, bottom: 10),
+                            clipBehavior: Clip.hardEdge,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                image: FileImage(_file!),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            child: ChangeBubble(onTap: () => _selectFile()),
+                          )
+                        : CustomNetworkImage(
+                            context.authProvider.user.image!,
+                            margin: const EdgeInsets.only(top: 25, bottom: 10),
+                            width: 80,
+                            height: 80,
+                            clipBehavior: Clip.hardEdge,
+                            alignment: Alignment.bottomCenter,
+                            shape: BoxShape.circle,
+                            child: ChangeBubble(onTap: () => _selectFile()),
                           ),
-                        ),
-                      ),
-                    ),
                   ),
                   TitledTextField(
                     title: context.appLocalization.fullName,
-                    child: BaseEditor(
+                    child: TextEditor(
                       hintText: context.appLocalization.enterYourNameHere,
-                      initialValue: null,
-                      onChanged: (value) {},
+                      initialValue: context.authProvider.user.name,
+                      onChanged: (value) => value != null
+                          ? userName = value.trim()
+                          : userName = null,
                     ),
                   ),
-                  PhoneField(
-                    controller: _phoneController,
-                  ),
-                  PasswordEditor(
-                    title: context.appLocalization.currentPassword,
-                    initialValue: null,
-                    onChanged: (value) {},
-                  ),
-                  PasswordEditor(
-                    title: context.appLocalization.newPassword,
-                    initialValue: null,
-                    onChanged: (value) {},
-                  ),
-                  PasswordEditor(
-                    title: context.appLocalization.confirmNewPassword,
-                    initialValue: null,
-                    onChanged: (value) {},
-                  ),
+                  if (context.authProvider.user.phoneNumber != null)
+                    Column(
+                      children: [
+                        TitledTextField(
+                          title: context.appLocalization.phoneNum,
+                          child: BaseEditor(
+                            hintText: "",
+                            textDirection: TextDirection.ltr,
+                            initialValue: context.authProvider.user.phoneNumber,
+                            readOnly: true,
+                          ),
+                        ),
+                        PasswordEditor(
+                          title: context.appLocalization.currentPassword,
+                          initialValue: null,
+                          onChanged: (value) => value != null
+                              ? currentPassword = value.trim()
+                              : currentPassword = null,
+                        ),
+                        PasswordEditor(
+                          title: context.appLocalization.newPassword,
+                          initialValue: null,
+                          onChanged: (value) => value != null
+                              ? password = value.trim()
+                              : password = null,
+                        ),
+                        PasswordEditor(
+                          title: context.appLocalization.confirmNewPassword,
+                          initialValue: null,
+                          onChanged: (value) => value != null
+                              ? passwordConfirmation = value.trim()
+                              : passwordConfirmation = null,
+                        ),
+                      ],
+                    ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      _deleteDialog(context);
+                    },
                     child: Container(
                       width: double.infinity,
                       height: 40,
@@ -119,8 +222,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       padding: const EdgeInsets.symmetric(horizontal: 15),
                       decoration: BoxDecoration(
                         color: context.colorPalette.greyEEE,
-                        borderRadius:
-                            BorderRadius.circular(MyTheme.radiusSecondary),
+                        borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
                       ),
                       child: Row(
                         children: [
@@ -131,7 +233,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             style: TextStyle(
                               color: context.colorPalette.redE66,
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),

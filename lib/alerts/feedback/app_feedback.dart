@@ -75,7 +75,7 @@ extension AppFeedbacks on BuildContext {
                   //   child: Text(context.appLocalization.cancel),
                   // ),
                   StretchedButton(
-                    backgroundColor: confirmButtonBackgroundColor ?? (warning ? context.colorScheme.error : null),
+                    backgroundColor: confirmButtonBackgroundColor ?? (warning ? context.colorPalette.redE66 : null),
                     onPressed: () {
                       context.pop(true);
                     },
