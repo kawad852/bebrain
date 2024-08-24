@@ -81,7 +81,8 @@ class _MyAppState extends State<MyApp> {
   late AuthProvider _authProvider;
 
   Widget _toggleRoute(BuildContext context) {
-    if (_authProvider.user.id != null) {
+     
+      if (_authProvider.user.id != null && _authProvider.wizardValues.countryId != null) {
       return const AppNavBar();
     } else {
       if (MySharedPreferences.isPassedIntro) {
@@ -90,6 +91,8 @@ class _MyAppState extends State<MyApp> {
         return const IntroScreen();
       }
     }
+   
+  
   }
 
   @override

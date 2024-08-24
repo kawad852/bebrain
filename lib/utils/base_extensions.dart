@@ -66,7 +66,7 @@ extension NavigatorExtension on BuildContext {
     }
   }
 
-  void pushAndRemoveUntil(Widget screen) {
+  Future<void> pushAndRemoveUntil(Widget screen) async{
     final routeName = AppRoutes.names[screen.runtimeType];
     Navigator.pushAndRemoveUntil(
       this,

@@ -1,9 +1,11 @@
 import 'package:bebrain/alerts/errors/app_error_feedback.dart';
 import 'package:bebrain/alerts/feedback/app_feedback.dart';
 import 'package:bebrain/alerts/loading/app_over_loader.dart';
+import 'package:bebrain/main.dart';
 import 'package:bebrain/model/auth_model.dart';
 import 'package:bebrain/model/filter_model.dart';
 import 'package:bebrain/model/general_model.dart';
+import 'package:bebrain/model/token_info_model.dart';
 import 'package:bebrain/model/user_model.dart';
 import 'package:bebrain/network/api_service.dart';
 import 'package:bebrain/network/api_url.dart';
@@ -366,5 +368,39 @@ class AuthProvider extends ChangeNotifier {
     if (notify) {
       notifyListeners();
     }
+  }
+
+  Future tokenCheck(BuildContext context) async {
+    await ApiFutureBuilder<TokenInfoModel>().fetch(
+       context,
+       withOverlayLoader: false,
+       future: (){
+        final snapshot = ApiService<TokenInfoModel>().build(
+          url: ApiUrl.tokenCheck,
+          isPublic: true,
+          apiType: ApiType.post,
+          queryParams: {
+            "token": MySharedPreferences.accessToken,
+          },
+          builder: TokenInfoModel.fromJson,
+        );
+        return snapshot;
+       },
+       onComplete: (snapshot) async{
+         if(snapshot.code == 500) {
+           await context.pushAndRemoveUntil(const RegistrationScreen()).then((value) {
+            Future.delayed(const Duration(seconds: 1)).then((value) {
+               _firebaseAuth.signOut();
+               MySharedPreferences.clearStorage();
+               if(context.mounted) {
+                updateUser(context, userModel: UserData());
+                updateFilter(context, filterModel: FilterModel());
+                }
+            });
+           });
+         }
+       },
+    );
+    
   }
 }
