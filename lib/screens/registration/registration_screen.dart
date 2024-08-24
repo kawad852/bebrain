@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:math' as math;
+
 import 'package:bebrain/alerts/feedback/app_feedback.dart';
 import 'package:bebrain/alerts/loading/app_over_loader.dart';
 import 'package:bebrain/helper/phone_controller.dart';
@@ -14,15 +17,17 @@ import 'package:bebrain/utils/my_images.dart';
 import 'package:bebrain/widgets/editors/password_editor.dart';
 import 'package:bebrain/widgets/phone_field.dart';
 import 'package:bebrain/widgets/stretch_button.dart';
+import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class RegistrationScreen extends StatefulWidget {
   final bool hideGuestButton;
-  const RegistrationScreen({super.key, this.hideGuestButton=false});
+  const RegistrationScreen({super.key, this.hideGuestButton = false});
 
   @override
   State<RegistrationScreen> createState() => _RegistrationScreenState();
@@ -85,6 +90,64 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     }
   }
 
+  Future<void> _signInWithApple(BuildContext context) async {
+    try {
+      AppOverlayLoader.show();
+      final rawNonce = generateNonce();
+      final nonce = sha256ofString(rawNonce);
+
+      final appleCredential = await SignInWithApple.getAppleIDCredential(
+        scopes: [
+          AppleIDAuthorizationScopes.email,
+          AppleIDAuthorizationScopes.fullName,
+        ],
+        nonce: nonce,
+      );
+
+      final oauthCredential = firebase_auth.OAuthProvider("apple.com").credential(
+        idToken: appleCredential.identityToken,
+        rawNonce: rawNonce,
+      );
+
+      final auth = await _firebaseAuth.signInWithCredential(oauthCredential);
+      if (context.mounted) {
+        await _authProvider.login(
+          context,
+          displayName: auth.user?.displayName,
+          email: auth.user?.email,
+          photoURL: auth.user?.photoURL,
+        );
+      }
+    } on PlatformException catch (e) {
+      AppOverlayLoader.hide();
+      if (e.code == GoogleSignIn.kNetworkError && context.mounted) {
+        context.showSnackBar(context.appLocalization.networkError, duration: 8);
+      } else {
+        if (context.mounted) {
+          context.showSnackBar(context.appLocalization.generalError);
+        }
+      }
+      debugPrint("AppleSignInException:: $e");
+    } catch (e) {
+      AppOverlayLoader.hide();
+      debugPrint("AppleSignInException:: $e");
+    } finally {
+      AppOverlayLoader.hide();
+    }
+  }
+
+  String generateNonce([int length = 32]) {
+    const charset = '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._';
+    final random = math.Random.secure();
+    return List.generate(length, (_) => charset[random.nextInt(charset.length)]).join();
+  }
+
+  String sha256ofString(String input) {
+    final bytes = utf8.encode(input);
+    final digest = sha256.convert(bytes);
+    return digest.toString();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -103,13 +166,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-         if(!widget.hideGuestButton)
-          TextButton(
-            onPressed: () {
-              context.pushAndRemoveUntil(const WizardScreen(wizardType: WizardType.countries));
-            },
-            child: Text(context.appLocalization.guestBrowse),
-          ),
+          if (!widget.hideGuestButton)
+            TextButton(
+              onPressed: () {
+                context.pushAndRemoveUntil(const WizardScreen(wizardType: WizardType.countries));
+              },
+              child: Text(context.appLocalization.guestBrowse),
+            ),
         ],
       ),
       floatingActionButton: kDebugMode
@@ -184,13 +247,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               textColor: context.colorPalette.blackB0B,
               iconColor: context.colorPalette.blackB0B,
             ),
-            AuthButton(
-              onTap: () {},
-              icon: MyIcons.facebook,
-              text: context.appLocalization.conWithFacebook,
-              backgroundColor: context.colorPalette.facebook,
-              textColor: Colors.white,
-            ),
+            // AuthButton(
+            //   onTap: () {},
+            //   icon: MyIcons.facebook,
+            //   text: context.appLocalization.conWithFacebook,
+            //   backgroundColor: context.colorPalette.facebook,
+            //   textColor: Colors.white,
+            // ),
             AuthButton(
               onTap: () {
                 _signInWithGoogle(context);
@@ -200,7 +263,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               backgroundColor: context.colorPalette.greyF2F,
             ),
             AuthButton(
-              onTap: () {},
+              onTap: () {
+                _signInWithApple(context);
+              },
               icon: MyIcons.apple,
               text: context.appLocalization.conWithApple,
               backgroundColor: Colors.black,
