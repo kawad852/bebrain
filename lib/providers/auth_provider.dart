@@ -1,7 +1,6 @@
 import 'package:bebrain/alerts/errors/app_error_feedback.dart';
 import 'package:bebrain/alerts/feedback/app_feedback.dart';
 import 'package:bebrain/alerts/loading/app_over_loader.dart';
-import 'package:bebrain/main.dart';
 import 'package:bebrain/model/auth_model.dart';
 import 'package:bebrain/model/filter_model.dart';
 import 'package:bebrain/model/general_model.dart';
