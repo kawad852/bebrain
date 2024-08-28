@@ -193,7 +193,7 @@ class _WizardScreenState extends State<WizardScreen> {
         }
         return Scaffold(
           appBar: AppBar(
-            backgroundColor: Colors.transparent,
+           // backgroundColor: Colors.transparent,
             surfaceTintColor: Colors.transparent,
             actions: [
               if(widget.wizardType != WizardType.countries)
@@ -220,7 +220,7 @@ class _WizardScreenState extends State<WizardScreen> {
             ),
           ),
           body: Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.only(bottom: 20,left: 20,right: 20),
             child: Column(
               children: [
                 Material(

@@ -229,27 +229,28 @@ class UiHelper extends ChangeNotifier {
     required int? subscribtionId,
     String? orderId,
   }) {
-    //selectPaymentDialog(
-      //context,
-      // onUpayment: () {
-      //   context.pop();
-      //   context.paymentProvider.pay(
-      //     context,
-      //     paymentMethod: PaymentMethodType.upayment,
-      //     productId: productId,
-      //     title: title,
-      //     discription: discription,
-      //     id: id,
-      //     amount: amount,
-      //     orderType: orderType,
-      //     subscriptionsType: subscriptionsType,
-      //     subscribtionId: subscribtionId,
-      //     orderId: orderId,
-      //     afterPay: afterPay,
-      //   );
-      //},
-      //onAppPurchases: () {
-        //context.pop();
+    Platform.isAndroid ?
+    selectPaymentDialog(
+      context,
+      onUpayment: () {
+        context.pop();
+        context.paymentProvider.pay(
+          context,
+          paymentMethod: PaymentMethodType.upayment,
+          productId: productId,
+          title: title,
+          discription: discription,
+          id: id,
+          amount: amount,
+          orderType: orderType,
+          subscriptionsType: subscriptionsType,
+          subscribtionId: subscribtionId,
+          orderId: orderId,
+          afterPay: afterPay,
+        );
+      },
+      onAppPurchases: () {
+        context.pop();
         context.paymentProvider.pay(
           context,
           paymentMethod: PaymentMethodType.inAppPurchases,
@@ -264,7 +265,21 @@ class UiHelper extends ChangeNotifier {
           orderId: orderId,
           afterPay: afterPay,
         );
-      //},
-   // );
+      },
+   )
+   : context.paymentProvider.pay(
+          context,
+          paymentMethod: PaymentMethodType.inAppPurchases,
+          productId: productId,
+          title: title,
+          discription: discription,
+          id: id,
+          amount: amount,
+          orderType: orderType,
+          subscriptionsType: subscriptionsType,
+          subscribtionId: subscribtionId,
+          orderId: orderId,
+          afterPay: afterPay,
+        );
   }
 }
