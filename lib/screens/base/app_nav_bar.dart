@@ -72,7 +72,9 @@ class _AppNavBarState extends State<AppNavBar> {
     authProvider = context.authProvider;
     _pageController = PageController();
      authProvider.updateDeviceToken(context);
-     authProvider.tokenCheck(context);
+     if(authProvider.isAuthenticated) {
+        authProvider.tokenCheck(context);
+     }
     cloudMessagingService.requestPermission();
     cloudMessagingService.init(context);
   }

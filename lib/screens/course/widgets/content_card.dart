@@ -84,6 +84,7 @@ class ContentCard extends StatelessWidget {
                 children: [
                   CourseText(
                     unit.name!,
+                    overflow: TextOverflow.ellipsis,
                     fontWeight: FontWeight.bold,
                   ),
                   CourseText(

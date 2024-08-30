@@ -151,15 +151,15 @@ class _IntroScreenState extends State<IntroScreen> {
                   child: IntroBubble(icon: bottomIcon[index]),
                 ),
               ),
-              const Positioned(
+               Positioned(
                 top: 25,
-                left: 90,
-                child: CustomSvg(MyIcons.arrow0),
+                left: context.mediaQuery.width *0.26,
+                child: const CustomSvg(MyIcons.arrow0),
               ),
-              const Positioned(
+               Positioned(
                 top: 100,
-                left: 75,
-                child: CustomSvg(MyIcons.arrow1),
+                left: context.mediaQuery.width *0.26,
+                child: const CustomSvg(MyIcons.arrow1),
               ),
               Align(
                 alignment: Alignment.bottomCenter,
