@@ -1,6 +1,5 @@
 import 'package:bebrain/helper/ui_helper.dart';
 import 'package:bebrain/model/filter_model.dart';
-import 'package:bebrain/screens/department/department_screen.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/enums.dart';
 import 'package:bebrain/utils/my_theme.dart';
@@ -65,7 +64,7 @@ class _DepartmentsCardState extends State<DepartmentsCard> {
               ),
               MoreButton(
                 onTap: () {
-                  if(context.authProvider.wizardValues.wizardType==WizardType.countries){
+                  if(context.authProvider.wizardValues.wizardType == WizardType.countries) {
                     UiHelper().addFilter(context, 
                     filterModel:FilterModel(
                       wizardType: WizardType.universities,
@@ -78,7 +77,7 @@ class _DepartmentsCardState extends State<DepartmentsCard> {
                     afterAdd: widget.onTapSubData,
                     );
                   }
-                  else if(context.authProvider.wizardValues.wizardType==WizardType.universities){
+                  else if(context.authProvider.wizardValues.wizardType == WizardType.universities) {
                     UiHelper().addFilter(context, 
                     filterModel:FilterModel(
                       wizardType: WizardType.colleges,
@@ -94,11 +93,20 @@ class _DepartmentsCardState extends State<DepartmentsCard> {
                     );
                   }
                   else{
-                    context.push( 
-                      DepartmentScreen(
-                        collegeId: widget.collegeId!,
-                        majorId: widget.data!.id!,
+                    UiHelper().addFilter(context,
+                    filterModel: FilterModel(
+                      wizardType: WizardType.specialities,
+                      countryId: context.authProvider.wizardValues.countryId,
+                      countryName: context.authProvider.wizardValues.countryName,
+                      countryCode: context.authProvider.wizardValues.countryCode,
+                      universityId: context.authProvider.wizardValues.universityId,
+                      universityName: context.authProvider.wizardValues.universityName,
+                      collegeId: context.authProvider.wizardValues.collegeId,
+                      collegeName: context.authProvider.wizardValues.collegeName,
+                      majorId: widget.data!.id!,
+                      majorName: widget.data!.name!,
                     ),
+                    afterAdd: widget.onTapSubData,
                     );
                   }
                 },
@@ -136,12 +144,22 @@ class _DepartmentsCardState extends State<DepartmentsCard> {
                         afterAdd: widget.onTapSubData,
                       );
                     } else if (context.authProvider.wizardValues.wizardType == WizardType.universities) {
-                      context.push(
-                        DepartmentScreen(
-                          collegeId: widget.data.id!,
-                          majorId: widget.data.majors[index].id!,
-                        ),
-                      );
+                        UiHelper().addFilter(
+                          context,
+                          filterModel: FilterModel(
+                            wizardType: WizardType.specialities,
+                            countryId: context.authProvider.wizardValues.countryId,
+                            countryName: context.authProvider.wizardValues.countryName,
+                            countryCode:context.authProvider.wizardValues.countryCode ,
+                            universityId: context.authProvider.wizardValues.universityId,
+                            universityName: context.authProvider.wizardValues.universityName,
+                            collegeId: widget.data!.id!,
+                            collegeName: widget.data!.name!,
+                            majorId: widget.data.majors![index].id!,
+                            majorName: widget.data.majors![index].name!,
+                          ),
+                          afterAdd: widget.onTapSubData
+                        );
                     }
                   },
                   child: Container(

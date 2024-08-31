@@ -240,6 +240,7 @@
   "buyFullCourse":"اشتري الكورس كاملاً",
   "successEditProfile":"تم تعديل الملف الشخصي بنجاح",
   "checkInfo":"يرجى التحقق من المعلومات المدخلة",
-  "deleteAccountMsg": "هل أنت متأكد انك تريد حذف حسابك ؟"
+  "deleteAccountMsg": "هل أنت متأكد انك تريد حذف حسابك ؟",
+  "noCoursesYet":"لا توجد كورسات مضافة بعد"
 
 }

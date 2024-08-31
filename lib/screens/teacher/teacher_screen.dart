@@ -66,7 +66,7 @@ class _TeacherScreenState extends State<TeacherScreen> {
                   collapsedHeight: 320,
                   flexibleSpace: TeacherCard(teacherData: professor.data!),
                 ),
-                if(professor.data!.subjects!.isNotEmpty || professor.data!.subjects != null)
+                if(professor.data!.subjects!.isNotEmpty)
                 SliverPadding(
                   padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 15),
                   sliver: SliverToBoxAdapter(

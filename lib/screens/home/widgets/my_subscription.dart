@@ -30,9 +30,11 @@ class _MySubscriptionState extends State<MySubscription> {
                     if (userData.universityName == null) {
                       return "";
                     } else {
-                      return userData.collegeName != null
-                          ? "/${userData.universityName}/ ${userData.collegeName}"
-                          : "/${userData.universityName!}";
+                      return userData.collegeName != null && userData.majorName != null
+                          ? "/${userData.universityName}/ ${userData.collegeName}/ ${userData.majorName}"
+                          : userData.collegeName == null
+                          ? "/${userData.universityName!}"
+                          : "/${userData.universityName!}/ ${userData.collegeName!}";
                     }
                   }
 
@@ -92,9 +94,11 @@ class _MySubscriptionState extends State<MySubscription> {
                     if (wizardValues.universityName == null) {
                       return "";
                     } else {
-                      return wizardValues.collegeName != null
-                          ? "/${wizardValues.universityName}/ ${wizardValues.collegeName}"
-                          : "/${wizardValues.universityName!}";
+                      return wizardValues.collegeName != null && wizardValues.majorName != null
+                          ? "/${wizardValues.universityName}/ ${wizardValues.collegeName}/ ${wizardValues.majorName}"
+                          : wizardValues.collegeName == null
+                          ? "/${wizardValues.universityName!}"
+                          : "/${wizardValues.universityName!}/ ${wizardValues.collegeName!}";
                     }
                   }
 
