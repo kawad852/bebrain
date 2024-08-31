@@ -131,8 +131,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Scaffold(
-      body: RefreshIndicator(
+    return  RefreshIndicator(
         onRefresh: () async {
           setState(() {
             _future = _initializeFuture();
@@ -440,8 +439,8 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
             ),
           ],
         ),
-      ),
-    );
+      );
+    
   }
 
   @override
