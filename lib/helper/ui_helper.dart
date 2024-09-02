@@ -33,6 +33,9 @@ class UiHelper extends ChangeNotifier {
           });
           return updateFilter;
         },
+        onError: (failure) {
+          context.showSnackBar(failure.code);
+        },
         onComplete: (snapshot) async {
           if (snapshot.code != 200) {
             context.showSnackBar(snapshot.msg ?? context.appLocalization.generalError);
