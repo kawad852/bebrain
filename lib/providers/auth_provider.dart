@@ -371,9 +371,9 @@ class AuthProvider extends ChangeNotifier {
 
   Future tokenCheck(BuildContext context) async {
     await ApiFutureBuilder<TokenInfoModel>().fetch(
-       context,
-       withOverlayLoader: false,
-       future: (){
+      context,
+      withOverlayLoader: false,
+      future: () {
         final snapshot = ApiService<TokenInfoModel>().build(
           url: ApiUrl.tokenCheck,
           isPublic: true,
@@ -384,22 +384,21 @@ class AuthProvider extends ChangeNotifier {
           builder: TokenInfoModel.fromJson,
         );
         return snapshot;
-       },
-       onComplete: (snapshot) async{
-         if(snapshot.code == 500) {
-           await context.pushAndRemoveUntil(const RegistrationScreen()).then((value) {
+      },
+      onComplete: (snapshot) async {
+        if (snapshot.code == 500) {
+          await context.pushAndRemoveUntil(const RegistrationScreen()).then((value) {
             Future.delayed(const Duration(seconds: 1)).then((value) {
-               _firebaseAuth.signOut();
-               MySharedPreferences.clearStorage();
-               if(context.mounted) {
+              _firebaseAuth.signOut();
+              MySharedPreferences.clearStorage();
+              if (context.mounted) {
                 updateUser(context, userModel: UserData());
                 updateFilter(context, filterModel: FilterModel());
-                }
+              }
             });
-           });
-         }
-       },
+          });
+        }
+      },
     );
-    
   }
 }

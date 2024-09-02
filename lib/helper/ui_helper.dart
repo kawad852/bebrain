@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:bebrain/alerts/errors/app_error_feedback.dart';
 import 'package:bebrain/alerts/feedback/app_feedback.dart';
 import 'package:bebrain/model/auth_model.dart';
@@ -13,7 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class UiHelper extends ChangeNotifier {
-  static String getFlag(String code) =>'assets/flags/${code.toLowerCase()}.svg';
+  static String getFlag(String code) => 'assets/flags/${code.toLowerCase()}.svg';
 
   Future<void> addFilter(
     BuildContext context, {
@@ -33,8 +34,11 @@ class UiHelper extends ChangeNotifier {
           return updateFilter;
         },
         onComplete: (snapshot) async {
-          await context.authProvider.updateFilter(context, filterModel: filterModel)
-              .then(
+          if (snapshot.code != 200) {
+            context.showSnackBar(snapshot.msg ?? context.appLocalization.generalError);
+            return;
+          }
+          await context.authProvider.updateFilter(context, filterModel: filterModel).then(
             (value) {
               if (afterAdd != null) {
                 afterAdd();
@@ -46,8 +50,7 @@ class UiHelper extends ChangeNotifier {
       notifyListeners();
     } else {
       if (context.mounted) {
-        await context.authProvider.updateFilter(context, filterModel: filterModel)
-            .then(
+        await context.authProvider.updateFilter(context, filterModel: filterModel).then(
           (value) {
             if (afterAdd != null) {
               afterAdd();
@@ -79,11 +82,10 @@ class UiHelper extends ChangeNotifier {
   }
 
   static Future selectFileDialog(
-    BuildContext context,{
-      required void Function() onTapFiles,
-      required void Function() onTapGallery,
-    }
-  ) {
+    BuildContext context, {
+    required void Function() onTapFiles,
+    required void Function() onTapGallery,
+  }) {
     return showDialog(
       context: context,
       builder: (context) {
@@ -99,7 +101,7 @@ class UiHelper extends ChangeNotifier {
             child: Column(
               children: [
                 Padding(
-                  padding:const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                  padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
                   child: Text(
                     context.appLocalization.pleaseChoose,
                     textAlign: TextAlign.center,
@@ -112,11 +114,11 @@ class UiHelper extends ChangeNotifier {
                 ),
                 StretchedButton(
                   onPressed: onTapFiles,
-                  margin:const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                  margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
                   child: Text(context.appLocalization.files),
                 ),
                 StretchedButton(
-                  onPressed:onTapGallery,
+                  onPressed: onTapGallery,
                   margin: const EdgeInsets.symmetric(horizontal: 40),
                   child: Text(context.appLocalization.gallery),
                 ),
@@ -132,46 +134,44 @@ class UiHelper extends ChangeNotifier {
     var contactNumber = "+96555800822";
     var androidUrl = "whatsapp://send?phone=$contactNumber";
     var iosUrl = "https://wa.me/$contactNumber";
-    try{
-      if(Platform.isIOS){
+    try {
+      if (Platform.isIOS) {
         await launchUrl(Uri.parse(iosUrl));
-      }
-      else if(Platform.isAndroid){
+      } else if (Platform.isAndroid) {
         await launchUrl(Uri.parse(androidUrl));
       }
-    } on Exception{
-      if(context.mounted){
+    } on Exception {
+      if (context.mounted) {
         context.showSnackBar(context.appLocalization.installWhatsApp);
       }
     }
   }
 
   static Future<void> confirmPayment(
-    BuildContext context,{
+    BuildContext context, {
     required String orderNumber,
     Function? afterPay,
-  }) async{
-     await ApiFutureBuilder<ConfirmPayModel>().fetch(
-        context,
-        future: () async {
-          final confirmPay = context.mainProvider.confirmPayment(orderNumber);
-          return confirmPay;
-        },
-        onComplete: (snapshot) {
-          if(snapshot.code == 200 && afterPay != null){
-            afterPay();
-          }
-        },
-        onError: (failure) =>  AppErrorFeedback.show(context, failure),
-     );
+  }) async {
+    await ApiFutureBuilder<ConfirmPayModel>().fetch(
+      context,
+      future: () async {
+        final confirmPay = context.mainProvider.confirmPayment(orderNumber);
+        return confirmPay;
+      },
+      onComplete: (snapshot) {
+        if (snapshot.code == 200 && afterPay != null) {
+          afterPay();
+        }
+      },
+      onError: (failure) => AppErrorFeedback.show(context, failure),
+    );
   }
 
   static Future selectPaymentDialog(
-    BuildContext context,{
-      required void Function() onUpayment,
-      required void Function() onAppPurchases,
-    }
-  ) {
+    BuildContext context, {
+    required void Function() onUpayment,
+    required void Function() onAppPurchases,
+  }) {
     return showDialog(
       context: context,
       builder: (context) {
@@ -187,7 +187,7 @@ class UiHelper extends ChangeNotifier {
             child: Column(
               children: [
                 Padding(
-                  padding:const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                  padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
                   child: Text(
                     context.appLocalization.choosePaymentMethod,
                     textAlign: TextAlign.center,
@@ -200,11 +200,11 @@ class UiHelper extends ChangeNotifier {
                 ),
                 StretchedButton(
                   onPressed: onUpayment,
-                  margin:const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                  margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
                   child: const Text("Upayment"),
                 ),
                 StretchedButton(
-                  onPressed:onAppPurchases,
+                  onPressed: onAppPurchases,
                   margin: const EdgeInsets.symmetric(horizontal: 40),
                   child: const Text("In App Purchases"),
                 ),
@@ -217,7 +217,7 @@ class UiHelper extends ChangeNotifier {
   }
 
   static void payment(
-    BuildContext context,{
+    BuildContext context, {
     required String? productId,
     required String title,
     String? discription,
@@ -229,57 +229,57 @@ class UiHelper extends ChangeNotifier {
     required int? subscribtionId,
     String? orderId,
   }) {
-    Platform.isAndroid ?
-    selectPaymentDialog(
-      context,
-      onUpayment: () {
-        context.pop();
-        context.paymentProvider.pay(
-          context,
-          paymentMethod: PaymentMethodType.upayment,
-          productId: productId,
-          title: title,
-          discription: discription,
-          id: id,
-          amount: amount,
-          orderType: orderType,
-          subscriptionsType: subscriptionsType,
-          subscribtionId: subscribtionId,
-          orderId: orderId,
-          afterPay: afterPay,
-        );
-      },
-      onAppPurchases: () {
-        context.pop();
-        context.paymentProvider.pay(
-          context,
-          paymentMethod: PaymentMethodType.inAppPurchases,
-          productId: productId,
-          title: title,
-          discription: discription,
-          id: id,
-          amount: amount,
-          orderType: orderType,
-          subscriptionsType: subscriptionsType,
-          subscribtionId: subscribtionId,
-          orderId: orderId,
-          afterPay: afterPay,
-        );
-      },
-   )
-   : context.paymentProvider.pay(
-          context,
-          paymentMethod: PaymentMethodType.inAppPurchases,
-          productId: productId,
-          title: title,
-          discription: discription,
-          id: id,
-          amount: amount,
-          orderType: orderType,
-          subscriptionsType: subscriptionsType,
-          subscribtionId: subscribtionId,
-          orderId: orderId,
-          afterPay: afterPay,
-        );
+    Platform.isAndroid
+        ? selectPaymentDialog(
+            context,
+            onUpayment: () {
+              context.pop();
+              context.paymentProvider.pay(
+                context,
+                paymentMethod: PaymentMethodType.upayment,
+                productId: productId,
+                title: title,
+                discription: discription,
+                id: id,
+                amount: amount,
+                orderType: orderType,
+                subscriptionsType: subscriptionsType,
+                subscribtionId: subscribtionId,
+                orderId: orderId,
+                afterPay: afterPay,
+              );
+            },
+            onAppPurchases: () {
+              context.pop();
+              context.paymentProvider.pay(
+                context,
+                paymentMethod: PaymentMethodType.inAppPurchases,
+                productId: productId,
+                title: title,
+                discription: discription,
+                id: id,
+                amount: amount,
+                orderType: orderType,
+                subscriptionsType: subscriptionsType,
+                subscribtionId: subscribtionId,
+                orderId: orderId,
+                afterPay: afterPay,
+              );
+            },
+          )
+        : context.paymentProvider.pay(
+            context,
+            paymentMethod: PaymentMethodType.inAppPurchases,
+            productId: productId,
+            title: title,
+            discription: discription,
+            id: id,
+            amount: amount,
+            orderType: orderType,
+            subscriptionsType: subscriptionsType,
+            subscribtionId: subscribtionId,
+            orderId: orderId,
+            afterPay: afterPay,
+          );
   }
 }
