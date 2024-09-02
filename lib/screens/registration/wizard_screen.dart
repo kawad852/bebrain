@@ -35,7 +35,7 @@ class _WizardScreenState extends State<WizardScreen> {
   late Future<WizardModel> _future;
   int? _selectedId;
   String? _selectedName;
-  String countryCode='';
+  String countryCode = '';
   Timer? _debounce;
   String _query = '';
 
@@ -105,9 +105,9 @@ class _WizardScreenState extends State<WizardScreen> {
     switch (widget.wizardType) {
       case WizardType.countries:
         context.authProvider.wizardValues.countryId = _selectedId;
-        context.authProvider.wizardValues.countryName=_selectedName;
-        context.authProvider.wizardValues.wizardType=WizardType.countries;
-        context.authProvider.wizardValues.countryCode=countryCode;
+        context.authProvider.wizardValues.countryName = _selectedName;
+        context.authProvider.wizardValues.wizardType = WizardType.countries;
+        context.authProvider.wizardValues.countryCode = countryCode;
         context.authProvider.wizardValues.universityId = null;
         context.authProvider.wizardValues.universityName = null;
         context.authProvider.wizardValues.collegeId = null;
@@ -116,22 +116,22 @@ class _WizardScreenState extends State<WizardScreen> {
         context.authProvider.wizardValues.majorName = null;
       case WizardType.universities:
         context.authProvider.wizardValues.universityId = _selectedId;
-        context.authProvider.wizardValues.universityName=_selectedName;
-        context.authProvider.wizardValues.wizardType=WizardType.universities;
+        context.authProvider.wizardValues.universityName = _selectedName;
+        context.authProvider.wizardValues.wizardType = WizardType.universities;
         context.authProvider.wizardValues.collegeId = null;
         context.authProvider.wizardValues.collegeName = null;
         context.authProvider.wizardValues.majorId = null;
         context.authProvider.wizardValues.majorName = null;
       case WizardType.colleges:
         context.authProvider.wizardValues.collegeId = _selectedId;
-        context.authProvider.wizardValues.collegeName=_selectedName;
-        context.authProvider.wizardValues.wizardType=WizardType.colleges;
+        context.authProvider.wizardValues.collegeName = _selectedName;
+        context.authProvider.wizardValues.wizardType = WizardType.colleges;
         context.authProvider.wizardValues.majorId = null;
         context.authProvider.wizardValues.majorName = null;
       case WizardType.specialities:
         context.authProvider.wizardValues.majorId = _selectedId;
-        context.authProvider.wizardValues.majorName=_selectedName;
-        context.authProvider.wizardValues.wizardType=WizardType.specialities;
+        context.authProvider.wizardValues.majorName = _selectedName;
+        context.authProvider.wizardValues.wizardType = WizardType.specialities;
       default:
         break;
     }
@@ -140,10 +140,9 @@ class _WizardScreenState extends State<WizardScreen> {
   void _onNext(BuildContext context) {
     saveWizardValue();
     if (_info!.nextType == null) {
-      UiHelper().addFilter(context, filterModel: context.authProvider.wizardValues,
-      afterAdd: (){
+      UiHelper().addFilter(context, filterModel: context.authProvider.wizardValues, afterAdd: () {
         context.pushAndRemoveUntil(const AppNavBar());
-       // Navigator.popUntil(context, (route) => route.isFirst);
+        // Navigator.popUntil(context, (route) => route.isFirst);
       });
     } else {
       context.push(
@@ -193,20 +192,19 @@ class _WizardScreenState extends State<WizardScreen> {
         }
         return Scaffold(
           appBar: AppBar(
-           // backgroundColor: Colors.transparent,
+            // backgroundColor: Colors.transparent,
             surfaceTintColor: Colors.transparent,
             actions: [
-              if(widget.wizardType != WizardType.countries)
-              TextButton(
-                onPressed: () {
-                  UiHelper().addFilter(context, filterModel: context.authProvider.wizardValues,
-                   afterAdd: (){
-                   context.pushAndRemoveUntil(const AppNavBar());
-                   });
-                 // context.pushAndRemoveUntil(const AppNavBar());
-                },
-                child: Text(context.appLocalization.skip),
-              ),
+              if (widget.wizardType != WizardType.countries)
+                TextButton(
+                  onPressed: () {
+                    UiHelper().addFilter(context, filterModel: context.authProvider.wizardValues, afterAdd: () {
+                      context.pushAndRemoveUntil(const AppNavBar());
+                    });
+                    // context.pushAndRemoveUntil(const AppNavBar());
+                  },
+                  child: Text(context.appLocalization.skip),
+                ),
             ],
           ),
           bottomNavigationBar: BottomAppBar(
@@ -220,7 +218,7 @@ class _WizardScreenState extends State<WizardScreen> {
             ),
           ),
           body: Padding(
-            padding: const EdgeInsets.only(bottom: 20,left: 20,right: 20),
+            padding: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
             child: Column(
               children: [
                 Material(
@@ -256,11 +254,11 @@ class _WizardScreenState extends State<WizardScreen> {
                         ),
                         onTap: () {
                           setState(() {
-                            if(widget.wizardType == WizardType.countries){
-                              countryCode=element.countryCode!;
+                            if (widget.wizardType == WizardType.countries) {
+                              countryCode = element.countryCode!;
                             }
                             _selectedId = element.id;
-                            _selectedName=element.name!;
+                            _selectedName = element.name!;
                           });
                         },
                         leading: widget.wizardType == WizardType.countries
