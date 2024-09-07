@@ -94,7 +94,7 @@ class ApiService<T> {
           body: body,
         );
       }
-      // log("ApiRequest::\nURL:: ${link ?? uri}\nQueryParameters:: $queryParams\nSTATUSCODE:: ${response.statusCode}");
+       log("ApiRequest::\nURL:: ${link ?? uri}\nQueryParameters:: $queryParams\nSTATUSCODE:: ${response.statusCode}");
       if (onEnd != null) {
         Map<String, dynamic> json = jsonDecode(response.body);
         final model = builder(json) as T;

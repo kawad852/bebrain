@@ -10,6 +10,7 @@ import 'package:bebrain/screens/booking/booking_request_screen.dart';
 import 'package:bebrain/screens/teacher/widgets/date_bubble.dart';
 import 'package:bebrain/screens/teacher/widgets/subject_menu.dart';
 import 'package:bebrain/screens/teacher/widgets/teacher_info.dart';
+import 'package:bebrain/screens/teacher/widgets/teacher_time.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/my_icons.dart';
 import 'package:bebrain/utils/my_theme.dart';
@@ -173,7 +174,21 @@ class _BookingLectureScreenState extends State<BookingLectureScreen> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Text(
+                      context.appLocalization.availableTimes,
+                      style: TextStyle(
+                        color: context.colorPalette.black33,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  TeacherTime(
+                    interviewDays: _teacher.interviewDays!,
+                  ),
+                  const SizedBox(height: 5),
                   TitledTextField(
                     title: "${context.appLocalization.subject} *",
                     child: SubjectMenu(

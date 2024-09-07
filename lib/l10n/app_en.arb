@@ -241,5 +241,7 @@
   "successEditProfile":"The profile has been successfully modified",
   "checkInfo":"Please check the information entered",
   "deleteAccountMsg": "Are you sure you want to delete your account?",
-  "noCoursesYet":"There are no courses added yet"
+  "noCoursesYet":"There are no courses added yet",
+  "availableTimes":"Available times",
+  "day":"Day"
 }
