@@ -7,6 +7,7 @@ import 'package:bebrain/helper/phone_controller.dart';
 import 'package:bebrain/providers/auth_provider.dart';
 import 'package:bebrain/screens/registration/create_account_screen.dart';
 import 'package:bebrain/screens/registration/forget_password/forget_password_screen.dart';
+import 'package:bebrain/screens/registration/phone_auth_screen.dart';
 import 'package:bebrain/screens/registration/widgets/auth_button.dart';
 import 'package:bebrain/screens/registration/widgets/auth_header.dart';
 import 'package:bebrain/screens/registration/wizard_screen.dart';
@@ -60,11 +61,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
       final auth = await _firebaseAuth.signInWithCredential(credential);
       if (context.mounted) {
-        await _authProvider.login(
-          context,
-          displayName: auth.user?.displayName,
-          email: auth.user?.email,
-          photoURL: auth.user?.photoURL,
+        context.push(
+          PhoneAuthScreen(
+            email: auth.user?.email,
+            fullName: auth.user?.displayName,
+            photoURL: auth.user?.photoURL,
+          ),
         );
       }
     } on PlatformException catch (e) {
@@ -111,11 +113,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
       final auth = await _firebaseAuth.signInWithCredential(oauthCredential);
       if (context.mounted) {
-        await _authProvider.login(
-          context,
-          displayName: auth.user?.displayName,
-          email: auth.user?.email,
-          photoURL: auth.user?.photoURL,
+        context.push(
+          PhoneAuthScreen(
+            email: auth.user?.email,
+            fullName: auth.user?.displayName,
+            photoURL: auth.user?.photoURL,
+          ),
         );
       }
     } on PlatformException catch (e) {
@@ -195,6 +198,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 isLogin: true,
                 phoneNum: '${_phoneController.getDialCode()}${_phoneController.phoneNum}',
                 password: _password!,
+                withOverlayLoader: true,
               );
             }
           },

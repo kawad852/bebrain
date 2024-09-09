@@ -243,5 +243,6 @@
   "deleteAccountMsg": "Are you sure you want to delete your account?",
   "noCoursesYet":"There are no courses added yet",
   "availableTimes":"Available times",
-  "day":"Day"
+  "day":"Day",
+  "phoneNumBody": "Please enter your phone number to continue"
 }

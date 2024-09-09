@@ -41,7 +41,7 @@ class AuthProvider extends ChangeNotifier {
     Navigator.popUntil(context, (route) => route.settings.name == _lastRouteName);
   }
 
-  Future login(
+  Future<AuthModel> login(
     BuildContext context, {
     String? displayName,
     String? email,
@@ -49,8 +49,9 @@ class AuthProvider extends ChangeNotifier {
     String? phoneNum,
     String? password,
     bool isLogin = false,
+    bool withOverlayLoader = true,
   }) async {
-    await ApiFutureBuilder<AuthModel>().fetch(
+    return await ApiFutureBuilder<AuthModel>().fetch(
       context,
       withOverlayLoader: isLogin,
       future: () {
@@ -307,7 +308,10 @@ class AuthProvider extends ChangeNotifier {
     required String dialCode,
     required String phoneNum,
     String? password,
+    String? email,
     String? fullName,
+    String? photoURL,
+    bool socialLogin = false,
   }) async {
     debugPrint("DialCode:: $dialCode PhoneNum:: $phoneNum");
     if (withOverLayLoading) {
@@ -318,10 +322,10 @@ class AuthProvider extends ChangeNotifier {
       future: () async {
         final otpFuture = ApiService<GeneralModel>().build(
           url: '',
-          link: "https://api.doverifyit.com/api/otp-send/6879141732",
+          link: "https://api.doverifyit.com/api/otp-send/9698951871",
           isPublic: true,
           additionalHeaders: {
-            "Authorization": "878|ddl4NYnlSKlCeYwrDtfUcTa2RNeIvdv1MPEA9rAwF3nqUxU6VIjXa4H2J9CY",
+            "Authorization": "553|qsZhFQf91vSH5eMnmvQCI1oNwrmT01O7PQEgn4gjJSv6d10xSvMVIIeoX2L1",
           },
           queryParams: {
             "contact": "$dialCode$phoneNum",
@@ -331,6 +335,7 @@ class AuthProvider extends ChangeNotifier {
         );
         return otpFuture;
       },
+      onError: (failure) => AppErrorFeedback.show(context, failure),
       onComplete: (snapshot) {
         if (snapshot.status == 200) {
           if (onResent != null) {
@@ -345,6 +350,9 @@ class AuthProvider extends ChangeNotifier {
                   guestRoute: '',
                   password: password,
                   fullName: fullName,
+                  email: email,
+                  photoURL: photoURL,
+                  socialLogin: socialLogin,
                 ),
               );
             }

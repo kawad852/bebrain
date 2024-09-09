@@ -1,4 +1,5 @@
 import 'package:bebrain/alerts/feedback/app_feedback.dart';
+import 'package:bebrain/model/auth_model.dart';
 import 'package:bebrain/model/general_model.dart';
 import 'package:bebrain/network/api_service.dart';
 import 'package:bebrain/providers/auth_provider.dart';
@@ -16,6 +17,9 @@ class VerifyCodeScreen extends StatefulWidget {
   final String? fullName;
   final String verificationId;
   final String? guestRoute;
+  final String? email;
+  final String? photoURL;
+  final bool socialLogin;
 
   const VerifyCodeScreen({
     super.key,
@@ -25,6 +29,9 @@ class VerifyCodeScreen extends StatefulWidget {
     required this.guestRoute,
     required this.password,
     required this.fullName,
+    required this.photoURL,
+    required this.email,
+    this.socialLogin = false,
   });
 
   @override
@@ -37,9 +44,10 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
   late AuthProvider _userProvider;
 
   Future<void> _verifyPinCode(BuildContext context) async {
-    ApiFutureBuilder<GeneralModel>().fetch(
+    ApiFutureBuilder<List<dynamic>>().fetch(
       context,
       future: () async {
+        List<Future<dynamic>> futures = [];
         final otpFuture = ApiService<GeneralModel>().build(
           url: '',
           link: "https://api.doverifyit.com/api/otp-check/6879141732",
@@ -53,10 +61,26 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
           apiType: ApiType.post,
           builder: GeneralModel.fromJson,
         );
-        return otpFuture;
+        futures.add(otpFuture);
+        if (widget.socialLogin) {
+          final loginFuture = context.authProvider.login(
+            context,
+            displayName: widget.fullName,
+            email: widget.email,
+            photoURL: widget.photoURL,
+            withOverlayLoader: false,
+          );
+          futures.add(loginFuture);
+        } else {
+          futures.add(Future.value(AuthModel()));
+        }
+        return futures;
       },
       onComplete: (snapshot) {
-        if (snapshot.status == 200) {
+        final otpSnapshot = snapshot[0] as GeneralModel;
+        final loginSnapshot = snapshot[1] as AuthModel;
+
+        if (otpSnapshot.status == 200 && loginSnapshot.code == 200) {
           if (widget.password == null) {
             if (context.mounted) {
               context.push(
@@ -77,7 +101,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
             }
           }
         } else {
-          context.showSnackBar(snapshot.message ?? context.appLocalization.generalError);
+          context.showSnackBar(context.appLocalization.generalError);
         }
       },
     );
