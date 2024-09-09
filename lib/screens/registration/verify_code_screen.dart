@@ -68,6 +68,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
             displayName: widget.fullName,
             email: widget.email,
             photoURL: widget.photoURL,
+            phoneNum: '${widget.dialCode}${widget.phoneNum}',
             withOverlayLoader: false,
           );
           futures.add(loginFuture);

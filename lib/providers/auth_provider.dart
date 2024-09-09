@@ -71,6 +71,7 @@ class AuthProvider extends ChangeNotifier {
             "name": displayName,
             "email": email,
             "image": photoURL,
+            "phone_number": phoneNum,
             "country_id": wizardValues.countryId ?? "",
             "university_id": wizardValues.universityId ?? "",
             "college_id": wizardValues.collegeId ?? "",
