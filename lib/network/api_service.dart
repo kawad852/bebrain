@@ -45,7 +45,7 @@ class ApiService<T> {
       var response = await request.send();
 
       var responseBody = await http.Response.fromStream(response).then((response) => response.body);
-       log("ApiRequest::URL:: $url\nSTATUSCODE:: ${response.statusCode}\nBODY:: $responseBody");
+      // log("ApiRequest::URL:: $url\nSTATUSCODE:: ${response.statusCode}\nBODY:: $responseBody");
 
       Map<String, dynamic> json = jsonDecode(responseBody);
       if (onSuccess != null) {
@@ -94,7 +94,7 @@ class ApiService<T> {
           body: body,
         );
       }
-       log("ApiRequest::\nURL:: ${link ?? uri}\nQueryParameters:: $queryParams\nSTATUSCODE:: ${response.statusCode}");
+      // log("ApiRequest::\nURL:: ${link ?? uri}\nQueryParameters:: $queryParams\nSTATUSCODE:: ${response.statusCode}");
       if (onEnd != null) {
         Map<String, dynamic> json = jsonDecode(response.body);
         final model = builder(json) as T;
