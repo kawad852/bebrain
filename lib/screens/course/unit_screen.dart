@@ -203,7 +203,7 @@ class _UnitScreenState extends State<UnitScreen> {
                         textColor: context.colorPalette.grey66,
                         fontWeight: FontWeight.bold,
                       ),
-                      if (unit.paymentStatus == PaymentStatus.unPaid)
+                      if (unit.paymentStatus == PaymentStatus.unPaid && unit.unitPrice != 0 && unit.discountPrice != 0)
                         Container(
                           width: double.infinity,
                           height: 50,

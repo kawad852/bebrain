@@ -46,6 +46,7 @@ class _BookingLectureScreenState extends State<BookingLectureScreen> {
   String? _notes;
   String? _day;
   String? _hour;
+  String? _helpTextTimePicker;
 
   FilePickerResult? result;
   List<File> files = [];
@@ -64,7 +65,7 @@ class _BookingLectureScreenState extends State<BookingLectureScreen> {
   }
 
   void _sendInterView() {
-    if (_subjectId == null || _title == null || files.isEmpty || _hoursNumber == null || _day == null || _hour == null) {
+    if (_subjectId == null || _title == null || _hoursNumber == null || _day == null || _hour == null) {
       context.showSnackBar(context.appLocalization.fillAllFields);
     } else {
       ApiFutureBuilder<SingleInterviewModel>().fetch(context, future: () async {
@@ -104,6 +105,15 @@ class _BookingLectureScreenState extends State<BookingLectureScreen> {
         _selectedDate = picked;
         _day = DateFormat("yyyy-MM-dd").format(_selectedDate!);
         dateHintText = _selectedDate!.formatDate(context);
+        _teacher.interviewDays!.map((element) {
+          if(element.dayId == picked.weekday) {
+            _helpTextTimePicker = context.appLocalization.professorAvailable(
+              DateFormat("hh:mm:ss").parse(element.from!).formatDate(context, pattern: "hh:mma"),
+              DateFormat("hh:mm:ss").parse(element.to!).formatDate(context, pattern: "hh:mma"),
+            );
+          }
+         },
+       ).toSet();
       });
     }
   }
@@ -114,6 +124,7 @@ class _BookingLectureScreenState extends State<BookingLectureScreen> {
     final TimeOfDay? picked = await showTimePicker(
       context: context,
       initialTime: _selectedHour,
+      helpText: _helpTextTimePicker,
     );
     if (picked != null) {
       setState(() {
@@ -284,7 +295,7 @@ class _BookingLectureScreenState extends State<BookingLectureScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "${context.appLocalization.attachFilesAndPictures} *",
+                                  context.appLocalization.attachFilesAndPictures,
                                   style: const TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w600,

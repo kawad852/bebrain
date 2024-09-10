@@ -244,5 +244,6 @@
   "noCoursesYet":"There are no courses added yet",
   "availableTimes":"Available times",
   "day":"Day",
-  "phoneNumBody": "Please enter your phone number to continue"
+  "phoneNumBody": "Please enter your phone number to continue",
+  "professorAvailable":"The professor is available from {from} to {to}"
 }

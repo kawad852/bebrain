@@ -244,5 +244,6 @@
   "noCoursesYet":"لا توجد كورسات مضافة بعد",
   "availableTimes":"الأوقات المتاحة",
   "day":"اليوم",
-  "phoneNumBody": "يرجى ادخال رقم الهاتف للمتابعة"
+  "phoneNumBody": "يرجى ادخال رقم الهاتف للمتابعة",
+  "professorAvailable":"الإستاذ متاح من {from} الى {to}"
 }
