@@ -193,7 +193,7 @@ class _CourseScreenState extends State<CourseScreen> {
                           children: [
                             Expanded(
                               child: CourseText(
-                                course.university!,
+                                course.university ?? "",
                                 overflow: TextOverflow.ellipsis,
                                 fontSize: 14,
                                 textColor: context.colorPalette.grey66,
