@@ -43,17 +43,17 @@ class LectureCard extends StatelessWidget {
               ),
             ),
           ),
-          Flexible(
-            child: Text(
-              professor.universityName!,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontSize: 14,
-                color: context.colorPalette.grey66,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
+          // Flexible(
+          //   child: Text(
+          //     professor.universityName!,
+          //     overflow: TextOverflow.ellipsis,
+          //     style: TextStyle(
+          //       fontSize: 14,
+          //       color: context.colorPalette.grey66,
+          //       fontWeight: FontWeight.bold,
+          //     ),
+          //   ),
+          // ),
           Flexible(
             child: Text(
               "${professor.subscriptionCount} ${context.appLocalization.subscriber}",

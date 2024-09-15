@@ -36,15 +36,15 @@ class TeacherInfo extends StatelessWidget {
                   fontSize: 14,
                 ),
               ),
-              Text(
-                teacher.universityName!,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  color: context.colorPalette.grey66,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 14,
-                ),
-              ),
+              // Text(
+              //   teacher.universityName!,
+              //   overflow: TextOverflow.ellipsis,
+              //   style: TextStyle(
+              //     color: context.colorPalette.grey66,
+              //     fontWeight: FontWeight.w600,
+              //     fontSize: 14,
+              //   ),
+              // ),
               Row(
                 children: [
                   RatingBar.builder(

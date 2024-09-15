@@ -101,7 +101,7 @@ class _LecturersScreenState extends State<LecturersScreen> {
                   sliver: SliverGrid(
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
-                      childAspectRatio: 0.9,
+                      childAspectRatio: 1,
                     ),
                     delegate: SliverChildBuilderDelegate(
                       childCount: snapshot.docs.length + 1,
@@ -137,7 +137,7 @@ class _LecturersScreenState extends State<LecturersScreen> {
                   sliver: SliverGrid(
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
-                      childAspectRatio: 0.9,
+                      childAspectRatio: 1,
                     ),
                     delegate: SliverChildBuilderDelegate(
                       childCount: snapshot.docs.length + 1,
