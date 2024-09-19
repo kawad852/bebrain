@@ -50,10 +50,10 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
         List<Future<dynamic>> futures = [];
         final otpFuture = ApiService<GeneralModel>().build(
           url: '',
-          link: "https://api.doverifyit.com/api/otp-check/6879141732",
+          link: "https://api.doverifyit.com/api/otp-check/9698951871",
           isPublic: true,
           additionalHeaders: {
-            "Authorization": "878|ddl4NYnlSKlCeYwrDtfUcTa2RNeIvdv1MPEA9rAwF3nqUxU6VIjXa4H2J9CY",
+            "Authorization": "553|qsZhFQf91vSH5eMnmvQCI1oNwrmT01O7PQEgn4gjJSv6d10xSvMVIIeoX2L1",
           },
           queryParams: {
             "otp": _pinCodeCtrl.text,

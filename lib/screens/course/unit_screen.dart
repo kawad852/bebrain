@@ -17,6 +17,7 @@ import 'package:bebrain/widgets/custom_future_builder.dart';
 import 'package:bebrain/widgets/custom_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:no_screenshot/no_screenshot.dart';
 
 class UnitScreen extends StatefulWidget {
   final int unitId;
@@ -40,6 +41,7 @@ class UnitScreen extends StatefulWidget {
 }
 
 class _UnitScreenState extends State<UnitScreen> {
+  final _noScreenshot = NoScreenshot.instance;
   late MainProvider _mainProvider;
   late Future<UnitFilterModel> _unitFuture;
   String? _orderNumber;
@@ -64,9 +66,20 @@ class _UnitScreenState extends State<UnitScreen> {
         (lastDate.toUTC(context).compareTo(DateTime.now()) == 0 || DateTime.now().isBefore(lastDate.toUTC(context)));
   }
 
+  void disableScreenshot() async {
+    bool result = await _noScreenshot.screenshotOff();
+    debugPrint('Screenshot Off: $result');
+  }
+
+  void enableScreenshot() async {
+    bool result = await _noScreenshot.screenshotOn();
+    debugPrint('Enable Screenshot: $result');
+  }
+
   @override
   void initState() {
     super.initState();
+    disableScreenshot();
     _mainProvider = context.mainProvider;
     _initializeFuture(null,null);
     SystemChrome.setPreferredOrientations([
@@ -92,6 +105,7 @@ class _UnitScreenState extends State<UnitScreen> {
 
   @override
   void dispose() {
+    enableScreenshot();
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
@@ -203,7 +217,7 @@ class _UnitScreenState extends State<UnitScreen> {
                         textColor: context.colorPalette.grey66,
                         fontWeight: FontWeight.bold,
                       ),
-                      if (unit.paymentStatus == PaymentStatus.unPaid && unit.unitPrice != 0 && unit.discountPrice != 0)
+                      if (unit.paymentStatus == PaymentStatus.unPaid && unit.unitPrice != 0 && unit.discountPrice != 0 && unit.type == PaymentType.notFree)
                         Container(
                           width: double.infinity,
                           height: 50,

@@ -116,8 +116,8 @@ class PartCard extends StatelessWidget {
                       onTap: _allowShow? () {
                         context.push(
                           FileScreen(
-                            url: element.document!,
-                            fileName: element.name!,
+                            url: element.document!.document!,
+                            fileName: element.document!.name!,
                           ),
                         );
                       } : null,

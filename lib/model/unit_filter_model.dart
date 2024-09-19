@@ -257,7 +257,7 @@ class Video {
     String? section;
     int? period;
     int? paymentStatus;
-    dynamic document;
+    Document? document;
 
     Video({
         this.id,
@@ -286,7 +286,7 @@ class Video {
         section: json["section"],
         period: json["period"],
         paymentStatus: json["payment_status"],
-        document: json["document"],
+        document: json["document"] == null ? null : Document.fromJson(json["document"]),
     );
 
     Map<String, dynamic> toJson() => {
@@ -301,6 +301,6 @@ class Video {
         "section": section,
         "period": period,
         "payment_status": paymentStatus,
-        "document": document,
+        "document": document?.toJson(),
     };
 }
