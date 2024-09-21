@@ -39,7 +39,7 @@ class UPayment {
             "id": orderId,
             "reference": "11111991",
             "description": "Purchase order received for Logitech K380 Keyboard",
-            "currency": "USD",
+            "currency": MySharedPreferences.user.currencyCode!,
             "amount": amount,
           },
           "language": "en",

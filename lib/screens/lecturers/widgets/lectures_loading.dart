@@ -3,18 +3,19 @@ import 'package:bebrain/widgets/shimmer/shimmer_bubble.dart';
 import 'package:flutter/material.dart';
 
 class LecturesLoading extends StatelessWidget {
-  const LecturesLoading({super.key});
+  final bool isOnLine;
+  const LecturesLoading({super.key, this.isOnLine = false});
 
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
       itemCount: 8,
       shrinkWrap: true,
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      padding: EdgeInsets.symmetric(horizontal: isOnLine? 0 : 10),
       physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        childAspectRatio: 1,
+        childAspectRatio: MediaQuery.of(context).size.width / (MediaQuery.of(context).size.height / 2),
       ),
       itemBuilder: (context, snaphot) {
         return const LoadingBubble(

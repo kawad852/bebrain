@@ -60,6 +60,8 @@ class UserData {
     int? countryId;
     String? country;
     String? countryCode;
+    String? currencyCode;
+    String? currencySympol;
     int? universityId;
     String? universityName;
     int? collegeId;
@@ -85,6 +87,8 @@ class UserData {
         this.countryId,
         this.country,
         this.countryCode,
+        this.currencyCode,
+        this.currencySympol,
         this.universityId,
         this.universityName,
         this.collegeId,
@@ -113,6 +117,8 @@ class UserData {
         countryId: json["country_id"],
         country: json["country"],
         countryCode: json["country_code"],
+        currencyCode: json["currency_code"],
+        currencySympol: json["currency_Sympol"],
         universityId: json["university_id"],
         universityName: json["university_name"],
         collegeId: json["college_id"],
@@ -139,6 +145,8 @@ class UserData {
         "country_id": countryId,
         "country": country,
         "country_code":countryCode,
+        "currency_code": currencyCode,
+        "currency_Sympol": currencySympol,
         "university_id": universityId,
         "university_name": universityName,
         "college_id": collegeId,

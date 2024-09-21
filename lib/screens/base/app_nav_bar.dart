@@ -4,8 +4,8 @@ import 'package:bebrain/screens/base/widgets/nav_bar_item.dart';
 import 'package:bebrain/screens/duties/duties_screen.dart';
 import 'package:bebrain/screens/graduation_projects/graduation_projects_screen.dart';
 import 'package:bebrain/screens/home/home_screen.dart';
+import 'package:bebrain/screens/online/online_screen.dart';
 import 'package:bebrain/screens/profile/profile_screen.dart';
-import 'package:bebrain/screens/special_explanation/special_explanation_screen.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/my_icons.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +28,7 @@ class _AppNavBarState extends State<AppNavBar> {
   final items = [
     MyIcons.home,
     MyIcons.duties,
-    MyIcons.specialExplanation,
+    MyIcons.onLine,
     MyIcons.graduation,
     MyIcons.profile,
   ];
@@ -36,7 +36,7 @@ class _AppNavBarState extends State<AppNavBar> {
   final itemsSelected = [
     MyIcons.homeSelected,
     MyIcons.dutiesSelected,
-    MyIcons.specialExplanationSelected,
+    MyIcons.onLineSelected,
     MyIcons.graduationSelected,
     MyIcons.profileSelected,
   ];
@@ -45,7 +45,7 @@ class _AppNavBarState extends State<AppNavBar> {
     return [
       context.appLocalization.home,
       context.appLocalization.duties,
-      context.appLocalization.explanation,
+      context.appLocalization.onLine,
       context.appLocalization.graduationProjects,
       context.appLocalization.profile,
     ];
@@ -54,7 +54,7 @@ class _AppNavBarState extends State<AppNavBar> {
   final screens = [
     const HomeScreen(),
     const DutiesScreen(),
-    const SpecialExplanationScreen(),
+    const OnlineScreen(),
     const GraduationProjectsScreen(),
     const ProfileScreen(),
   ];

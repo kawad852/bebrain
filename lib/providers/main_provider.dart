@@ -7,9 +7,11 @@ import 'package:bebrain/model/country_filter_model.dart';
 import 'package:bebrain/model/course_filter_model.dart';
 import 'package:bebrain/model/course_rating_model.dart';
 import 'package:bebrain/model/course_review_model.dart';
+import 'package:bebrain/model/important_subject_model.dart';
 import 'package:bebrain/model/interview_model.dart';
 import 'package:bebrain/model/major_filter_model.dart';
 import 'package:bebrain/model/new_request_model.dart';
+import 'package:bebrain/model/online_professor_model.dart';
 import 'package:bebrain/model/order_model.dart';
 import 'package:bebrain/model/policy_model.dart';
 import 'package:bebrain/model/professors_model.dart';
@@ -416,6 +418,48 @@ class MainProvider extends ChangeNotifier {
         "order_number": orderNumber,
       },
       builder: ConfirmPayModel.fromJson,
+    );
+    return snapshot;
+  }
+
+  Future<ImportantSubjectModel> fetchImportantSubject(String value) {
+    final snapshot = ApiService<ImportantSubjectModel>().build(
+      url: ApiUrl.importantSubject,
+      isPublic: true,
+      apiType: ApiType.post,
+      queryParams: {
+        "key": value,
+      },
+      builder: ImportantSubjectModel.fromJson,
+    );
+    return snapshot;
+  }
+
+  Future<OnlineProfessorModel> fetchOnlineProfessor({
+    required int pageKey,
+    required String value,
+  }) {
+    final snapshot = ApiService<OnlineProfessorModel>().build(
+      url: "${ApiUrl.onlineProfessor}?page=$pageKey",
+      isPublic: false,
+      apiType: ApiType.post,
+      queryParams: {
+        "key": value,
+      },
+      builder: OnlineProfessorModel.fromJson,
+    );
+    return snapshot;
+  }
+
+  Future<OnlineProfessorModel> fetchProfessorBySubjectId({
+    required int id,
+    required int pageKey,
+  }) {
+    final snapshot = ApiService<OnlineProfessorModel>().build(
+      url: "${ApiUrl.professorBySubject}/$id?page=$pageKey",
+      isPublic: false,
+      apiType: ApiType.get,
+      builder: OnlineProfessorModel.fromJson,
     );
     return snapshot;
   }

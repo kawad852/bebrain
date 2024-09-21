@@ -9,6 +9,7 @@ import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/enums.dart';
 import 'package:bebrain/utils/my_icons.dart';
 import 'package:bebrain/utils/my_theme.dart';
+import 'package:bebrain/utils/shared_pref.dart';
 import 'package:bebrain/widgets/custom_svg.dart';
 import 'package:flutter/material.dart';
 
@@ -104,13 +105,13 @@ class ContentCard extends StatelessWidget {
                         children: [
                           if (unit.discountPrice != null)
                             CourseText(
-                              "\$${unit.unitPrice}",
+                              "${MySharedPreferences.user.currencySympol} ${unit.unitPrice}",
                               textColor: context.colorPalette.grey66,
                               fontWeight: FontWeight.bold,
                               decoration: TextDecoration.lineThrough,
                             ),
                           CourseText(
-                            "\$${unit.discountPrice ?? unit.unitPrice}",
+                            "${MySharedPreferences.user.currencySympol} ${unit.discountPrice ?? unit.unitPrice}",
                             fontWeight: FontWeight.bold,
                           ),
                         ],

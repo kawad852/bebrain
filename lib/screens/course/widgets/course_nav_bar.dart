@@ -2,6 +2,7 @@ import 'package:bebrain/model/course_filter_model.dart';
 import 'package:bebrain/screens/course/widgets/course_text.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/my_theme.dart';
+import 'package:bebrain/utils/shared_pref.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -56,14 +57,14 @@ class _CourseNavBarState extends State<CourseNavBar> {
               children: [
                 if (widget.discountPrice != null)
                   CourseText(
-                    "\$${widget.price}",
+                    "${MySharedPreferences.user.currencySympol} ${widget.price}",
                     fontSize: 16,
                     textColor: context.colorPalette.grey66,
                     decoration: TextDecoration.lineThrough,
                     fontWeight: FontWeight.bold,
                   ),
                 CourseText(
-                  "\$${widget.discountPrice ?? widget.price}",
+                  "${MySharedPreferences.user.currencySympol} ${widget.discountPrice ?? widget.price}",
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),

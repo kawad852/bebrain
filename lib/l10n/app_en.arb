@@ -245,5 +245,13 @@
   "availableTimes":"Available times",
   "day":"Day",
   "phoneNumBody": "Please enter your phone number to continue",
-  "professorAvailable":"The professor is available from {from} to {to}"
+  "professorAvailable":"The professor is available from {from} to {to}",
+  "onLine":"Online",
+  "bookLectureOnline":"Book a lecture online",
+  "searchSubOrLecture":"Search for the name of a subject or lecturer",
+  "bookNow":"Book now",
+  "noTeacherYet":"There are no teachers yet",
+  "watchAfreeVideo":"Watch a free video of the professor's explanation",
+  "sorry":"Sorry",
+  "noVideoAvailable":"There is no video currently available"
 }

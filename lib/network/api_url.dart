@@ -41,4 +41,7 @@ class ApiUrl {
   static const String interview = '/api/interviews';
   static const String paymentConfirm = '/api/payment/confirm';
   static const String tokenCheck = '/api/token/check';
+  static const String importantSubject = '/api/subjects/trendy';
+  static const String onlineProfessor = '/api/subjects/filter';
+  static const String professorBySubject = '/api/professors/subject';
 }

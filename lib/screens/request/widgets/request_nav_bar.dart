@@ -1,3 +1,4 @@
+import 'package:bebrain/utils/shared_pref.dart';
 import 'package:bebrain/widgets/request_text.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/enums.dart';
@@ -50,7 +51,7 @@ class _RequestNavBarState extends State<RequestNavBar> {
           //mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             RequestText(
-              "\$${widget.price}",
+              "${MySharedPreferences.user.currencySympol} ${widget.price}",
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),

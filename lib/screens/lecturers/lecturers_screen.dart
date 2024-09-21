@@ -99,9 +99,10 @@ class _LecturersScreenState extends State<LecturersScreen> {
                 return SliverPadding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   sliver: SliverGrid(
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
-                      childAspectRatio: 1,
+                      childAspectRatio: MediaQuery.of(context).size.width / (MediaQuery.of(context).size.height / 2),
+                      
                     ),
                     delegate: SliverChildBuilderDelegate(
                       childCount: snapshot.docs.length + 1,
@@ -135,9 +136,9 @@ class _LecturersScreenState extends State<LecturersScreen> {
                 return SliverPadding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   sliver: SliverGrid(
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
-                      childAspectRatio: 1,
+                      childAspectRatio: MediaQuery.of(context).size.width / (MediaQuery.of(context).size.height / 2),
                     ),
                     delegate: SliverChildBuilderDelegate(
                       childCount: snapshot.docs.length + 1,

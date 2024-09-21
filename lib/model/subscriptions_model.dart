@@ -64,7 +64,7 @@ class SubscriptionsData {
 
 class Order {
     int? id;
-    int? amount;
+    double? amount;
     DateTime? createdAt;
     int? userId;
     String? userName;
@@ -89,7 +89,7 @@ class Order {
 
     factory Order.fromJson(Map<String, dynamic> json) => Order(
         id: json["id"],
-        amount: json["amount"],
+        amount: json["amount"].toDouble(),
         createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
         userId: json["user_id"],
         userName: json["user_name"],

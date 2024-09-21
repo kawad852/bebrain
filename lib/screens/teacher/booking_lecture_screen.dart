@@ -161,13 +161,13 @@ class _BookingLectureScreenState extends State<BookingLectureScreen> {
         slivers: [
           SliverAppBar(
             pinned: true,
-            collapsedHeight: 170,
+            collapsedHeight: 200,
             flexibleSpace: Container(
               color: context.colorPalette.blueC2E,
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Padding(
                 padding: const EdgeInsetsDirectional.only(top: 50),
-                child: TeacherInfo(teacher: _teacher),
+                child: TeacherInfo(teacher: _teacher , showVideo: true),
               ),
             ),
           ),

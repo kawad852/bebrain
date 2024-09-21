@@ -148,7 +148,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
               actions: [
                 ActionContainer(
                   onTap: () {
-                    context.push( const WizardScreen(wizardType: WizardType.countries));
+                    context.push(const WizardScreen(wizardType: WizardType.universities));
                   },
                   hasBorder: true,
                   child: const CustomSvg(MyIcons.filter),

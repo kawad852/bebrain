@@ -21,6 +21,7 @@ class LectureCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
       ),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CustomNetworkImage(
             professor.image!,

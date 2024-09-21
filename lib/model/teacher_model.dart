@@ -32,6 +32,7 @@ class TeacherData {
     int? id;
     String? name;
     String? email;
+    double? interviewHourPrice;
     String? description;
     String? image;
     int? universityId;
@@ -42,6 +43,8 @@ class TeacherData {
     int? viewsCount;
     int? videosCount;
     int? coursesCount;
+    String? vimeoId;
+    int? videoId;
     List<Major>? majors;
     List<College>? colleges;
     List<Course>? courses;
@@ -53,6 +56,7 @@ class TeacherData {
         this.id,
         this.name,
         this.email,
+        this.interviewHourPrice,
         this.description,
         this.image,
         this.universityId,
@@ -63,6 +67,8 @@ class TeacherData {
         this.viewsCount,
         this.videosCount,
         this.coursesCount,
+        this.vimeoId,
+        this.videoId,
         this.majors,
         this.colleges,
         this.courses,
@@ -75,6 +81,9 @@ class TeacherData {
         id: json["id"],
         name: json["name"],
         email: json["email"],
+        vimeoId: json["vimeo_id"],
+        videoId: json["video_id"],
+        interviewHourPrice: json["interview_hour_price"]?.toDouble(),
         description: json["description"],
         image: json["image"],
         universityId: json["university_id"],
@@ -97,6 +106,9 @@ class TeacherData {
         "id": id,
         "name": name,
         "email": email,
+        "vimeo_id" :vimeoId,
+        "video_id": videoId,
+        "interview_hour_price": interviewHourPrice,
         "description": description,
         "image": image,
         "university_id": universityId,

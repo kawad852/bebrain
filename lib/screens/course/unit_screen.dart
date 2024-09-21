@@ -13,6 +13,7 @@ import 'package:bebrain/screens/vimeo_player/vimeo_player_screen.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/enums.dart';
 import 'package:bebrain/utils/my_theme.dart';
+import 'package:bebrain/utils/shared_pref.dart';
 import 'package:bebrain/widgets/custom_future_builder.dart';
 import 'package:bebrain/widgets/custom_network_image.dart';
 import 'package:flutter/material.dart';
@@ -129,9 +130,8 @@ class _UnitScreenState extends State<UnitScreen> {
         final unit = data.data!;
         return Scaffold(
           bottomNavigationBar:
-              unit.courseOffer == null || !checkTime(unit.courseOffer!.startDate!, unit.courseOffer!.endDate!)
-                  ? null
-                  : CourseNavBar(
+              unit.courseOffer != null && unit.couursePrice != 0 && unit.courseDiscountPrice != 0
+                  ? CourseNavBar(
                       offer: unit.courseOffer!,
                       price: unit.couursePrice!,
                       discountPrice: unit.courseDiscountPrice,
@@ -161,7 +161,8 @@ class _UnitScreenState extends State<UnitScreen> {
                           );
                         }
                       },
-                    ),
+                    )
+                    : null,
           body: CustomScrollView(
             slivers: [
               SliverAppBar(
@@ -199,13 +200,13 @@ class _UnitScreenState extends State<UnitScreen> {
                             children: [
                               if (unit.discountPrice != null)
                                 CourseText(
-                                  "\$${unit.unitPrice}",
+                                  "${MySharedPreferences.user.currencySympol} ${unit.unitPrice}",
                                   textColor: context.colorPalette.grey66,
                                   decoration: TextDecoration.lineThrough,
                                   fontWeight: FontWeight.bold,
                                 ),
                               CourseText(
-                                "\$${unit.discountPrice ?? unit.unitPrice}",
+                                "${MySharedPreferences.user.currencySympol} ${unit.discountPrice ?? unit.unitPrice}",
                                 fontWeight: FontWeight.bold,
                               ),
                             ],
@@ -235,13 +236,13 @@ class _UnitScreenState extends State<UnitScreen> {
                                 children: [
                                   if (unit.discountPrice != null)
                                     CourseText(
-                                      "\$${unit.unitPrice}",
+                                      "${MySharedPreferences.user.currencySympol} ${unit.unitPrice}",
                                       textColor: context.colorPalette.grey66,
                                       decoration: TextDecoration.lineThrough,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   CourseText(
-                                    "\$${unit.discountPrice ?? unit.unitPrice}",
+                                    "${MySharedPreferences.user.currencySympol} ${unit.discountPrice ?? unit.unitPrice}",
                                     textColor: context.colorPalette.black33,
                                     fontWeight: FontWeight.bold,
                                   ),

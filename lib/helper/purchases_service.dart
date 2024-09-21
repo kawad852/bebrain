@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:bebrain/alerts/loading/app_over_loader.dart';
+import 'package:bebrain/utils/shared_pref.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
@@ -83,7 +84,7 @@ class PurchasesService {
         description: description,
         price: "$price",
         rawPrice: price,
-        currencyCode: "USD",
+        currencyCode: MySharedPreferences.user.currencyCode!,
       );
       debugPrint("productId:: ${details.id}\nprice:: ${details.price}\ncurrency:: ${details.currencyCode}");
       final purchaseParam = PurchaseParam(productDetails: details);

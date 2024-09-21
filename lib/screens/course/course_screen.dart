@@ -111,9 +111,8 @@ class _CourseScreenState extends State<CourseScreen> {
         final data = snapshot.data!;
         final course = data.data!.course!;
         return Scaffold(
-          bottomNavigationBar: course.paymentStatus == PaymentStatus.paid
-              ? null
-              : CourseNavBar(
+          bottomNavigationBar: course.paymentStatus == PaymentStatus.unPaid && course.price != 0 && course.discountPrice != 0
+              ? CourseNavBar(
                   offer: course.offer,
                   price: course.price!,
                   discountPrice: course.discountPrice,
@@ -144,7 +143,8 @@ class _CourseScreenState extends State<CourseScreen> {
                       );
                     }
                   },
-                ),
+                )
+                : null,
           body: CustomScrollView(
             slivers: [
               SliverAppBar(
