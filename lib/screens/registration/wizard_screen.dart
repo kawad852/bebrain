@@ -19,11 +19,13 @@ import 'package:flutter/material.dart';
 class WizardScreen extends StatefulWidget {
   final String wizardType;
   final int? id;
+  final bool isComeHome;
 
   const WizardScreen({
     super.key,
     required this.wizardType,
     this.id,
+    this.isComeHome = false,
   });
 
   @override
@@ -149,6 +151,7 @@ class _WizardScreenState extends State<WizardScreen> {
         WizardScreen(
           wizardType: _info!.nextType!,
           id: _selectedId,
+          isComeHome: widget.isComeHome,
         ),
       );
     }
@@ -208,13 +211,38 @@ class _WizardScreenState extends State<WizardScreen> {
             ],
           ),
           bottomNavigationBar: BottomAppBar(
-            child: StretchedButton(
-              onPressed: _selectedId != null
-                  ? () {
-                      _onNext(context);
-                    }
-                  : null,
-              child: Text(context.appLocalization.next),
+            height: widget.isComeHome && widget.wizardType != WizardType.countries ? 105 : null,
+            child: Column(
+              children: [
+               if(widget.isComeHome && widget.wizardType != WizardType.countries) 
+                InkWell(
+                  onTap: () {
+                    context.push(
+                      const WizardScreen(wizardType: WizardType.countries , isComeHome: true),
+                    );
+                  },
+                  child: Text(
+                    context.appLocalization.changeCountry,
+                    style: TextStyle(
+                      color: context.colorPalette.blue8DD,
+                      fontWeight: FontWeight.bold,
+                      decoration: TextDecoration.underline,
+                      decorationThickness: 2,
+                      decorationColor: context.colorPalette.blue8DD,
+                    ),
+                  ),
+                ),
+                if(widget.isComeHome && widget.wizardType != WizardType.countries)
+                const SizedBox(height: 8),
+                StretchedButton(
+                  onPressed: _selectedId != null
+                      ? () {
+                          _onNext(context);
+                        }
+                      : null,
+                  child: Text(context.appLocalization.next),
+                ),
+              ],
             ),
           ),
           body: Padding(

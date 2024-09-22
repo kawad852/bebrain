@@ -36,7 +36,7 @@ class MySharedPreferences {
     user = UserData.fromJson(adminModel.toJson());
   }
 
-  static String get accessToken => _sharedPreferences.getString('accessToken') ?? '7|3W8tNeCRDQRipuNHOgIUmpACJwDGpYqX79NVj6wA3ee9e1ba';
+  static String get accessToken => _sharedPreferences.getString('accessToken') ?? '';
   static set accessToken(String value) => _sharedPreferences.setString('accessToken', value);
 
   static String get language => _sharedPreferences.getString('language') ?? LanguageEnum.arabic;

@@ -253,5 +253,10 @@
   "noTeacherYet":"لا يوجد مدرسين بعد",
   "watchAfreeVideo":"شاهد فيديو مجاني من طريقة شرح الأستاذ",
   "sorry":"عذرا",
-  "noVideoAvailable":"لا يوجد فيديو متوفر حاليا"
+  "noVideoAvailable":"لا يوجد فيديو متوفر حاليا",
+  "bookOnline":"احجز اون لاين",
+  "changeCountry":"تغيير الدولة",
+  "changeUniversity":"تغيير الجامعة",
+  "changeCollege":"تغيير الكلية",
+  "changeMajor":"تغيير التخصص"
 }

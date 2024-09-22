@@ -193,8 +193,9 @@ class AuthProvider extends ChangeNotifier {
   void logout(BuildContext context) {
     _firebaseAuth.signOut();
     MySharedPreferences.clearStorage();
-    updateUser(context, userModel: UserData());
-    updateFilter(context, filterModel: FilterModel());
+    user.id = null;
+    //updateUser(context, userModel: UserData());
+    //updateFilter(context, filterModel: FilterModel());
     context.pushAndRemoveUntil(const RegistrationScreen());
   }
 

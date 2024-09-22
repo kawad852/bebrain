@@ -4,6 +4,7 @@ import 'package:bebrain/model/filter_model.dart';
 import 'package:bebrain/providers/auth_provider.dart';
 import 'package:bebrain/screens/home/widgets/appbar_text.dart';
 import 'package:bebrain/utils/base_extensions.dart';
+import 'package:bebrain/utils/enums.dart';
 import 'package:bebrain/utils/shared_pref.dart';
 import 'package:bebrain/widgets/custom_svg.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +36,20 @@ class _MySubscriptionState extends State<MySubscription> {
                           : userData.collegeName == null
                           ? "/${userData.universityName!}"
                           : "/${userData.universityName!}/ ${userData.collegeName!}";
+                    }
+                  }
+
+                  String getChangeName() {
+                    switch(context.authProvider.wizardValues.wizardType) {
+                      case WizardType.countries :
+                          return context.appLocalization.changeCountry;
+                      case WizardType.universities :
+                          return context.appLocalization.changeUniversity;
+                      case WizardType.colleges :
+                          return context.appLocalization.changeCollege;
+                      case WizardType.specialities :
+                          return context.appLocalization.changeMajor;
+                      default : return "";
                     }
                   }
 
@@ -80,6 +95,14 @@ class _MySubscriptionState extends State<MySubscription> {
                                 ),
                               ],
                             ),
+                            Text(
+                              getChangeName(),
+                              style: TextStyle(
+                                color: context.colorPalette.blue8DD,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ],
                         ),
                       );
@@ -99,6 +122,20 @@ class _MySubscriptionState extends State<MySubscription> {
                           : wizardValues.collegeName == null
                           ? "/${wizardValues.universityName!}"
                           : "/${wizardValues.universityName!}/ ${wizardValues.collegeName!}";
+                    }
+                  }
+
+                  String getChangeName() {
+                    switch(wizardValues.wizardType) {
+                      case WizardType.countries :
+                          return context.appLocalization.changeCountry;
+                      case WizardType.universities :
+                          return context.appLocalization.changeUniversity;
+                      case WizardType.colleges :
+                          return context.appLocalization.changeCollege;
+                      case WizardType.specialities :
+                          return context.appLocalization.changeMajor;
+                      default : return "";
                     }
                   }
 
@@ -142,6 +179,14 @@ class _MySubscriptionState extends State<MySubscription> {
                                   ),
                                 ),
                               ],
+                            ),
+                            Text(
+                              getChangeName(),
+                              style: TextStyle(
+                                color: context.colorPalette.blue8DD,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ],
                         ),

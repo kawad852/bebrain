@@ -463,4 +463,14 @@ class MainProvider extends ChangeNotifier {
     );
     return snapshot;
   }
+
+  Future<OnlineProfessorModel> fetchProfessorByCollegeFilter(int id) {
+    final snapshot = ApiService<OnlineProfessorModel>().build(
+      url: "${ApiUrl.professorByCollegeFilter}/$id",
+      isPublic: false,
+      apiType: ApiType.get,
+      builder: OnlineProfessorModel.fromJson,
+    );
+    return snapshot;
+  }
 }

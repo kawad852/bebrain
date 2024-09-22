@@ -20,6 +20,7 @@ import 'package:bebrain/screens/home/widgets/filter_loading.dart';
 import 'package:bebrain/screens/home/widgets/major_filter_loading.dart';
 import 'package:bebrain/screens/home/widgets/my_slider.dart';
 import 'package:bebrain/screens/home/widgets/my_subscription.dart';
+import 'package:bebrain/screens/home/widgets/online_professors.dart';
 import 'package:bebrain/screens/home/widgets/slider_loading.dart';
 import 'package:bebrain/screens/registration/wizard_screen.dart';
 import 'package:bebrain/utils/base_extensions.dart';
@@ -90,6 +91,41 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
     });
   }
 
+  void navigateToWizard() {
+    switch (_authProvider.wizardValues.wizardType) {
+      case WizardType.countries :
+         context.push(
+          const WizardScreen(
+            wizardType: WizardType.countries,
+          ),
+        );
+      case WizardType.universities :
+         context.push(
+           WizardScreen(
+            wizardType: WizardType.universities,
+            id: _authProvider.wizardValues.countryId,
+            isComeHome: true,
+          ),
+         );
+       case WizardType.colleges :
+          context.push(
+            WizardScreen(
+              wizardType: WizardType.colleges,
+              id: _authProvider.wizardValues.universityId,
+              isComeHome: true,
+            ),
+          );
+       case WizardType.specialities :
+          context.push(
+          WizardScreen(
+            wizardType: WizardType.specialities,
+            id: _authProvider.wizardValues.collegeId,
+            isComeHome: true,
+          ),
+        );
+    }
+  }
+
   List<cou.Course> search() {
     List<cou.Course> results = <cou.Course>[];
     if (_query.isEmpty) {
@@ -144,11 +180,15 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
             SliverAppBar(
               pinned: true,
               leadingWidth: kBarLeadingWith,
-              leading: const MySubscription(),
+              toolbarHeight: 67,
+              leading:  GestureDetector(
+                onTap: () => navigateToWizard(),
+                child: const MySubscription(),
+                ),
               actions: [
                 ActionContainer(
                   onTap: () {
-                    context.push(const WizardScreen(wizardType: WizardType.universities));
+                    context.push(const WizardScreen(wizardType: WizardType.countries));
                   },
                   hasBorder: true,
                   child: const CustomSvg(MyIcons.filter),
@@ -192,6 +232,10 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                           : MySlider(slider: slider.data!);
                     },
                   ),
+                  if(_authProvider.wizardValues.wizardType == WizardType.colleges)
+                   OnlineProfessors(
+                    key: UniqueKey(),
+                   ),
                   Selector<AuthProvider, bool>(
                       selector: (context, provider) => provider.isAuthenticated,
                       builder: (context, isAuthenticated, child) {

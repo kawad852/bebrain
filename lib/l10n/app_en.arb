@@ -253,5 +253,10 @@
   "noTeacherYet":"There are no teachers yet",
   "watchAfreeVideo":"Watch a free video of the professor's explanation",
   "sorry":"Sorry",
-  "noVideoAvailable":"There is no video currently available"
+  "noVideoAvailable":"There is no video currently available",
+  "bookOnline":"Book online",
+  "changeCountry":"Change country",
+  "changeUniversity":"Change university",
+  "changeCollege":"Change college",
+  "changeMajor":"Change major"
 }
