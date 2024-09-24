@@ -258,5 +258,6 @@
   "changeCountry":"تغيير الدولة",
   "changeUniversity":"تغيير الجامعة",
   "changeCollege":"تغيير الكلية",
-  "changeMajor":"تغيير التخصص"
+  "changeMajor":"تغيير التخصص",
+  "msgSendSuccessfully": "تم إرسال الرسالة بنجاح"
 }

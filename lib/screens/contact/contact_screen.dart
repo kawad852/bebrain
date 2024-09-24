@@ -1,12 +1,18 @@
-import 'package:bebrain/helper/phone_controller.dart';
+import 'dart:convert';
+
+import 'package:bebrain/alerts/feedback/app_feedback.dart';
+import 'package:bebrain/alerts/loading/app_over_loader.dart';
+import 'package:bebrain/helper/validation_helper.dart';
+import 'package:bebrain/providers/auth_provider.dart';
 import 'package:bebrain/screens/contact/widgets/contact_nav_bar.dart';
 import 'package:bebrain/utils/base_extensions.dart';
-import 'package:bebrain/utils/shared_pref.dart';
-import 'package:bebrain/widgets/editors/text_editor.dart';
-import 'package:bebrain/widgets/phone_field.dart';
+import 'package:bebrain/utils/enums.dart';
+import 'package:bebrain/widgets/editors/base_editor.dart';
+import 'package:http/http.dart' as http;
 import 'package:bebrain/widgets/stretch_button.dart';
 import 'package:bebrain/widgets/titled_textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ContactScreen extends StatefulWidget {
   const ContactScreen({super.key});
@@ -16,23 +22,70 @@ class ContactScreen extends StatefulWidget {
 }
 
 class _ContactScreenState extends State<ContactScreen> {
-  late PhoneController _phoneController;
+  late TextEditingController nameCtrl, subjectCtrl, msgCtrl, emailCtrl;
+  late AuthProvider authProvider;
   final _formKey = GlobalKey<FormState>();
-  String? _name = MySharedPreferences.user.name ?? "";
-  String? _email = MySharedPreferences.user.email ?? "";
-  String? _title;
-  String? _notes;
+
+  Future<void> _sendEmail(BuildContext context) async {
+    try {
+      AppOverlayLoader.show();
+      const url = 'https://api.emailjs.com/api/v1.0/email/send';
+      Uri uri = Uri.parse(url);
+      var headers = {
+        'Content-Type': 'application/json',
+        'origin': 'http://localhost',
+      };
+      var body = jsonEncode({
+        'service_id': EmailJsEnum.serviceId,
+        'template_id': EmailJsEnum.templateId,
+        'user_id': EmailJsEnum.userId,
+        'template_params': {
+          'user_name': nameCtrl.text,
+          'user_email': emailCtrl.text,
+          'user_subject': subjectCtrl.text,
+          'user_message': msgCtrl.text,
+        },
+      });
+      debugPrint("Response:: CheckoutResponse\nUrl:: $url\nheaders:: ${headers.toString()}");
+      http.Response response = await http.post(uri, headers: headers, body: body);
+      debugPrint("CheckoutStatusCode:: ${response.statusCode} CheckoutBody:: ${response.body}");
+      AppOverlayLoader.hide();
+      if (response.statusCode == 200) {
+        if (context.mounted) {
+          context.showSnackBar(context.appLocalization.msgSendSuccessfully);
+          Navigator.pop(context);
+        }
+      } else {
+        if (context.mounted) {
+          context.showSnackBar(context.appLocalization.generalError);
+        }
+      }
+    } catch (e) {
+      debugPrint("$e");
+      AppOverlayLoader.hide();
+      if (context.mounted) {
+        context.showSnackBar(context.appLocalization.generalError);
+      }
+    }
+  }
 
   @override
   void initState() {
     super.initState();
-    _phoneController = PhoneController(context);
+    authProvider = Provider.of<AuthProvider>(context, listen: false);
+    nameCtrl = TextEditingController(text: authProvider.user.name ?? "");
+    subjectCtrl = TextEditingController();
+    msgCtrl = TextEditingController();
+    emailCtrl = TextEditingController(text: authProvider.user.email ?? "");
   }
 
   @override
   void dispose() {
     super.dispose();
-    _phoneController.dispose();
+    nameCtrl.dispose();
+    subjectCtrl.dispose();
+    msgCtrl.dispose();
+    emailCtrl.dispose();
   }
 
   @override
@@ -69,43 +122,62 @@ class _ContactScreenState extends State<ContactScreen> {
                     ),
                     TitledTextField(
                       title: context.appLocalization.fullName,
-                      child: TextEditor(
-                        initialValue: _name,
+                      child: BaseEditor(
+                        controller: nameCtrl,
                         hintText: context.appLocalization.fullNameHint,
-                        onChanged: (value) => _name = value,
+                        validator: (value) {
+                          return ValidationHelper.general(context, value);
+                        },
                       ),
                     ),
-                    PhoneField(
-                      controller: _phoneController,
-                    ),
+                    TitledTextField(
+                      title: context.appLocalization.phoneNum,
+                      child: BaseEditor(
+                        hintText: "",
+                        textDirection: TextDirection.ltr,
+                        initialValue: authProvider.user.phoneNumber,
+                        readOnly: true,
+                       ),
+                     ),
                     TitledTextField(
                       title: context.appLocalization.yourEmail,
-                      child: TextEditor(
-                        initialValue: _email,
+                      child: BaseEditor(
+                        controller: emailCtrl,
                         keyboardType: TextInputType.emailAddress,
                         hintText: context.appLocalization.emailHint,
-                        onChanged: (value) => _email = value,
+                        validator: (value) {
+                          return ValidationHelper.email(context, value);
+                        },
                       ),
                     ),
                     TitledTextField(
                       title: context.appLocalization.title,
-                      child: TextEditor(
-                        initialValue: _title,
+                      child: BaseEditor(
+                        controller: subjectCtrl,
                         hintText: context.appLocalization.titleHint,
-                        onChanged: (value) => _title = value,
+                        validator: (value) {
+                          return ValidationHelper.general(context, value);
+                        },
                       ),
                     ),
                     TitledTextField(
                       title: context.appLocalization.notes,
-                      child: TextEditor(
-                        initialValue: _notes,
+                      child: BaseEditor(
+                        controller: msgCtrl,
                         maxLines: 4,
                         hintText: context.appLocalization.notesHint,
-                        onChanged: (value) => _notes = value,
+                        validator: (value) {
+                           return ValidationHelper.general(context, value);
+                        },
                       ),
                     ),
                     StretchedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()){
+                          FocusManager.instance.primaryFocus?.unfocus();
+                          _sendEmail(context);
+                        }
+                      },
                       child: Text(
                         context.appLocalization.send,
                         style: TextStyle(

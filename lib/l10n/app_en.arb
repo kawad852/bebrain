@@ -258,5 +258,6 @@
   "changeCountry":"Change country",
   "changeUniversity":"Change university",
   "changeCollege":"Change college",
-  "changeMajor":"Change major"
+  "changeMajor":"Change major",
+  "msgSendSuccessfully": "Message sent successfully"
 }
