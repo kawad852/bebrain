@@ -11,7 +11,7 @@ class WizardType {
   static const String specialities = 'specialities';
 }
 
-class RequestType{
+class RequestType {
   static const String pending = 'pending';
   static const String pendingPayment = 'pending_payment';
   static const String canceled = 'canceled';
@@ -21,25 +21,25 @@ class RequestType{
   static const String rejected = 'rejected';
 }
 
-class SubscriptionsType{
+class SubscriptionsType {
   static const String course = 'course';
-  static const String unit  = 'unit';
+  static const String unit = 'unit';
   static const String section = 'section';
 }
 
-class PaymentStatus{
+class PaymentStatus {
   static const int paid = 1;
   static const int unPaid = 0;
 }
 
-class PaymentType{
+class PaymentType {
   static const String free = "free";
   static const String notFree = "paid";
 }
 
-class PaymentMethodType{
+class PaymentMethodType {
   static const String upayment = "upament";
-  static const String inAppPurchases= "inAppPurchases";
+  static const String inAppPurchases = "inAppPurchases";
 }
 
 class LanguageEnum {
@@ -47,7 +47,7 @@ class LanguageEnum {
   static const String arabic = 'ar';
 }
 
-class OrderType{
+class OrderType {
   static const String subscription = "subscription";
   static const String request = "request";
   static const String interview = "interview";
@@ -85,7 +85,7 @@ class BlogsType {
 
 class EmailJsEnum {
   static const link = 'https://api.emailjs.com/api/v1.0/email/send';
-  static const serviceId = "service_85zuv8l"; // service_dga8ga8
-  static const templateId = "template_4w6bflf"; //template_kibj8m3
-  static const userId = "QIWycTMidTmWWH1ro"; //kdJ4pcQ38XFqx54Lk
+  static const serviceId = "service_rvkldvr"; // service_dga8ga8
+  static const templateId = "template_74kag8d"; //template_kibj8m3
+  static const userId = "kPy1Kn95eO6ZExsTI"; //kdJ4pcQ38XFqx54Lk
 }
