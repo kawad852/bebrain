@@ -26,7 +26,7 @@ class AuthProvider extends ChangeNotifier {
   FirebaseAuth get _firebaseAuth => FirebaseAuth.instance;
   var wizardValues = FilterModel();
 
-  bool get isAuthenticated => user.id != null;
+  bool get isAuthenticated => MySharedPreferences.accessToken != '';
 
   void initUser() {
     user = UserData.copy(MySharedPreferences.user);
@@ -190,13 +190,17 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  void logout(BuildContext context) {
-    _firebaseAuth.signOut();
-    MySharedPreferences.clearStorage();
-    user.id = null;
-    //updateUser(context, userModel: UserData());
-    //updateFilter(context, filterModel: FilterModel());
-    context.pushAndRemoveUntil(const RegistrationScreen());
+  void logout(BuildContext context) async{
+    await context.pushAndRemoveUntil(const RegistrationScreen()).then((value) {
+       Future.delayed(const Duration(seconds: 1)).then((value) {
+         _firebaseAuth.signOut();
+           MySharedPreferences.clearStorage();
+           if (context.mounted) {
+                updateUser(context, userModel: UserData());
+                updateFilter(context, filterModel: FilterModel());
+           }
+         });
+      });
   }
 
   Future<AuthModel> updateProfile(
