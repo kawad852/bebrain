@@ -53,12 +53,6 @@ class _OnlineScreenState extends State<OnlineScreen>
     super.initState();
     _mainProvider = context.mainProvider;
     _initializeFuture();
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeRight,
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
   }
 
   @override
