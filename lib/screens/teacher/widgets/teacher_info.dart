@@ -92,7 +92,7 @@ class TeacherInfo extends StatelessWidget {
                   ? context.push(
                       VimeoPlayerScreen(
                         vimeoId: teacher.vimeoId!,
-                        videoId: teacher.videoId!,
+                        videoId: teacher.videoId,
                       ),
                     )
                   : context.showDialog(

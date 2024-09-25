@@ -14,8 +14,8 @@ class LecturesLoading extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: isOnLine? 0 : 10),
       physics: const NeverScrollableScrollPhysics(),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        childAspectRatio: MediaQuery.of(context).size.width / (MediaQuery.of(context).size.height / 2),
+        crossAxisCount: (MediaQuery.of(context).size.width / 170).toInt(),
+        childAspectRatio: 170 / 185,
       ),
       itemBuilder: (context, snaphot) {
         return const LoadingBubble(

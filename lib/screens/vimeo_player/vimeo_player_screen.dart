@@ -12,7 +12,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 class VimeoPlayerScreen extends StatefulWidget {
   final String vimeoId;
-  final int videoId;
+  final int? videoId;
   const VimeoPlayerScreen(
       {super.key, required this.vimeoId, required this.videoId});
 
@@ -31,7 +31,7 @@ class _VimeoPlayerScreenState extends State<VimeoPlayerScreen> {
   // Timer? _timer;
 
   void _initializeFuture() async {
-    _videoFuture = _mainProvider.videoView(widget.videoId);
+    _videoFuture = _mainProvider.videoView(widget.videoId!);
   }
 
   void disableScreenshot() async {
@@ -101,7 +101,9 @@ class _VimeoPlayerScreenState extends State<VimeoPlayerScreen> {
     _initialize();
     //_startWatermarkAnimation();
     _mainProvider = context.mainProvider;
-    _initializeFuture();
+    if (widget.videoId != null) {
+      _initializeFuture();
+    }
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeRight,
       DeviceOrientation.landscapeLeft,
@@ -141,24 +143,30 @@ class _VimeoPlayerScreenState extends State<VimeoPlayerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomFutureBuilder(
-        future: _videoFuture,
-        onRetry: () {},
-        onError: (snapshot) {
-          return !showPage
+      body: widget.videoId == null
+          ? !showPage
               ? const CustomLoadingIndicator()
               : WebViewWidget(
                   controller: controller,
-                );
-        },
-        onComplete: (context, snapshot) {
-          return !showPage
-              ? const CustomLoadingIndicator()
-              : WebViewWidget(
-                  controller: controller,
-                );
-        },
-      ),
+                )
+          : CustomFutureBuilder(
+              future: _videoFuture,
+              onRetry: () {},
+              onError: (snapshot) {
+                return !showPage
+                    ? const CustomLoadingIndicator()
+                    : WebViewWidget(
+                        controller: controller,
+                      );
+              },
+              onComplete: (context, snapshot) {
+                return !showPage
+                    ? const CustomLoadingIndicator()
+                    : WebViewWidget(
+                        controller: controller,
+                      );
+              },
+            ),
     );
   }
 }

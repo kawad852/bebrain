@@ -15,6 +15,7 @@ import 'package:bebrain/widgets/shimmer/shimmer_loading.dart';
 import 'package:bebrain/widgets/vex/vex_loader.dart';
 import 'package:bebrain/widgets/vex/vex_paginator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class OnlineScreen extends StatefulWidget {
   const OnlineScreen({super.key});
@@ -52,6 +53,12 @@ class _OnlineScreenState extends State<OnlineScreen>
     super.initState();
     _mainProvider = context.mainProvider;
     _initializeFuture();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
   }
 
   @override
@@ -176,8 +183,8 @@ class _OnlineScreenState extends State<OnlineScreen>
                         )
                       : SliverGrid(
                           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            childAspectRatio: MediaQuery.of(context).size.width / (MediaQuery.of(context).size.height / 2),
+                            crossAxisCount: (MediaQuery.of(context).size.width / 170).toInt(),
+                            childAspectRatio: MediaQuery.of(context).size.shortestSide < 600 ? 170 / 160 : 170 / 145,
                           ),
                           delegate: SliverChildBuilderDelegate(
                             childCount: snapshot.docs.length + 1,
