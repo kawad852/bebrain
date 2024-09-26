@@ -13,6 +13,7 @@ class LectureCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: 170,
       height: 185,
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
       margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),

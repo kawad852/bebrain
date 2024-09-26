@@ -16,7 +16,8 @@ class TeacherCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 147,
+      width: 170,
+      height: 160,
       margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
       decoration: BoxDecoration(
         color: context.colorPalette.greyEEE,

@@ -23,6 +23,7 @@ class OnlineProfessors extends StatefulWidget {
 class _OnlineProfessorsState extends State<OnlineProfessors> with AutomaticKeepAliveClientMixin {
   late MainProvider _mainProvider;
   late Future<OnlineProfessorModel> _professorsFuture;
+  late bool _isAuth;
 
   void _initializeFuture() {
     _professorsFuture = _mainProvider.fetchProfessorByCollegeFilter(context.authProvider.wizardValues.collegeId!);
@@ -32,6 +33,7 @@ class _OnlineProfessorsState extends State<OnlineProfessors> with AutomaticKeepA
   void initState() {
     super.initState();
     _mainProvider = context.mainProvider;
+    _isAuth = context.authProvider.isAuthenticated;
     _initializeFuture();
   }
 
@@ -145,7 +147,7 @@ class _OnlineProfessorsState extends State<OnlineProfessors> with AutomaticKeepA
                                       children: [
                                         Flexible(
                                           child: Text(
-                                            "${professor.interviewHourPrice!.toStringAsFixed(1)} ${MySharedPreferences.user.currencySympol ?? "\$"} ${context.appLocalization.theHour}",
+                                            "${professor.interviewHourPrice!.toStringAsFixed(1)} ${_isAuth ? MySharedPreferences.user.currencySympol : "\$"} ${context.appLocalization.theHour}",
                                             overflow: TextOverflow.ellipsis,
                                             style: const TextStyle(
                                               fontSize: 12,
