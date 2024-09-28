@@ -7,8 +7,8 @@ class TeacherTime extends StatelessWidget {
   final List<InterviewDay> interviewDays;
   const TeacherTime({super.key, required this.interviewDays});
 
-  String _timeFormat(String time) {
-    return DateFormat("hh:mma").format(DateFormat("hh:mm:ss").parse(time));
+  String _timeFormat(DateTime time) {
+    return DateFormat("hh:mma").format(time);
   }
 
   @override

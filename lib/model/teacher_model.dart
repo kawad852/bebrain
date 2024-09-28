@@ -245,8 +245,8 @@ class Subject {
 class InterviewDay {
     int? id;
     String? day;
-    String? from;
-    String? to;
+    DateTime? from;
+    DateTime? to;
     int? dayId;
 
     InterviewDay({
@@ -260,16 +260,16 @@ class InterviewDay {
     factory InterviewDay.fromJson(Map<String, dynamic> json) => InterviewDay(
         id: json["id"],
         day: json["day"],
-        from: json["from"],
-        to: json["to"],
+        from: json["from"] == null ? null : DateTime.parse(json["from"]),
+        to: json["to"] == null ? null : DateTime.parse(json["to"]),
         dayId: json["day_id"]
     );
 
     Map<String, dynamic> toJson() => {
         "id": id,
         "day": day,
-        "from": from,
-        "to": to,
+        "from": from?.toIso8601String(),
+        "to": to?.toIso8601String(),
         "day_id": dayId,
     };
 }

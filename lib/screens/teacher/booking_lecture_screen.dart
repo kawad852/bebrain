@@ -108,8 +108,8 @@ class _BookingLectureScreenState extends State<BookingLectureScreen> {
         _teacher.interviewDays!.map((element) {
           if(element.dayId == picked.weekday) {
             _helpTextTimePicker = context.appLocalization.professorAvailable(
-              DateFormat("hh:mm:ss").parse(element.from!).formatDate(context, pattern: "hh:mma"),
-              DateFormat("hh:mm:ss").parse(element.to!).formatDate(context, pattern: "hh:mma"),
+              DateFormat("hh:mma").format(element.from!),
+              DateFormat("hh:mma").format(element.to!),
             );
           }
          },
