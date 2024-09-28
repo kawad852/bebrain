@@ -91,7 +91,7 @@ class PaymentProvider extends ChangeNotifier {
             afterPay: afterPay,
           );
         } else {
-          UPayment.checkout(
+         await UPayment.checkout(
             context: context,
             orderId: snapshot.data!.orderNumber!,
             amount: double.parse(amount.toStringAsFixed(2)),
