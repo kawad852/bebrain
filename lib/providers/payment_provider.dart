@@ -39,7 +39,7 @@ class PaymentProvider extends ChangeNotifier {
           orderType: orderType,
           paymentMethod: paymentMethod,
           orderableId: snapshot.data!.id!,
-          amount: amount,
+          amount: double.parse(amount.toStringAsFixed(2)),
           afterPay: afterPay,
           productId: productId,
           title: title,
@@ -75,7 +75,7 @@ class PaymentProvider extends ChangeNotifier {
       final order = context.mainProvider.createOrder(
         type: orderType,
         orderableId: orderableId,
-        amount: amount,
+        amount: double.parse(amount.toStringAsFixed(2)),
       );
       return order;
     }, onComplete: (snapshot) async {
@@ -87,14 +87,14 @@ class PaymentProvider extends ChangeNotifier {
             productId ?? "dash_consumable_2k",
             title: title,
             description: description ?? "",
-            price: amount,
+            price: double.parse(amount.toStringAsFixed(2)),
             afterPay: afterPay,
           );
         } else {
           UPayment.checkout(
             context: context,
             orderId: snapshot.data!.orderNumber!,
-            amount: amount,
+            amount: double.parse(amount.toStringAsFixed(2)),
             afterPay: afterPay,
           );
         }
@@ -136,16 +136,16 @@ class PaymentProvider extends ChangeNotifier {
           productId ?? "dash_consumable_2k",
           title: title,
           description: discription ?? "",
-          price: amount,
+          price: double.parse(amount.toStringAsFixed(2)),
           withOverlayLoader: true,
           afterPay: afterPay,
         );
       } else {
-        UPayment.checkout(
+       await UPayment.checkout(
           context: context,
           withOverlayLoader: true,
           orderId: orderId,
-          amount: amount,
+          amount: double.parse(amount.toStringAsFixed(2)),
           afterPay: afterPay,
         );
       }
@@ -157,7 +157,7 @@ class PaymentProvider extends ChangeNotifier {
         context,
         paymentMethod: paymentMethod,
         withOverlayLoader: true,
-        amount: amount,
+        amount: double.parse(amount.toStringAsFixed(2)),
         orderType: orderType,
         orderableId: subscribtionId,
         afterPay: afterPay,
@@ -171,7 +171,7 @@ class PaymentProvider extends ChangeNotifier {
         orderType: orderType,
         paymentMethod: paymentMethod,
         subscriptionsType: subscriptionsType!,
-        amount: amount,
+        amount: double.parse(amount.toStringAsFixed(2)),
         id: id!,
         afterPay: afterPay,
         productId: productId,
