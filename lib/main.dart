@@ -23,7 +23,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
 
-// mhyar
+//
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey(debugLabel: "Main Navigator");
 
@@ -81,12 +81,12 @@ class _MyAppState extends State<MyApp> {
   late AuthProvider _authProvider;
 
   Widget _toggleRoute(BuildContext context) {
-  if (MySharedPreferences.accessToken != '' && _authProvider.wizardValues.countryId != null) {
+    if (MySharedPreferences.accessToken != '' && _authProvider.wizardValues.countryId != null) {
       return const AppNavBar();
-  } else {
-    if (MySharedPreferences.isPassedIntro) {
-        return const RegistrationScreen();
     } else {
+      if (MySharedPreferences.isPassedIntro) {
+        return const RegistrationScreen();
+      } else {
         return const IntroScreen();
       }
     }
