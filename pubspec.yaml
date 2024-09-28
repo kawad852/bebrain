@@ -48,7 +48,7 @@ dependencies:
   google_sign_in: ^6.2.1
   carousel_slider: ^5.0.0
   http: ^1.1.2
-  sign_in_with_apple: ^5.0.0
+  sign_in_with_apple: ^6.1.2
   crypto: ^3.0.3
   flutter_svg: ^2.0.9
   pin_code_fields: ^8.0.1
