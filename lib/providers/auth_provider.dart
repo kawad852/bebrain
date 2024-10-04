@@ -151,11 +151,7 @@ class AuthProvider extends ChangeNotifier {
             _popUntilLastPage(context);
           }
         } else {
-          if (snapshot.code == 400) {
-            context.showSnackBar(context.appLocalization.accountAlreadyRegistered);
-          } else {
-            context.showSnackBar(snapshot.msg ?? context.appLocalization.generalError);
-          }
+          context.showSnackBar(snapshot.msg ?? context.appLocalization.generalError);
         }
       },
       onError: (failure) => AppErrorFeedback.show(context, failure),
