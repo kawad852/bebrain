@@ -74,7 +74,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
           );
           futures.add(authFuture);
         } else {
-          authFuture = Future.value(AuthModel());
+          authFuture = Future.value(AuthModel(code: 200));
           futures.add(authFuture);
         }
         return Future.wait(futures);

@@ -259,5 +259,6 @@
   "changeUniversity":"Change university",
   "changeCollege":"Change college",
   "changeMajor":"Change major",
-  "msgSendSuccessfully": "Message sent successfully"
+  "msgSendSuccessfully": "Message sent successfully",
+  "accountAlreadyRegistered": "Account Already Registered"
 }

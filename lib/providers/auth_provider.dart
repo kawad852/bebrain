@@ -151,7 +151,11 @@ class AuthProvider extends ChangeNotifier {
             _popUntilLastPage(context);
           }
         } else {
-          context.showSnackBar(snapshot.msg ?? context.appLocalization.generalError);
+          if (snapshot.code == 400) {
+            context.showSnackBar(context.appLocalization.accountAlreadyRegistered);
+          } else {
+            context.showSnackBar(snapshot.msg ?? context.appLocalization.generalError);
+          }
         }
       },
       onError: (failure) => AppErrorFeedback.show(context, failure),
@@ -190,17 +194,17 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  void logout(BuildContext context) async{
+  void logout(BuildContext context) async {
     await context.pushAndRemoveUntil(const RegistrationScreen()).then((value) {
-       Future.delayed(const Duration(seconds: 1)).then((value) {
-         _firebaseAuth.signOut();
-           MySharedPreferences.clearStorage();
-           if (context.mounted) {
-                updateUser(context, userModel: UserData());
-                updateFilter(context, filterModel: FilterModel());
-           }
-         });
+      Future.delayed(const Duration(seconds: 1)).then((value) {
+        _firebaseAuth.signOut();
+        MySharedPreferences.clearStorage();
+        if (context.mounted) {
+          updateUser(context, userModel: UserData());
+          updateFilter(context, filterModel: FilterModel());
+        }
       });
+    });
   }
 
   Future<AuthModel> updateProfile(

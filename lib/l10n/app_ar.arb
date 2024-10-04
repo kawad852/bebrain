@@ -259,5 +259,6 @@
   "changeUniversity":"تغيير الجامعة",
   "changeCollege":"تغيير الكلية",
   "changeMajor":"تغيير التخصص",
-  "msgSendSuccessfully": "تم إرسال الرسالة بنجاح"
+  "msgSendSuccessfully": "تم إرسال الرسالة بنجاح",
+  "accountAlreadyRegistered": "الحساب مسجل مسبقاً"
 }
