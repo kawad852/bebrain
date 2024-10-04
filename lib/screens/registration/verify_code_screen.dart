@@ -62,8 +62,9 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
           builder: GeneralModel.fromJson,
         );
         futures.add(otpFuture);
+        late Future<AuthModel> authFuture;
         if (widget.socialLogin) {
-          final loginFuture = context.authProvider.login(
+          authFuture = context.authProvider.login(
             context,
             displayName: widget.fullName,
             email: widget.email,
@@ -71,11 +72,12 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
             phoneNum: '${widget.dialCode}${widget.phoneNum}',
             withOverlayLoader: false,
           );
-          futures.add(loginFuture);
+          futures.add(authFuture);
         } else {
-          futures.add(Future.value(AuthModel()));
+          authFuture = Future.value(AuthModel());
+          futures.add(authFuture);
         }
-        return futures;
+        return Future.wait(futures);
       },
       onComplete: (snapshot) {
         final otpSnapshot = snapshot[0] as GeneralModel;
@@ -102,7 +104,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
             }
           }
         } else {
-          context.showSnackBar(context.appLocalization.generalError);
+          context.showSnackBar(otpSnapshot.message ?? context.appLocalization.generalError);
         }
       },
     );
