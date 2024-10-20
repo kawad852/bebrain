@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bebrain/model/video_view_model.dart';
 import 'package:bebrain/providers/main_provider.dart';
+import 'package:bebrain/screens/course/widgets/leading_back.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/widgets/custom_future_builder.dart';
 import 'package:bebrain/widgets/custom_loading_indicator.dart';
@@ -13,8 +14,9 @@ import 'package:webview_flutter/webview_flutter.dart';
 class VimeoPlayerScreen extends StatefulWidget {
   final String vimeoId;
   final int? videoId;
+  final bool isFullScreen;
   const VimeoPlayerScreen(
-      {super.key, required this.vimeoId, required this.videoId});
+      {super.key, required this.vimeoId, required this.videoId, required this.isFullScreen});
 
   @override
   State<VimeoPlayerScreen> createState() => _VimeoPlayerScreenState();
@@ -143,6 +145,9 @@ class _VimeoPlayerScreenState extends State<VimeoPlayerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: widget.isFullScreen ? AppBar(
+        leading: const LeadingBack(),
+      ): null,
       body: widget.videoId == null
           ? !showPage
               ? const CustomLoadingIndicator()

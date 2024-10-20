@@ -89,7 +89,7 @@ class PartCard extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap:_allowShow? () {
-                      context.push(VimeoPlayerScreen(vimeoId: element.vimeoId!, videoId: element.id!));
+                      context.push(VimeoPlayerScreen(vimeoId: element.vimeoId!, videoId: element.id!,isFullScreen: true));
                     } : null ,
                     child: Row(
                       children: [

@@ -93,6 +93,7 @@ class TeacherInfo extends StatelessWidget {
                       VimeoPlayerScreen(
                         vimeoId: teacher.vimeoId!,
                         videoId: teacher.videoId,
+                        isFullScreen: true,
                       ),
                     )
                   : context.showDialog(

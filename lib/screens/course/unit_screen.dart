@@ -174,6 +174,7 @@ class _UnitScreenState extends State<UnitScreen> {
                       ? VimeoPlayerScreen(
                           vimeoId: unit.sections![0].videos![0].vimeoId!,
                           videoId: unit.sections![0].videos![0].id!,
+                          isFullScreen: false,
                         )
                       : CustomNetworkImage(
                           widget.courseImage,
