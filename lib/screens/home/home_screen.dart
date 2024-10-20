@@ -469,6 +469,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                                       );
                                     },
                                   ),
+                                  if (professors.isNotEmpty)
                                   SliverToBoxAdapter(
                                     child: DistinguishedLectures(
                                       title: context.appLocalization.distinguishedLecturers,

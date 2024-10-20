@@ -83,7 +83,9 @@ class _OnlineProfessorsState extends State<OnlineProfessors> with AutomaticKeepA
       },
       onComplete: (context, snapshot) {
         final professors = snapshot.data!;
-        return Column(
+        return professors.data!.isEmpty
+        ? const SizedBox.shrink()
+        : Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
