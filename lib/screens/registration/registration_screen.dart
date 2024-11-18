@@ -24,6 +24,7 @@ import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
+import '../../alerts/errors/app_error_feedback.dart';
 import '../../model/auth_model.dart';
 import '../../network/api_service.dart';
 import '../../network/api_url.dart';
@@ -43,16 +44,22 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   firebase_auth.FirebaseAuth get _firebaseAuth => firebase_auth.FirebaseAuth.instance;
 
-  Future<AuthModel> _checkPhone(BuildContext context) async {
-    return ApiService<AuthModel>().build(
-      url: ApiUrl.checkPhone,
-      isPublic: true,
-      apiType: ApiType.post,
-      builder: AuthModel.fromJson,
-      queryParams: {
-        "phone_number": '${_phoneController.getDialCode()}${_phoneController.phoneNum}',
+  Future<void> _checkPhone(BuildContext context) async {
+    await ApiFutureBuilder<AuthModel>().fetch(
+      context,
+      future: () async {
+        final future = ApiService<AuthModel>().build(
+          url: ApiUrl.checkPhone,
+          isPublic: true,
+          apiType: ApiType.post,
+          builder: AuthModel.fromJson,
+          queryParams: {
+            "phone_number": '${_phoneController.getDialCode()}${_phoneController.phoneNum}',
+          },
+        );
+        return future;
       },
-      onEnd: (snapshot) {
+      onComplete: (snapshot) {
         if (snapshot.code == 200) {
           _authProvider.sendPinCode(
             context,
@@ -63,6 +70,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           context.showSnackBar(snapshot.msg ?? context.appLocalization.generalError);
         }
       },
+      onError: (failure) => AppErrorFeedback.show(context, failure),
     );
   }
 
