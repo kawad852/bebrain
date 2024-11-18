@@ -6,7 +6,6 @@ import 'package:bebrain/alerts/loading/app_over_loader.dart';
 import 'package:bebrain/helper/phone_controller.dart';
 import 'package:bebrain/providers/auth_provider.dart';
 import 'package:bebrain/screens/registration/create_account_screen.dart';
-import 'package:bebrain/screens/registration/forget_password/forget_password_screen.dart';
 import 'package:bebrain/screens/registration/phone_auth_screen.dart';
 import 'package:bebrain/screens/registration/widgets/auth_button.dart';
 import 'package:bebrain/screens/registration/widgets/auth_header.dart';
@@ -15,7 +14,6 @@ import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/enums.dart';
 import 'package:bebrain/utils/my_icons.dart';
 import 'package:bebrain/utils/my_images.dart';
-import 'package:bebrain/widgets/editors/password_editor.dart';
 import 'package:bebrain/widgets/phone_field.dart';
 import 'package:bebrain/widgets/stretch_button.dart';
 import 'package:crypto/crypto.dart';
@@ -25,6 +23,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+
+import '../../model/auth_model.dart';
+import '../../network/api_service.dart';
+import '../../network/api_url.dart';
 
 class RegistrationScreen extends StatefulWidget {
   final bool hideGuestButton;
@@ -38,9 +40,31 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   late PhoneController _phoneController;
   late AuthProvider _authProvider;
   final _formKey = GlobalKey<FormState>();
-  String? _password;
 
   firebase_auth.FirebaseAuth get _firebaseAuth => firebase_auth.FirebaseAuth.instance;
+
+  Future<AuthModel> _checkPhone(BuildContext context) async {
+    return ApiService<AuthModel>().build(
+      url: ApiUrl.checkPhone,
+      isPublic: true,
+      apiType: ApiType.post,
+      builder: AuthModel.fromJson,
+      queryParams: {
+        "phone_number": '${_phoneController.getDialCode()}${_phoneController.phoneNum}',
+      },
+      onEnd: (snapshot) {
+        if (snapshot.code == 200) {
+          _authProvider.sendPinCode(
+            context,
+            dialCode: _phoneController.getDialCode(),
+            phoneNum: _phoneController.phoneNum!,
+          );
+        } else {
+          context.showSnackBar(snapshot.msg ?? context.appLocalization.generalError);
+        }
+      },
+    );
+  }
 
   Future<void> _signInWithGoogle(BuildContext context) async {
     try {
@@ -193,13 +217,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           onPressed: () {
             if (_formKey.currentState!.validate()) {
               FocusManager.instance.primaryFocus?.unfocus();
-              _authProvider.login(
-                context,
-                isLogin: true,
-                phoneNum: '${_phoneController.getDialCode()}${_phoneController.phoneNum}',
-                password: _password!,
-                withOverlayLoader: true,
-              );
+              _checkPhone(context);
             }
           },
         ),
@@ -222,23 +240,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             ),
             PhoneField(
               controller: _phoneController,
-            ),
-            const SizedBox(height: 15),
-            PasswordEditor(
-              initialValue: null,
-              onChanged: (value) => _password = value,
-            ),
-            Align(
-              alignment: AlignmentDirectional.centerEnd,
-              child: TextButton(
-                onPressed: () {
-                  context.push(const ForgetPasswordScreen());
-                },
-                style: TextButton.styleFrom(
-                  foregroundColor: context.colorPalette.red232,
-                ),
-                child: Text(context.appLocalization.forgotPassword),
-              ),
             ),
             const SizedBox(height: 49),
             AuthButton(
