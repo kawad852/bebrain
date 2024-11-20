@@ -80,12 +80,12 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
       },
       onComplete: (snapshot) {
         final otpSnapshot = snapshot[0] as GeneralModel;
-        final loginSnapshot = snapshot[1] as AuthModel;
 
         if (otpSnapshot.status != 200) {
           context.showSnackBar(otpSnapshot.message ?? context.appLocalization.generalError);
           return;
         }
+        final loginSnapshot = snapshot[1] as AuthModel;
 
         if (loginSnapshot.status == true) {
           MySharedPreferences.accessToken = loginSnapshot.data!.token!;
