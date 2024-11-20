@@ -3,12 +3,16 @@ import 'package:bebrain/model/auth_model.dart';
 import 'package:bebrain/model/general_model.dart';
 import 'package:bebrain/network/api_service.dart';
 import 'package:bebrain/providers/auth_provider.dart';
-import 'package:bebrain/screens/registration/forget_password/reset_password_screen.dart';
+import 'package:bebrain/screens/registration/create_account_screen.dart';
 import 'package:bebrain/screens/registration/widgets/auth_header.dart';
 import 'package:bebrain/screens/registration/widgets/pincode_field.dart';
+import 'package:bebrain/screens/registration/wizard_screen.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/widgets/stretch_button.dart';
 import 'package:flutter/material.dart';
+
+import '../../utils/enums.dart';
+import '../../utils/shared_pref.dart';
 
 class VerifyCodeScreen extends StatefulWidget {
   final String dialCode;
@@ -62,49 +66,43 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
           builder: GeneralModel.fromJson,
         );
         futures.add(otpFuture);
-        late Future<AuthModel> authFuture;
-        if (widget.socialLogin) {
-          authFuture = context.authProvider.login(
-            context,
-            displayName: widget.fullName,
-            email: widget.email,
-            photoURL: widget.photoURL,
-            phoneNum: '${widget.dialCode}${widget.phoneNum}',
-            withOverlayLoader: false,
-          );
-          futures.add(authFuture);
-        } else {
-          authFuture = Future.value(AuthModel(code: 200));
-          futures.add(authFuture);
-        }
+        final authFuture = context.authProvider.login(
+          context,
+          displayName: widget.fullName,
+          email: widget.email,
+          photoURL: widget.photoURL,
+          phoneNum: '${widget.dialCode}${widget.phoneNum}',
+          withOverlayLoader: false,
+          isLogin: !widget.socialLogin,
+        );
+        futures.add(authFuture);
         return Future.wait(futures);
       },
       onComplete: (snapshot) {
         final otpSnapshot = snapshot[0] as GeneralModel;
         final loginSnapshot = snapshot[1] as AuthModel;
 
-        if (otpSnapshot.status == 200 && loginSnapshot.code == 200) {
-          if (widget.password == null) {
-            if (context.mounted) {
-              context.push(
-                ResetPasswordScreen(
-                  dialCode: widget.dialCode,
-                  phoneNum: widget.phoneNum,
-                ),
-              );
-            }
+        if (otpSnapshot.status != 200) {
+          context.showSnackBar(otpSnapshot.message ?? context.appLocalization.generalError);
+          return;
+        }
+
+        if (loginSnapshot.status == true) {
+          MySharedPreferences.accessToken = loginSnapshot.data!.token!;
+          if (!context.mounted) return;
+          final userData = loginSnapshot.data!.user!;
+          _userProvider.updateUser(context, userModel: userData);
+          if (_userProvider.lastRouteName == null) {
+            context.pushAndRemoveUntil(const WizardScreen(wizardType: WizardType.countries));
           } else {
-            if (context.mounted) {
-              _userProvider.createAccount(
-                context,
-                phoneNum: '${widget.dialCode}${widget.phoneNum}',
-                fullName: widget.fullName,
-                password: widget.password,
-              );
-            }
+            _userProvider.popUntilLastPage(context);
           }
         } else {
-          context.showSnackBar(otpSnapshot.message ?? context.appLocalization.generalError);
+          context.pushAndRemoveUntil(CreateAccountScreen(
+            dialCode: widget.dialCode,
+            phoneNum: widget.phoneNum,
+          ));
+          context.showSnackBar(loginSnapshot.msg ?? context.appLocalization.generalError);
         }
       },
     );

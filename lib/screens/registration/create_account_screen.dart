@@ -1,16 +1,18 @@
-import 'package:bebrain/helper/phone_controller.dart';
 import 'package:bebrain/screens/registration/widgets/auth_header.dart';
 import 'package:bebrain/utils/base_extensions.dart';
-import 'package:bebrain/widgets/editors/password_editor.dart';
 import 'package:bebrain/widgets/editors/text_editor.dart';
-import 'package:bebrain/widgets/phone_field.dart';
 import 'package:bebrain/widgets/stretch_button.dart';
 import 'package:bebrain/widgets/titled_textfield.dart';
 import 'package:flutter/material.dart';
 
 class CreateAccountScreen extends StatefulWidget {
+  final String dialCode;
+  final String phoneNum;
+
   const CreateAccountScreen({
     super.key,
+    required this.dialCode,
+    required this.phoneNum,
   });
 
   @override
@@ -19,45 +21,23 @@ class CreateAccountScreen extends StatefulWidget {
 
 class _CreateAccountScreenState extends State<CreateAccountScreen> {
   String? _fullName;
-  String? _password;
-  String? _confirmPassword;
   final _formKey = GlobalKey<FormState>();
-  late PhoneController _phoneController;
 
   Future<void> _onSubmit(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       FocusManager.instance.primaryFocus?.unfocus();
-      context.authProvider.sendPinCode(
+      context.authProvider.createAccount(
         context,
-        dialCode: _phoneController.getDialCode(),
-        phoneNum: _phoneController.phoneNum!,
-        password: _password!,
-        fullName: _fullName!,
+        fullName: _fullName,
+        phoneNum: "${widget.dialCode}${widget.phoneNum}",
       );
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _phoneController = PhoneController(context);
-  }
-
-  @override
-  void dispose() {
-    _phoneController.dispose();
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     context.push(const WizardScreen(wizardType: WizardType.countries));
-      //   },
-      // ),
       bottomNavigationBar: BottomAppBar(
         child: StretchedButton(
           child: Text(context.appLocalization.next),
@@ -83,33 +63,6 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                 onChanged: (value) => _fullName = value,
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 24),
-              child: PhoneField(
-                controller: _phoneController,
-              ),
-            ),
-            StatefulBuilder(builder: (context, setState) {
-              return ListBody(
-                children: [
-                  PasswordEditor(
-                    onChanged: (value) {
-                      setState(() {
-                        _password = value;
-                      });
-                    },
-                    initialValue: null,
-                  ),
-                  const SizedBox(height: 24),
-                  PasswordEditor(
-                    onChanged: (value) => _confirmPassword = value,
-                    isConfirm: true,
-                    password: _password,
-                    initialValue: null,
-                  ),
-                ],
-              );
-            }),
           ],
         ),
       ),

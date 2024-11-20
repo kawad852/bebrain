@@ -15,7 +15,6 @@ import 'package:bebrain/utils/enums.dart';
 import 'package:bebrain/utils/my_icons.dart';
 import 'package:bebrain/utils/my_images.dart';
 import 'package:bebrain/widgets/phone_field.dart';
-import 'package:bebrain/widgets/stretch_button.dart';
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:flutter/foundation.dart';
@@ -44,6 +43,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   firebase_auth.FirebaseAuth get _firebaseAuth => firebase_auth.FirebaseAuth.instance;
 
+  Future<void> _onSendCode(BuildContext context) async {
+    if (_formKey.currentState!.validate()) {
+      FocusManager.instance.primaryFocus?.unfocus();
+      context.authProvider.sendPinCode(
+        context,
+        dialCode: _phoneController.getDialCode(),
+        phoneNum: _phoneController.phoneNum!,
+        fullName: null,
+      );
+    }
+  }
+
   Future<void> _checkPhone(BuildContext context) async {
     await ApiFutureBuilder<AuthModel>().fetch(
       context,
@@ -67,7 +78,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             phoneNum: _phoneController.phoneNum!,
           );
         } else {
-          context.showSnackBar(snapshot.msg ?? context.appLocalization.generalError);
+          context.push(
+            CreateAccountScreen(
+              dialCode: _phoneController.getDialCode(),
+              phoneNum: _phoneController.phoneNum!,
+            ),
+          );
         }
       },
       onError: (failure) => AppErrorFeedback.show(context, failure),
@@ -219,17 +235,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               },
             )
           : null,
-      bottomNavigationBar: BottomAppBar(
-        child: StretchedButton(
-          child: Text(context.appLocalization.login),
-          onPressed: () {
-            if (_formKey.currentState!.validate()) {
-              FocusManager.instance.primaryFocus?.unfocus();
-              _checkPhone(context);
-            }
-          },
-        ),
-      ),
+      // bottomNavigationBar: BottomAppBar(
+      //   child: StretchedButton(
+      //     child: Text(context.appLocalization.login),
+      //     onPressed: () {
+      //       if (_formKey.currentState!.validate()) {
+      //         FocusManager.instance.primaryFocus?.unfocus();
+      //         _checkPhone(context);
+      //       }
+      //     },
+      //   ),
+      // ),
       body: Form(
         key: _formKey,
         child: ListView(
@@ -249,10 +265,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             PhoneField(
               controller: _phoneController,
             ),
-            const SizedBox(height: 49),
+            const SizedBox(height: 20),
             AuthButton(
               onTap: () {
-                context.push(const CreateAccountScreen());
+                if (_formKey.currentState!.validate()) {
+                  FocusManager.instance.primaryFocus?.unfocus();
+                  _onSendCode(context);
+                }
               },
               icon: MyIcons.phone,
               text: context.appLocalization.conWithAPhone,
@@ -260,6 +279,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               textColor: context.colorPalette.blackB0B,
               iconColor: context.colorPalette.blackB0B,
             ),
+            const SizedBox(height: 49),
             // AuthButton(
             //   onTap: () {},
             //   icon: MyIcons.facebook,

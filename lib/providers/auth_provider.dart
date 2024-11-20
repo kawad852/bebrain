@@ -21,7 +21,7 @@ import 'package:flutter/cupertino.dart';
 class AuthProvider extends ChangeNotifier {
   var user = UserData();
   late Future<String> countryCodeFuture;
-  String? _lastRouteName;
+  String? lastRouteName;
   bool _executeLastRouteCallback = false;
   FirebaseAuth get _firebaseAuth => FirebaseAuth.instance;
   var wizardValues = FilterModel();
@@ -36,9 +36,9 @@ class AuthProvider extends ChangeNotifier {
     wizardValues = FilterModel.copy(MySharedPreferences.filter);
   }
 
-  void _popUntilLastPage(BuildContext context) {
+  void popUntilLastPage(BuildContext context) {
     _executeLastRouteCallback = true;
-    Navigator.popUntil(context, (route) => route.settings.name == _lastRouteName);
+    Navigator.popUntil(context, (route) => route.settings.name == lastRouteName);
   }
 
   Future<AuthModel> login(
@@ -51,67 +51,42 @@ class AuthProvider extends ChangeNotifier {
     bool isLogin = false,
     bool withOverlayLoader = true,
   }) async {
-    return await ApiFutureBuilder<AuthModel>().fetch(
-      context,
-      withOverlayLoader: isLogin,
-      future: () {
-        Map<String, dynamic> json = {};
-        if (isLogin) {
-          json = {
-            "phone_number": phoneNum,
-            "password": password,
-            "country_id": wizardValues.countryId ?? "",
-            "university_id": wizardValues.universityId ?? "",
-            "college_id": wizardValues.collegeId ?? "",
-            "major_id": wizardValues.majorId ?? "",
-            "locale": MySharedPreferences.language,
-          };
-        } else {
-          json = {
-            "name": displayName,
-            "email": email,
-            "image": photoURL,
-            "phone_number": phoneNum,
-            "country_id": wizardValues.countryId ?? "",
-            "university_id": wizardValues.universityId ?? "",
-            "college_id": wizardValues.collegeId ?? "",
-            "major_id": wizardValues.majorId ?? "",
-            "locale": MySharedPreferences.language,
-          };
-        }
-        final socialLoginFuture = ApiService<AuthModel>().build(
-          url: isLogin ? ApiUrl.login : ApiUrl.socialLogin,
-          isPublic: true,
-          apiType: ApiType.post,
-          queryParams: json,
-          builder: AuthModel.fromJson,
-        );
-        return socialLoginFuture;
-      },
-      onComplete: (snapshot) async {
-        final userData = snapshot.data!.user!;
-        if (snapshot.status == true) {
-          MySharedPreferences.accessToken = snapshot.data!.token!;
-          if (!context.mounted) return;
-          updateUser(context, userModel: userData);
-          if (_lastRouteName == null) {
-            //context.pushAndRemoveUntil(const AppNavBar());
-            context.pushAndRemoveUntil(const WizardScreen(wizardType: WizardType.countries));
-          } else {
-            _popUntilLastPage(context);
-          }
-        } else {
-          context.showSnackBar(snapshot.msg ?? context.appLocalization.generalError);
-        }
-      },
-      onError: (failure) => AppErrorFeedback.show(context, failure),
+    Map<String, dynamic> json = {};
+    if (isLogin) {
+      json = {
+        "phone_number": phoneNum,
+        "password": password,
+        "country_id": wizardValues.countryId ?? "",
+        "university_id": wizardValues.universityId ?? "",
+        "college_id": wizardValues.collegeId ?? "",
+        "major_id": wizardValues.majorId ?? "",
+        "locale": MySharedPreferences.language,
+      };
+    } else {
+      json = {
+        "name": displayName,
+        "email": email,
+        "image": photoURL,
+        "phone_number": phoneNum,
+        "country_id": wizardValues.countryId ?? "",
+        "university_id": wizardValues.universityId ?? "",
+        "college_id": wizardValues.collegeId ?? "",
+        "major_id": wizardValues.majorId ?? "",
+        "locale": MySharedPreferences.language,
+      };
+    }
+    return ApiService<AuthModel>().build(
+      url: isLogin ? ApiUrl.login : ApiUrl.socialLogin,
+      isPublic: true,
+      apiType: ApiType.post,
+      queryParams: json,
+      builder: AuthModel.fromJson,
     );
   }
 
   Future createAccount(
     BuildContext context, {
     required String? fullName,
-    required String? password,
     required String? phoneNum,
   }) async {
     await ApiFutureBuilder<AuthModel>().fetch(
@@ -125,8 +100,6 @@ class AuthProvider extends ChangeNotifier {
           queryParams: {
             "name": fullName,
             "phone_number": phoneNum,
-            "password": password,
-            "password_confirmation": password,
             "country_id": wizardValues.countryId ?? "",
             "university_id": wizardValues.universityId ?? "",
             "college_id": wizardValues.collegeId ?? "",
@@ -144,11 +117,11 @@ class AuthProvider extends ChangeNotifier {
           if (!context.mounted) return;
           context.showSnackBar(context.appLocalization.accountCreatedMsg, duration: 10);
           updateUser(context, userModel: snapshot.data!.user);
-          if (_lastRouteName == null) {
+          if (lastRouteName == null) {
             // context.pushAndRemoveUntil(const AppNavBar());
             context.pushAndRemoveUntil(const WizardScreen(wizardType: WizardType.countries));
           } else {
-            _popUntilLastPage(context);
+            popUntilLastPage(context);
           }
         } else {
           context.showSnackBar(snapshot.msg ?? context.appLocalization.generalError);
@@ -294,9 +267,9 @@ class AuthProvider extends ChangeNotifier {
       )
           .then((value) {
         if (value != null) {
-          _lastRouteName = context.currentRouteName;
+          lastRouteName = context.currentRouteName;
           context.push(const RegistrationScreen(hideGuestButton: true)).then((value) {
-            _lastRouteName = null;
+            lastRouteName = null;
             if (_executeLastRouteCallback) {
               callback();
               _executeLastRouteCallback = false;
