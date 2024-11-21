@@ -75,6 +75,7 @@ class AuthProvider extends ChangeNotifier {
         "locale": MySharedPreferences.language,
       };
     }
+    print("urL::::: ${ApiUrl.login}");
     return ApiService<AuthModel>().build(
       url: isLogin ? ApiUrl.login : ApiUrl.socialLogin,
       isPublic: true,
