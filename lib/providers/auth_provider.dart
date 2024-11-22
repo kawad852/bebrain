@@ -55,7 +55,6 @@ class AuthProvider extends ChangeNotifier {
     if (isLogin) {
       json = {
         "phone_number": phoneNum,
-        "password": password,
         "country_id": wizardValues.countryId ?? "",
         "university_id": wizardValues.universityId ?? "",
         "college_id": wizardValues.collegeId ?? "",
