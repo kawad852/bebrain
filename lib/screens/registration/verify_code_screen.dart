@@ -102,7 +102,6 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
             dialCode: widget.dialCode,
             phoneNum: widget.phoneNum,
           ));
-          context.showSnackBar(loginSnapshot.msg ?? context.appLocalization.generalError);
         }
       },
     );

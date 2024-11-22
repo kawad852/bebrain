@@ -92,7 +92,7 @@ class AuthProvider extends ChangeNotifier {
   }) async {
     await ApiFutureBuilder<AuthModel>().fetch(
       context,
-      withOverlayLoader: false,
+      withOverlayLoader: true,
       future: () {
         final createAccountFuture = ApiService<AuthModel>().build(
           url: ApiUrl.createAccount,
