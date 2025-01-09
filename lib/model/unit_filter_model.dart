@@ -52,6 +52,7 @@ class UnitFilterData {
     Offer? courseOffer;
     Offer? offer;
     List<Section>? sections;
+    List<Exam>? exams;
 
     UnitFilterData({
         this.id,
@@ -76,6 +77,7 @@ class UnitFilterData {
         this.courseOffer,
         this.offer,
         this.sections,
+        this.exams,
     });
 
     factory UnitFilterData.fromJson(Map<String, dynamic> json) => UnitFilterData(
@@ -101,6 +103,7 @@ class UnitFilterData {
         courseOffer: json["course_offer"] == null ? null : Offer.fromJson(json["course_offer"]),
         offer: json["offer"] == null ? null : Offer.fromJson(json["offer"]),
         sections: json["sections"] == null ? [] : List<Section>.from(json["sections"]!.map((x) => Section.fromJson(x))),
+        exams: json["exams"] == null ? [] : List<Exam>.from(json["exams"]!.map((x) => Exam.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
@@ -126,6 +129,7 @@ class UnitFilterData {
         "course_offer": courseOffer?.toJson(),
         "offer": offer?.toJson(),
         "sections": sections == null ? [] : List<dynamic>.from(sections!.map((x) => x.toJson())),
+        "exams": exams == null ? [] : List<dynamic>.from(exams!.map((x) => x.toJson())),
     };
 }
 
@@ -149,6 +153,7 @@ class Section {
     Offer? offer;
     List<Video>? videos;
     List<Document>? documents;
+    List<Exam>? exams;
 
     Section({
         this.id,
@@ -170,6 +175,7 @@ class Section {
         this.offer,
         this.videos,
         this.documents,
+        this.exams,
     });
 
     factory Section.fromJson(Map<String, dynamic> json) => Section(
@@ -192,6 +198,7 @@ class Section {
         subscription: json["subscription"] == null ? [] : List<SubscriptionsData>.from(json["subscription"]!.map((x) => SubscriptionsData.fromJson(x))),
         videos: json["videos"] == null ? [] : List<Video>.from(json["videos"]!.map((x) => Video.fromJson(x))),
         documents: json["documents"] == null ? [] : List<Document>.from(json["documents"]!.map((x) => Document.fromJson(x))),
+        exams: json["exams"] == null ? [] : List<Exam>.from(json["exams"]!.map((x) => Exam.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
@@ -214,6 +221,7 @@ class Section {
         "subscription": subscription == null ? [] : List<dynamic>.from(subscription!.map((x) => x.toJson())),
         "videos": videos == null ? [] : List<dynamic>.from(videos!.map((x) => x.toJson())),
         "documents": documents == null ? [] : List<dynamic>.from(documents!.map((x) => x.toJson())),
+        "exams": exams == null ? [] : List<dynamic>.from(exams!.map((x) => x.toJson())),
     };
 }
 

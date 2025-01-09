@@ -15,8 +15,9 @@ class VimeoPlayerScreen extends StatefulWidget {
   final String vimeoId;
   final int? videoId;
   final bool isFullScreen;
+  final bool isInitialize;
   const VimeoPlayerScreen(
-      {super.key, required this.vimeoId, required this.videoId, required this.isFullScreen});
+      {super.key, required this.vimeoId, required this.videoId, required this.isFullScreen, this.isInitialize = true});
 
   @override
   State<VimeoPlayerScreen> createState() => _VimeoPlayerScreenState();
@@ -99,30 +100,34 @@ class _VimeoPlayerScreenState extends State<VimeoPlayerScreen> {
   @override
   void initState() {
     super.initState();
-    disableScreenshot();
+    
     _initialize();
     //_startWatermarkAnimation();
     _mainProvider = context.mainProvider;
     if (widget.videoId != null) {
       _initializeFuture();
     }
+    if (widget.isInitialize) {
+    disableScreenshot();
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeRight,
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+    }
   }
 
   @override
   void dispose() {
     super.dispose();
+    if (widget.isInitialize) {
     enableScreenshot();
-    //_timer?.cancel();
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+    }
   }
 
   //  void _startWatermarkAnimation() {

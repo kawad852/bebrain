@@ -61,4 +61,6 @@ class MyIcons {
   static const String onLine = '${_path}on_line.svg';
   static const String onLineSelected = '${_path}on_line_selected.svg';
   static const String clock = '${_path}clock.svg';
+  static const String examOpen = '${_path}exam_open.svg';
+  static const String examClose = '${_path}exam_close.svg';
 }

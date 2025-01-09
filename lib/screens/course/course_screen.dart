@@ -6,6 +6,7 @@ import 'package:bebrain/model/course_filter_model.dart';
 import 'package:bebrain/model/subscriptions_model.dart';
 import 'package:bebrain/network/api_service.dart';
 import 'package:bebrain/providers/main_provider.dart';
+import 'package:bebrain/screens/course/exam_screen.dart';
 import 'package:bebrain/screens/course/widgets/content_card.dart';
 import 'package:bebrain/screens/course/widgets/course_info.dart';
 import 'package:bebrain/screens/course/widgets/course_nav_bar.dart';
@@ -283,6 +284,67 @@ class _CourseScreenState extends State<CourseScreen> {
                           _initializeFuture();
                         });
                       },
+                    );
+                  },
+                ),
+              ),
+              SliverPadding(
+                padding: const EdgeInsetsDirectional.only(start: 15,end: 15,top: 5),
+                sliver: SliverList.separated( 
+                  separatorBuilder: (context, index) => const SizedBox(height: 5),
+                  itemCount: course.exams!.length,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      width: double.infinity,
+                      height: 60,
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      decoration: BoxDecoration(
+                        color: context.colorPalette.greyEEE,
+                        borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
+                      ),
+                      child: Row(
+                        children: [
+                          CustomSvg(
+                            course.exams![index].paymentType == 0 || (course.paymentStatus == 1 && course.exams![index].paymentType == 1)
+                            ? MyIcons.examOpen
+                            :MyIcons.examClose,
+                          ),
+                          const SizedBox(width: 7),
+                          Expanded(
+                            child: CourseText(
+                              course.exams![index].name!,
+                              fontWeight: FontWeight.bold,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: course.exams![index].paymentType == 0 || (course.paymentStatus == 1 && course.exams![index].paymentType == 1)
+                            ? () {
+                               context.push(ExamScreen(payUrl:course.exams![index].link!));
+                            }
+                            :null,
+                            child: Container(
+                              height: 23,
+                              width: 46,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: course.exams![index].paymentType == 0 || (course.paymentStatus == 1 && course.exams![index].paymentType == 1)
+                                ? context.colorPalette.blue8DD
+                                : context.colorPalette.greyD9D,
+                                borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
+                              ),
+                              child: Text(
+                                context.appLocalization.go,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                  color: context.colorPalette.black33,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     );
                   },
                 ),

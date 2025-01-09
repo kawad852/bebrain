@@ -40,7 +40,7 @@ class ContentCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async{
-        if (unit.videosCount == 0 && unit.documentsCount == 0) {
+        if (unit.videosCount == 0 && unit.documentsCount == 0 && unit.exams!.isEmpty) {
           context.showDialog(
             titleText: "",
             confirmTitle: context.appLocalization.back,
@@ -96,7 +96,9 @@ class ContentCard extends StatelessWidget {
                 ],
               ),
             ),
-            unit.type == PaymentType.free
+            unit.type == PaymentType.notFree && unit.unitPrice == 0
+            ? const SizedBox()
+            : unit.type == PaymentType.free
                 ? const FreeBubble()
                 : unit.paymentStatus == PaymentStatus.paid
                     ? const SubscribedBubble()

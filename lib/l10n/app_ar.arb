@@ -260,5 +260,6 @@
   "changeCollege":"تغيير الكلية",
   "changeMajor":"تغيير التخصص",
   "msgSendSuccessfully": "تم إرسال الرسالة بنجاح",
-  "accountAlreadyRegistered": "الحساب مسجل مسبقاً"
+  "accountAlreadyRegistered": "الحساب مسجل مسبقاً",
+  "go":"دخول"
 }

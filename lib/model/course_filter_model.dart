@@ -81,6 +81,7 @@ class Course {
     co.Professor? professor;
     Offer? offer;
     List<Unit>? units;
+    List<Exam>? exams;
 
     Course({
         this.id,
@@ -114,6 +115,7 @@ class Course {
         this.professor,
         this.offer,
         this.units,
+        this.exams,
     });
 
     factory Course.fromJson(Map<String, dynamic> json) => Course(
@@ -148,6 +150,8 @@ class Course {
         professor: json["professor"] == null ? null : co.Professor.fromJson(json["professor"]),
         offer: json["offer"] == null ? null : Offer.fromJson(json["offer"]),
         units: json["units"] == null ? [] : List<Unit>.from(json["units"]!.map((x) => Unit.fromJson(x))),
+        exams: json["exams"] == null ? [] : List<Exam>.from(json["exams"]!.map((x) => Exam.fromJson(x))),
+
     );
 
     Map<String, dynamic> toJson() => {
@@ -182,6 +186,43 @@ class Course {
         "professor": professor?.toJson(),
         "offer": offer?.toJson(),
         "units": units == null ? [] : List<dynamic>.from(units!.map((x) => x.toJson())),
+        "exams": exams == null ? [] : List<dynamic>.from(exams!.map((x) => x.toJson())),
+    };
+}
+
+class Exam {
+    int? id;
+    String? name;
+    int? paymentType;
+    String? link;
+    int? periodInMinutes;
+    List<dynamic>? links;
+
+    Exam({
+        this.id,
+        this.name,
+        this.paymentType,
+        this.link,
+        this.periodInMinutes,
+        this.links,
+    });
+
+    factory Exam.fromJson(Map<String, dynamic> json) => Exam(
+        id: json["id"],
+        name: json["name"],
+        paymentType: json["payment_type"],
+        link: json["link"],
+        periodInMinutes: json["period_in_minutes"],
+        links: json["links"] == null ? [] : List<dynamic>.from(json["links"]!.map((x) => x)),
+    );
+
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "payment_type": paymentType,
+        "link": link,
+        "period_in_minutes": periodInMinutes,
+        "links": links == null ? [] : List<dynamic>.from(links!.map((x) => x)),
     };
 }
 
@@ -230,6 +271,7 @@ class Unit {
     int? subscriptionCount;
     List<SubscriptionsData>? subscription;
     Offer? offer;
+    List<Exam>? exams;
 
     Unit({
         this.id,
@@ -247,6 +289,7 @@ class Unit {
         this.subscriptionCount,
         this.subscription,
         this.offer,
+        this.exams,
     });
 
     factory Unit.fromJson(Map<String, dynamic> json) => Unit(
@@ -265,6 +308,7 @@ class Unit {
         subscriptionCount: json["subscription_count"],
         subscription: json["subscription"] == null ? [] : List<SubscriptionsData>.from(json["subscription"]!.map((x) => SubscriptionsData.fromJson(x))),
         offer: json["offer"] == null ? null : Offer.fromJson(json["offer"]),
+        exams: json["exams"] == null ? [] : List<Exam>.from(json["exams"]!.map((x) => Exam.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
@@ -283,5 +327,6 @@ class Unit {
         "subscription_count": subscriptionCount,
         "subscription": subscription == null ? [] : List<dynamic>.from(subscription!.map((x) => x.toJson())),
         "offer": offer?.toJson(),
+        "exams": exams == null ? [] : List<dynamic>.from(exams!.map((x) => x.toJson())),
     };
 }

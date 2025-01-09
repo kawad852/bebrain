@@ -5,6 +5,7 @@ import 'package:bebrain/helper/ui_helper.dart';
 import 'package:bebrain/model/subscriptions_model.dart';
 import 'package:bebrain/model/unit_filter_model.dart';
 import 'package:bebrain/providers/main_provider.dart';
+import 'package:bebrain/screens/course/exam_screen.dart';
 import 'package:bebrain/screens/course/widgets/course_nav_bar.dart';
 import 'package:bebrain/screens/course/widgets/course_text.dart';
 import 'package:bebrain/screens/course/widgets/leading_back.dart';
@@ -12,10 +13,12 @@ import 'package:bebrain/screens/course/widgets/part_card.dart';
 import 'package:bebrain/screens/vimeo_player/vimeo_player_screen.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/enums.dart';
+import 'package:bebrain/utils/my_icons.dart';
 import 'package:bebrain/utils/my_theme.dart';
 import 'package:bebrain/utils/shared_pref.dart';
 import 'package:bebrain/widgets/custom_future_builder.dart';
 import 'package:bebrain/widgets/custom_network_image.dart';
+import 'package:bebrain/widgets/custom_svg.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:no_screenshot/no_screenshot.dart';
@@ -46,10 +49,14 @@ class _UnitScreenState extends State<UnitScreen> {
   late MainProvider _mainProvider;
   late Future<UnitFilterModel> _unitFuture;
   String? _orderNumber;
+  String? _vimeoId;
+  int? _videoId;
 
   _initializeFuture(String? type, int? index ) async {
     _unitFuture = _mainProvider.filterByUnit(widget.unitId);
     final _unit = await _unitFuture;
+    _vimeoId = _unit.data!.sections![0].videos![0].vimeoId!;
+    _videoId = _unit.data!.sections![0].videos![0].id!;
     switch(type){
       case SubscriptionsType.course:
         _orderNumber = _unit.data!.courseSubscription?[0].order?.orderNumber;
@@ -172,9 +179,11 @@ class _UnitScreenState extends State<UnitScreen> {
                   leading: const LeadingBack(),
                   flexibleSpace: (widget.isSubscribedCourse && unit.type == PaymentType.free) || (unit.paymentStatus == PaymentStatus.paid && unit.type == PaymentType.notFree)
                       ? VimeoPlayerScreen(
-                          vimeoId: unit.sections![0].videos![0].vimeoId!,
-                          videoId: unit.sections![0].videos![0].id!,
+                          key: UniqueKey(),
+                          vimeoId: _vimeoId!,
+                          videoId: _videoId,
                           isFullScreen: false,
+                          isInitialize: false,
                         )
                       : CustomNetworkImage(
                           widget.courseImage,
@@ -304,7 +313,7 @@ class _UnitScreenState extends State<UnitScreen> {
                 ),
               ),
               SliverPadding(
-                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                 sliver: SliverList.separated(
                   separatorBuilder: (context, index) => const SizedBox(height: 5),
                   itemCount: unit.sections!.length,
@@ -314,6 +323,12 @@ class _UnitScreenState extends State<UnitScreen> {
                       section: section,
                       unitStatus: unit.paymentStatus!,
                       isSubscribedCourse: widget.isSubscribedCourse,
+                      onTapVideo: (viemoId, videoId) {
+                        setState(() {
+                          _vimeoId = viemoId;
+                          _videoId = videoId;
+                        });
+                      },
                       onTap: () {
                         widget.available == 0
                             ? context.dialogNotAvailble()
@@ -338,6 +353,67 @@ class _UnitScreenState extends State<UnitScreen> {
                               },
                             );
                       },
+                    );
+                  },
+                ),
+              ),
+              SliverPadding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                sliver: SliverList.separated(
+                  separatorBuilder: (context, index) => const SizedBox(height: 5),
+                  itemCount: unit.exams!.length,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      width: double.infinity,
+                      height: 60,
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      decoration: BoxDecoration(
+                        color: context.colorPalette.greyEEE,
+                        borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
+                      ),
+                      child: Row(
+                        children: [
+                          CustomSvg(
+                            unit.exams![index].paymentType == 0 || (unit.paymentStatus == 1 && unit.exams![index].paymentType == 1)
+                            ? MyIcons.examOpen
+                            :MyIcons.examClose,
+                          ),
+                          const SizedBox(width: 7),
+                          Expanded(
+                            child: CourseText(
+                              unit.exams![index].name!,
+                              fontWeight: FontWeight.bold,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: unit.exams![index].paymentType == 0 || (unit.paymentStatus == 1 && unit.exams![index].paymentType == 1)
+                            ? () {
+                               context.push(ExamScreen(payUrl:unit.exams![index].link!));
+                            }
+                            :null,
+                            child: Container(
+                              height: 23,
+                              width: 46,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: unit.exams![index].paymentType == 0 || (unit.paymentStatus == 1 && unit.exams![index].paymentType == 1)
+                                ? context.colorPalette.blue8DD
+                                : context.colorPalette.greyD9D,
+                                borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
+                              ),
+                              child: Text(
+                                context.appLocalization.go,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                  color: context.colorPalette.black33,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     );
                   },
                 ),

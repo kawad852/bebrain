@@ -1,4 +1,5 @@
 import 'package:bebrain/model/unit_filter_model.dart';
+import 'package:bebrain/screens/course/exam_screen.dart';
 import 'package:bebrain/screens/course/widgets/course_text.dart';
 import 'package:bebrain/screens/course/widgets/free_bubble.dart';
 import 'package:bebrain/screens/course/widgets/subscribed_bubble.dart';
@@ -17,12 +18,14 @@ class PartCard extends StatelessWidget {
   final bool isSubscribedCourse;
   final int unitStatus;
   final void Function() onTap;
+  final Function(String viemoId, int videoId) onTapVideo;
   const PartCard({
     super.key, 
     required this.section, 
     required this.onTap, 
     required this.isSubscribedCourse, 
     required this.unitStatus,
+    required this.onTapVideo,
     });
 
   bool get _sectionAllow => section.type == PaymentType.free || section.paymentStatus == PaymentStatus.paid;
@@ -38,7 +41,9 @@ class PartCard extends StatelessWidget {
         tilePadding: const EdgeInsets.symmetric(horizontal: 10),
         backgroundColor: context.colorPalette.greyEEE,
         collapsedBackgroundColor: context.colorPalette.greyEEE,
-        trailing: section.type == PaymentType.free
+        trailing: section.type == PaymentType.notFree && section.sectionPrice == 0
+        ? const  SizedBox.shrink() 
+        : section.type == PaymentType.free
             ? const FreeBubble()
             : section.paymentStatus == PaymentStatus.paid
                 ? const SubscribedBubble()
@@ -89,7 +94,8 @@ class PartCard extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap:_allowShow? () {
-                      context.push(VimeoPlayerScreen(vimeoId: element.vimeoId!, videoId: element.id!,isFullScreen: true));
+                      onTapVideo(element.vimeoId!,element.id!);
+                      //context.push(VimeoPlayerScreen(vimeoId: element.vimeoId!, videoId: element.id!,isFullScreen: true));
                     } : null ,
                     child: Row(
                       children: [
@@ -171,8 +177,40 @@ class PartCard extends StatelessWidget {
               ),
             );
           }).toList(),
+          ...section.exams!.map((element) {
+            return GestureDetector(
+              onTap: element.paymentType == 0 || (section.paymentStatus == 1 && element.paymentType == 1)
+                 ? () {
+                       context.push(ExamScreen(payUrl:element.link!));
+                  }
+                 :null,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                child: Row(
+                  children: [
+                    CustomSvg(
+                      element.paymentType == 0 || (section.paymentStatus == 1 && element.paymentType == 1)
+                      ? MyIcons.examOpen
+                      :MyIcons.examClose,
+                    ),
+                    const SizedBox(width: 7),
+                    Expanded(
+                      child: CourseText(
+                        element.name!,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }).toList(),
           if(section.type != PaymentType.free && section.paymentStatus != PaymentStatus.paid)
-          GestureDetector(
+          section.type == PaymentType.notFree && section.sectionPrice == 0
+          ? const SizedBox.shrink()
+          : GestureDetector(
             onTap: onTap,
             child: Container(
               width: double.infinity,
