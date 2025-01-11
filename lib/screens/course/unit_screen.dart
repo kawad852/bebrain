@@ -382,6 +382,7 @@ class _UnitScreenState extends State<UnitScreen> {
                           Expanded(
                             child: CourseText(
                               unit.exams![index].name!,
+                              maxLines: 2,
                               fontWeight: FontWeight.bold,
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -394,7 +395,7 @@ class _UnitScreenState extends State<UnitScreen> {
                             :null,
                             child: Container(
                               height: 23,
-                              width: 46,
+                              padding: const EdgeInsets.symmetric(horizontal: 8),
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
                                 color: unit.exams![index].paymentType == 0 || (unit.paymentStatus == 1 && unit.exams![index].paymentType == 1)
