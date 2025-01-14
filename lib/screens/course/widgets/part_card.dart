@@ -181,7 +181,7 @@ class PartCard extends StatelessWidget {
             return GestureDetector(
               onTap: element.paymentType == 0 || (section.paymentStatus == 1 && element.paymentType == 1)
                  ? () {
-                       context.push(ExamScreen(payUrl:element.link!));
+                       context.push(ExamScreen(payUrl:element.link!, isInitialize: false));
                   }
                  :null,
               child: Padding(

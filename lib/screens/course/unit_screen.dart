@@ -390,7 +390,7 @@ class _UnitScreenState extends State<UnitScreen> {
                           GestureDetector(
                             onTap: unit.exams![index].paymentType == 0 || (unit.paymentStatus == 1 && unit.exams![index].paymentType == 1)
                             ? () {
-                               context.push(ExamScreen(payUrl:unit.exams![index].link!));
+                               context.push(ExamScreen(payUrl:unit.exams![index].link!,isInitialize: false));
                             }
                             :null,
                             child: Container(
