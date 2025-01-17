@@ -70,8 +70,7 @@ class PaymentProvider extends ChangeNotifier {
     if (withOverlayLoader) {
       AppOverlayLoader.show();
     }
-    ApiFutureBuilder<OrderModel>().fetch(context, withOverlayLoader: false,
-        future: () async {
+    ApiFutureBuilder<OrderModel>().fetch(context, withOverlayLoader: false, future: () async {
       final order = context.mainProvider.createOrder(
         type: orderType,
         orderableId: orderableId,
@@ -79,7 +78,7 @@ class PaymentProvider extends ChangeNotifier {
       );
       return order;
     }, onComplete: (snapshot) async {
-      log("khaled");
+      log("ProductId:::: $productId");
       if (snapshot.code == 200) {
         if (paymentMethod == PaymentMethodType.inAppPurchases) {
           await PurchasesService.buy(
@@ -91,7 +90,7 @@ class PaymentProvider extends ChangeNotifier {
             afterPay: afterPay,
           );
         } else {
-         await UPayment.checkout(
+          await UPayment.checkout(
             context: context,
             orderId: snapshot.data!.orderNumber!,
             amount: double.parse(amount.toStringAsFixed(2)),
@@ -141,7 +140,7 @@ class PaymentProvider extends ChangeNotifier {
           afterPay: afterPay,
         );
       } else {
-       await UPayment.checkout(
+        await UPayment.checkout(
           context: context,
           withOverlayLoader: true,
           orderId: orderId,
