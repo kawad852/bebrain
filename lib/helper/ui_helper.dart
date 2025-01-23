@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:bebrain/alerts/errors/app_error_feedback.dart';
 import 'package:bebrain/alerts/feedback/app_feedback.dart';
+import 'package:bebrain/alerts/loading/app_over_loader.dart';
 import 'package:bebrain/model/auth_model.dart';
 import 'package:bebrain/model/confirm_pay_model.dart';
 import 'package:bebrain/model/filter_model.dart';
@@ -154,19 +155,28 @@ class UiHelper extends ChangeNotifier {
     BuildContext context, {
     required String orderNumber,
     Function? afterPay,
+    bool withOverlayLoader = true,
   }) async {
     await ApiFutureBuilder<ConfirmPayModel>().fetch(
       context,
+      withOverlayLoader: withOverlayLoader,
       future: () async {
         final confirmPay = context.mainProvider.confirmPayment(orderNumber);
         return confirmPay;
       },
       onComplete: (snapshot) {
+        AppOverlayLoader.hide();
         if (snapshot.code == 200 && afterPay != null) {
           afterPay();
         }
       },
-      onError: (failure) => AppErrorFeedback.show(context, failure),
+      onError: (failure) {
+        if (afterPay != null) {
+          afterPay();
+        }
+        AppOverlayLoader.hide();
+        AppErrorFeedback.show(context, failure);
+      },
     );
   }
 

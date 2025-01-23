@@ -137,7 +137,8 @@ class _UnitScreenState extends State<UnitScreen> {
         final unit = data.data!;
         return Scaffold(
           bottomNavigationBar:
-              unit.courseOffer != null && unit.couursePrice != 0 && unit.courseDiscountPrice != 0
+              unit.courseOffer != null 
+              //&& unit.couursePrice != 0 && unit.courseDiscountPrice != 0
                   ? CourseNavBar(
                       offer: unit.courseOffer!,
                       price: unit.couursePrice!,
@@ -146,6 +147,29 @@ class _UnitScreenState extends State<UnitScreen> {
                         if (widget.available == 0) {
                           context.dialogNotAvailble();
                         } else {
+                          if (unit.couursePrice == 0 || unit.courseDiscountPrice == 0) {
+                            context.paymentProvider.fakePayment(
+                              context,
+                              title: unit.courseName!,
+                              amount: unit.courseDiscountPrice ?? unit.couursePrice!,
+                              id: unit.courseId!,
+                              orderId: unit.courseSubscription!.isEmpty || unit.courseSubscription == null
+                                ? null
+                                : unit.courseSubscription?[0].order?.orderNumber,
+                              orderType: OrderType.subscription,
+                              productId: widget.productIdCourse,
+                              subscribtionId: unit.courseSubscription!.isEmpty || unit.courseSubscription == null
+                                ? null
+                                : unit.courseSubscription?[0].id,
+                              subscriptionsType: SubscriptionsType.course,
+                              afterPay: (){
+                              setState(() {
+                                _initializeFuture(SubscriptionsType.course, 0);
+                              });
+                            },
+                            );
+                          }
+                          else {
                           UiHelper.payment(
                             context,
                             title: unit.courseName! ,
@@ -166,6 +190,7 @@ class _UnitScreenState extends State<UnitScreen> {
                               });
                             },
                           );
+                          }
                         }
                       },
                     )
@@ -228,7 +253,8 @@ class _UnitScreenState extends State<UnitScreen> {
                         textColor: context.colorPalette.grey66,
                         fontWeight: FontWeight.bold,
                       ),
-                      if (unit.paymentStatus == PaymentStatus.unPaid && unit.unitPrice != 0 && unit.discountPrice != 0 && unit.type == PaymentType.notFree)
+                      if (unit.paymentStatus == PaymentStatus.unPaid &&  unit.type == PaymentType.notFree)
+                      // unit.unitPrice != 0 && unit.discountPrice != 0 &&
                         Container(
                           width: double.infinity,
                           height: 50,
@@ -268,7 +294,29 @@ class _UnitScreenState extends State<UnitScreen> {
                                   if (widget.available == 0) {
                                     context.dialogNotAvailble();
                                   } else {
-                                    UiHelper.payment(
+                                    if (unit.unitPrice == 0 || unit.discountPrice == 0) {
+                                      context.paymentProvider.fakePayment(
+                                        context,
+                                        title: unit.name!,
+                                        amount: unit.discountPrice?? unit.unitPrice!,
+                                        id: unit.id!,
+                                        orderId: unit.subscription!.isEmpty || unit.subscription == null
+                                        ? null
+                                        : unit.subscription?[0].order?.orderNumber,
+                                        orderType: OrderType.subscription,
+                                        productId: unit.productId,
+                                        subscribtionId: unit.subscription!.isEmpty || unit.subscription == null
+                                        ? null
+                                        : unit.subscription?[0].id,
+                                        subscriptionsType: SubscriptionsType.unit,
+                                        afterPay: (){
+                                        setState(() {
+                                          _initializeFuture(SubscriptionsType.unit,0);
+                                        });
+                                      },
+                                      );
+                                    }
+                                   else { UiHelper.payment(
                                       context,
                                       title: unit.name!,
                                       amount: unit.discountPrice?? unit.unitPrice!,
@@ -288,6 +336,7 @@ class _UnitScreenState extends State<UnitScreen> {
                                         });
                                       },
                                     );
+                                   }
                                   }
                                 },
                                 child: Container(
@@ -332,7 +381,28 @@ class _UnitScreenState extends State<UnitScreen> {
                       onTap: () {
                         widget.available == 0
                             ? context.dialogNotAvailble()
-                            : UiHelper.payment(
+                            : section.sectionPrice == 0 || section.discountPrice == 0
+                            ? context.paymentProvider.fakePayment(
+                              context,
+                              title: section.name!,
+                              amount: section.discountPrice ?? section.sectionPrice!,
+                              id: section.id!,
+                              orderId: section.subscription!.isEmpty || section.subscription == null
+                                    ? null
+                                    : section.subscription?[0].order?.orderNumber,
+                              orderType: OrderType.subscription,
+                              productId: section.productId,
+                              subscribtionId: section.subscription!.isEmpty || section.subscription == null
+                                    ? null
+                                    : section.subscription?[0].id,
+                              subscriptionsType: SubscriptionsType.section,
+                              afterPay: (){
+                                setState(() {
+                                  _initializeFuture(SubscriptionsType.section, index);
+                                });
+                              },
+                            ) 
+                            :UiHelper.payment(
                               context,
                               title: section.name!,
                               amount: section.discountPrice ?? section.sectionPrice!,

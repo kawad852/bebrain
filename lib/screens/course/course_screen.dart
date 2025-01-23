@@ -112,7 +112,8 @@ class _CourseScreenState extends State<CourseScreen> {
         final data = snapshot.data!;
         final course = data.data!.course!;
         return Scaffold(
-          bottomNavigationBar: course.paymentStatus == PaymentStatus.unPaid && course.price != 0 && course.discountPrice != 0
+          bottomNavigationBar: course.paymentStatus == PaymentStatus.unPaid 
+          //&& course.price != 0 && course.discountPrice != 0
               ? CourseNavBar(
                   offer: course.offer,
                   price: course.price!,
@@ -121,6 +122,28 @@ class _CourseScreenState extends State<CourseScreen> {
                     if (course.available == 0) {
                       context.dialogNotAvailble();
                     } else {
+                      if (course.price == 0 || course.discountPrice == 0) {
+                      context.paymentProvider.fakePayment(
+                        context,
+                        amount: course.discountPrice ?? course.price!,
+                        orderType: OrderType.subscription,
+                        productId: course.productId,
+                        title: course.name!,
+                        discription: course.description,
+                        afterPay: () {
+                          setState(() {
+                            _initializeFuture();
+                          });
+                        },
+                        id: course.id!,
+                        orderId: course.subscription!.isEmpty || course.subscription == null
+                            ? null
+                            : course.subscription?[0].order?.orderNumber,
+                        subscribtionId: course.subscription!.isEmpty || course.subscription == null
+                            ? null
+                            : course.subscription?[0].id,
+                        subscriptionsType: SubscriptionsType.course,
+                      ); } else {
                       UiHelper.payment(
                         context,
                         title: course.name!,
@@ -142,6 +165,7 @@ class _CourseScreenState extends State<CourseScreen> {
                           });
                         },
                       );
+                      }
                     }
                   },
                 )

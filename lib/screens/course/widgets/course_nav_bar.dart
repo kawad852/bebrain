@@ -92,6 +92,7 @@ class _CourseNavBarState extends State<CourseNavBar> {
                       return CourseText(
                         "$seconds ${context.appLocalization.second}, $minutes ${context.appLocalization.minute}, $hours ${context.appLocalization.hours}, $days ${context.appLocalization.days}",
                         fontSize: 12,
+                        overflow: TextOverflow.ellipsis,
                         textColor: context.colorPalette.grey66,
                       );
                     },

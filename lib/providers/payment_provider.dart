@@ -4,6 +4,7 @@ import 'package:bebrain/alerts/errors/app_error_feedback.dart';
 import 'package:bebrain/alerts/feedback/app_feedback.dart';
 import 'package:bebrain/alerts/loading/app_over_loader.dart';
 import 'package:bebrain/helper/purchases_service.dart';
+import 'package:bebrain/helper/ui_helper.dart';
 import 'package:bebrain/model/order_model.dart';
 import 'package:bebrain/model/subscriptions_model.dart';
 import 'package:bebrain/network/api_service.dart';
@@ -178,5 +179,102 @@ class PaymentProvider extends ChangeNotifier {
         description: discription,
       );
     }
+  }
+
+  Future fakePayment(BuildContext context,{
+    int? subscribtionId,
+    String? subscriptionsType,
+    String? orderId,
+    Function? afterPay,
+    int? id,
+    String? discription,
+    required double amount,
+    required String orderType,
+    required String title,
+    required String? productId,
+  }) async {
+    if (orderId != null) {
+      UiHelper.confirmPayment(context, orderNumber: orderId,afterPay: afterPay);
+    } else if (subscribtionId != null) {
+      AppOverlayLoader.show();
+       ApiFutureBuilder<OrderModel>().fetch(context, withOverlayLoader: false, future: () async {
+      final order = context.mainProvider.createOrder(
+        type: orderType,
+        orderableId: subscribtionId,
+        amount: double.parse(amount.toStringAsFixed(2)),
+      );
+      return order;
+    }, onComplete: (snapshot) async {
+      if (snapshot.code == 200) {
+        UiHelper.confirmPayment(
+        context, 
+        orderNumber: snapshot.data!.orderNumber!, 
+        afterPay: afterPay,
+        withOverlayLoader: false,
+      );
+        if (afterPay != null) {
+          afterPay();
+        }
+      } else {
+        AppOverlayLoader.hide();
+        context.showSnackBar(context.appLocalization.generalError);
+      }
+    }, onError: (failure) {
+      if (afterPay != null) {
+        afterPay();
+      }
+      AppOverlayLoader.hide();
+      AppErrorFeedback.show(context, failure);
+    });
+    } else {
+      AppOverlayLoader.show();
+      await ApiFutureBuilder<SubscriptionsModel>().fetch(
+        context,
+        withOverlayLoader: false,
+        future: () async {
+          final subscribe = context.mainProvider.subscribe(
+          type: subscriptionsType!,
+          id: id!,
+         );
+          return subscribe;
+        },
+        onComplete: (snapshot) {
+          ApiFutureBuilder<OrderModel>().fetch(context, withOverlayLoader: false, future: () async {
+            final order = context.mainProvider.createOrder(
+              type: orderType,
+              orderableId: snapshot.data!.id!,
+              amount: double.parse(amount.toStringAsFixed(2)),
+            );
+            return order;
+          }, onComplete: (snapshot) async {
+            if (snapshot.code == 200) {
+              UiHelper.confirmPayment(
+              context, 
+              orderNumber: snapshot.data!.orderNumber!, 
+              afterPay: afterPay,
+              withOverlayLoader: false,
+            );
+              if (afterPay != null) {
+                afterPay();
+              }
+            } else {
+              AppOverlayLoader.hide();
+              context.showSnackBar(context.appLocalization.generalError);
+            }
+          }, onError: (failure) {
+            if (afterPay != null) {
+              afterPay();
+            }
+            AppOverlayLoader.hide();
+            AppErrorFeedback.show(context, failure);
+          });
+        },
+        onError: (failure) {
+          AppOverlayLoader.hide();
+          AppErrorFeedback.show(context, failure);
+        }
+      );
+    }
+
   }
 }
