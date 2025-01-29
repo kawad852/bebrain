@@ -246,7 +246,7 @@
   "day":"Day",
   "phoneNumBody": "Please enter your phone number to continue",
   "professorAvailable":"The professor is available from {from} to {to}",
-  "onLine":"Online",
+  "onLine":"Online booking",
   "bookLectureOnline":"Book a lecture online",
   "searchSubOrLecture":"Search for the name of a subject or lecturer",
   "bookNow":"Book now",

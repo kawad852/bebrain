@@ -246,7 +246,7 @@
   "day":"اليوم",
   "phoneNumBody": "يرجى ادخال رقم الهاتف للمتابعة",
   "professorAvailable":"الإستاذ متاح من {from} الى {to}",
-  "onLine":"اون لاين",
+  "onLine":"حجز اون لاين",
   "bookLectureOnline":"احجز محاضرة اون لاين",
   "searchSubOrLecture":"ابحث عن اسم المادة او اسم محاضر",
   "bookNow":"احجز الآن",

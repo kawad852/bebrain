@@ -86,7 +86,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                     }
                     return Container(
                       width: double.infinity,
-                      height: 99,
+                      // height: 99,
                       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                       decoration: BoxDecoration(
                         color: index % 2 == 0
@@ -107,13 +107,13 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                           ),
                           Text(
                             notification[index].content!,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
+                            // maxLines: 2,
+                            // overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               color: context.colorPalette.grey66,
                             ),
                           ),
-                          const Spacer(),
+                          // const Spacer(),
                           Align(
                             alignment: context.isLTR
                                 ? Alignment.bottomRight

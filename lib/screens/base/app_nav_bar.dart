@@ -29,7 +29,7 @@ class _AppNavBarState extends State<AppNavBar> {
     MyIcons.home,
     MyIcons.duties,
     MyIcons.onLine,
-    MyIcons.graduation,
+    // MyIcons.graduation,
     MyIcons.profile,
   ];
 
@@ -37,7 +37,7 @@ class _AppNavBarState extends State<AppNavBar> {
     MyIcons.homeSelected,
     MyIcons.dutiesSelected,
     MyIcons.onLineSelected,
-    MyIcons.graduationSelected,
+    // MyIcons.graduationSelected,
     MyIcons.profileSelected,
   ];
 
@@ -46,7 +46,7 @@ class _AppNavBarState extends State<AppNavBar> {
       context.appLocalization.home,
       context.appLocalization.duties,
       context.appLocalization.onLine,
-      context.appLocalization.graduationProjects,
+      // context.appLocalization.graduationProjects,
       context.appLocalization.profile,
     ];
   }
@@ -55,7 +55,7 @@ class _AppNavBarState extends State<AppNavBar> {
     const HomeScreen(),
     const DutiesScreen(),
     const OnlineScreen(),
-    const GraduationProjectsScreen(),
+    // const GraduationProjectsScreen(),
     const ProfileScreen(),
   ];
 
