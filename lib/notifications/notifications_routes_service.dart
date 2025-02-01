@@ -1,6 +1,6 @@
 import 'package:bebrain/screens/booking/booking_request_screen.dart';
+import 'package:bebrain/screens/notifications/notifications_screen.dart';
 import 'package:bebrain/utils/base_extensions.dart';
-import 'package:bebrain/utils/enums.dart';
 import 'package:flutter/material.dart';
 
 class NotificationsRouteService {
@@ -14,6 +14,9 @@ class NotificationsRouteService {
             BookingRequestScreen(interViewId: int.parse(data['id']))
           );
           break;
+        default: context.push(
+          const NotificationsScreen()
+        );
       }
     } catch (e) {
       debugPrint("RouteError:: $e");
