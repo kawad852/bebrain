@@ -202,8 +202,8 @@ class _UnitScreenState extends State<UnitScreen> {
                   scrolledUnderElevation: 0,
                   collapsedHeight: 170,
                   leading: const LeadingBack(),
-                  flexibleSpace: (widget.isSubscribedCourse && unit.type == PaymentType.free) || (unit.paymentStatus == PaymentStatus.paid && unit.type == PaymentType.notFree)
-                      ? VimeoPlayerScreen(
+                  flexibleSpace: ((widget.isSubscribedCourse && unit.type == PaymentType.free) || (unit.paymentStatus == PaymentStatus.paid && unit.type == PaymentType.notFree)) && _vimeoId != null
+                     ? VimeoPlayerScreen(
                           key: UniqueKey(),
                           vimeoId: _vimeoId!,
                           videoId: _videoId,
