@@ -207,9 +207,7 @@ class PartCard extends StatelessWidget {
             );
           }).toList(),
           if(section.type != PaymentType.free && section.paymentStatus != PaymentStatus.paid)
-          section.type == PaymentType.notFree && section.sectionPrice == 0
-          ? const SizedBox.shrink()
-          : GestureDetector(
+           GestureDetector(
             onTap: onTap,
             child: Container(
               width: double.infinity,
