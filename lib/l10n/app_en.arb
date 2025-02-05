@@ -262,5 +262,8 @@
   "msgSendSuccessfully": "Message sent successfully",
   "accountAlreadyRegistered": "Account Already Registered",
   "go":"Start exam",
-  "exam":"exams"
+  "exam":"exams",
+  "updateRequired": "Update Required",
+  "updateBody": "A new version of the app is available. Please update to continue.",
+  "update": "Update"
 }

@@ -262,5 +262,8 @@
   "msgSendSuccessfully": "تم إرسال الرسالة بنجاح",
   "accountAlreadyRegistered": "الحساب مسجل مسبقاً",
   "go":"ابدأ الاختبار",
-  "exam":"اختبار"
+  "exam":"اختبار",
+  "updateRequired": "التحديث مطلوب",
+  "updateBody": "يتوفر إصدار جديد من التطبيق. يرجى التحديث للمتابعة.",
+  "update": "تحديث"
 }
