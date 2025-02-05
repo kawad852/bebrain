@@ -34,8 +34,8 @@ class ContentCard extends StatelessWidget {
       required this.unitStatus,
       });
 
-  bool get _allowShow => (isSubscribedCourse && unit.type == PaymentType.free) || (unit.paymentStatus == PaymentStatus.paid && unit.type == PaymentType.notFree) || ( unitStatus == PaymentStatus.paid );
-
+  bool get _allowShow => (unit.type == PaymentType.free) || (unit.paymentStatus == PaymentStatus.paid && unit.type == PaymentType.notFree) || ( unitStatus == PaymentStatus.paid );
+// isSubscribedCourse && 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

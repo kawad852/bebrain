@@ -77,6 +77,8 @@ class Course {
     int? paymentStatus;
     int? isSubscribed;
     String? productId;
+    String? freeVimeoId;
+    int? freeVideoId;
     List<SubscriptionsData>? subscription;
     co.Professor? professor;
     Offer? offer;
@@ -111,6 +113,8 @@ class Course {
         this.paymentStatus,
         this.isSubscribed,
         this.productId,
+        this.freeVimeoId,
+        this.freeVideoId,
         this.subscription,
         this.professor,
         this.offer,
@@ -146,6 +150,8 @@ class Course {
         paymentStatus: json["payment_status"],
         isSubscribed: json["is_subscribed"],
         productId: json["product_id"],
+        freeVimeoId: json["free_vimeo_id"],
+        freeVideoId: json["free_video_id"],
         subscription: json["subscription"] == null ? [] : List<SubscriptionsData>.from(json["subscription"]!.map((x) => SubscriptionsData.fromJson(x))),
         professor: json["professor"] == null ? null : co.Professor.fromJson(json["professor"]),
         offer: json["offer"] == null ? null : Offer.fromJson(json["offer"]),
@@ -182,6 +188,8 @@ class Course {
         "payment_status": paymentStatus,
         "is_subscribed": isSubscribed,
         "product_id": productId,
+        "free_vimeo_id": freeVimeoId,
+        "free_video_id": freeVideoId,
         "subscription": subscription == null ? [] : List<dynamic>.from(subscription!.map((x) => x.toJson())),
         "professor": professor?.toJson(),
         "offer": offer?.toJson(),

@@ -16,6 +16,7 @@ import 'package:bebrain/screens/course/widgets/course_text.dart';
 import 'package:bebrain/screens/course/widgets/leading_back.dart';
 import 'package:bebrain/screens/course/widgets/lecture_card.dart';
 import 'package:bebrain/screens/course/widgets/rating_card.dart';
+import 'package:bebrain/screens/vimeo_player/vimeo_player_screen.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/enums.dart';
 import 'package:bebrain/utils/my_icons.dart';
@@ -24,9 +25,9 @@ import 'package:bebrain/widgets/courses_list.dart';
 import 'package:bebrain/widgets/custom_future_builder.dart';
 import 'package:bebrain/widgets/custom_network_image.dart';
 import 'package:bebrain/widgets/custom_svg.dart';
-import 'package:bebrain/widgets/stretch_button.dart';
 import 'package:bebrain/widgets/view_ratings_button.dart';
 import 'package:flutter/material.dart';
+import 'package:no_screenshot/no_screenshot.dart';
 
 class CourseScreen extends StatefulWidget {
   final int courseId;
@@ -37,6 +38,7 @@ class CourseScreen extends StatefulWidget {
 }
 
 class _CourseScreenState extends State<CourseScreen> {
+  final _noScreenshot = NoScreenshot.instance;
   late MainProvider _mainProvider;
   late Future<CourseFilterModel> _courseFuture;
   String? _orderNumber;
@@ -78,6 +80,7 @@ class _CourseScreenState extends State<CourseScreen> {
   @override
   void initState() {
     super.initState();
+    disableScreenshot();
     _mainProvider = context.mainProvider;
     _initializeFuture();
     PurchasesService.initialize(
@@ -94,8 +97,20 @@ class _CourseScreenState extends State<CourseScreen> {
 
   @override
   void dispose() {
+    enableScreenshot();
     PurchasesService.cancel();
     super.dispose();
+  }
+
+
+  void disableScreenshot() async {
+    bool result = await _noScreenshot.screenshotOff();
+    debugPrint('Screenshot Off: $result');
+  }
+
+  void enableScreenshot() async {
+    bool result = await _noScreenshot.screenshotOn();
+    debugPrint('Enable Screenshot: $result');
   }
 
   @override
@@ -175,11 +190,17 @@ class _CourseScreenState extends State<CourseScreen> {
               SliverAppBar(
                 pinned: true,
                 scrolledUnderElevation: 0,
-                collapsedHeight: kBarCollapsedHeight,
+                collapsedHeight: 170,
                 leading: const LeadingBack(),
-                flexibleSpace: CustomNetworkImage(
+                flexibleSpace: course.freeVimeoId != null
+                ? VimeoPlayerScreen(
+                          vimeoId: course.freeVimeoId!,
+                          videoId: course.freeVideoId,
+                          isFullScreen: false,
+                          isInitialize: false,
+                        )
+                : CustomNetworkImage(
                   course.image!,
-                  height: 258,
                   radius: 0,
                 ),
               ),
@@ -254,32 +275,32 @@ class _CourseScreenState extends State<CourseScreen> {
                         videoCount: course.videosCount!,
                         subscriptionCount: course.subscriptionCount!,
                       ),
-                      if (course.subscription!.isEmpty)
-                        StretchedButton(
-                          onPressed: () {
-                            if (course.available == 0) {
-                              context.dialogNotAvailble();
-                            } else {
-                              _courseSubscribe(course.id!);
-                            }
-                          },
-                          margin: const EdgeInsets.symmetric(vertical: 12),
-                          child: Column(
-                            children: [
-                              CourseText(
-                                context.appLocalization.join,
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                                textColor: context.colorPalette.black33,
-                              ),
-                              CourseText(
-                                context.appLocalization.getPatFree,
-                                fontSize: 12,
-                                textColor: context.colorPalette.black33,
-                              ),
-                            ],
-                          ),
-                        ),
+                      // if (course.subscription!.isEmpty)
+                      //   StretchedButton(
+                      //     onPressed: () {
+                      //       if (course.available == 0) {
+                      //         context.dialogNotAvailble();
+                      //       } else {
+                      //         _courseSubscribe(course.id!);
+                      //       }
+                      //     },
+                      //     margin: const EdgeInsets.symmetric(vertical: 12),
+                      //     child: Column(
+                      //       children: [
+                      //         CourseText(
+                      //           context.appLocalization.join,
+                      //           fontSize: 15,
+                      //           fontWeight: FontWeight.bold,
+                      //           textColor: context.colorPalette.black33,
+                      //         ),
+                      //         CourseText(
+                      //           context.appLocalization.getPatFree,
+                      //           fontSize: 12,
+                      //           textColor: context.colorPalette.black33,
+                      //         ),
+                      //       ],
+                      //     ),
+                      //   ),
                       CourseText(
                         context.appLocalization.contents,
                         fontSize: 16,

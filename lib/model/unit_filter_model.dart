@@ -47,6 +47,8 @@ class UnitFilterData {
     String? type;
     int? paymentStatus;
     String? productId;
+    String? freeVimeoId;
+    int? freeVideoId;
     List<SubscriptionsData>? courseSubscription;
     List<SubscriptionsData>? subscription;
     Offer? courseOffer;
@@ -72,6 +74,8 @@ class UnitFilterData {
         this.type,
         this.paymentStatus,
         this.productId,
+        this.freeVimeoId,
+        this.freeVideoId,
         this.courseSubscription,
         this.subscription,
         this.courseOffer,
@@ -98,6 +102,8 @@ class UnitFilterData {
         type: json["type"],
         paymentStatus: json["payment_status"],
         productId: json["product_id"],
+        freeVimeoId: json["free_vimeo_id"],
+        freeVideoId: json["free_video_id"],
         courseSubscription: json["course_subscription"] == null ? [] : List<SubscriptionsData>.from(json["course_subscription"]!.map((x) => SubscriptionsData.fromJson(x))),
         subscription: json["subscription"] == null ? [] : List<SubscriptionsData>.from(json["subscription"]!.map((x) => SubscriptionsData.fromJson(x))),
         courseOffer: json["course_offer"] == null ? null : Offer.fromJson(json["course_offer"]),
@@ -124,6 +130,8 @@ class UnitFilterData {
         "type": type,
         "payment_status": paymentStatus,
         "product_id": productId,
+        "free_vimeo_id": freeVimeoId,
+        "free_video_id": freeVideoId,
         "course_subscription": courseSubscription == null ? [] : List<dynamic>.from(courseSubscription!.map((x) => x.toJson())),
         "subscription": subscription == null ? [] : List<dynamic>.from(subscription!.map((x) => x.toJson())),
         "course_offer": courseOffer?.toJson(),

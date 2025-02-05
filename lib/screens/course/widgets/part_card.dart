@@ -29,8 +29,8 @@ class PartCard extends StatelessWidget {
 
   bool get _sectionAllow => section.type == PaymentType.free || section.paymentStatus == PaymentStatus.paid;
 
-  bool get _allowShow => (isSubscribedCourse && section.type == PaymentType.free) || (section.paymentStatus == PaymentStatus.paid && section.type == PaymentType.notFree) || ( unitStatus == PaymentStatus.paid );
-
+  bool get _allowShow => ( section.type == PaymentType.free) || (section.paymentStatus == PaymentStatus.paid && section.type == PaymentType.notFree) || ( unitStatus == PaymentStatus.paid );
+//isSubscribedCourse &&
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
