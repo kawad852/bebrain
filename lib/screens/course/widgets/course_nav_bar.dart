@@ -78,6 +78,8 @@ class _CourseNavBarState extends State<CourseNavBar> {
                     widget.offer?.content?? context.appLocalization.buyFullCourse,
                     // context.appLocalization.discountEntireCourse(70),
                     textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
                     fontWeight: FontWeight.bold,
                   ),
                   if(widget.offer != null)

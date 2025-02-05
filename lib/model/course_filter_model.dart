@@ -268,6 +268,7 @@ class Unit {
     int? videosMinutes;
     String? type;
     int? paymentStatus;
+    int? examsCount;
     int? subscriptionCount;
     List<SubscriptionsData>? subscription;
     Offer? offer;
@@ -286,6 +287,7 @@ class Unit {
         this.videosMinutes,
         this.type,
         this.paymentStatus,
+        this.examsCount,
         this.subscriptionCount,
         this.subscription,
         this.offer,
@@ -305,6 +307,7 @@ class Unit {
         videosMinutes: json["videos_minutes"],
         type: json["type"],
         paymentStatus: json["payment_status"],
+        examsCount: json["exams_count"],
         subscriptionCount: json["subscription_count"],
         subscription: json["subscription"] == null ? [] : List<SubscriptionsData>.from(json["subscription"]!.map((x) => SubscriptionsData.fromJson(x))),
         offer: json["offer"] == null ? null : Offer.fromJson(json["offer"]),
@@ -324,6 +327,7 @@ class Unit {
         "videos_minutes": videosMinutes,
         "type":type,
         "payment_status":paymentStatus,
+        "exams_count": examsCount,
         "subscription_count": subscriptionCount,
         "subscription": subscription == null ? [] : List<dynamic>.from(subscription!.map((x) => x.toJson())),
         "offer": offer?.toJson(),

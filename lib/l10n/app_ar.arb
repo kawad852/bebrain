@@ -261,5 +261,6 @@
   "changeMajor":"تغيير التخصص",
   "msgSendSuccessfully": "تم إرسال الرسالة بنجاح",
   "accountAlreadyRegistered": "الحساب مسجل مسبقاً",
-  "go":"ابدأ الاختبار"
+  "go":"ابدأ الاختبار",
+  "exam":"اختبار"
 }

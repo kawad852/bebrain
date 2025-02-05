@@ -40,7 +40,7 @@ class ContentCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async{
-        if (unit.videosCount == 0 && unit.documentsCount == 0 && unit.exams!.isEmpty) {
+        if (unit.videosCount == 0 && unit.documentsCount == 0 && unit.examsCount == 0) {
           context.showDialog(
             titleText: "",
             confirmTitle: context.appLocalization.back,
@@ -89,7 +89,7 @@ class ContentCard extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                   CourseText(
-                    "${unit.videosMinutes} ${context.appLocalization.minute} , ${unit.videosCount} ${context.appLocalization.videos} , ${unit.documentsCount} ${context.appLocalization.file}",
+                    "${unit.videosMinutes} ${context.appLocalization.minute} , ${unit.videosCount} ${context.appLocalization.videos} , ${unit.documentsCount} ${context.appLocalization.file}${unit.examsCount != 0 ? " , ${unit.examsCount} ${context.appLocalization.exam}":""}",
                     textColor: context.colorPalette.grey66,
                     fontSize: 12,
                   ),
