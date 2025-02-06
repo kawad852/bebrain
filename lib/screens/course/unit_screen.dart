@@ -21,7 +21,7 @@ import 'package:bebrain/widgets/custom_network_image.dart';
 import 'package:bebrain/widgets/custom_svg.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:no_screenshot/no_screenshot.dart';
+// import 'package:no_screenshot/no_screenshot.dart';
 
 class UnitScreen extends StatefulWidget {
   final int unitId;
@@ -45,7 +45,7 @@ class UnitScreen extends StatefulWidget {
 }
 
 class _UnitScreenState extends State<UnitScreen> {
-  final _noScreenshot = NoScreenshot.instance;
+  // final _noScreenshot = NoScreenshot.instance;
   late MainProvider _mainProvider;
   late Future<UnitFilterModel> _unitFuture;
   String? _orderNumber;
@@ -55,8 +55,8 @@ class _UnitScreenState extends State<UnitScreen> {
   _initializeFuture(String? type, int? index ) async {
     _unitFuture = _mainProvider.filterByUnit(widget.unitId);
     final _unit = await _unitFuture;
-    _vimeoId = _unit.data!.sections![0].videos![0].vimeoId!;
-    _videoId = _unit.data!.sections![0].videos![0].id!;
+    _vimeoId = _unit.data!.freeVimeoId;
+    _videoId = _unit.data!.freeVideoId;
     switch(type){
       case SubscriptionsType.course:
         _orderNumber = _unit.data!.courseSubscription?[0].order?.orderNumber;
@@ -74,20 +74,20 @@ class _UnitScreenState extends State<UnitScreen> {
         (lastDate.toUTC(context).compareTo(DateTime.now()) == 0 || DateTime.now().isBefore(lastDate.toUTC(context)));
   }
 
-  void disableScreenshot() async {
-    bool result = await _noScreenshot.screenshotOff();
-    debugPrint('Screenshot Off: $result');
-  }
+  // void disableScreenshot() async {
+  //   bool result = await _noScreenshot.screenshotOff();
+  //   debugPrint('Screenshot Off: $result');
+  // }
 
-  void enableScreenshot() async {
-    bool result = await _noScreenshot.screenshotOn();
-    debugPrint('Enable Screenshot: $result');
-  }
+  // void enableScreenshot() async {
+  //   bool result = await _noScreenshot.screenshotOn();
+  //   debugPrint('Enable Screenshot: $result');
+  // }
 
   @override
   void initState() {
     super.initState();
-    disableScreenshot();
+    // disableScreenshot();
     _mainProvider = context.mainProvider;
     _initializeFuture(null,null);
     SystemChrome.setPreferredOrientations([
@@ -113,7 +113,7 @@ class _UnitScreenState extends State<UnitScreen> {
 
   @override
   void dispose() {
-    enableScreenshot();
+    // enableScreenshot();
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
@@ -203,7 +203,9 @@ class _UnitScreenState extends State<UnitScreen> {
                   collapsedHeight: 170,
                   leading: const LeadingBack(),
                   //widget.isSubscribedCourse && unit.type == PaymentType.free
-                  flexibleSpace: ((unit.sections![0].type == PaymentType.free) || (unit.paymentStatus == PaymentStatus.paid && unit.type == PaymentType.notFree)) && _vimeoId != null
+
+                  //((unit.sections![0].type == PaymentType.free) || (unit.paymentStatus == PaymentStatus.paid && unit.type == PaymentType.notFree)) &&
+                  flexibleSpace:  _vimeoId != null
                      ? VimeoPlayerScreen(
                           key: UniqueKey(),
                           vimeoId: _vimeoId!,
