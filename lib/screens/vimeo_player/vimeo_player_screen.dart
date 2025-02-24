@@ -16,8 +16,7 @@ class VimeoPlayerScreen extends StatefulWidget {
   final int? videoId;
   final bool isFullScreen;
   final bool isInitialize;
-  const VimeoPlayerScreen(
-      {super.key, required this.vimeoId, required this.videoId, required this.isFullScreen, this.isInitialize = true});
+  const VimeoPlayerScreen({super.key, required this.vimeoId, required this.videoId, required this.isFullScreen, this.isInitialize = true});
 
   @override
   State<VimeoPlayerScreen> createState() => _VimeoPlayerScreenState();
@@ -100,7 +99,7 @@ class _VimeoPlayerScreenState extends State<VimeoPlayerScreen> {
   @override
   void initState() {
     super.initState();
-    
+
     _initialize();
     //_startWatermarkAnimation();
     _mainProvider = context.mainProvider;
@@ -108,13 +107,13 @@ class _VimeoPlayerScreenState extends State<VimeoPlayerScreen> {
       _initializeFuture();
     }
     if (widget.isInitialize) {
-    disableScreenshot();
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeRight,
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
+      disableScreenshot();
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.landscapeRight,
+        DeviceOrientation.landscapeLeft,
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ]);
     }
   }
 
@@ -122,11 +121,11 @@ class _VimeoPlayerScreenState extends State<VimeoPlayerScreen> {
   void dispose() {
     super.dispose();
     if (widget.isInitialize) {
-    enableScreenshot();
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
+      enableScreenshot();
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ]);
     }
   }
 
@@ -150,9 +149,11 @@ class _VimeoPlayerScreenState extends State<VimeoPlayerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: widget.isFullScreen ? AppBar(
-        leading: const LeadingBack(),
-      ): null,
+      appBar: widget.isFullScreen
+          ? AppBar(
+              leading: const LeadingBack(),
+            )
+          : null,
       body: widget.videoId == null
           ? !showPage
               ? const CustomLoadingIndicator()
@@ -180,25 +181,24 @@ class _VimeoPlayerScreenState extends State<VimeoPlayerScreen> {
     );
   }
 }
- 
 
-   //         if (_showWatermark)
-            // Positioned(
-            //   left: _watermarkPosition.dx,
-            //   top: _watermarkPosition.dy,
-            //   child: const Text(
-            //     'My Watermark',
-            //     style: TextStyle(
-            //       color: Colors.white,
-            //       fontSize: 20,
-            //       fontWeight: FontWeight.bold,
-            //       shadows: [
-            //         Shadow(
-            //           offset: Offset(2, 2),
-            //           blurRadius: 4,
-            //           color: Colors.black54,
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // ),
+//         if (_showWatermark)
+// Positioned(
+//   left: _watermarkPosition.dx,
+//   top: _watermarkPosition.dy,
+//   child: const Text(
+//     'My Watermark',
+//     style: TextStyle(
+//       color: Colors.white,
+//       fontSize: 20,
+//       fontWeight: FontWeight.bold,
+//       shadows: [
+//         Shadow(
+//           offset: Offset(2, 2),
+//           blurRadius: 4,
+//           color: Colors.black54,
+//         ),
+//       ],
+//     ),
+//   ),
+// ),
