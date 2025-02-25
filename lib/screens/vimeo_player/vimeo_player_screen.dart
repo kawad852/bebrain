@@ -16,8 +16,9 @@ class VimeoPlayerScreen extends StatefulWidget {
   final int? videoId;
   final bool isFullScreen;
   final bool isInitialize;
+  final int autoPlay;
   const VimeoPlayerScreen(
-      {super.key, required this.vimeoId, required this.videoId, required this.isFullScreen, this.isInitialize = true});
+      {super.key, required this.vimeoId, required this.videoId, required this.isFullScreen, this.isInitialize = true, required this.autoPlay});
 
   @override
   State<VimeoPlayerScreen> createState() => _VimeoPlayerScreenState();
@@ -89,7 +90,7 @@ class _VimeoPlayerScreenState extends State<VimeoPlayerScreen> {
         </head>
              <body>
                <iframe 
-                src="https://player.vimeo.com/video/${widget.vimeoId}&loop=0&autoplay=1&muted=1" 
+                src="https://player.vimeo.com/video/${widget.vimeoId}&loop=0&autoplay=${widget.autoPlay}&muted=1" 
                 width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen" 
                 allowfullscreen></iframe>
              </body>

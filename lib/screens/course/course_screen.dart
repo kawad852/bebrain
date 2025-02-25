@@ -198,6 +198,7 @@ class _CourseScreenState extends State<CourseScreen> {
                           videoId: course.freeVideoId,
                           isFullScreen: false,
                           isInitialize: false,
+                          autoPlay: course.autoPlay!,
                         )
                 : CustomNetworkImage(
                   course.image!,

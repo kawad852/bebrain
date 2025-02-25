@@ -212,6 +212,7 @@ class _UnitScreenState extends State<UnitScreen> {
                           videoId: _videoId,
                           isFullScreen: false,
                           isInitialize: false,
+                          autoPlay: unit.autoPlay!,
                         )
                       : CustomNetworkImage(
                           widget.courseImage,

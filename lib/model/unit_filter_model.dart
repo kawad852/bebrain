@@ -45,6 +45,7 @@ class UnitFilterData {
     double? couursePrice;
     double? courseDiscountPrice;
     String? type;
+    int? autoPlay;
     int? paymentStatus;
     String? productId;
     String? freeVimeoId;
@@ -72,6 +73,7 @@ class UnitFilterData {
         this.couursePrice,
         this.courseDiscountPrice,
         this.type,
+        this.autoPlay,
         this.paymentStatus,
         this.productId,
         this.freeVimeoId,
@@ -100,6 +102,7 @@ class UnitFilterData {
         couursePrice: json["couurse_price"]?.toDouble(),
         courseDiscountPrice: json["course_discount_price"]?.toDouble(),
         type: json["type"],
+        autoPlay: json["auto_play"],
         paymentStatus: json["payment_status"],
         productId: json["product_id"],
         freeVimeoId: json["free_vimeo_id"],
@@ -128,6 +131,7 @@ class UnitFilterData {
         "couurse_price": couursePrice,
         "course_discount_price": courseDiscountPrice,
         "type": type,
+        "auto_play": autoPlay,
         "payment_status": paymentStatus,
         "product_id": productId,
         "free_vimeo_id": freeVimeoId,

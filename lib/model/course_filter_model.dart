@@ -66,6 +66,7 @@ class Course {
     int? unitsCount;
     int? hours;
     int? minutes;
+    int? autoPlay;
     int? subscriptionCount;
     int? available;
     double? reviewsRating;
@@ -102,6 +103,7 @@ class Course {
         this.unitsCount,
         this.hours,
         this.minutes,
+        this.autoPlay,
         this.subscriptionCount,
         this.available,
         this.reviewsRating,
@@ -139,6 +141,7 @@ class Course {
         unitsCount: json["units_count"],
         hours: json["hours"],
         minutes: json["minutes"],
+        autoPlay: json['auto_play'],
         subscriptionCount: json["subscription_count"],
         available: json["available"],
         reviewsRating: json["reviews_rating"]?.toDouble(),
@@ -177,6 +180,7 @@ class Course {
         "units_count": unitsCount,
         "hours": hours,
         "minutes": minutes,
+        "auto_play": autoPlay,
         "subscription_count": subscriptionCount,
         "available": available,
         "reviews_rating": reviewsRating,
