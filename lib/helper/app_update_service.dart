@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io' show Platform;
 
+import 'package:bebrain/helper/screenshot_service.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,7 @@ class AppUpdateService {
       );
       await remoteConfig.fetchAndActivate();
       final minSupportedVersion = remoteConfig.getString('minimum_supported_version');
+      ScreenShotService.canScreenshot = remoteConfig.getBool('can_screenshot');
       debugPrint("minSupportedVersion:: $minSupportedVersion");
       final isLowerVersion = _isVersionLower(currentVersion, minSupportedVersion);
       if (isLowerVersion) {
