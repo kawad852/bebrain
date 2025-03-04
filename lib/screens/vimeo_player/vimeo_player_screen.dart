@@ -8,8 +8,9 @@ import 'package:bebrain/widgets/custom_future_builder.dart';
 import 'package:bebrain/widgets/custom_loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:no_screenshot/no_screenshot.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+
+import '../../helper/screenshot_service.dart';
 
 class VimeoPlayerScreen extends StatefulWidget {
   final String vimeoId;
@@ -29,23 +30,12 @@ class _VimeoPlayerScreenState extends State<VimeoPlayerScreen> {
   late Future<VideoViewModel> _videoFuture;
   late WebViewController controller;
   bool showPage = false;
-  final _noScreenshot = NoScreenshot.instance;
   // bool _showWatermark = true;
   // Offset _watermarkPosition = const Offset(20, 20);
   // Timer? _timer;
 
   void _initializeFuture() async {
     _videoFuture = _mainProvider.videoView(widget.videoId!);
-  }
-
-  void disableScreenshot() async {
-    bool result = await _noScreenshot.screenshotOff();
-    debugPrint('Screenshot Off: $result');
-  }
-
-  void enableScreenshot() async {
-    bool result = await _noScreenshot.screenshotOn();
-    debugPrint('Enable Screenshot: $result');
   }
 
   void _initialize() async {
@@ -101,7 +91,7 @@ class _VimeoPlayerScreenState extends State<VimeoPlayerScreen> {
   @override
   void initState() {
     super.initState();
-    
+
     _initialize();
     //_startWatermarkAnimation();
     _mainProvider = context.mainProvider;
@@ -109,13 +99,13 @@ class _VimeoPlayerScreenState extends State<VimeoPlayerScreen> {
       _initializeFuture();
     }
     if (widget.isInitialize) {
-    disableScreenshot();
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeRight,
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
+      ScreenShotService.disableScreenshot();
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.landscapeRight,
+        DeviceOrientation.landscapeLeft,
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ]);
     }
   }
 
@@ -123,11 +113,11 @@ class _VimeoPlayerScreenState extends State<VimeoPlayerScreen> {
   void dispose() {
     super.dispose();
     if (widget.isInitialize) {
-    enableScreenshot();
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
+      ScreenShotService.enableScreenshot();
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ]);
     }
   }
 
@@ -151,9 +141,11 @@ class _VimeoPlayerScreenState extends State<VimeoPlayerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: widget.isFullScreen ? AppBar(
-        leading: const LeadingBack(),
-      ): null,
+      appBar: widget.isFullScreen
+          ? AppBar(
+              leading: const LeadingBack(),
+            )
+          : null,
       body: widget.videoId == null
           ? !showPage
               ? const CustomLoadingIndicator()
@@ -181,25 +173,24 @@ class _VimeoPlayerScreenState extends State<VimeoPlayerScreen> {
     );
   }
 }
- 
 
-   //         if (_showWatermark)
-            // Positioned(
-            //   left: _watermarkPosition.dx,
-            //   top: _watermarkPosition.dy,
-            //   child: const Text(
-            //     'My Watermark',
-            //     style: TextStyle(
-            //       color: Colors.white,
-            //       fontSize: 20,
-            //       fontWeight: FontWeight.bold,
-            //       shadows: [
-            //         Shadow(
-            //           offset: Offset(2, 2),
-            //           blurRadius: 4,
-            //           color: Colors.black54,
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // ),
+//         if (_showWatermark)
+// Positioned(
+//   left: _watermarkPosition.dx,
+//   top: _watermarkPosition.dy,
+//   child: const Text(
+//     'My Watermark',
+//     style: TextStyle(
+//       color: Colors.white,
+//       fontSize: 20,
+//       fontWeight: FontWeight.bold,
+//       shadows: [
+//         Shadow(
+//           offset: Offset(2, 2),
+//           blurRadius: 4,
+//           color: Colors.black54,
+//         ),
+//       ],
+//     ),
+//   ),
+// ),

@@ -1,7 +1,8 @@
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:flutter/material.dart';
-import 'package:no_screenshot/no_screenshot.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+
+import '../../helper/screenshot_service.dart';
 
 class ExamScreen extends StatefulWidget {
   final String payUrl;
@@ -16,24 +17,13 @@ class _ExamScreenState extends State<ExamScreen> {
   WebViewController? controller;
 
   bool isLoading = true;
-  final _noScreenshot = NoScreenshot.instance;
 
-    void _changeLoadingStatus(bool status) {
+  void _changeLoadingStatus(bool status) {
     if (mounted) {
       setState(() {
         isLoading = status;
       });
     }
-  }
-
-  void disableScreenshot() async {
-    bool result = await _noScreenshot.screenshotOff();
-    debugPrint('Screenshot Off: $result');
-  }
-
-  void enableScreenshot() async {
-    bool result = await _noScreenshot.screenshotOn();
-    debugPrint('Enable Screenshot: $result');
   }
 
   void _initialize(BuildContext context) {
@@ -63,7 +53,7 @@ class _ExamScreenState extends State<ExamScreen> {
     super.initState();
     _initialize(context);
     if (widget.isInitialize) {
-       disableScreenshot();
+      ScreenShotService.disableScreenshot();
     }
   }
 
@@ -71,20 +61,19 @@ class _ExamScreenState extends State<ExamScreen> {
   void dispose() {
     super.dispose();
     if (widget.isInitialize) {
-      enableScreenshot();
+      ScreenShotService.enableScreenshot();
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
       body: isLoading
-      ? context.loaders.circular()
-      :WebViewWidget(
-            controller: controller!,
-          ),
+          ? context.loaders.circular()
+          : WebViewWidget(
+              controller: controller!,
+            ),
     );
   }
 }

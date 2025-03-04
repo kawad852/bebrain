@@ -51,6 +51,9 @@ class MySharedPreferences {
   static String get countryCode => _sharedPreferences.getString('countryCode') ?? kFallBackCountryCode;
   static set countryCode(String value) => _sharedPreferences.setString('countryCode', value);
 
+  static bool get canScreenshot => _sharedPreferences.getBool('canScreenshot') ?? false;
+  static set canScreenshot(bool value) => _sharedPreferences.setBool('canScreenshot', value);
+
   static FilterModel get filter {
     String value = _sharedPreferences.getString('filterModel') ?? '';
     var filterModel = FilterModel();
