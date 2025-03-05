@@ -22,12 +22,14 @@ import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/enums.dart';
 import 'package:bebrain/utils/my_icons.dart';
 import 'package:bebrain/utils/my_theme.dart';
+import 'package:bebrain/utils/shared_pref.dart';
 import 'package:bebrain/widgets/courses_list.dart';
 import 'package:bebrain/widgets/custom_future_builder.dart';
 import 'package:bebrain/widgets/custom_network_image.dart';
 import 'package:bebrain/widgets/custom_svg.dart';
 import 'package:bebrain/widgets/view_ratings_button.dart';
 import 'package:flutter/material.dart';
+import 'package:no_screenshot/no_screenshot.dart';
 
 class CourseScreen extends StatefulWidget {
   final int courseId;
@@ -41,6 +43,7 @@ class _CourseScreenState extends State<CourseScreen> {
   late MainProvider _mainProvider;
   late Future<CourseFilterModel> _courseFuture;
   String? _orderNumber;
+  final _noScreenshot = NoScreenshot.instance;
 
   void _initializeFuture() async {
     _courseFuture = _mainProvider.filterByCourse(widget.courseId);
@@ -51,6 +54,20 @@ class _CourseScreenState extends State<CourseScreen> {
   bool checkTime(DateTime firstDate, DateTime lastDate) {
     return (firstDate.toUTC(context).compareTo(DateTime.now()) == 0 || DateTime.now().isAfter(firstDate.toUTC(context))) &&
         (lastDate.toUTC(context).compareTo(DateTime.now()) == 0 || DateTime.now().isBefore(lastDate.toUTC(context)));
+  }
+
+  void disableScreenshot() async {
+    if (!MySharedPreferences.canScreenshot) {
+      bool result = await _noScreenshot.screenshotOff();
+      debugPrint('Screenshot Off: $result');
+    }
+  }
+
+  void enableScreenshot() async {
+    if (!MySharedPreferences.canScreenshot) {
+      bool result = await _noScreenshot.screenshotOn();
+      debugPrint('Enable Screenshot: $result');
+    }
   }
 
   void _courseSubscribe(int id) {
@@ -77,7 +94,8 @@ class _CourseScreenState extends State<CourseScreen> {
   @override
   void initState() {
     super.initState();
-    ScreenShotService.disableScreenshot();
+    // ScreenShotService.disableScreenshot();
+    disableScreenshot();
     _mainProvider = context.mainProvider;
     _initializeFuture();
     PurchasesService.initialize(
@@ -93,7 +111,8 @@ class _CourseScreenState extends State<CourseScreen> {
 
   @override
   void dispose() {
-    ScreenShotService.enableScreenshot();
+    // ScreenShotService.enableScreenshot();
+    enableScreenshot();
     PurchasesService.cancel();
     super.dispose();
   }

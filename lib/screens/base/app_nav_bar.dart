@@ -9,6 +9,7 @@ import 'package:bebrain/screens/profile/profile_screen.dart';
 import 'package:bebrain/utils/base_extensions.dart';
 import 'package:bebrain/utils/my_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:no_screenshot/no_screenshot.dart';
 
 class AppNavBar extends StatefulWidget {
   const AppNavBar({
@@ -24,6 +25,12 @@ class _AppNavBarState extends State<AppNavBar> {
   late PageController _pageController;
   final cloudMessagingService = CloudMessagingService();
   late AuthProvider authProvider;
+  final _noScreenshot = NoScreenshot.instance;
+
+  void enableScreenshot() async {
+      bool result = await _noScreenshot.screenshotOn();
+      debugPrint('Enable Screenshot: $result');
+  }
 
   final items = [
     MyIcons.home,
@@ -69,6 +76,7 @@ class _AppNavBarState extends State<AppNavBar> {
   @override
   void initState() {
     super.initState();
+    enableScreenshot();
     authProvider = context.authProvider;
     _pageController = PageController();
      authProvider.updateDeviceToken(context);

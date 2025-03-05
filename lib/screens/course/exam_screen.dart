@@ -1,5 +1,7 @@
 import 'package:bebrain/utils/base_extensions.dart';
+import 'package:bebrain/utils/shared_pref.dart';
 import 'package:flutter/material.dart';
+import 'package:no_screenshot/no_screenshot.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../helper/screenshot_service.dart';
@@ -15,7 +17,7 @@ class ExamScreen extends StatefulWidget {
 
 class _ExamScreenState extends State<ExamScreen> {
   WebViewController? controller;
-
+  final _noScreenshot = NoScreenshot.instance;
   bool isLoading = true;
 
   void _changeLoadingStatus(bool status) {
@@ -23,6 +25,20 @@ class _ExamScreenState extends State<ExamScreen> {
       setState(() {
         isLoading = status;
       });
+    }
+  }
+
+  void disableScreenshot() async {
+    if (!MySharedPreferences.canScreenshot) {
+      bool result = await _noScreenshot.screenshotOff();
+      debugPrint('Screenshot Off: $result');
+    }
+  }
+
+  void enableScreenshot() async {
+    if (!MySharedPreferences.canScreenshot) {
+      bool result = await _noScreenshot.screenshotOn();
+      debugPrint('Enable Screenshot: $result');
     }
   }
 
@@ -53,7 +69,8 @@ class _ExamScreenState extends State<ExamScreen> {
     super.initState();
     _initialize(context);
     if (widget.isInitialize) {
-      ScreenShotService.disableScreenshot();
+      // ScreenShotService.disableScreenshot();
+      disableScreenshot();
     }
   }
 
@@ -61,7 +78,8 @@ class _ExamScreenState extends State<ExamScreen> {
   void dispose() {
     super.dispose();
     if (widget.isInitialize) {
-      ScreenShotService.enableScreenshot();
+      // ScreenShotService.enableScreenshot();
+      enableScreenshot();
     }
   }
 

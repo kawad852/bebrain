@@ -4,10 +4,12 @@ import 'package:bebrain/model/video_view_model.dart';
 import 'package:bebrain/providers/main_provider.dart';
 import 'package:bebrain/screens/course/widgets/leading_back.dart';
 import 'package:bebrain/utils/base_extensions.dart';
+import 'package:bebrain/utils/shared_pref.dart';
 import 'package:bebrain/widgets/custom_future_builder.dart';
 import 'package:bebrain/widgets/custom_loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:no_screenshot/no_screenshot.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../helper/screenshot_service.dart';
@@ -30,12 +32,27 @@ class _VimeoPlayerScreenState extends State<VimeoPlayerScreen> {
   late Future<VideoViewModel> _videoFuture;
   late WebViewController controller;
   bool showPage = false;
+  final _noScreenshot = NoScreenshot.instance;
   // bool _showWatermark = true;
   // Offset _watermarkPosition = const Offset(20, 20);
   // Timer? _timer;
 
   void _initializeFuture() async {
     _videoFuture = _mainProvider.videoView(widget.videoId!);
+  }
+
+  void disableScreenshot() async {
+    if (!MySharedPreferences.canScreenshot) {
+      bool result = await _noScreenshot.screenshotOff();
+      debugPrint('Screenshot Off: $result');
+    }
+  }
+
+  void enableScreenshot() async {
+    if (!MySharedPreferences.canScreenshot) {
+      bool result = await _noScreenshot.screenshotOn();
+      debugPrint('Enable Screenshot: $result');
+    }
   }
 
   void _initialize() async {
@@ -99,7 +116,8 @@ class _VimeoPlayerScreenState extends State<VimeoPlayerScreen> {
       _initializeFuture();
     }
     if (widget.isInitialize) {
-      ScreenShotService.disableScreenshot();
+      // ScreenShotService.disableScreenshot();
+      disableScreenshot();
       SystemChrome.setPreferredOrientations([
         DeviceOrientation.landscapeRight,
         DeviceOrientation.landscapeLeft,
@@ -113,7 +131,8 @@ class _VimeoPlayerScreenState extends State<VimeoPlayerScreen> {
   void dispose() {
     super.dispose();
     if (widget.isInitialize) {
-      ScreenShotService.enableScreenshot();
+      // ScreenShotService.enableScreenshot();
+      enableScreenshot();
       SystemChrome.setPreferredOrientations([
         DeviceOrientation.portraitUp,
         DeviceOrientation.portraitDown,
