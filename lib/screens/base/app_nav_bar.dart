@@ -2,7 +2,6 @@ import 'package:bebrain/notifications/cloud_messaging_service.dart';
 import 'package:bebrain/providers/auth_provider.dart';
 import 'package:bebrain/screens/base/widgets/nav_bar_item.dart';
 import 'package:bebrain/screens/duties/duties_screen.dart';
-import 'package:bebrain/screens/graduation_projects/graduation_projects_screen.dart';
 import 'package:bebrain/screens/home/home_screen.dart';
 import 'package:bebrain/screens/online/online_screen.dart';
 import 'package:bebrain/screens/profile/profile_screen.dart';

@@ -1,9 +1,9 @@
 import 'package:bebrain/alerts/errors/app_error_feedback.dart';
 import 'package:bebrain/alerts/feedback/app_feedback.dart';
 import 'package:bebrain/helper/purchases_service.dart';
-import 'package:bebrain/helper/screenshot_service.dart';
 import 'package:bebrain/helper/ui_helper.dart';
-import 'package:bebrain/model/course_filter_model.dart';
+import 'package:bebrain/model/course_info_model.dart';
+import 'package:bebrain/model/more_course_model.dart';
 import 'package:bebrain/model/subscriptions_model.dart';
 import 'package:bebrain/network/api_service.dart';
 import 'package:bebrain/providers/main_provider.dart';
@@ -41,12 +41,17 @@ class CourseScreen extends StatefulWidget {
 
 class _CourseScreenState extends State<CourseScreen> {
   late MainProvider _mainProvider;
-  late Future<CourseFilterModel> _courseFuture;
+  late Future<CourseInfoModel> _courseFuture;
+  late Future<MoreCourseModel> _moreCourseFuture;
   String? _orderNumber;
   final _noScreenshot = NoScreenshot.instance;
 
+  void _initializeMoreCourse() async {
+    _moreCourseFuture = _mainProvider.fetchMoreCourse(widget.courseId);
+  }
+
   void _initializeFuture() async {
-    _courseFuture = _mainProvider.filterByCourse(widget.courseId);
+    _courseFuture = _mainProvider.getCourseInfo(widget.courseId);
     final course = await _courseFuture;
     _orderNumber = course.data!.course!.subscription?[0].order?.orderNumber;
   }
@@ -98,6 +103,7 @@ class _CourseScreenState extends State<CourseScreen> {
     disableScreenshot();
     _mainProvider = context.mainProvider;
     _initializeFuture();
+    _initializeMoreCourse();
     PurchasesService.initialize(
       onPurchase: () {
         UiHelper.confirmPayment(context, orderNumber: _orderNumber!, afterPay: () {
@@ -404,7 +410,7 @@ class _CourseScreenState extends State<CourseScreen> {
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
-                      LectureCard(professor: course.professor!),
+                      LectureCard(courseId: course.id!),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -452,27 +458,43 @@ class _CourseScreenState extends State<CourseScreen> {
                   ),
                 ),
               ),
-              if (data.data!.moreCourses!.isNotEmpty)
-                SliverToBoxAdapter(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15),
-                        child: CourseText(
-                          context.appLocalization.more,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
+              // if (data.data!.moreCourses!.isNotEmpty)
+                CustomFutureBuilder(
+                  future: _moreCourseFuture,
+                  sliver: true,
+                  onRetry: () {
+                    setState(() {
+                      _initializeMoreCourse();
+                    });
+                  },
+                  onComplete: (context, snapshot) {
+                    final moreCourse = snapshot.data!;
+                    return moreCourse.data!.moreCourses!.isEmpty
+                    ? const SliverToBoxAdapter(
+                      child: SizedBox.shrink(),
+                    )
+                    :SliverToBoxAdapter(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            child: CourseText(
+                              context.appLocalization.more,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            child: CoursesList(
+                              courses: moreCourse.data!.moreCourses!,
+                            ),
+                          ),
+                        ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: CoursesList(
-                          courses: data.data!.moreCourses!,
-                        ),
-                      ),
-                    ],
-                  ),
+                    );
+                  },
                 ),
             ],
           ),
