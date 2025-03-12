@@ -11,7 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class MySubscription extends StatefulWidget {
-  const MySubscription({super.key});
+  final bool isMajor;
+  const MySubscription({super.key, required this.isMajor});
 
   @override
   State<MySubscription> createState() => _MySubscriptionState();
@@ -96,7 +97,7 @@ class _MySubscriptionState extends State<MySubscription> {
                               ],
                             ),
                             Text(
-                              getChangeName(),
+                              widget.isMajor ? context.appLocalization.changeMajor : getChangeName(),
                               style: TextStyle(
                                 color: context.colorPalette.blue8DD,
                                 fontSize: 12,
@@ -181,7 +182,7 @@ class _MySubscriptionState extends State<MySubscription> {
                               ],
                             ),
                             Text(
-                              getChangeName(),
+                              widget.isMajor ? context.appLocalization.changeMajor : getChangeName(),
                               style: TextStyle(
                                 color: context.colorPalette.blue8DD,
                                 fontSize: 12,

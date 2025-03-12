@@ -118,8 +118,8 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
        case WizardType.specialities :
           context.push(
           WizardScreen(
-            wizardType: WizardType.specialities,
-            id: _authProvider.wizardValues.collegeId,
+            wizardType: WizardType.colleges,
+            id: _authProvider.wizardValues.universityId,
             isComeHome: true,
           ),
         );
@@ -183,7 +183,9 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
               toolbarHeight: 67,
               leading:  GestureDetector(
                 onTap: () => navigateToWizard(),
-                child: const MySubscription(),
+                child:  MySubscription(
+                  isMajor: _authProvider.wizardValues.wizardType == WizardType.specialities,
+                ),
                 ),
               actions: [
                 ActionContainer(
