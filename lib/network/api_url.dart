@@ -46,4 +46,7 @@ class ApiUrl {
   static const String professorBySubject = '/api/professors/subject';
   static const String professorByCollegeFilter = '/api/professor-college-filter'; 
   static const String checkPhone = '/api/phone/check';
+  static const String professorCourseFilter = '/api/professor-course-filter';
+  static const String moreCourses = '/api/more-courses';
+  static const String coursesInfo = '/api/courses-info';
 }

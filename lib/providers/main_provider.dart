@@ -5,15 +5,18 @@ import 'package:bebrain/model/confirm_pay_model.dart';
 import 'package:bebrain/model/continue_learning_model.dart';
 import 'package:bebrain/model/country_filter_model.dart';
 import 'package:bebrain/model/course_filter_model.dart';
+import 'package:bebrain/model/course_info_model.dart';
 import 'package:bebrain/model/course_rating_model.dart';
 import 'package:bebrain/model/course_review_model.dart';
 import 'package:bebrain/model/important_subject_model.dart';
 import 'package:bebrain/model/interview_model.dart';
 import 'package:bebrain/model/major_filter_model.dart';
+import 'package:bebrain/model/more_course_model.dart';
 import 'package:bebrain/model/new_request_model.dart';
 import 'package:bebrain/model/online_professor_model.dart';
 import 'package:bebrain/model/order_model.dart';
 import 'package:bebrain/model/policy_model.dart';
+import 'package:bebrain/model/professor_course_model.dart';
 import 'package:bebrain/model/professors_model.dart';
 import 'package:bebrain/model/projects_model.dart';
 import 'package:bebrain/model/single_interview_model.dart';
@@ -470,6 +473,36 @@ class MainProvider extends ChangeNotifier {
       isPublic: false,
       apiType: ApiType.get,
       builder: OnlineProfessorModel.fromJson,
+    );
+    return snapshot;
+  }
+
+  Future<ProfessorCourseModel> professorCourseFilter(int courseId) {
+    final snapshot = ApiService<ProfessorCourseModel>().build(
+      url: "${ApiUrl.professorCourseFilter}/$courseId",
+      isPublic: false,
+      apiType: ApiType.get,
+      builder: ProfessorCourseModel.fromJson,
+    );
+    return snapshot;
+  }
+
+  Future<MoreCourseModel> fetchMoreCourse(int courseId) {
+    final snapshot = ApiService<MoreCourseModel>().build(
+      url: "${ApiUrl.moreCourses}/$courseId",
+      isPublic: false,
+      apiType: ApiType.get,
+      builder: MoreCourseModel.fromJson,
+    );
+    return snapshot;
+  }
+
+  Future<CourseInfoModel> getCourseInfo(int courseId) {
+    final snapshot = ApiService<CourseInfoModel>().build(
+      url: "${ApiUrl.coursesInfo}/$courseId",
+      isPublic: false,
+      apiType: ApiType.get,
+      builder: CourseInfoModel.fromJson,
     );
     return snapshot;
   }
