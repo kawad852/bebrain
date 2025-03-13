@@ -157,6 +157,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       final oauthCredential = firebase_auth.OAuthProvider("apple.com").credential(
         idToken: appleCredential.identityToken,
         rawNonce: rawNonce,
+        accessToken: appleCredential.authorizationCode,
       );
 
       final auth = await _firebaseAuth.signInWithCredential(oauthCredential);
