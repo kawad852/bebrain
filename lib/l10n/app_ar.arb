@@ -265,5 +265,6 @@
   "exam":"اختبار",
   "updateRequired": "التحديث مطلوب",
   "updateBody": "يتوفر إصدار جديد من التطبيق. يرجى التحديث للمتابعة.",
-  "update": "تحديث"
+  "update": "تحديث",
+  "phoneNumAlreadyRegistered": "رقم الهاتف مسجل مسبقا"
 }

@@ -124,7 +124,11 @@ class AuthProvider extends ChangeNotifier {
             popUntilLastPage(context);
           }
         } else {
-          context.showSnackBar(snapshot.msg ?? context.appLocalization.generalError);
+          if (snapshot.code == 400) {
+            context.showSnackBar(context.appLocalization.phoneNumAlreadyRegistered);
+          } else {
+            context.showSnackBar(snapshot.msg ?? context.appLocalization.generalError);
+          }
         }
       },
       onError: (failure) => AppErrorFeedback.show(context, failure),

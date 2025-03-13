@@ -265,5 +265,6 @@
   "exam":"exams",
   "updateRequired": "Update Required",
   "updateBody": "A new version of the app is available. Please update to continue.",
-  "update": "Update"
+  "update": "Update",
+  "phoneNumAlreadyRegistered": "Phone number already registered"
 }
